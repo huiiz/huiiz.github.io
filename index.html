@@ -51,7 +51,7 @@
   isHome: true,
   isHighlightShrink: false,
   isToc: false,
-  postUpdate: '2022-10-15 19:40:50'
+  postUpdate: '2022-10-15 19:44:18'
 }</script><noscript><style type="text/css">
   #nav {
     opacity: 1
@@ -149,41 +149,32 @@
 
 \begin{bmatrix}
 4\\5
-\end{bmatrix}可以被理解为点(4,5)，也可被认为(0 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/MCU/be8ae3d50499.html" title="ESP32-C3手动烧录bin文件"><img class="post_bg" src="/img/esp32-c3-banner-small.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ESP32-C3手动烧录bin文件"></a></div><div class="recent-post-info"><a class="article-title" href="/MCU/be8ae3d50499.html" title="ESP32-C3手动烧录bin文件">ESP32-C3手动烧录bin文件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-01-18T04:56:19.000Z" title="发表于 2022-01-18 12:56:19">2022-01-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/MCU/">MCU</a></span></div><div class="content">一、应用程序的启动流程
-宏观上，该启动流程可以分为如下 3 个步骤：
+\end{bmatrix}可以被理解为点(4,5)，也可被认为(0 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/MCU/be8ae3d50499.html" title="ESP32-C3手动烧录bin文件"><img class="post_bg" src="/img/esp32-c3-banner-small.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ESP32-C3手动烧录bin文件"></a></div><div class="recent-post-info"><a class="article-title" href="/MCU/be8ae3d50499.html" title="ESP32-C3手动烧录bin文件">ESP32-C3手动烧录bin文件</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2022-01-18T04:56:19.000Z" title="发表于 2022-01-18 12:56:19">2022-01-18</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/MCU/">MCU</a></span></div><div class="content">一、应用程序的启动流程宏观上，该启动流程可以分为如下 3 个步骤：
 
-一级引导程序 被固化在了 ESP32-C3 内部的 ROM 中，它会从 flash 的
-0x0 偏移地址处加载二级引导程序至 RAM (IRAM &amp; DRAM) 中。
-二级引导程序 从 flash
-中加载分区表和主程序镜像至内存中，主程序中包含了 RAM 段和通过 flash
-高速缓存映射的只读段。
-应用程序启动阶段 运行，这时第二个 CPU 和 RTOS
-的调度器启动。
+一级引导程序 被固化在了 ESP32-C3 内部的 ROM 中，它会从 flash 的 0x0 偏移地址处加载二级引导程序至 RAM (IRAM &amp; DRAM) 中。
 
-（摘自：应用程序的启动流程
-- ESP32-C3 - — ESP-IDF 编程指南 latest 文档 (espressif.com)）
-二、烧录内容
-共需要烧录三部分内容：
-1. bootloader.bin
-ESP-IDF 软件引导加载程序 (Bootloader) 主要执行以下任务：
+二级引导程序 从 flash 中加载分区表和主程序镜像至内存中，主程序中包含了 RAM 段和通过 flash 高速缓存映射的只读段。
+
+应用程序启动阶段 运行，这时第二个 CPU 和 RTOS 的调度器启动。
+
+
+（摘自：应用程序的启动流程 - ESP32-C3 - — ESP-IDF 编程指南 latest 文档 (espressif.com)）
+二、烧录内容共需要烧录三部分内容：
+1. bootloader.binESP-IDF 软件引导加载程序 (Bootloader) 主要执行以下任务：
 
 内部模块的最小化初始配置；
-如果配置了 Flash
-加密 和/或 Secure，则对其进行初始化。
-根据分区表和 ota_data（如果存在）选择需要引导的应用程序 (app)
-分区；
-将此应用程序镜像 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/Coding/acef3ee86ddc.html" title="记录Django+uwsgi+Nginx配置"><img class="post_bg" src="/img/django.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记录Django+uwsgi+Nginx配置"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/acef3ee86ddc.html" title="记录Django+uwsgi+Nginx配置">记录Django+uwsgi+Nginx配置</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-17T09:09:33.000Z" title="发表于 2021-10-17 17:09:33">2021-10-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">实现
-模拟从windows开发环境，迁移项目至linux生产环境
-前置条件
-安装Django、uwsgi、Nginx
+如果配置了 Flash 加密 和/或 Secure，则对其进行初始化。
+根据分区表和 ota_data（如果存在）选择需要引导的应用程序 (app) 分区；
+将此应用程序镜像加载到 RAM（IRAM 和 DRAM）中，最 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/Coding/acef3ee86ddc.html" title="记录Django+uwsgi+Nginx配置"><img class="post_bg" src="/img/django.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记录Django+uwsgi+Nginx配置"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/acef3ee86ddc.html" title="记录Django+uwsgi+Nginx配置">记录Django+uwsgi+Nginx配置</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-10-17T09:09:33.000Z" title="发表于 2021-10-17 17:09:33">2021-10-17</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">实现模拟从windows开发环境，迁移项目至linux生产环境
+前置条件安装Django、uwsgi、Nginx
 1pip install uwsgi
-uWSGI 以客户端-服务端模型运行。Web 服务器（例如 nginx，Apache）与一个
-django-uwsgi "worker" 进程交互，提供动态内容。
+uWSGI 以客户端-服务端模型运行。Web 服务器（例如 nginx，Apache）与一个 django-uwsgi “worker” 进程交互，提供动态内容。
 其他的安装不再赘述。
 Django项目创建
-
 创建虚拟环境
+
 创建HelloWorld项目
+
 
 1django-admin startproject HelloWorld
 
@@ -193,16 +184,14 @@ Django项目创建
 
 迁移到服务器
 
-uwsgi文件配置
-12345678910111213141516[uwsgi]socket          &#x3D; &#x2F;www&#x2F;wwwroot&#x2F;test1&#x2F;test1.sockchdir           &#x3D; &#x2F;www&#x2F;wwwroot&#x2F;test1 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Coding/2159293943f9.html" title="SpringBoot入门"><img class="post_bg" src="/img/spring.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringBoot入门"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/2159293943f9.html" title="SpringBoot入门">SpringBoot入门</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-08-03T15:32:14.000Z" title="发表于 2021-08-03 23:32:14">2021-08-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">SpringBoot
-
+uwsgi文件配置12345678910111213141516[uwsgi]socket          &#x3D; &#x2F;www&#x2F;wwwroot&#x2F;test1&#x2F;test1.sockchdir           &#x3D; &#x2F;www&#x2F;wwwroot&#x2F;test1module          &#x3D; H ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Coding/2159293943f9.html" title="SpringBoot入门"><img class="post_bg" src="/img/spring.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringBoot入门"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/2159293943f9.html" title="SpringBoot入门">SpringBoot入门</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-08-03T15:32:14.000Z" title="发表于 2021-08-03 23:32:14">2021-08-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">SpringBoot
 自动装配
+
 约定大于配置
 
-微服务
-是一种架构。打破all-in-one
-第一个SpringBoot
 
+微服务是一种架构。打破all-in-one
+第一个SpringBoot
 jdk1.8
 maven
 SpringBoot
@@ -211,57 +200,42 @@ IDEA
 官方提供快速生成网站，IDEA集成了。
 Spring Initializr
 官网创建
-
-
-image-20210804092417019
-
 IDEA创建
 
-
-image-20210804094858227
-
-
-
-image-20210804094920406
-
-第一个SpringBoot WEB应用
-HelloController.java
-1234567891011121314151617package top.huii.hellospringboot.controller;import org.springframework.stereotype.Controller;import org.springframework.web.bind.annotation.GetMapping;import org.springframework. ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/Coding/fecf8be6b6db.html" title="SpringMVC入门"><img class="post_bg" src="/img/spring.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringMVC入门"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/fecf8be6b6db.html" title="SpringMVC入门">SpringMVC入门</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-08-02T14:14:11.000Z" title="发表于 2021-08-02 22:14:11">2021-08-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">MVC
-
+第一个SpringBoot WEB应用HelloController.java
+1234567891011121314151617package top.huii.hellospringboot.controller;import org.springframework.stereotype.Controller;import org.springframework.web.bind.annotation.GetMapping;import org.springframework.web.bind.annotation.RequestMapping;import org.springframework.web.bind.annotation.ResponseBody;@Controller@Request ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/Coding/fecf8be6b6db.html" title="SpringMVC入门"><img class="post_bg" src="/img/spring.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringMVC入门"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/fecf8be6b6db.html" title="SpringMVC入门">SpringMVC入门</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-08-02T14:14:11.000Z" title="发表于 2021-08-02 22:14:11">2021-08-02</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">MVC
 模型 dao、service
+
 视图 jsp/html
+
 控制器 servlet
 
-Hello SpringMVC
-需要依赖
-123456789101112131415161718192021222324252627&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;junit&lt;/groupId&gt;        &lt;artifactId&gt;junit&lt;/artifactId&gt;        &lt;version&gt;3.8.2&lt;/version&gt;    &lt;/dependency&gt;    &lt;dependency&gt;        &lt;groupId&gt;org.springframework&lt;/groupId&gt;        &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;        &lt;version&gt;5.3.9&lt;/version ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Coding/30667b644c02.html" title="Spring入门"><img class="post_bg" src="/img/spring.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring入门"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/30667b644c02.html" title="Spring入门">Spring入门</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-07-21T23:29:33.000Z" title="发表于 2021-07-22 07:29:33">2021-07-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">Spring
-简介
 
+Hello SpringMVC需要依赖
+123456789101112131415161718192021222324252627&lt;dependencies&gt;    &lt;dependency&gt;        &lt;groupId&gt;junit&lt;/groupId&gt;        &lt;artifactId&gt;junit&lt;/artifactId&gt;        &lt;version&gt;3.8.2&lt;/version&gt;    &lt;/dependency&gt;    &lt;dependency&gt;        &lt;groupId&gt;org.springframework&lt;/groupId&gt;        &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;        &lt;version&gt;5.3.9&lt;/version&gt;    ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Coding/30667b644c02.html" title="Spring入门"><img class="post_bg" src="/img/spring.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Spring入门"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/30667b644c02.html" title="Spring入门">Spring入门</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-07-21T23:29:33.000Z" title="发表于 2021-07-22 07:29:33">2021-07-22</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">Spring简介
 雏形：interface21
+
 诞生：2004年3月24日
+
 理念：使现有的技术更加容易使用，本身是大杂烩，整合了现有的技术框架。
+
 spring web mvc
 
 1234567&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt;&lt;dependency&gt;    &lt;groupId&gt;org.springframework&lt;/groupId&gt;    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;    &lt;version&gt;5.3.9&lt;/version&gt;&lt;/dependency&gt;
 优点
-
 开源免费框架
 非入侵式，轻量级
 控制反转（IOC），面向切面编程（AOP）
 支持事务的处理，对框架整合的支持
 
 组成
+拓展Spring Boot
+一个快速开发的脚手架
+基于Spring Boot可以快速开发单个微服务
+约定大于配置
 
-
-image-20210722074628028
-
-拓展
-Spring Boot
-
-一个快 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/Coding/e5333079d82a.html" title="Git"><img class="post_bg" src="/img/github.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/e5333079d82a.html" title="Git">Git</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-04T11:36:43.000Z" title="发表于 2021-05-04 19:36:43">2021-05-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">版本控制
-介绍
-版本控制（Revision
-control）是一种在开发的过程中用于管理我们对文件、目录或工程等内容的修改历史，方便查看更改历史记录，备份以便恢复以前的版本的软件工程技术。
+SpringCloud
+ ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/Coding/e5333079d82a.html" title="Git"><img class="post_bg" src="/img/github.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Git"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/e5333079d82a.html" title="Git">Git</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-04T11:36:43.000Z" title="发表于 2021-05-04 19:36:43">2021-05-04</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">版本控制介绍版本控制（Revision control）是一种在开发的过程中用于管理我们对文件、目录或工程等内容的修改历史，方便查看更改历史记录，备份以便恢复以前的版本的软件工程技术。
 
 实现跨区域多人协同开发
 追踪和记载一个或者多个文件的历史记录
@@ -272,8 +246,7 @@ control）是一种在开发的过程中用于管理我们对文件、目录或�
 减轻开发人员的负担，节省时间，同时降低人为错误
 
 简单说就是用于管理多人协同开发项目的技术。
-常见工具
-我们学习的东西，一定是当下最流行的！
+常见工具我们学习的东西，一定是当下最流行的！
 主流的版本控制器有如下这些：
 
 Git
@@ -283,17 +256,11 @@ VSS（Micorosoft Visual SourceSafe）
 TFS（Team Foundation Server）
 Visual Studio Online
 
-版本控制产品非常的多（Perforce、Rational ClearCase、RCS（GNU Revision
-Control System）、Serena ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Coding/1c850176cba9.html" title="Linux（二）——常用命令"><img class="post_bg" src="/img/linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux（二）——常用命令"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/1c850176cba9.html" title="Linux（二）——常用命令">Linux（二）——常用命令</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-03T15:40:47.000Z" title="发表于 2021-05-03 23:40:47">2021-05-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">目录管理
-切换路径
-1cd
+版本控制产品非常的多（Perforce、Rational ClearCase、RCS（GNU Revision Control System）、Serena Dimention、SVK、BitKeeper、Mono ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Coding/1c850176cba9.html" title="Linux（二）——常用命令"><img class="post_bg" src="/img/linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux（二）——常用命令"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/1c850176cba9.html" title="Linux（二）——常用命令">Linux（二）——常用命令</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-03T15:40:47.000Z" title="发表于 2021-05-03 23:40:47">2021-05-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">目录管理切换路径1cd
 
 绝对路径
 
 路径全称，以/开头
-
-
-image-20210503235324850
 
 
 相对路径
@@ -302,106 +269,102 @@ image-20210503235324850
 
 
 
-image-20210503234653170
-
-列出目录
-1ls
+列出目录1ls
 
 -a参数：all 查看所有文件（包括隐藏文件）
+
 -l参数：所有文件信息（属性）
 
 
 
-image-20210503234910687
-
 命令可以组合使用
 
+显示用户所在目录1pwd
 
-image-20210503235017941
-
-显示用户所在目录
-1pwd
-
-
-image-20210503235414005
-
-创建目录
-1mkdir
-
-
-image-20210503235548858
+创建目录1mkdir
 
 
 -p参数：递归创建
 
 
-image-20210503235705143
 
-
-删除目录
-1rmdir
-
-
-image-20210504000136954
+删除目录1rmdir
 
 当目录不为空时，无法直接删除
 
 -p参数：递归删除
 
 
+复制文件/目录1cp 原来的地方 新的地方
 
-image-2021050400032 ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/Coding/f50f63461495.html" title="Linux（一）——初识"><img class="post_bg" src="/img/linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux（一）——初识"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/f50f63461495.html" title="Linux（一）——初识">Linux（一）——初识</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-03T14:09:13.000Z" title="发表于 2021-05-03 22:09:13">2021-05-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">环境及介绍
+移除文件或目录1rm 移除文件或目录
 
+-f参数：忽略不存在的文件，不会出现警告，强制删除
+
+-r参数：递归删除目录
+
+-i互动，删除询问是否删除
+以下命令极其危险，不得尝试！
+1rm -rf /	#删除系统中所有文件
+
+
+
+移动文件或目录1mv 移动文件或目录|重命名
+移动文件
+-f参数：强制
+-u参数：只替换
+
+
+重命名操作
+文件1ls -ll
+
+在Linux中第一个字符代表这个文件是目录、文件或链接文件等等：
+
+当为[ d ]则是目录
+当为[ - ]则是文件；
+若是[ l ]则表示为链接文档 ( link file )；
+若是[ b  ...</div></div></div><div class="recent-post-item"><div class="post_cover left"><a href="/Coding/f50f63461495.html" title="Linux（一）——初识"><img class="post_bg" src="/img/linux.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="Linux（一）——初识"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/f50f63461495.html" title="Linux（一）——初识">Linux（一）——初识</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-03T14:09:13.000Z" title="发表于 2021-05-03 22:09:13">2021-05-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">环境及介绍
 学习基于CentOS 7
-Linux 内核最初只是由芬兰人林纳斯·托瓦兹（Linus
-Torvalds）在赫尔辛基大学上学时出于个人爱好而编写的。
-Linux 是一套免费使用和自由传播的类 Unix 操作系统，是一个基于
-POSIX（可移植操作系统接口） 和 UNIX 的多用户、多任务、支持多线程和多 CPU
-的操作系统。
-Linux 能运行主要的 UNIX 工具软件、应用程序和网络协议。它支持 32 位和
-64 位硬件。Linux 继承了 Unix
-以网络为核心的设计思想，是一个性能稳定的多用户网络操作系统。
+
+Linux 内核最初只是由芬兰人林纳斯·托瓦兹（Linus Torvalds）在赫尔辛基大学上学时出于个人爱好而编写的。
+Linux 是一套免费使用和自由传播的类 Unix 操作系统，是一个基于 POSIX（可移植操作系统接口） 和 UNIX 的多用户、多任务、支持多线程和多 CPU 的操作系统。
+Linux 能运行主要的 UNIX 工具软件、应用程序和网络协议。它支持 32 位和 64 位硬件。Linux 继承了 Unix 以网络为核心的设计思想，是一个性能稳定的多用户网络操作系统。
 
 
 
-
-image-20210504194353130
 
 远程连接
-
-
-image-20210503230146377
-
 用户登录
-
 命令行登录
+
 ssh登录
+
 图形界面登录
-最高权限账号为root，可以操作一切
 
+
+  最高权限账号为root，可以操作一切
 关机
-
 服务器几乎不关机
+
 linux中无错误即代表操作成功
 
-12345678910111213141516171819sync # 将数据由内存同步到硬盘中。shutdown # 关机指 ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Coding/06f614eb0d37.html" title="JavaWeb学习之路（七）——Mybatis常见操作"><img class="post_bg" src="/img/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaWeb学习之路（七）——Mybatis常见操作"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/06f614eb0d37.html" title="JavaWeb学习之路（七）——Mybatis常见操作">JavaWeb学习之路（七）——Mybatis常见操作</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-03T02:58:06.000Z" title="发表于 2021-05-03 10:58:06">2021-05-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">CURD
-命名空间namespace
-namespace的包名要和Dao/mapper接口的包名一致！
-查询语句Select
-选择，查询语句
+
+12345678910111213141516171819sync # 将数据由内存同步到硬盘中。shutdown # 关机指令，你可以man shutdown 来看一下帮助文档。例如你可以运行如下命令关机：shutdown –h 10 # 这个命令告诉大家，计算机将在10分钟后关机sh ...</div></div></div><div class="recent-post-item"><div class="post_cover right"><a href="/Coding/06f614eb0d37.html" title="JavaWeb学习之路（七）——Mybatis常见操作"><img class="post_bg" src="/img/java.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="JavaWeb学习之路（七）——Mybatis常见操作"></a></div><div class="recent-post-info"><a class="article-title" href="/Coding/06f614eb0d37.html" title="JavaWeb学习之路（七）——Mybatis常见操作">JavaWeb学习之路（七）——Mybatis常见操作</a><div class="article-meta-wrap"><span class="post-meta-date"><i class="far fa-calendar-alt"></i><span class="article-meta-label">发表于</span><time datetime="2021-05-03T02:58:06.000Z" title="发表于 2021-05-03 10:58:06">2021-05-03</time></span><span class="article-meta"><span class="article-meta-separator">|</span><i class="fas fa-inbox"></i><a class="article-meta__categories" href="/categories/Coding/">Coding</a></span></div><div class="content">CURD命名空间namespacenamespace的包名要和Dao/mapper接口的包名一致！
+查询语句Select选择，查询语句
 
 id：就是对应发namespace中的方法名
 resultType:Sql语句执行的返回值
+
 parameterType：参数类型
 
+
 123&lt;select id=&quot;getUserById&quot; resultType=&quot;top.huii.pojo.User&quot; parameterType=&quot;int&quot;&gt;    select * from javaweb.user where id = #&#123;id&#125;&lt;/select&gt;
-结果：User&#123;id=1, name='张三', pwd='11111111'&#125;
-新增Insert
-123&lt;insert id=&quot;addUser&quot; parameterType=&quot;top.huii.pojo.User&quot;&gt;    insert into ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">HUII</div><div class="author-info__description">HUII博客，记录技术学习历程。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/1390113493"><i class="fab fa-github"></i><span>是非在己，毁誉由人</span></a></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/MachineLearning/89747e24e95f.html" title="机器学习线性代数基础"><img src="/img/machinelearning.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="机器学习线性代数基础"/></a><div class="content"><a class="title" href="/MachineLearning/89747e24e95f.html" title="机器学习线性代数基础">机器学习线性代数基础</a><time datetime="2022-10-14T12:24:57.000Z" title="发表于 2022-10-14 20:24:57">2022-10-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/MCU/be8ae3d50499.html" title="ESP32-C3手动烧录bin文件"><img src="/img/esp32-c3-banner-small.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ESP32-C3手动烧录bin文件"/></a><div class="content"><a class="title" href="/MCU/be8ae3d50499.html" title="ESP32-C3手动烧录bin文件">ESP32-C3手动烧录bin文件</a><time datetime="2022-01-18T04:56:19.000Z" title="发表于 2022-01-18 12:56:19">2022-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Coding/acef3ee86ddc.html" title="记录Django+uwsgi+Nginx配置"><img src="/img/django.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记录Django+uwsgi+Nginx配置"/></a><div class="content"><a class="title" href="/Coding/acef3ee86ddc.html" title="记录Django+uwsgi+Nginx配置">记录Django+uwsgi+Nginx配置</a><time datetime="2021-10-17T09:09:33.000Z" title="发表于 2021-10-17 17:09:33">2021-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Coding/2159293943f9.html" title="SpringBoot入门"><img src="/img/spring.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringBoot入门"/></a><div class="content"><a class="title" href="/Coding/2159293943f9.html" title="SpringBoot入门">SpringBoot入门</a><time datetime="2021-08-03T15:32:14.000Z" title="发表于 2021-08-03 23:32:14">2021-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Coding/fecf8be6b6db.html" title="SpringMVC入门"><img src="/img/spring.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringMVC入门"/></a><div class="content"><a class="title" href="/Coding/fecf8be6b6db.html" title="SpringMVC入门">SpringMVC入门</a><time datetime="2021-08-02T14:14:11.000Z" title="发表于 2021-08-02 22:14:11">2021-08-02</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
+结果：User&#123;id=1, name=&#39;张三&#39;, pwd=&#39;11111111&#39;&#125;
+新增Insert123&lt;insert id=&quot;addUser&quot; parameterType=&quot;top.huii.pojo.User&quot;&gt;    insert int ...</div></div></div><nav id="pagination"><div class="pagination"><span class="page-number current">1</span><a class="page-number" href="/page/2/#content-inner">2</a><a class="extend next" rel="next" href="/page/2/#content-inner"><i class="fas fa-chevron-right fa-fw"></i></a></div></nav></div><div class="aside-content" id="aside-content"><div class="card-widget card-info"><div class="is-center"><div class="avatar-img"><img src="/img/avatar.png" onerror="this.onerror=null;this.src='/img/friend_404.gif'" alt="avatar"/></div><div class="author-info__name">HUII</div><div class="author-info__description">HUII博客，记录技术学习历程。</div></div><div class="card-info-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">16</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">27</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">3</div></a></div><a id="card-info-btn" target="_blank" rel="noopener" href="https://github.com/1390113493"><i class="fab fa-github"></i><span>是非在己，毁誉由人</span></a></div><div class="sticky_layout"><div class="card-widget card-recent-post"><div class="item-headline"><i class="fas fa-history"></i><span>最新文章</span></div><div class="aside-list"><div class="aside-list-item"><a class="thumbnail" href="/MachineLearning/89747e24e95f.html" title="机器学习线性代数基础"><img src="/img/machinelearning.jpeg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="机器学习线性代数基础"/></a><div class="content"><a class="title" href="/MachineLearning/89747e24e95f.html" title="机器学习线性代数基础">机器学习线性代数基础</a><time datetime="2022-10-14T12:24:57.000Z" title="发表于 2022-10-14 20:24:57">2022-10-14</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/MCU/be8ae3d50499.html" title="ESP32-C3手动烧录bin文件"><img src="/img/esp32-c3-banner-small.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="ESP32-C3手动烧录bin文件"/></a><div class="content"><a class="title" href="/MCU/be8ae3d50499.html" title="ESP32-C3手动烧录bin文件">ESP32-C3手动烧录bin文件</a><time datetime="2022-01-18T04:56:19.000Z" title="发表于 2022-01-18 12:56:19">2022-01-18</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Coding/acef3ee86ddc.html" title="记录Django+uwsgi+Nginx配置"><img src="/img/django.jpg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="记录Django+uwsgi+Nginx配置"/></a><div class="content"><a class="title" href="/Coding/acef3ee86ddc.html" title="记录Django+uwsgi+Nginx配置">记录Django+uwsgi+Nginx配置</a><time datetime="2021-10-17T09:09:33.000Z" title="发表于 2021-10-17 17:09:33">2021-10-17</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Coding/2159293943f9.html" title="SpringBoot入门"><img src="/img/spring.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringBoot入门"/></a><div class="content"><a class="title" href="/Coding/2159293943f9.html" title="SpringBoot入门">SpringBoot入门</a><time datetime="2021-08-03T15:32:14.000Z" title="发表于 2021-08-03 23:32:14">2021-08-03</time></div></div><div class="aside-list-item"><a class="thumbnail" href="/Coding/fecf8be6b6db.html" title="SpringMVC入门"><img src="/img/spring.svg" onerror="this.onerror=null;this.src='/img/404.jpg'" alt="SpringMVC入门"/></a><div class="content"><a class="title" href="/Coding/fecf8be6b6db.html" title="SpringMVC入门">SpringMVC入门</a><time datetime="2021-08-02T14:14:11.000Z" title="发表于 2021-08-02 22:14:11">2021-08-02</time></div></div></div></div><div class="card-widget card-categories"><div class="item-headline">
             <i class="fas fa-folder-open"></i>
             <span>分类</span>
             
             </div>
             <ul class="card-category-list" id="aside-cat-list">
             <li class="card-category-list-item "><a class="card-category-list-link" href="/categories/Coding/"><span class="card-category-list-name">Coding</span><span class="card-category-list-count">14</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MCU/"><span class="card-category-list-name">MCU</span><span class="card-category-list-count">1</span></a></li><li class="card-category-list-item "><a class="card-category-list-link" href="/categories/MachineLearning/"><span class="card-category-list-name">MachineLearning</span><span class="card-category-list-count">1</span></a></li>
-            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/CentOS/" style="font-size: 1.17em; color: #999c9f">CentOS</a> <a href="/tags/Django/" style="font-size: 1.1em; color: #999">Django</a> <a href="/tags/ESP32-C3/" style="font-size: 1.1em; color: #999">ESP32-C3</a> <a href="/tags/Git/" style="font-size: 1.1em; color: #999">Git</a> <a href="/tags/IDEA/" style="font-size: 1.43em; color: #99a6b9">IDEA</a> <a href="/tags/JDBC/" style="font-size: 1.17em; color: #999c9f">JDBC</a> <a href="/tags/Java/" style="font-size: 1.5em; color: #99a9bf">Java</a> <a href="/tags/Junit/" style="font-size: 1.17em; color: #999c9f">Junit</a> <a href="/tags/Linux/" style="font-size: 1.17em; color: #999c9f">Linux</a> <a href="/tags/MCU/" style="font-size: 1.1em; color: #999">MCU</a> <a href="/tags/Maven/" style="font-size: 1.23em; color: #999ea6">Maven</a> <a href="/tags/MySQL/" style="font-size: 1.17em; color: #999c9f">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 1.17em; color: #999c9f">Mybatis</a> <a href="/tags/Nginx/" style="font-size: 1.1em; color: #999">Nginx</a> <a href="/tags/Python/" style="font-size: 1.1em; color: #999">Python</a> <a href="/tags/Spring/" style="font-size: 1.23em; color: #999ea6">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 1.1em; color: #999">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 1.1em; color: #999">SpringMVC</a> <a href="/tags/Tomcat/" style="font-size: 1.3em; color: #99a1ac">Tomcat</a> <a href="/tags/Web/" style="font-size: 1.37em; color: #99a4b2">Web</a> <a href="/tags/github/" style="font-size: 1.1em; color: #999">github</a> <a href="/tags/uwsgi/" style="font-size: 1.1em; color: #999">uwsgi</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">机器学习</a> <a href="/tags/%E7%9B%91%E5%90%AC%E5%99%A8/" style="font-size: 1.1em; color: #999">监听器</a> <a href="/tags/%E7%A0%81%E4%BA%91/" style="font-size: 1.1em; color: #999">码云</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 1.1em; color: #999">线性代数</a> <a href="/tags/%E8%BF%87%E6%BB%A4%E5%99%A8/" style="font-size: 1.1em; color: #999">过滤器</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">十月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">一月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/10/"><span class="card-archive-list-date">十月 2021</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/08/"><span class="card-archive-list-date">八月 2021</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/07/"><span class="card-archive-list-date">七月 2021</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/05/"><span class="card-archive-list-date">五月 2021</span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/04/"><span class="card-archive-list-date">四月 2021</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">16</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-10-15T11:40:50.653Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2015 - 2022 By HUII</div><div class="footer_custom_text"><span>备案号：<a href="https://beian.miit.gov.cn/" target="_blank">闽ICP备18005042号-2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><div style="display:none;"><script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1279897347&web_id=1279897347"></script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
+            </ul></div><div class="card-widget card-tags"><div class="item-headline"><i class="fas fa-tags"></i><span>标签</span></div><div class="card-tag-cloud"><a href="/tags/CentOS/" style="font-size: 1.17em; color: #999c9f">CentOS</a> <a href="/tags/Django/" style="font-size: 1.1em; color: #999">Django</a> <a href="/tags/ESP32-C3/" style="font-size: 1.1em; color: #999">ESP32-C3</a> <a href="/tags/Git/" style="font-size: 1.1em; color: #999">Git</a> <a href="/tags/IDEA/" style="font-size: 1.43em; color: #99a6b9">IDEA</a> <a href="/tags/JDBC/" style="font-size: 1.17em; color: #999c9f">JDBC</a> <a href="/tags/Java/" style="font-size: 1.5em; color: #99a9bf">Java</a> <a href="/tags/Junit/" style="font-size: 1.17em; color: #999c9f">Junit</a> <a href="/tags/Linux/" style="font-size: 1.17em; color: #999c9f">Linux</a> <a href="/tags/MCU/" style="font-size: 1.1em; color: #999">MCU</a> <a href="/tags/Maven/" style="font-size: 1.23em; color: #999ea6">Maven</a> <a href="/tags/MySQL/" style="font-size: 1.17em; color: #999c9f">MySQL</a> <a href="/tags/Mybatis/" style="font-size: 1.17em; color: #999c9f">Mybatis</a> <a href="/tags/Nginx/" style="font-size: 1.1em; color: #999">Nginx</a> <a href="/tags/Python/" style="font-size: 1.1em; color: #999">Python</a> <a href="/tags/Spring/" style="font-size: 1.23em; color: #999ea6">Spring</a> <a href="/tags/SpringBoot/" style="font-size: 1.1em; color: #999">SpringBoot</a> <a href="/tags/SpringMVC/" style="font-size: 1.1em; color: #999">SpringMVC</a> <a href="/tags/Tomcat/" style="font-size: 1.3em; color: #99a1ac">Tomcat</a> <a href="/tags/Web/" style="font-size: 1.37em; color: #99a4b2">Web</a> <a href="/tags/github/" style="font-size: 1.1em; color: #999">github</a> <a href="/tags/uwsgi/" style="font-size: 1.1em; color: #999">uwsgi</a> <a href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/" style="font-size: 1.1em; color: #999">机器学习</a> <a href="/tags/%E7%9B%91%E5%90%AC%E5%99%A8/" style="font-size: 1.1em; color: #999">监听器</a> <a href="/tags/%E7%A0%81%E4%BA%91/" style="font-size: 1.1em; color: #999">码云</a> <a href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/" style="font-size: 1.1em; color: #999">线性代数</a> <a href="/tags/%E8%BF%87%E6%BB%A4%E5%99%A8/" style="font-size: 1.1em; color: #999">过滤器</a></div></div><div class="card-widget card-archives"><div class="item-headline"><i class="fas fa-archive"></i><span>归档</span></div><ul class="card-archive-list"><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/10/"><span class="card-archive-list-date">十月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2022/01/"><span class="card-archive-list-date">一月 2022</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/10/"><span class="card-archive-list-date">十月 2021</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/08/"><span class="card-archive-list-date">八月 2021</span><span class="card-archive-list-count">2</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/07/"><span class="card-archive-list-date">七月 2021</span><span class="card-archive-list-count">1</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/05/"><span class="card-archive-list-date">五月 2021</span><span class="card-archive-list-count">9</span></a></li><li class="card-archive-list-item"><a class="card-archive-list-link" href="/archives/2021/04/"><span class="card-archive-list-date">四月 2021</span><span class="card-archive-list-count">1</span></a></li></ul></div><div class="card-widget card-webinfo"><div class="item-headline"><i class="fas fa-chart-line"></i><span>网站资讯</span></div><div class="webinfo"><div class="webinfo-item"><div class="item-name">文章数目 :</div><div class="item-count">16</div></div><div class="webinfo-item"><div class="item-name">本站访客数 :</div><div class="item-count" id="busuanzi_value_site_uv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">本站总访问量 :</div><div class="item-count" id="busuanzi_value_site_pv"><i class="fa-solid fa-spinner fa-spin"></i></div></div><div class="webinfo-item"><div class="item-name">最后更新时间 :</div><div class="item-count" id="last-push-date" data-lastPushDate="2022-10-15T11:44:18.427Z"><i class="fa-solid fa-spinner fa-spin"></i></div></div></div></div></div></div></main><footer id="footer"><div id="footer-wrap"><div class="copyright">&copy;2015 - 2022 By HUII</div><div class="footer_custom_text"><span>备案号：<a href="https://beian.miit.gov.cn/" target="_blank">闽ICP备18005042号-2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button id="go-up" type="button" title="回到顶部"><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox.umd.min.js"></script><div class="js-pjax"></div><div style="display:none;"><script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1279897347&web_id=1279897347"></script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
