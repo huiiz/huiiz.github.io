@@ -1,0 +1,303 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>YOLO v1笔记 | HUII's Blog</title><meta name="author" content="HUII"><meta name="copyright" content="HUII"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="学习内容来源：同济子豪兄的个人空间_哔哩哔哩_bilibili    作者介绍Joseph Redmon，You Only Look Once、YOLO9000、YOLOv3。 2020年起不再从事计算机视觉研究。  作者宣布停止CV研究  预测阶段（前向判断） YOLOv1结构   输入一个4484483的图像，经过一系列的卷积和池化操作，得到一个771024的feature map，将其拉平，">
+<meta property="og:type" content="article">
+<meta property="og:title" content="YOLO v1笔记">
+<meta property="og:url" content="https://blog.huii.top/MachineLearning/4543f3866cda.html">
+<meta property="og:site_name" content="HUII&#39;s Blog">
+<meta property="og:description" content="学习内容来源：同济子豪兄的个人空间_哔哩哔哩_bilibili    作者介绍Joseph Redmon，You Only Look Once、YOLO9000、YOLOv3。 2020年起不再从事计算机视觉研究。  作者宣布停止CV研究  预测阶段（前向判断） YOLOv1结构   输入一个4484483的图像，经过一系列的卷积和池化操作，得到一个771024的feature map，将其拉平，">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.huii.top/img/machinelearning.jpeg">
+<meta property="article:published_time" content="2023-02-12T07:32:00.000Z">
+<meta property="article:modified_time" content="2023-10-06T05:30:56.900Z">
+<meta property="article:author" content="HUII">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="目标检测">
+<meta property="article:tag" content="CV">
+<meta property="article:tag" content="论文">
+<meta property="article:tag" content="YOLO">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.huii.top/img/machinelearning.jpeg"><link rel="shortcut icon" href="/img/logo.png"><link rel="canonical" href="https://blog.huii.top/MachineLearning/4543f3866cda.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":128,"position":"top","messagePrev":"本文最后更新于","messageNext":"天前，其中的信息可能已经有所发展或是发生改变。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: HUII","link":"链接: ","source":"来源: HUII's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'YOLO v1笔记',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-06 13:30:56'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">36</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签云</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/machinelearning.jpeg')"><nav id="nav"><span id="blog-info"><a href="/" title="HUII's Blog"><img class="site-icon" src="/img/logo.png"/><span class="site-name">HUII's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签云</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">YOLO v1笔记</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2023-02-12T07:32:00.000Z" title="发表于 2023-02-12 15:32:00">2023-02-12</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-06T05:30:56.900Z" title="更新于 2023-10-06 13:30:56">2023-10-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/MachineLearning/">MachineLearning</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="YOLO v1笔记"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p><strong>学习内容来源：<a target="_blank" rel="noopener" href="https://space.bilibili.com/1900783">同济子豪兄的个人空间_哔哩哔哩_bilibili</a></strong></p>
+<iframe src="//player.bilibili.com/player.html?aid=333949841&amp;bvid=BV15w411Z7LG&amp;cid=364776981&amp;page=2" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true" style="width: 100%; height: 500px; max-width: 100%；align:center; padding:20px 0;"> </iframe>
+
+<h1 id="作者介绍"><a href="#作者介绍" class="headerlink" title="作者介绍"></a>作者介绍</h1><p>Joseph Redmon，You Only Look Once、YOLO9000、YOLOv3。</p>
+<p>2020年起不再从事计算机视觉研究。</p>
+<p><img src="../img/image-1024x392.png" alt="img"></p>
+<center>作者宣布停止CV研究</center>
+
+<h1 id="预测阶段（前向判断）"><a href="#预测阶段（前向判断）" class="headerlink" title="预测阶段（前向判断）"></a>预测阶段（前向判断）</h1><p><img src="../img/image-1-1024x434.png" alt="img"></p>
+<center>YOLOv1结构</center>
+
+
+<p>输入一个448<em>448</em>3的图像，经过一系列的卷积和池化操作，得到一个7<em>7</em>1024的feature map，将其拉平，送入4096个神经元的FC层中，输出结果输入到1470（7<em>7</em>30）个神经元的FC层中，输出1470维向量，reshape成7<em>7</em>30的tensor。</p>
+<p><strong>why7*7*30?</strong>论文中将图像划分为S<em>S个网格，这里S取7。每个grid cell（网格）可以预测出B个bounding box（预测框，包含x,y【中心坐标】,h,w【宽高】,c【置信度confidence，<strong>包含物体的概率</strong>，用框线粗细表示，粗的置信度高】），这里B取2。**30=2\</em>5+20<strong>。2：</strong>2个框<strong>；5：</strong>5个参数<strong>；20：Pascal VOC中</strong>20个类别的条件概率**（该grid cell在包含物体情况下是xx的概率）。</p>
+<p><img src="../img/image-3-16965169875583.png" alt="img">输出7<em>7</em>30模型结构</p>
+<p><strong>如何定义bounding box是属于这个grid cell?</strong>只要该bounding box的中心是在这个grid cell中即可。</p>
+<p>当框内含有物体时，能计算某物体概率。将每个bounding box的<strong>置信度×条件概率</strong>，获得每个bounding box各类别的概率。值得注意的是，每个grid cell只能预测一个物体，7<em>7最多只能识别<em>*49个物体</em></em>。</p>
+<p><img src="../img/image-2.png" alt="img"></p>
+<center>划分网格</center>
+
+
+<p><img src="../img/image-4-1024x578.png" alt="img"></p>
+<center>输入输出流程</center>
+
+
+<h1 id="预测阶段后处理——NMS非极大值抑制"><a href="#预测阶段后处理——NMS非极大值抑制" class="headerlink" title="预测阶段后处理——NMS非极大值抑制"></a>预测阶段后处理——NMS非极大值抑制</h1><p>使用bounding box的置信度，即该box中存在物体的概率，<strong>乘以</strong>是该种物体的条件概率，得到该种物体的全概率。因此每个grid cell可以得到2个20维的全概率，或者说每个种类有7<em>7</em>2=98个概率，最终生成7<em>7</em>2*20个概率。</p>
+<p>对于小于阈值（如0.2）的值直接设为0。</p>
+<p>对于非0</p>
+<p><img src="../img/image-5-1024x574.png" alt="img"></p>
+<center>概率预测</center>
+
+
+<p>当两个框的交并比IoU（两个框的并部分/两个框的交部分）&gt;0.5时，可以认定两个框重复识别了同一个物体，将低概率的框去除（将其条件概率置为0），否则暂时将其保留，继续进行比较，直至将98个bounding box比较完，最后保留n个框。</p>
+<p><strong>注意，NMS操作仅在预测阶段进行！</strong></p>
+<h1 id="训练阶段（反向传播）"><a href="#训练阶段（反向传播）" class="headerlink" title="训练阶段（反向传播）"></a>训练阶段（反向传播）</h1><p>每个grid cell只能代表一个物体，因此最多有49个物体。当ground-truth的中心点落在grid cell中时，生成的两个bounding box中，只使用与ground-truth的IoU较大那个进行拟合物体，另一个则弃之不用。当ground-truth中心点不在grid cell中，则直接放弃这两个bounding box。</p>
+<h2 id="损失函数"><a href="#损失函数" class="headerlink" title="损失函数"></a>损失函数</h2><p>损失函数由5部分组成。</p>
+<p><img src="../img/image-9-1024x797.png" alt="img"></p>
+<center>损失函数</center>
+
+
+<p>5项均为<strong>回归问题</strong>的损失函数，其中</p>
+<ul>
+<li>式1：<em>负责检测物体</em>的bbox<strong>中心点定位</strong>误差；</li>
+<li>式2：<strong>负责检测物体</strong>的bbox<strong>宽高定位</strong>误差，其中求根号能使小框对误差更敏感，大框的偏差减小，对大框更公平；前两项是对坐标回归误差；</li>
+<li>式3：<em>负责检测物体</em>的bbox 的<strong>置信度</strong>confidence误差，标签值即为bbox和ground truth的IoU，越接近1越好；</li>
+<li>式4：<em>不负责检测物体</em>的bbox 的<strong>置信度</strong>confidence误差，越接近0越好；3、4是置信度回归误差；</li>
+<li>式5：<em>负责检测物体</em>的grid cell分类误差，即类别预测误差。</li>
+</ul>
+<p>权重设置：对于负责定位检测的${\lambda}<em>{coord}$取5，不负责检测物体的${\lambda}</em>{noobj}$则取0.5。</p>
+<p>值得注意的是，负责检测物体的$\mathbb{1}^{obj}<em>{i}$与$\mathbb{1}^{obj}</em>{ij}$同为0/1，而$\mathbb{1}^{noobj}_{ij}$则相反。</p>
+<h1 id="论文细节"><a href="#论文细节" class="headerlink" title="论文细节"></a>论文细节</h1><p>对比其他目标检测方法，在实时目标检测中，YOLO是最准的，在非实时目标检测中，YOLO是最快的。初代版本YOLO的精度位于R-CNN与Fast R-CNN之间，但其速度很快，FPS达到45。</p>
+<p><img src="../img/image-6-1024x480.png" alt="img"></p>
+<center>精度与速度对比</center>
+
+
+<p>Fast R-CNN只能看到RoI，区分背景能力差，但是精确定位性能好；YOLO能看到全图，区分背景和物体能力强，但精确定位能力差。</p>
+<p><img src="../img/image-7-1024x554.png" alt="img"></p>
+<center>Fast R-CNN与YOLO错误分析</center>
+
+<h1 id="论文精读"><a href="#论文精读" class="headerlink" title="论文精读"></a>论文精读</h1><p>Two stage的算法是先提取候选框，再对其进行甄别，而YOLO则是直接输出检测结果。</p>
+<p>V1-V3版本的作者均为Joseph Redmon。</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://blog.huii.top">HUII</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.huii.top/MachineLearning/4543f3866cda.html">https://blog.huii.top/MachineLearning/4543f3866cda.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.huii.top" target="_blank">HUII's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/">目标检测</a><a class="post-meta__tags" href="/tags/CV/">CV</a><a class="post-meta__tags" href="/tags/%E8%AE%BA%E6%96%87/">论文</a><a class="post-meta__tags" href="/tags/YOLO/">YOLO</a></div><div class="post_share"><div class="social-share" data-image="/img/machinelearning.jpeg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/Note/1c744868e51f.html" title="操作系统 from 蒋炎岩nju2023"><img class="cover" src="/img/image-8.png" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">操作系统 from 蒋炎岩nju2023</div></div></a></div><div class="next-post pull-right"><a href="/Coding/4e27b74d221c.html" title="Flet的页面布局(Layout)"><img class="cover" src="/img/python.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">Flet的页面布局(Layout)</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/MachineLearning/9de011f33507.html" title="Fast R-CNN——RCNN系列算法Ⅱ"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-23</div><div class="title">Fast R-CNN——RCNN系列算法Ⅱ</div></div></a></div><div><a href="/MachineLearning/b91d8b42ccc3.html" title="Faster R-CNN——RCNN系列算法Ⅲ"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-27</div><div class="title">Faster R-CNN——RCNN系列算法Ⅲ</div></div></a></div><div><a href="/MachineLearning/794a5634681d.html" title="R-CNN——RCNN系列算法Ⅰ"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-21</div><div class="title">R-CNN——RCNN系列算法Ⅰ</div></div></a></div><div><a href="/MachineLearning/ea6e3c43cae3.html" title="YOLOv3笔记"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-11</div><div class="title">YOLOv3笔记</div></div></a></div><div><a href="/MachineLearning/c1f3db5b0215.html" title="YOLOv2(YOLO9000)笔记"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-09</div><div class="title">YOLOv2(YOLO9000)笔记</div></div></a></div><div><a href="/MachineLearning/d808d6f21a58.html" title="图像目标检测基本概念与算法"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-20</div><div class="title">图像目标检测基本概念与算法</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BD%9C%E8%80%85%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.</span> <span class="toc-text">作者介绍</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%84%E6%B5%8B%E9%98%B6%E6%AE%B5%EF%BC%88%E5%89%8D%E5%90%91%E5%88%A4%E6%96%AD%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">预测阶段（前向判断）</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%A2%84%E6%B5%8B%E9%98%B6%E6%AE%B5%E5%90%8E%E5%A4%84%E7%90%86%E2%80%94%E2%80%94NMS%E9%9D%9E%E6%9E%81%E5%A4%A7%E5%80%BC%E6%8A%91%E5%88%B6"><span class="toc-number">3.</span> <span class="toc-text">预测阶段后处理——NMS非极大值抑制</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E9%98%B6%E6%AE%B5%EF%BC%88%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">训练阶段（反向传播）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8D%9F%E5%A4%B1%E5%87%BD%E6%95%B0"><span class="toc-number">4.1.</span> <span class="toc-text">损失函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E7%BB%86%E8%8A%82"><span class="toc-number">5.</span> <span class="toc-text">论文细节</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E7%B2%BE%E8%AF%BB"><span class="toc-number">6.</span> <span class="toc-text">论文精读</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('/img/machinelearning.jpeg')"><div id="footer-wrap"><div class="copyright">&copy;2015 - 2025 By HUII</div><div class="footer_custom_text"><span>备案号：<a href="https://beian.miit.gov.cn/" target="_blank">闽ICP备18005042号-2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'ce436d2d4a3e549dad64',
+      clientSecret: '9a40a66c694e77b58120d1b62b2dcee193963143',
+      repo: 'huiiz.github.io',
+      owner: 'huiiz',
+      admin: ['huiiz'],
+      id: '73c89b9d1ba33e702261db965dde731c',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.textContent= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><div style="display:none;"><script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1279897347&web_id=1279897347"></script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

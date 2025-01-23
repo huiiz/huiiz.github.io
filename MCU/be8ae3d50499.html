@@ -1,0 +1,290 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ESP32-C3手动烧录bin文件 | HUII's Blog</title><meta name="author" content="HUII"><meta name="copyright" content="HUII"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="一、应用程序的启动流程宏观上，该启动流程可以分为如下 3 个步骤：  一级引导程序 被固化在了 ESP32-C3 内部的 ROM 中，它会从 flash 的 0x0 偏移地址处加载二级引导程序至 RAM (IRAM &amp; DRAM) 中。  二级引导程序 从 flash 中加载分区表和主程序镜像至内存中，主程序中包含了 RAM 段和通过 flash 高速缓存映射的只读段。  应用程序启动阶段">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ESP32-C3手动烧录bin文件">
+<meta property="og:url" content="https://blog.huii.top/MCU/be8ae3d50499.html">
+<meta property="og:site_name" content="HUII&#39;s Blog">
+<meta property="og:description" content="一、应用程序的启动流程宏观上，该启动流程可以分为如下 3 个步骤：  一级引导程序 被固化在了 ESP32-C3 内部的 ROM 中，它会从 flash 的 0x0 偏移地址处加载二级引导程序至 RAM (IRAM &amp; DRAM) 中。  二级引导程序 从 flash 中加载分区表和主程序镜像至内存中，主程序中包含了 RAM 段和通过 flash 高速缓存映射的只读段。  应用程序启动阶段">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.huii.top/img/esp32-c3-banner-small.jpg">
+<meta property="article:published_time" content="2022-01-18T04:56:19.000Z">
+<meta property="article:modified_time" content="2022-01-18T08:20:25.001Z">
+<meta property="article:author" content="HUII">
+<meta property="article:tag" content="ESP32-C3">
+<meta property="article:tag" content="MCU">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.huii.top/img/esp32-c3-banner-small.jpg"><link rel="shortcut icon" href="/img/logo.png"><link rel="canonical" href="https://blog.huii.top/MCU/be8ae3d50499.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":128,"position":"top","messagePrev":"本文最后更新于","messageNext":"天前，其中的信息可能已经有所发展或是发生改变。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: HUII","link":"链接: ","source":"来源: HUII's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'ESP32-C3手动烧录bin文件',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-01-18 16:20:25'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">36</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签云</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/esp32-c3-banner-small.jpg')"><nav id="nav"><span id="blog-info"><a href="/" title="HUII's Blog"><img class="site-icon" src="/img/logo.png"/><span class="site-name">HUII's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签云</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">ESP32-C3手动烧录bin文件</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-01-18T04:56:19.000Z" title="发表于 2022-01-18 12:56:19">2022-01-18</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-01-18T08:20:25.001Z" title="更新于 2022-01-18 16:20:25">2022-01-18</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/MCU/">MCU</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="ESP32-C3手动烧录bin文件"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="一、应用程序的启动流程"><a href="#一、应用程序的启动流程" class="headerlink" title="一、应用程序的启动流程"></a>一、应用程序的启动流程</h1><p>宏观上，该启动流程可以分为如下 3 个步骤：</p>
+<ol>
+<li><p>一级引导程序 被固化在了 ESP32-C3 内部的 ROM 中，它会从 flash 的 0x0 偏移地址处加载二级引导程序至 RAM (IRAM &amp; DRAM) 中。</p>
+</li>
+<li><p>二级引导程序 从 flash 中加载分区表和主程序镜像至内存中，主程序中包含了 RAM 段和通过 flash 高速缓存映射的只读段。</p>
+</li>
+<li><p>应用程序启动阶段 运行，这时第二个 CPU 和 RTOS 的调度器启动。</p>
+</li>
+</ol>
+<p>（摘自：<a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/api-guides/startup.html#app-main-task">应用程序的启动流程 - ESP32-C3 - — ESP-IDF 编程指南 latest 文档 (espressif.com)</a>）</p>
+<h1 id="二、烧录内容"><a href="#二、烧录内容" class="headerlink" title="二、烧录内容"></a>二、烧录内容</h1><p>共需要烧录三部分内容：</p>
+<h3 id="1-bootloader-bin"><a href="#1-bootloader-bin" class="headerlink" title="1. bootloader.bin"></a>1. bootloader.bin</h3><p>ESP-IDF 软件引导加载程序 (Bootloader) 主要执行以下任务：</p>
+<ol>
+<li>内部模块的最小化初始配置；</li>
+<li>如果配置了 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/security/flash-encryption.html">Flash 加密</a> 和/或 <a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/security/secure-boot-v2.html">Secure</a>，则对其进行初始化。</li>
+<li>根据分区表和 ota_data（如果存在）选择需要引导的应用程序 (app) 分区；</li>
+<li>将此应用程序镜像加载到 RAM（IRAM 和 DRAM）中，最后把控制权转交给此应用程序。</li>
+</ol>
+<p>引导加载程序位于 flash 的 0x0 偏移地址处。</p>
+<p>（摘自：<a target="_blank" rel="noopener" href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/api-guides/bootloader.html">引导加载程序 (Bootloader) - ESP32-C3 - — ESP-IDF 编程指南 latest 文档 (espressif.com)</a>）</p>
+<h2 id="2-partition-table-bin"><a href="#2-partition-table-bin" class="headerlink" title="2. partition-table.bin"></a>2. partition-table.bin</h2><p>​    分区表（partition table ）是 ESP-IDF 框架中实现的一种分配 flash 的方式 ，对 spi<em>flash</em>{read|write|erase} 等接口进行了封装，增加了越界检查，同时尽量避免了直接操作 flash 地址，所以更加简单安全，但分区表擦写操作本身不具备擦写均衡，如果希望使用分区表存储用户数据，只建议存储不会频繁更改的数据。</p>
+<h2 id="3-应用程序-bin"><a href="#3-应用程序-bin" class="headerlink" title="3. 应用程序.bin"></a>3. 应用程序.bin</h2><p>应用程序对应bin文件。</p>
+<h1 id="三、烧录对于地址与指令"><a href="#三、烧录对于地址与指令" class="headerlink" title="三、烧录对于地址与指令"></a>三、烧录对于地址与指令</h1><div class="table-container">
+<table>
+<thead>
+<tr>
+<th>内容</th>
+<th>起始地址</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>bootloader.bin</td>
+<td>0x0000_0000</td>
+</tr>
+<tr>
+<td>partition-table.bin</td>
+<td>0x0000_8000</td>
+</tr>
+<tr>
+<td>应用程序.bin</td>
+<td>0x0001_0000</td>
+</tr>
+</tbody>
+</table>
+</div>
+<p>其中COM3为对应的COM口，要根据实际进行修改</p>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m esptool --chip esp32c3 --port COM3 --baud 460800 write_flash -z 0x0 bootloader.bin</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m esptool --chip esp32c3 --port COM3 --baud 460800 write_flash -z 0x8000 partition-table.bin</span><br></pre></td></tr></table></figure>
+<figure class="highlight shell"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">python -m esptool --chip esp32c3 --port COM3 --baud 460800 write_flash -z 0x10000 应用程序.bin</span><br></pre></td></tr></table></figure>
+<h1 id="四、总结"><a href="#四、总结" class="headerlink" title="四、总结"></a>四、总结</h1><p>这样的烧录结果与调用<code>idf.py -p COM3 flash</code>的效果一致。</p>
+<h1 id="五、附件"><a href="#五、附件" class="headerlink" title="五、附件"></a>五、附件</h1><p> <a href="../data/esp32c3/bootloader.bin">bootloader.bin</a> </p>
+<p> <a href="../data/esp32c3/partition-table.bin">partition-table.bin</a> </p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://blog.huii.top">HUII</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.huii.top/MCU/be8ae3d50499.html">https://blog.huii.top/MCU/be8ae3d50499.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.huii.top" target="_blank">HUII's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/ESP32-C3/">ESP32-C3</a><a class="post-meta__tags" href="/tags/MCU/">MCU</a></div><div class="post_share"><div class="social-share" data-image="/img/esp32-c3-banner-small.jpg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/Note/12d6d3a0881a.html" title="C&amp;C++ from 于仕琪 南科大"><img class="cover" src="/img/1676641492749-1024x640.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">C&amp;C++ from 于仕琪 南科大</div></div></a></div><div class="next-post pull-right"><a href="/Coding/acef3ee86ddc.html" title="记录Django+uwsgi+Nginx配置"><img class="cover" src="/img/django.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">记录Django+uwsgi+Nginx配置</div></div></a></div></nav><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%80%E3%80%81%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F%E7%9A%84%E5%90%AF%E5%8A%A8%E6%B5%81%E7%A8%8B"><span class="toc-number">1.</span> <span class="toc-text">一、应用程序的启动流程</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%8C%E3%80%81%E7%83%A7%E5%BD%95%E5%86%85%E5%AE%B9"><span class="toc-number">2.</span> <span class="toc-text">二、烧录内容</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#1-bootloader-bin"><span class="toc-number">2.0.1.</span> <span class="toc-text">1. bootloader.bin</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#2-partition-table-bin"><span class="toc-number">2.1.</span> <span class="toc-text">2. partition-table.bin</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#3-%E5%BA%94%E7%94%A8%E7%A8%8B%E5%BA%8F-bin"><span class="toc-number">2.2.</span> <span class="toc-text">3. 应用程序.bin</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%B8%89%E3%80%81%E7%83%A7%E5%BD%95%E5%AF%B9%E4%BA%8E%E5%9C%B0%E5%9D%80%E4%B8%8E%E6%8C%87%E4%BB%A4"><span class="toc-number">3.</span> <span class="toc-text">三、烧录对于地址与指令</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9B%9B%E3%80%81%E6%80%BB%E7%BB%93"><span class="toc-number">4.</span> <span class="toc-text">四、总结</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BA%94%E3%80%81%E9%99%84%E4%BB%B6"><span class="toc-number">5.</span> <span class="toc-text">五、附件</span></a></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('/img/esp32-c3-banner-small.jpg')"><div id="footer-wrap"><div class="copyright">&copy;2015 - 2025 By HUII</div><div class="footer_custom_text"><span>备案号：<a href="https://beian.miit.gov.cn/" target="_blank">闽ICP备18005042号-2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'ce436d2d4a3e549dad64',
+      clientSecret: '9a40a66c694e77b58120d1b62b2dcee193963143',
+      repo: 'huiiz.github.io',
+      owner: 'huiiz',
+      admin: ['huiiz'],
+      id: '9c8fb4bd3c508561d654882e6fff0aff',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.textContent= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><div style="display:none;"><script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1279897347&web_id=1279897347"></script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

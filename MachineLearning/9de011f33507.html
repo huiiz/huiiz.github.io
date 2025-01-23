@@ -1,0 +1,446 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Fast R-CNN——RCNN系列算法Ⅱ | HUII's Blog</title><meta name="author" content="HUII"><meta name="copyright" content="HUII"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="前言Fast R-CNN在VOC-07数据集上将检测精度mAP从58.5%提高到70.0%，检测速度比R-CNN提高了200倍。 从论文页数来看，Fast R-CNN仅9页，与R-CNN的21页相比，也“精简”了不少。 论文与源码原论文：Fast R-CNN (thecvf.com) 代码：rbgirshick&#x2F;fast-rcnn: Fast R-CNN (github.com)  Fast R-">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Fast R-CNN——RCNN系列算法Ⅱ">
+<meta property="og:url" content="https://blog.huii.top/MachineLearning/9de011f33507.html">
+<meta property="og:site_name" content="HUII&#39;s Blog">
+<meta property="og:description" content="前言Fast R-CNN在VOC-07数据集上将检测精度mAP从58.5%提高到70.0%，检测速度比R-CNN提高了200倍。 从论文页数来看，Fast R-CNN仅9页，与R-CNN的21页相比，也“精简”了不少。 论文与源码原论文：Fast R-CNN (thecvf.com) 代码：rbgirshick&#x2F;fast-rcnn: Fast R-CNN (github.com)  Fast R-">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.huii.top/img/machinelearning.jpeg">
+<meta property="article:published_time" content="2022-12-23T03:43:00.000Z">
+<meta property="article:modified_time" content="2023-10-06T13:38:17.088Z">
+<meta property="article:author" content="HUII">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="深度学习">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="目标检测">
+<meta property="article:tag" content="CV">
+<meta property="article:tag" content="论文">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.huii.top/img/machinelearning.jpeg"><link rel="shortcut icon" href="/img/logo.png"><link rel="canonical" href="https://blog.huii.top/MachineLearning/9de011f33507.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":128,"position":"top","messagePrev":"本文最后更新于","messageNext":"天前，其中的信息可能已经有所发展或是发生改变。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: HUII","link":"链接: ","source":"来源: HUII's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: 'Fast R-CNN——RCNN系列算法Ⅱ',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2023-10-06 21:38:17'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">36</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签云</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/machinelearning.jpeg')"><nav id="nav"><span id="blog-info"><a href="/" title="HUII's Blog"><img class="site-icon" src="/img/logo.png"/><span class="site-name">HUII's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签云</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">Fast R-CNN——RCNN系列算法Ⅱ</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-12-23T03:43:00.000Z" title="发表于 2022-12-23 11:43:00">2022-12-23</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2023-10-06T13:38:17.088Z" title="更新于 2023-10-06 21:38:17">2023-10-06</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/MachineLearning/">MachineLearning</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="Fast R-CNN——RCNN系列算法Ⅱ"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><h1 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h1><p>Fast R-CNN在VOC-07数据集上将检测精度mAP从58.5%提高到70.0%，检测速度比R-CNN提高了200倍。</p>
+<p>从论文页数来看，Fast R-CNN仅9页，与R-CNN的21页相比，也“精简”了不少。</p>
+<h1 id="论文与源码"><a href="#论文与源码" class="headerlink" title="论文与源码"></a>论文与源码</h1><p>原论文：<a target="_blank" rel="noopener" href="https://openaccess.thecvf.com/content_iccv_2015/papers/Girshick_Fast_R-CNN_ICCV_2015_paper.pdf">Fast R-CNN (thecvf.com)</a></p>
+<p>代码：<a target="_blank" rel="noopener" href="https://github.com/rbgirshick/fast-rcnn">rbgirshick/fast-rcnn: Fast R-CNN (github.com)</a></p>
+<p><img src="../img/image-19.png" alt="img"></p>
+<center>Fast R-CNN论文</center>
+
+<p><a target="_blank" rel="noopener" href="https://www.huii.top/wp-content/uploads/2022/12/Girshick_Fast_R-CNN_ICCV_2015_paper.pdf">Girshick_Fast_R-CNN_ICCV_2015_paper</a><a target="_blank" rel="noopener" href="https://www.huii.top/wp-content/uploads/2022/12/Girshick_Fast_R-CNN_ICCV_2015_paper.pdf">下载</a></p>
+<h1 id="摘要"><a href="#摘要" class="headerlink" title="摘要"></a>摘要</h1><p><img src="../img/image-20.png" alt="img"></p>
+<center>摘要</center>
+
+<p>从摘要可以看出，Fast R-CNN采用了几项创新技术来提升训练与测试的速度和精度，与R-CNN相比，Fast R-CNN采用更深的VGG16，但训练速度快了9倍，测试速度快了213倍，并且获得了更高的均值平均精度（Mean Average Precision）。</p>
+<h1 id="结论"><a href="#结论" class="headerlink" title="结论"></a>结论</h1><p><img src="../img/image-21.png" alt="img"></p>
+<center>结论</center>
+
+
+<p>Fast R-CNN是在R-CNN 和 SPPnet基础上进行升级的，并且提出“稀疏目标的建议似乎可以提高探测器的质量”。</p>
+<h1 id="介绍"><a href="#介绍" class="headerlink" title="介绍"></a>介绍</h1><p><img src="../img/image-22.png" alt="img"></p>
+<center>现况介绍</center>
+
+
+<p>作者认为前期的相关工作存在缓慢和不优雅的问题，主要原因是需要对对象（objects）进行精确定位。由此产生的两种挑战：① 必须处理许多候选对象位置（通常称为“提议”）；② 这些候选者只提供粗略的定位，必须对其进行细化才能实现精确定位。 这些问题的解决方案通常会<strong>损害速度、准确性或简单性</strong>。</p>
+<p>论文中提出一个单阶段训练算法，联合学习来分类目标建议和精化它们的空间位置。</p>
+<h2 id="R-CNN与SPPnet"><a href="#R-CNN与SPPnet" class="headerlink" title="R-CNN与SPPnet"></a>R-CNN与SPPnet</h2><h3 id="R-CNN的问题"><a href="#R-CNN的问题" class="headerlink" title="R-CNN的问题"></a>R-CNN的问题</h3><ul>
+<li>训练是多阶段管道</li>
+<li>训练在时间和空间都很昂贵</li>
+<li>目标检测很慢</li>
+</ul>
+<p>R-CNN速度较慢，因为它对每个对象建议执行ConvNet正向传递，而不共享计算。</p>
+<h3 id="SPPnets（Spatial-pyramid-pooling-networks）的优化与问题"><a href="#SPPnets（Spatial-pyramid-pooling-networks）的优化与问题" class="headerlink" title="SPPnets（Spatial pyramid pooling networks）的优化与问题"></a>SPPnets（Spatial pyramid pooling networks）的优化与问题</h3><p>SPPnets通过共享计算来加速R-CNN。SPPnet方法计算整个输入图像的卷积特征图，然后使用从共享特征图提取的特征向量对每个对象提议进行分类。通过将提议内的特征映射的部分最大池化为固定大小的输出（例如，6 × 6）。多个输出大小被合并，然后如空间金字塔式合并中那样级联。</p>
+<p>SPPnets也是多阶段流水线，并且其非常深的网络的准确性由于微调算法不能更新空间金字塔池化之前的卷积层而收到限制。</p>
+<h2 id="贡献"><a href="#贡献" class="headerlink" title="贡献"></a>贡献</h2><p>相较与前两者工作，Fast R-CNN弥补了R-CNN和SPPnet的不足，同时提高了它们的速度和精度。</p>
+<p>其优点如下：</p>
+<ul>
+<li>检测质量（mAP）高于R-CNN、SPPnet</li>
+<li>训练是单阶段的，采用多任务损失</li>
+<li>训练可以更新所有网络层</li>
+<li>特征缓存不需要磁盘存储</li>
+</ul>
+<h1 id="结构与训练过程"><a href="#结构与训练过程" class="headerlink" title="结构与训练过程"></a>结构与训练过程</h1><p><img src="../img/image-23-1024x393.png" alt="img"></p>
+<center>Fast R-CNN 结构</center>
+
+
+<p>① 用多个卷积层和最大池化层对整个图像进行处理，生成卷积特征映射；</p>
+<p>② 对于每个对象建议。感兴趣区域（RoI）池化层从特征映射中提取固定长度的特征向量；</p>
+<p>③ 每个特征向量输入到一个全连接层，最终分为两个兄弟层输出，一个是softmax，另一个是K个对象类中的每一个输出4个实数值，每组4个值即为对应的边框位置。</p>
+<h2 id="RoI池化层"><a href="#RoI池化层" class="headerlink" title="RoI池化层"></a>RoI池化层</h2><p>使用<strong>最大池化</strong>，将任一RoI转化为固定<em>H×W</em>。</p>
+<p>每个RoI是由四个参数(r, c, h, w)确定，其中(r, c)确定了左上角的位置，(h, w)确定了图像的尺度。</p>
+<p><img src="../img/image-27-1024x645.png" alt="img"></p>
+<center>RoI参数示意图</center>
+
+
+<p><img src="../img/image-28.png" alt="img"></p>
+<center>RoI最大池化</center>
+
+
+<p>RoI最大池化的工作是把<em>h×w</em>大小的RoI窗口划分成多个<em>H×W</em>大小的子窗口，显然，划分的子窗口个数应该是<em>(h/H)×(w/W)</em>。池化作用在每一个特征映射通道中，就和标准的最大池化是一样的。RoI层可以认为是金字塔池层的特例，其中只有一个金字塔级别。</p>
+<p><img src="../img/image-29.png" alt="img"></p>
+<center>子窗口划分</center>
+
+
+<h2 id="从预训练网络中初始化"><a href="#从预训练网络中初始化" class="headerlink" title="从预训练网络中初始化"></a>从预训练网络中初始化</h2><p><img src="../img/image-31.png" alt="img"></p>
+<center>从预训练网络初始化</center>
+
+
+<p>文中使用了三个预训练的ImageNet 网络，每个网络都有5个最大池化层，以及5-13个卷积层。预训练经过三个变化：</p>
+<ol>
+<li>最后的最大池化层被RoI池化层代替，RoI池化层通过将H和W设置为与网络的第一全连接层兼容而配置（例如，对于VGG16，H = W = 7）。</li>
+<li>网络的最后一个全连接层和softmax（其被训练用于1000路ImageNet分类）被替换为先前描述的两个兄弟层。</li>
+<li>网络被修改为采用两个数据输入：图像列表和这些图像中的RoI列表。</li>
+</ol>
+<h2 id="检测微调"><a href="#检测微调" class="headerlink" title="检测微调"></a>检测微调</h2><p>利用反向传播算法训练网络权值。</p>
+<p><img src="../img/image-32.png" alt="img"></p>
+<center>检测微调</center>
+
+
+<p><strong>SPPnet无法更新空间金字塔池层以下的权重的原因</strong>：当每个训练样本（即RoI）来自不同的图像时，通过SPP层的反向传播是非常低效的。每个RoI可以具有非常大的感受野，通常跨越整个输入图像。由于前向传递必须处理整个感受野，所以训练输入很大（通常是整个图像）。</p>
+<p>提出了一种更有效的训练方法：<strong>训练过程特征共享</strong>。随机梯度下降（SGD）小批次倍分层采样，首先采样N个图像，然后通过从每个图像采样R/N个ROI。关键的是，来自同一图像的ROI在向前和向后传递中共享计算和存储器。使N变小可以减少小型批处理计算。</p>
+<blockquote>
+<p>e.g. 当使用N = 2和R = 128时，所提出的训练方案比从128个不同图像中采样一个RoI大约快64倍</p>
+</blockquote>
+<p>要注意可能会导致<strong>训练收敛缓慢</strong>。</p>
+<p>与R-CNN不同的是，Fast R-CNN没有使用三个单独训练的softmax分类器、SVM和回归器，而是使用了一个精简的训练过程。其中一个微调阶段联合优化了softmax分类器和检测框回归器。</p>
+<h3 id="多任务损失"><a href="#多任务损失" class="headerlink" title="多任务损失"></a>多任务损失</h3><p>Fast R-CNN有两个输出，① K+1类离散概率输出<script type="math/tex">p=(p_0,…,p_K)$；② K个对象类每个输出边框回归偏移量</script> t^{k}=\left(t<em>{\mathrm{x}}^{k}, t</em>{\mathrm{y}}^{k}, t<em>{\mathrm{w}}^{k}, t</em>{\mathrm{h}}^{k}\right) $$，其中$t^{k}$指定相对于对象建议的尺度不变平移和对数空间高度/宽度移位。</p>
+<p><img src="../img/image-33.png" alt="img"></p>
+<center>多任务损失</center>
+
+
+<p>针对RoI标记的真实类（ground-truth class）<em>u</em>以及真实边框回归目标（ground-truth bounding-box regression target）<em>v</em>，提出一个多任务损失L进行联合训练：</p>
+<p>$L\left(p, u, t^{u}, v\right) = L<em>{\mathrm{cls}}(p, u)+\lambda[u \geq 1] L</em>{\mathrm{loc}}\left(t^{u}, v\right)$</p>
+<p>其中$L<em>{\mathrm{cls}}(p, u)=-\log p</em>{u}$是真实类u的对数损失。</p>
+<p>第二个任务损失$L<em>loc$定义在类u真实的边框回归目标上，$v=(v</em>{\mathrm{x}}, v<em>{\mathrm{y}}, v</em>{\mathrm{W}}, v<em>{\mathrm{h}})$。而预测结果为$t^{u}=\left(t</em>{\mathrm{x}}^{u}, t<em>{\mathrm{y}}^{u}, t</em>{\mathrm{w}}^{u}, t_{\mathrm{h}}^{u}\right)$。</p>
+<p>Iverson 括号指示函数[u≥1]，当 u≥1 的时候值为 1，否则为 0。按照惯例，任何背景类标记为u=0。对于背景 RoI，没有检测框真值的概念，因此$L_loc$被忽略。</p>
+<p>对于检测框回归，我们使用损失：</p>
+<script type="math/tex; mode=display">
+L_{loc}(t^{u}, v)=\sum_{i \in{\{x, y, w, h\}}}\operatorname{smooth_{L_1}}(t_{i}^{u}-v_{i})</script><p>其中：</p>
+<script type="math/tex; mode=display">
+\operatorname{smooth_{L_1}}(x) = \begin{cases} 0.5x^2, & \text{if |x|<1} \\ |x|-0.5, & \text{otherwise} \end{cases}</script><p>$smooth<em>{L_1}(x)$是一个健壮的（robust）$L_1$损失，相较于R-CNN和SPPnet使用的$L_2$损失更不敏感。当回归目标是无界的时，具有$L_2$损失的训练可能需要仔细调整学习速率以防止梯度爆炸，而上述的$smooth</em>{L_1}(x)$式子则消除了这一敏感性。</p>
+<p>$L\left(p, u, t^{u}, v\right)$式中的$\lambda$是用来控制两个任务损失之间的平衡，原论文的实验中$\lambda$均取1。</p>
+<p>OverFeat、R-CNN 和SPPnet也训练分类器和边界框定位器，但它们使用的是分阶段训练，这对于Fast R-CNN来说不是最优的。</p>
+<h3 id="小批量采样"><a href="#小批量采样" class="headerlink" title="小批量采样"></a>小批量采样</h3><p><img src="../img/image-35.png" alt="img"></p>
+<center>小批量采样</center>
+
+
+<p>在微调期间，SGD小批量由N=2图像中构造。</p>
+<p>使用R=128的mini-batches，采用64个RoI。选取25%的RoI，这些与真实的边界框定位器的IoU至少是0.5。这些RoI包括标记有前景对象类的示例，即u≥1。 剩下的RoI是从具有最大IoU的目标提案中取样的，其真实值在[0.1,0.5)区间内。背景示例，标记为u=0。</p>
+<h3 id="通过RoI池化层进行反向传播"><a href="#通过RoI池化层进行反向传播" class="headerlink" title="通过RoI池化层进行反向传播"></a>通过RoI池化层进行反向传播</h3><p>假设每次只处理一张图像。</p>
+<p>令$x<em>i\in \mathbb{R}$是第i个RoI池化层的激活输入，$y</em>{rj}$是从第r个RoI的第j个输出。$y<em>{rj}=x</em>{i^*(r,j)}$，其中</p>
+<script type="math/tex; mode=display">
+i^{*}(r, j)=\operatorname{argmax}_{i^{\prime} \in \mathcal{R}(r, j)} x_{i^{\prime}}</script><p>$\mathcal{R}(r, j)$是输出单元 $y<em>{rj}$最大池化的子窗口中的输入的索引集合。一个 $x_i$可以被分配给几个不同的输出 $y</em>{rj}$。</p>
+<p>RoI 池化层反向传播函数通过遵循 argmax switches 来计算关于每个输入变量 $x_i$的损失函数的偏导数：</p>
+<script type="math/tex; mode=display">
+\frac{\partial L}{\partial x_{i}}=\sum_{r} \sum_{j}\left[i=i^{*}(r, j)\right] \frac{\partial L}{\partial y_{r j}}</script><p>即对于每个RoI 的r和每个池化输出的$y<em>{rj}$，如果i是通过最大池化选择的argmax，则偏导数$\frac{\partial L}{\partial y</em>{r j}}$被累加。偏导数在反向传播过程中已经被计算。</p>
+<h2 id="随机梯度下降（SGD）超参数"><a href="#随机梯度下降（SGD）超参数" class="headerlink" title="随机梯度下降（SGD）超参数"></a>随机梯度下降（SGD）超参数</h2><div class="table-container">
+<table>
+<thead>
+<tr>
+<th><strong>参数名</strong></th>
+<th><strong>值</strong></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>零均值高斯分布初始化，选用标准差</td>
+<td>softmax分类：0.01 边界框回归:0.001</td>
+</tr>
+<tr>
+<td>bias初始化</td>
+<td>0</td>
+</tr>
+<tr>
+<td>全局学习率（learning rate）</td>
+<td>0.001</td>
+</tr>
+<tr>
+<td>每层学习率</td>
+<td>1倍的全局学习率，0.001</td>
+</tr>
+<tr>
+<td>偏置（bias）</td>
+<td>2倍的全局学习率，0.002</td>
+</tr>
+<tr>
+<td>动量（momentum）</td>
+<td>0.9</td>
+</tr>
+<tr>
+<td>（权重与偏置上的）参数衰减（parameter decay）</td>
+<td>0.0005</td>
+</tr>
+</tbody>
+</table>
+</div>
+<center>随机梯度下降（SGD）超参数</center>
+
+
+<p>30k次小批量 SGD迭代，然后将学习率降低到 0.0001，再训练 10k次迭代。</p>
+<h2 id="尺度不变性"><a href="#尺度不变性" class="headerlink" title="尺度不变性"></a>尺度不变性</h2><p>两种方式进行</p>
+<ol>
+<li>暴力进行（“brute force”）</li>
+<li>图像金字塔</li>
+</ol>
+<h1 id="Fast-R-CNN检测"><a href="#Fast-R-CNN检测" class="headerlink" title="Fast R-CNN检测"></a>Fast R-CNN检测</h1><p>Fast R-CNN微调之后，检测量就仅是运行一个正向传播。</p>
+<p>网络将<strong>图像</strong>和R（通常为2000左右）个<strong>提议区域</strong>（a list of R object proposals）传入，当使用图像金字塔时，每个RoI被分配到比例，使得缩放后的RoI最接近区域中的2242个像素。</p>
+<p>对于每个测试RoI的r，前向传播输出一类的后验概率分布p和一组相对于r的预测边界框偏移量。使用估计概率$\operatorname{Pr}(\text { class }=k \mid r) \triangleq p_{k}$为每个对象类别k分配一个检测置信度。使用R-CNN中的算法和设置对每个类独立地执行非最大值抑制。</p>
+<h2 id="用于快速检测的截断奇异值分解（SVD）"><a href="#用于快速检测的截断奇异值分解（SVD）" class="headerlink" title="用于快速检测的截断奇异值分解（SVD）"></a>用于快速检测的截断奇异值分解（SVD）</h2><p>对于全图分类任务来说，全连接层上的时间消耗较卷积层来说是比较少的。但对于检测任务来说，需要处理的RoI数量很大，并且需要消耗将近一般的前向传播时间在计算全连接层上。可以使用截断的奇异值（truncated SVD）分解来压缩大的全连接层使其加速。</p>
+<p><img src="../img/image-37.png" alt="img"></p>
+<center>使用SVD前后时间消耗及占比对比</center>
+
+
+<p>使用SVD将$u×v$权重矩阵$W$参数化的层近似分解为$W \approx U \Sigma_{t} V^{T}$。</p>
+<p>$U$是包含$W$的前$t$个左奇异向量的$u×t$大小矩阵，$\Sigma_{t}$是包含$W$的前$t$个奇异值的$t×t$大小矩阵，$V^{T}$是包含$W$的前$t$个左右奇异向量的$t×v$大小矩阵。截断SVD将参数计数从$UV$转化到$t(u+v)$，如果$t$远小于$min(u，v)$，那么参数量将显著减少。</p>
+<p>为了压缩网络，将对应于$W$的单个全连通层替换为两个全连通层，它们之间不存在非线性。</p>
+<p>第一层：<strong>权重矩阵$\Sigma_{t} V^{T}$</strong>；</p>
+<p>第二层：<strong>$U$</strong>。</p>
+<p>当ROI数目较多时，这种简单的压缩方法具有很好的加速效果。</p>
+<h1 id="实验结果概览"><a href="#实验结果概览" class="headerlink" title="实验结果概览"></a>实验结果概览</h1><h2 id="数据集测试平均精度"><a href="#数据集测试平均精度" class="headerlink" title="数据集测试平均精度"></a>数据集测试平均精度</h2><p><img src="../img/image-38-1024x666.png" alt="img"></p>
+<center>VOC数据集上实验结果</center>
+
+
+<h2 id="训练和测试时间"><a href="#训练和测试时间" class="headerlink" title="训练和测试时间"></a>训练和测试时间</h2><p>对于 VGG16，没有截断 SVD的 Fast R-CNN处理图像比 R-CNN快 146倍，有截断 SVD的 R-CNN快 213倍。训练时间减少 9倍，从 84小时减少到 9.5小时。与 SPPnet相比，没有截断 SVD的 Fast RCNN训练 VGG16网络比 SPPnet快 2.7倍9.5小时 相比于 25.5小时），测试时间快 7倍，有截断 SVD的 Fast RCNN比的 SPPnet快 10倍。 Fast R-CNN还不需要数百 GB的磁盘存储，因为它不缓存特征。</p>
+<p><img src="../img/image-39.png" alt="img"></p>
+<center>时间对比</center>
+
+
+<p>截断的 SVD可以将检测时间减少 30％以上，同时能保持 mAP只有很小（ 0.3个百分点）的下降，并且无需在模型压缩后执行额外的 fine-tuning。</p>
+<h1 id="问题讨论"><a href="#问题讨论" class="headerlink" title="问题讨论"></a>问题讨论</h1><h2 id="多任务训练有用吗？"><a href="#多任务训练有用吗？" class="headerlink" title="多任务训练有用吗？"></a>多任务训练有用吗？</h2><p>多任务学习有的一致的积极效果。</p>
+<p><img src="../img/image-40-1024x195.png" alt="img"></p>
+<center>多任务训练</center>
+
+
+<h2 id="尺度不变性：暴力或精细？"><a href="#尺度不变性：暴力或精细？" class="headerlink" title="尺度不变性：暴力或精细？"></a>尺度不变性：暴力或精细？</h2><p><img src="../img/image-41.png" alt="img"></p>
+<center>多尺度vs单一尺度</center>
+
+
+<p>单尺度检测几乎与多尺度检测一样好。深度卷积网络擅长直接学习到尺度的不变性。多尺度方法消耗大量的计算时间仅带来了很小的 mAP提升。</p>
+<h2 id="我们需要更多训练数据吗？"><a href="#我们需要更多训练数据吗？" class="headerlink" title="我们需要更多训练数据吗？"></a>我们需要更多训练数据吗？</h2><p>当提供更多的训练数据时，好的目标检测器应该会进一步提升性能。</p>
+<h2 id="SVM分类是否优于-Softmax？"><a href="#SVM分类是否优于-Softmax？" class="headerlink" title="SVM分类是否优于 Softmax？"></a>SVM分类是否优于 Softmax？</h2><p><img src="../img/image-42.png" alt="img"></p>
+<center>softmax vs SVM</center>
+
+
+<p>对于所有三个网络，Softmax略优于 SVM mAP分别提高了 0.1和 0.8个点。这个提升效果很小，但是它表明与先前的多级训练方法相比 ，“一次性 ”fine-tune是足够的 。不像一对多的SVM那样，Softmax会在计算RoI得分时引入类别之间的竞争。</p>
+<h2 id="更多的候选区域更好吗？"><a href="#更多的候选区域更好吗？" class="headerlink" title="更多的候选区域更好吗？"></a>更多的候选区域更好吗？</h2><p>随着候选区域数量的增加，mAP先上升然后略微下降。这表明深度神经网络分类器使用更多的候选区域没有帮助，甚至稍微有点影响准确性。</p>
+<p><img src="../img/image-43.png" alt="img"></p>
+<center>多候选区域</center>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://blog.huii.top">HUII</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.huii.top/MachineLearning/9de011f33507.html">https://blog.huii.top/MachineLearning/9de011f33507.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.huii.top" target="_blank">HUII's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><a class="post-meta__tags" href="/tags/%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/">深度学习</a><a class="post-meta__tags" href="/tags/Python/">Python</a><a class="post-meta__tags" href="/tags/%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B/">目标检测</a><a class="post-meta__tags" href="/tags/CV/">CV</a><a class="post-meta__tags" href="/tags/%E8%AE%BA%E6%96%87/">论文</a></div><div class="post_share"><div class="social-share" data-image="/img/machinelearning.jpeg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/Coding/29021ee756ea.html" title="Flet，一款基于Python的跨平台前端框架"><img class="cover" src="/img/python.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">Flet，一款基于Python的跨平台前端框架</div></div></a></div><div class="next-post pull-right"><a href="/MachineLearning/794a5634681d.html" title="R-CNN——RCNN系列算法Ⅰ"><img class="cover" src="/img/machinelearning.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">R-CNN——RCNN系列算法Ⅰ</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/MachineLearning/b91d8b42ccc3.html" title="Faster R-CNN——RCNN系列算法Ⅲ"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-27</div><div class="title">Faster R-CNN——RCNN系列算法Ⅲ</div></div></a></div><div><a href="/MachineLearning/794a5634681d.html" title="R-CNN——RCNN系列算法Ⅰ"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-21</div><div class="title">R-CNN——RCNN系列算法Ⅰ</div></div></a></div><div><a href="/MachineLearning/4543f3866cda.html" title="YOLO v1笔记"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-02-12</div><div class="title">YOLO v1笔记</div></div></a></div><div><a href="/MachineLearning/ea6e3c43cae3.html" title="YOLOv3笔记"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-11</div><div class="title">YOLOv3笔记</div></div></a></div><div><a href="/MachineLearning/d808d6f21a58.html" title="图像目标检测基本概念与算法"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-20</div><div class="title">图像目标检测基本概念与算法</div></div></a></div><div><a href="/MachineLearning/c1f3db5b0215.html" title="YOLOv2(YOLO9000)笔记"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-03-09</div><div class="title">YOLOv2(YOLO9000)笔记</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%89%8D%E8%A8%80"><span class="toc-number">1.</span> <span class="toc-text">前言</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%AE%BA%E6%96%87%E4%B8%8E%E6%BA%90%E7%A0%81"><span class="toc-number">2.</span> <span class="toc-text">论文与源码</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%91%98%E8%A6%81"><span class="toc-number">3.</span> <span class="toc-text">摘要</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E8%AE%BA"><span class="toc-number">4.</span> <span class="toc-text">结论</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E4%BB%8B%E7%BB%8D"><span class="toc-number">5.</span> <span class="toc-text">介绍</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#R-CNN%E4%B8%8ESPPnet"><span class="toc-number">5.1.</span> <span class="toc-text">R-CNN与SPPnet</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#R-CNN%E7%9A%84%E9%97%AE%E9%A2%98"><span class="toc-number">5.1.1.</span> <span class="toc-text">R-CNN的问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#SPPnets%EF%BC%88Spatial-pyramid-pooling-networks%EF%BC%89%E7%9A%84%E4%BC%98%E5%8C%96%E4%B8%8E%E9%97%AE%E9%A2%98"><span class="toc-number">5.1.2.</span> <span class="toc-text">SPPnets（Spatial pyramid pooling networks）的优化与问题</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%B4%A1%E7%8C%AE"><span class="toc-number">5.2.</span> <span class="toc-text">贡献</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%BB%93%E6%9E%84%E4%B8%8E%E8%AE%AD%E7%BB%83%E8%BF%87%E7%A8%8B"><span class="toc-number">6.</span> <span class="toc-text">结构与训练过程</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#RoI%E6%B1%A0%E5%8C%96%E5%B1%82"><span class="toc-number">6.1.</span> <span class="toc-text">RoI池化层</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E4%BB%8E%E9%A2%84%E8%AE%AD%E7%BB%83%E7%BD%91%E7%BB%9C%E4%B8%AD%E5%88%9D%E5%A7%8B%E5%8C%96"><span class="toc-number">6.2.</span> <span class="toc-text">从预训练网络中初始化</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%A3%80%E6%B5%8B%E5%BE%AE%E8%B0%83"><span class="toc-number">6.3.</span> <span class="toc-text">检测微调</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%9A%E4%BB%BB%E5%8A%A1%E6%8D%9F%E5%A4%B1"><span class="toc-number">6.3.1.</span> <span class="toc-text">多任务损失</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B0%8F%E6%89%B9%E9%87%8F%E9%87%87%E6%A0%B7"><span class="toc-number">6.3.2.</span> <span class="toc-text">小批量采样</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%9A%E8%BF%87RoI%E6%B1%A0%E5%8C%96%E5%B1%82%E8%BF%9B%E8%A1%8C%E5%8F%8D%E5%90%91%E4%BC%A0%E6%92%AD"><span class="toc-number">6.3.3.</span> <span class="toc-text">通过RoI池化层进行反向传播</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%9A%8F%E6%9C%BA%E6%A2%AF%E5%BA%A6%E4%B8%8B%E9%99%8D%EF%BC%88SGD%EF%BC%89%E8%B6%85%E5%8F%82%E6%95%B0"><span class="toc-number">6.4.</span> <span class="toc-text">随机梯度下降（SGD）超参数</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%BA%E5%BA%A6%E4%B8%8D%E5%8F%98%E6%80%A7"><span class="toc-number">6.5.</span> <span class="toc-text">尺度不变性</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Fast-R-CNN%E6%A3%80%E6%B5%8B"><span class="toc-number">7.</span> <span class="toc-text">Fast R-CNN检测</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%94%A8%E4%BA%8E%E5%BF%AB%E9%80%9F%E6%A3%80%E6%B5%8B%E7%9A%84%E6%88%AA%E6%96%AD%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%EF%BC%88SVD%EF%BC%89"><span class="toc-number">7.1.</span> <span class="toc-text">用于快速检测的截断奇异值分解（SVD）</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E9%AA%8C%E7%BB%93%E6%9E%9C%E6%A6%82%E8%A7%88"><span class="toc-number">8.</span> <span class="toc-text">实验结果概览</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E6%B5%8B%E8%AF%95%E5%B9%B3%E5%9D%87%E7%B2%BE%E5%BA%A6"><span class="toc-number">8.1.</span> <span class="toc-text">数据集测试平均精度</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%AD%E7%BB%83%E5%92%8C%E6%B5%8B%E8%AF%95%E6%97%B6%E9%97%B4"><span class="toc-number">8.2.</span> <span class="toc-text">训练和测试时间</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%97%AE%E9%A2%98%E8%AE%A8%E8%AE%BA"><span class="toc-number">9.</span> <span class="toc-text">问题讨论</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%9A%E4%BB%BB%E5%8A%A1%E8%AE%AD%E7%BB%83%E6%9C%89%E7%94%A8%E5%90%97%EF%BC%9F"><span class="toc-number">9.1.</span> <span class="toc-text">多任务训练有用吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%B0%BA%E5%BA%A6%E4%B8%8D%E5%8F%98%E6%80%A7%EF%BC%9A%E6%9A%B4%E5%8A%9B%E6%88%96%E7%B2%BE%E7%BB%86%EF%BC%9F"><span class="toc-number">9.2.</span> <span class="toc-text">尺度不变性：暴力或精细？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%88%91%E4%BB%AC%E9%9C%80%E8%A6%81%E6%9B%B4%E5%A4%9A%E8%AE%AD%E7%BB%83%E6%95%B0%E6%8D%AE%E5%90%97%EF%BC%9F"><span class="toc-number">9.3.</span> <span class="toc-text">我们需要更多训练数据吗？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#SVM%E5%88%86%E7%B1%BB%E6%98%AF%E5%90%A6%E4%BC%98%E4%BA%8E-Softmax%EF%BC%9F"><span class="toc-number">9.4.</span> <span class="toc-text">SVM分类是否优于 Softmax？</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9B%B4%E5%A4%9A%E7%9A%84%E5%80%99%E9%80%89%E5%8C%BA%E5%9F%9F%E6%9B%B4%E5%A5%BD%E5%90%97%EF%BC%9F"><span class="toc-number">9.5.</span> <span class="toc-text">更多的候选区域更好吗？</span></a></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('/img/machinelearning.jpeg')"><div id="footer-wrap"><div class="copyright">&copy;2015 - 2025 By HUII</div><div class="footer_custom_text"><span>备案号：<a href="https://beian.miit.gov.cn/" target="_blank">闽ICP备18005042号-2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'ce436d2d4a3e549dad64',
+      clientSecret: '9a40a66c694e77b58120d1b62b2dcee193963143',
+      repo: 'huiiz.github.io',
+      owner: 'huiiz',
+      admin: ['huiiz'],
+      id: '21230ade82524a93d713414cc7f7902f',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.textContent= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><div style="display:none;"><script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1279897347&web_id=1279897347"></script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>

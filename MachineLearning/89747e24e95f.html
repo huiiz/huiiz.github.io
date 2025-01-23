@@ -1,0 +1,798 @@
+<!DOCTYPE html><html lang="zh-CN" data-theme="light"><head><meta charset="UTF-8"><meta http-equiv="X-UA-Compatible" content="IE=edge"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>机器学习线性代数基础 | HUII's Blog</title><meta name="author" content="HUII"><meta name="copyright" content="HUII"><meta name="format-detection" content="telephone=no"><meta name="theme-color" content="#ffffff"><meta name="description" content="【已完结】 概述本书介绍数学是机器学习绕不开的基础知识，传统教材的风格偏重理论定义和运算技巧，想以此高效地打下机器学习的数学基础，针对性和可读性并不佳。本书以机器学习涉及的线性代数核心知识为重点，进行新的尝试和突破：从坐标与变换、空间与映射、近似与拟合、相似与特征、降维与压缩这5个维度，环环相扣地展开线性代数与机器学习算法紧密结合的核心内容，并分析推荐系统和图像压缩两个实践案例，在介绍完核心概念">
+<meta property="og:type" content="article">
+<meta property="og:title" content="机器学习线性代数基础">
+<meta property="og:url" content="https://blog.huii.top/MachineLearning/89747e24e95f.html">
+<meta property="og:site_name" content="HUII&#39;s Blog">
+<meta property="og:description" content="【已完结】 概述本书介绍数学是机器学习绕不开的基础知识，传统教材的风格偏重理论定义和运算技巧，想以此高效地打下机器学习的数学基础，针对性和可读性并不佳。本书以机器学习涉及的线性代数核心知识为重点，进行新的尝试和突破：从坐标与变换、空间与映射、近似与拟合、相似与特征、降维与压缩这5个维度，环环相扣地展开线性代数与机器学习算法紧密结合的核心内容，并分析推荐系统和图像压缩两个实践案例，在介绍完核心概念">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://blog.huii.top/img/machinelearning.jpeg">
+<meta property="article:published_time" content="2022-10-14T12:24:57.000Z">
+<meta property="article:modified_time" content="2022-10-21T12:16:51.326Z">
+<meta property="article:author" content="HUII">
+<meta property="article:tag" content="机器学习">
+<meta property="article:tag" content="线性代数">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://blog.huii.top/img/machinelearning.jpeg"><link rel="shortcut icon" href="/img/logo.png"><link rel="canonical" href="https://blog.huii.top/MachineLearning/89747e24e95f.html"><link rel="preconnect" href="//cdn.jsdelivr.net"/><link rel="preconnect" href="//busuanzi.ibruce.info"/><link rel="stylesheet" href="/css/index.css"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fortawesome/fontawesome-free/css/all.min.css" media="print" onload="this.media='all'"><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.min.css" media="print" onload="this.media='all'"><script>const GLOBAL_CONFIG = {
+  root: '/',
+  algolia: undefined,
+  localSearch: undefined,
+  translate: undefined,
+  noticeOutdate: {"limitDay":128,"position":"top","messagePrev":"本文最后更新于","messageNext":"天前，其中的信息可能已经有所发展或是发生改变。"},
+  highlight: {"plugin":"highlighjs","highlightCopy":true,"highlightLang":true,"highlightHeightLimit":false},
+  copy: {
+    success: '复制成功',
+    error: '复制错误',
+    noSupport: '浏览器不支持'
+  },
+  relativeDate: {
+    homepage: false,
+    post: false
+  },
+  runtime: '天',
+  dateSuffix: {
+    just: '刚刚',
+    min: '分钟前',
+    hour: '小时前',
+    day: '天前',
+    month: '个月前'
+  },
+  copyright: {"limitCount":50,"languages":{"author":"作者: HUII","link":"链接: ","source":"来源: HUII's Blog","info":"著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。"}},
+  lightbox: 'fancybox',
+  Snackbar: undefined,
+  source: {
+    justifiedGallery: {
+      js: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.js',
+      css: 'https://cdn.jsdelivr.net/npm/flickr-justified-gallery/dist/fjGallery.min.css'
+    }
+  },
+  isPhotoFigcaption: true,
+  islazyload: false,
+  isAnchor: false,
+  percent: {
+    toc: true,
+    rightside: false,
+  },
+  autoDarkmode: false
+}</script><script id="config-diff">var GLOBAL_CONFIG_SITE = {
+  title: '机器学习线性代数基础',
+  isPost: true,
+  isHome: false,
+  isHighlightShrink: false,
+  isToc: true,
+  postUpdate: '2022-10-21 20:16:51'
+}</script><noscript><style type="text/css">
+  #nav {
+    opacity: 1
+  }
+  .justified-gallery img {
+    opacity: 1
+  }
+
+  #recent-posts time,
+  #post-meta time {
+    display: inline !important
+  }
+</style></noscript><script>(win=>{
+    win.saveToLocal = {
+      set: function setWithExpiry(key, value, ttl) {
+        if (ttl === 0) return
+        const now = new Date()
+        const expiryDay = ttl * 86400000
+        const item = {
+          value: value,
+          expiry: now.getTime() + expiryDay,
+        }
+        localStorage.setItem(key, JSON.stringify(item))
+      },
+
+      get: function getWithExpiry(key) {
+        const itemStr = localStorage.getItem(key)
+
+        if (!itemStr) {
+          return undefined
+        }
+        const item = JSON.parse(itemStr)
+        const now = new Date()
+
+        if (now.getTime() > item.expiry) {
+          localStorage.removeItem(key)
+          return undefined
+        }
+        return item.value
+      }
+    }
+  
+    win.getScript = url => new Promise((resolve, reject) => {
+      const script = document.createElement('script')
+      script.src = url
+      script.async = true
+      script.onerror = reject
+      script.onload = script.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        script.onload = script.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(script)
+    })
+  
+    win.getCSS = (url,id = false) => new Promise((resolve, reject) => {
+      const link = document.createElement('link')
+      link.rel = 'stylesheet'
+      link.href = url
+      if (id) link.id = id
+      link.onerror = reject
+      link.onload = link.onreadystatechange = function() {
+        const loadState = this.readyState
+        if (loadState && loadState !== 'loaded' && loadState !== 'complete') return
+        link.onload = link.onreadystatechange = null
+        resolve()
+      }
+      document.head.appendChild(link)
+    })
+  
+      win.activateDarkMode = function () {
+        document.documentElement.setAttribute('data-theme', 'dark')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#0d0d0d')
+        }
+      }
+      win.activateLightMode = function () {
+        document.documentElement.setAttribute('data-theme', 'light')
+        if (document.querySelector('meta[name="theme-color"]') !== null) {
+          document.querySelector('meta[name="theme-color"]').setAttribute('content', '#ffffff')
+        }
+      }
+      const t = saveToLocal.get('theme')
+    
+          if (t === 'dark') activateDarkMode()
+          else if (t === 'light') activateLightMode()
+        
+      const asideStatus = saveToLocal.get('aside-status')
+      if (asideStatus !== undefined) {
+        if (asideStatus === 'hide') {
+          document.documentElement.classList.add('hide-aside')
+        } else {
+          document.documentElement.classList.remove('hide-aside')
+        }
+      }
+    
+    const detectApple = () => {
+      if(/iPad|iPhone|iPod|Macintosh/.test(navigator.userAgent)){
+        document.documentElement.classList.add('apple')
+      }
+    }
+    detectApple()
+    })(window)</script><meta name="generator" content="Hexo 6.3.0"></head><body><div id="sidebar"><div id="menu-mask"></div><div id="sidebar-menus"><div class="avatar-img is-center"><img src="/img/avatar.png" onerror="onerror=null;src='/img/friend_404.gif'" alt="avatar"/></div><div class="sidebar-site-data site-data is-center"><a href="/archives/"><div class="headline">文章</div><div class="length-num">36</div></a><a href="/tags/"><div class="headline">标签</div><div class="length-num">41</div></a><a href="/categories/"><div class="headline">分类</div><div class="length-num">4</div></a></div><hr class="custom-hr"/><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签云</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div></div></div><div class="post" id="body-wrap"><header class="post-bg" id="page-header" style="background-image: url('/img/machinelearning.jpeg')"><nav id="nav"><span id="blog-info"><a href="/" title="HUII's Blog"><img class="site-icon" src="/img/logo.png"/><span class="site-name">HUII's Blog</span></a></span><div id="menus"><div class="menus_items"><div class="menus_item"><a class="site-page" href="/"><i class="fa-fw fas fa-home"></i><span> 首页</span></a></div><div class="menus_item"><a class="site-page" href="/archives/"><i class="fa-fw fas fa-archive"></i><span> 文章归档</span></a></div><div class="menus_item"><a class="site-page" href="/tags/"><i class="fa-fw fas fa-tags"></i><span> 标签云</span></a></div><div class="menus_item"><a class="site-page" href="/categories/"><i class="fa-fw fas fa-folder-open"></i><span> 分类</span></a></div><div class="menus_item"><a class="site-page" href="/link/"><i class="fa-fw fas fa-link"></i><span> 友链</span></a></div><div class="menus_item"><a class="site-page" href="/about/"><i class="fa-fw fas fa-heart"></i><span> 关于</span></a></div></div><div id="toggle-menu"><a class="site-page" href="javascript:void(0);"><i class="fas fa-bars fa-fw"></i></a></div></div></nav><div id="post-info"><h1 class="post-title">机器学习线性代数基础</h1><div id="post-meta"><div class="meta-firstline"><span class="post-meta-date"><i class="far fa-calendar-alt fa-fw post-meta-icon"></i><span class="post-meta-label">发表于</span><time class="post-meta-date-created" datetime="2022-10-14T12:24:57.000Z" title="发表于 2022-10-14 20:24:57">2022-10-14</time><span class="post-meta-separator">|</span><i class="fas fa-history fa-fw post-meta-icon"></i><span class="post-meta-label">更新于</span><time class="post-meta-date-updated" datetime="2022-10-21T12:16:51.326Z" title="更新于 2022-10-21 20:16:51">2022-10-21</time></span><span class="post-meta-categories"><span class="post-meta-separator">|</span><i class="fas fa-inbox fa-fw post-meta-icon"></i><a class="post-meta-categories" href="/categories/MachineLearning/">MachineLearning</a></span></div><div class="meta-secondline"><span class="post-meta-separator">|</span><span class="post-meta-pv-cv" id="" data-flag-title="机器学习线性代数基础"><i class="far fa-eye fa-fw post-meta-icon"></i><span class="post-meta-label">阅读量:</span><span id="busuanzi_value_page_pv"><i class="fa-solid fa-spinner fa-spin"></i></span></span></div></div></div></header><main class="layout" id="content-inner"><div id="post"><article class="post-content" id="article-container"><p> 【已完结】</p>
+<h1 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h1><h2 id="本书介绍"><a href="#本书介绍" class="headerlink" title="本书介绍"></a>本书介绍</h2><p>数学是机器学习绕不开的基础知识，传统教材的风格偏重理论定义和运算技巧，想以此高效地打下机器学习的数学基础，针对性和可读性并不佳。本书以机器学习涉及的线性代数核心知识为重点，进行新的尝试和突破：从坐标与变换、空间与映射、近似与拟合、相似与特征、降维与压缩这5个维度，环环相扣地展开线性代数与机器学习算法紧密结合的核心内容，并分析推荐系统和图像压缩两个实践案例，在介绍完核心概念后，还将线性代数的应用领域向函数空间和复数域中进行拓展与延伸；同时极力避免数学的晦涩枯燥，充分挖掘线性代数的几何内涵，并以Python语言为工具进行数学思想和解决方案的有效实践。</p>
+<p>本书适合实践于数据分析、信号处理等工程领域的读者，也适合在人工智能、机器学习领域进行理论学习和实践，希望筑牢数学基础的读者，以及正在进行线性代数课程学习的读者阅读。</p>
+<p>(摘自：<a target="_blank" rel="noopener" href="https://book.douban.com/subject/34803776/">机器学习线性代数基础 (豆瓣) (douban.com)</a>)</p>
+<p><img src="../img/s33490083.jpg" alt="img" style="zoom:50%;" /></p>
+<h2 id="阅读目的"><a href="#阅读目的" class="headerlink" title="阅读目的"></a>阅读目的</h2><p>掌握机器学习数学基础，记录学习难点。</p>
+<h2 id="相关资料"><a href="#相关资料" class="headerlink" title="相关资料"></a>相关资料</h2><p>《机器学习线性代数基础：Python语言描述》学习资料——<br>链接：<a target="_blank" rel="noopener" href="https://eyun.baidu.com/s/3c3QH00S">https://eyun.baidu.com/s/3c3QH00S</a><br>提取码：zD33</p>
+<p> <a href="../data/machinelearning/机器学习线性代数基础：Python语言描述.zip">机器学习线性代数基础：Python语言描述.zip</a> </p>
+<p>含：ppt、源代码、numpy介绍文档</p>
+<p><img src="../img/image-20221016180738883.png" alt="image-20221016180738883" style="zoom:50%;" /></p>
+<h1 id="坐标与变化（第一章）"><a href="#坐标与变化（第一章）" class="headerlink" title="坐标与变化（第一章）"></a>坐标与变化（第一章）</h1><h2 id="向量"><a href="#向量" class="headerlink" title="向量"></a>向量</h2><h3 id="基本意义"><a href="#基本意义" class="headerlink" title="基本意义"></a>基本意义</h3><p>二维向量</p>
+<script type="math/tex; mode=display">
+\begin{bmatrix}
+4\\5
+\end{bmatrix}</script><p>可以被理解为点(4,5)，也可被认为(0,0)到(4,5)的有向线段。</p>
+<h3 id="列向量"><a href="#列向量" class="headerlink" title="列向量"></a>列向量</h3><p>一般来说，都是使用<strong>列向量</strong>，这是因为方便进行向量坐标变换、空间映射。</p>
+<h3 id="乘法"><a href="#乘法" class="headerlink" title="乘法"></a>乘法</h3><ul>
+<li><p>内积（点乘）</p>
+<p>对应位置相乘，结果相加，得到一个数。</p>
+<p><img src="../img/image-20221015130145264.png" alt="image-20221015130145264" style="zoom:80%;" /></p>
+<p><img src="../img/image-20221015130214805.png" alt="image-20221015130214805" style="zoom:80%;" /></p>
+<p><img src="../img/image-20221015130222032.png" alt="image-20221015130222032"></p>
+<p>含义:a在b上投影长度</p>
+<p>实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">u = np.array([<span class="number">3</span>, <span class="number">5</span>, <span class="number">2</span>])</span><br><span class="line">v = np.array([<span class="number">1</span>, <span class="number">4</span>, <span class="number">7</span>])</span><br><span class="line"><span class="built_in">print</span>(np.dot(u, v))</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<ul>
+<li>外积（叉乘）</li>
+</ul>
+<p>  <img src="../img/image-20221015130243323.png" alt="image-20221015130243323" style="zoom: 80%;" /></p>
+<p><img src="../img/image-20221015130314963.png" alt="image-20221015130314963" style="zoom:80%;" /></p>
+<p><img src="../img/image-20221015130320038.png" alt="image-20221015130320038"></p>
+<p>含有：二维平面中向量的外积表示两个向量张成的平行四边形的面积。</p>
+<p>实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">u = np.array([<span class="number">3</span>, <span class="number">5</span>])</span><br><span class="line">v = np.array([<span class="number">1</span>, <span class="number">4</span>])</span><br><span class="line"><span class="built_in">print</span>(np.cross(u, v))</span><br></pre></td></tr></table></figure>
+<h2 id="基底"><a href="#基底" class="headerlink" title="基底"></a>基底</h2><h3 id="基底条件"><a href="#基底条件" class="headerlink" title="基底条件"></a>基底条件</h3><ul>
+<li><p>向量数量足够</p>
+<p>如三位空间的每一个基向量维数必须是3</p>
+</li>
+<li><p>满足线性无关</p>
+</li>
+</ul>
+<h3 id="张成空间"><a href="#张成空间" class="headerlink" title="张成空间"></a>张成空间</h3><p>定义：对于一组向量，由他的所有<strong>线性组合所构成的空间</strong>就称之为这一组向量的张成空间。</p>
+<h2 id="矩阵"><a href="#矩阵" class="headerlink" title="矩阵"></a>矩阵</h2><h3 id="特殊矩阵"><a href="#特殊矩阵" class="headerlink" title="特殊矩阵"></a>特殊矩阵</h3><ul>
+<li><p>方阵</p>
+<p>定义：行数和列数相等的一类矩阵</p>
+<p>实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">A = np.array([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>],</span><br><span class="line">              [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>],</span><br><span class="line">              [<span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>, <span class="number">3</span>],</span><br><span class="line">              [<span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>, <span class="number">4</span>]])</span><br><span class="line"><span class="built_in">print</span>(A)</span><br><span class="line"><span class="built_in">print</span>(A.shape)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>转置与对称矩阵</p>
+<ul>
+<li><p>转置</p>
+<p>定义：行和列上的元素进行位置互换</p>
+<p>实现:</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">A = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>],</span><br><span class="line">               [<span class="number">5</span>, <span class="number">6</span>, <span class="number">7</span>, <span class="number">8</span>]])</span><br><span class="line"><span class="built_in">print</span>(A)</span><br><span class="line"><span class="built_in">print</span>(A.T)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对称矩阵</p>
+<p>左上到右下对角线对称</p>
+</li>
+</ul>
+</li>
+<li><p>零矩阵</p>
+<p>定义：对于所有元素都等于0的矩阵，我们将其称之为零矩阵，记作<strong>O</strong></p>
+<p>实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">A = np.zeros([<span class="number">5</span>, <span class="number">3</span>])</span><br><span class="line"><span class="built_in">print</span>(A)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>对角矩阵</p>
+<p>定义：在他的非对角线位置上矩阵的元素全部都为0</p>
+<p>实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">A = np.diag([<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>, <span class="number">4</span>, <span class="number">5</span>])</span><br><span class="line"><span class="built_in">print</span>(A)</span><br></pre></td></tr></table></figure>
+</li>
+<li><p>单位矩阵</p>
+<p>定义：对角位置上元素均为1，其余位置元素均为0</p>
+<p>实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">I = np.eye(<span class="number">5</span>)</span><br><span class="line"><span class="built_in">print</span>(I)</span><br></pre></td></tr></table></figure>
+</li>
+</ul>
+<h3 id="矩阵间乘法"><a href="#矩阵间乘法" class="headerlink" title="矩阵间乘法"></a>矩阵间乘法</h3><p>要求：</p>
+<ul>
+<li><p>左边矩阵的<strong>列数</strong>和右边矩阵的<strong>行数</strong>必须相等；</p>
+</li>
+<li><p>左边矩阵的<strong>行数</strong>决定了最终结果矩阵的<strong>行数</strong>；</p>
+</li>
+<li><p>右边矩阵的<strong>列数</strong>决定了最终结果矩阵的<strong>列数</strong>。</p>
+</li>
+</ul>
+<p><img src="../img/image-20221015131915875.png" alt="image-20221015131915875"></p>
+<p>​                </p>
+<h3 id="矩阵乘向量"><a href="#矩阵乘向量" class="headerlink" title="矩阵乘向量"></a>矩阵乘向量</h3><p>在指定矩阵乘法作用下，将原始空间中的向量映射转换到目标空间中的新坐标。</p>
+<h2 id="矩阵乘向量-1"><a href="#矩阵乘向量-1" class="headerlink" title="矩阵乘向量"></a>矩阵乘向量</h2><h3 id="基本事实"><a href="#基本事实" class="headerlink" title="基本事实"></a>基本事实</h3><p>矩阵与向量的乘法，本质上可以看作是对<strong>向量基底</strong>的一种改变</p>
+<h3 id="列的角度"><a href="#列的角度" class="headerlink" title="列的角度"></a>列的角度</h3><p><img src="../img/image-20221015133656961.png" alt="image-20221015133656961" style="zoom:67%;" /></p>
+<h3 id="向量的基底变换"><a href="#向量的基底变换" class="headerlink" title="向量的基底变换"></a>向量的基底变换</h3><p><img src="../img/image-20221015135047300.png" alt="image-20221015135047300"></p>
+<p>本质是将基底进行变化。</p>
+<script type="math/tex; mode=display">
+\begin{pmatrix}
+\begin{bmatrix}
+1 \\0
+
+\end{bmatrix},
+\begin{bmatrix}
+0 \\1
+
+\end{bmatrix}
+\end{pmatrix}
+\to
+\begin{pmatrix}
+\begin{bmatrix}
+a \\c
+
+\end{bmatrix},
+\begin{bmatrix}
+b \\d
+
+\end{bmatrix}
+\end{pmatrix}</script><p><img src="../img/image-20221015135439745.png" alt="image-20221015135439745"></p>
+<p>得到的是在原始空间中的新坐标(ax+by, cx+dy)，而在新空间中的坐标仍然是(x, y)</p>
+<h3 id="m×n矩阵乘以n维列向量"><a href="#m×n矩阵乘以n维列向量" class="headerlink" title="m×n矩阵乘以n维列向量"></a>m×n矩阵乘以n维列向量</h3><p><img src="../img/image-20221015140312765.png" alt="image-20221015140312765"></p>
+<h3 id="说明"><a href="#说明" class="headerlink" title="说明"></a>说明</h3><ul>
+<li><p>当n &gt; m的时候，显然这n个向量线性相关，因此不构成基底；</p>
+</li>
+<li><p>当n &lt; m的时候，即使这n个向量线性无关，由于他们不能表示m维空间中的所有向量，因此也不能称之为m维目标空间的基底；</p>
+</li>
+<li><p>当且仅当n = m，且这n个向量线性无关的时候，他们才能称之为目标空间中的一组新的基底。</p>
+</li>
+</ul>
+<h1 id="空间与映射（第二章）"><a href="#空间与映射（第二章）" class="headerlink" title="空间与映射（第二章）"></a>空间与映射（第二章）</h1><h2 id="矩阵-1"><a href="#矩阵-1" class="headerlink" title="矩阵"></a>矩阵</h2><h3 id="空间映射"><a href="#空间映射" class="headerlink" title="空间映射"></a>空间映射</h3><p>由于矩阵乘法的作用，原始向量的空间位置甚至其所在空间的维度和形态都发生了改变，这便是矩阵乘法的空间映射作用。</p>
+<p><img src="../img/image-20221015142426064.png" alt="image-20221015142426064"></p>
+<h3 id="m-lt-n矮胖矩阵空间压缩（降维）"><a href="#m-lt-n矮胖矩阵空间压缩（降维）" class="headerlink" title="m&lt;n矮胖矩阵空间压缩（降维）"></a>m&lt;n矮胖矩阵空间压缩（降维）</h3><p>对2×3矩阵，3个二维向量必然线性相关。下面进行分类讨论：</p>
+<ul>
+<li><p>3个二维目标向量满足不全部共线</p>
+<p>此时，三维空间被矩阵压缩成二维平面。</p>
+<p><img src="../img/image-20221015154309956.png" alt="image-20221015154309956"></p>
+</li>
+<li><p>3个二维向量是共线向量</p>
+<p>被压缩成平面内的一条直线。</p>
+<p><img src="../img/image-20221015154422237.png" alt="image-20221015154422237"></p>
+</li>
+</ul>
+<h3 id="m-gt-n高瘦矩阵无法覆盖目标空间"><a href="#m-gt-n高瘦矩阵无法覆盖目标空间" class="headerlink" title="m&gt;n高瘦矩阵无法覆盖目标空间"></a>m&gt;n高瘦矩阵无法覆盖目标空间</h3><p><strong>一个事物想凭空出现是不可能的。</strong></p>
+<p>对3×2矩阵</p>
+<ul>
+<li><p>两个向量线性无关</p>
+<p>映射到同一<strong>平面</strong>上</p>
+<p><img src="../img/0dd7912397dda1445e1382f9a2e75ea80cf4863a.png" alt="img"></p>
+</li>
+<li><p>两个向量线性相关</p>
+<p>映射到同一<strong>直线</strong>上</p>
+</li>
+</ul>
+<h3 id="n×n方阵"><a href="#n×n方阵" class="headerlink" title="n×n方阵"></a>n×n方阵</h3><p>对3×3矩阵</p>
+<ul>
+<li><p>3个列向量线性无关</p>
+<p>映射后得到仍是<strong>三维空间</strong></p>
+</li>
+<li><p>线性相关但不共线</p>
+<p>映射后到同一<strong>平面</strong></p>
+</li>
+<li><p>线性相关且共线</p>
+<p>映射后到同一条<strong>直线</strong>  </p>
+</li>
+</ul>
+<h3 id="秩"><a href="#秩" class="headerlink" title="秩"></a>秩</h3><p>像空间：一个空间经矩阵映射后得到的新空间</p>
+<p>像空间维度的决定因素：空间映射矩阵各列的线性相关性</p>
+<p>由各列所<strong>张成的空间维数</strong>就是原始空间映射后的像空间维数——秩</p>
+<p>秩也可以说成是<strong>该矩阵线性无关的列的个数</strong></p>
+<p>实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line">A_1 = np.array([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line">              [<span class="number">1</span>, <span class="number">0</span>, <span class="number">1</span>]])</span><br><span class="line"></span><br><span class="line">A_2 = np.array([[<span class="number">1</span>, <span class="number">2</span>, -<span class="number">1</span>],</span><br><span class="line">              [<span class="number">2</span>, <span class="number">4</span>, -<span class="number">2</span>]])</span><br><span class="line"></span><br><span class="line">A_3 = np.array([[<span class="number">1</span>, <span class="number">0</span>],</span><br><span class="line">              [<span class="number">0</span>, <span class="number">1</span>],</span><br><span class="line">              [<span class="number">0</span>, -<span class="number">1</span>]])</span><br><span class="line"></span><br><span class="line">A_4 = np.array([[<span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">              [<span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">              [-<span class="number">1</span>, -<span class="number">2</span>]])</span><br><span class="line"></span><br><span class="line">A_5 = np.array([[<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>],</span><br><span class="line">              [<span class="number">1</span>, <span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">              [<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>]])</span><br><span class="line"></span><br><span class="line"><span class="built_in">print</span>(np.linalg.matrix_rank(A_1))   <span class="comment"># 2</span></span><br><span class="line"><span class="built_in">print</span>(np.linalg.matrix_rank(A_2))   <span class="comment"># 1</span></span><br><span class="line"><span class="built_in">print</span>(np.linalg.matrix_rank(A_3))   <span class="comment"># 2</span></span><br><span class="line"><span class="built_in">print</span>(np.linalg.matrix_rank(A_4))   <span class="comment"># 1</span></span><br><span class="line"><span class="built_in">print</span>(np.linalg.matrix_rank(A_5))   <span class="comment"># 3</span></span><br></pre></td></tr></table></figure>
+<h2 id="逆矩阵和逆映射"><a href="#逆矩阵和逆映射" class="headerlink" title="逆矩阵和逆映射"></a>逆矩阵和逆映射</h2><h3 id="逆矩阵"><a href="#逆矩阵" class="headerlink" title="逆矩阵"></a>逆矩阵</h3><p>如果已知结果向量的坐标<strong>y</strong>去反推原始向量的坐标<strong>x</strong>，这个过程我们就将其称之为逆映射或者逆问题，因为逆映射也是一种映射过程，因此同样有矩阵与之相对应，那么我们就将表征逆映射的矩阵称之为矩阵<strong>A</strong>的逆矩阵，写作：<strong>A<sup> -1</sup></strong> 。</p>
+<h3 id="零空间"><a href="#零空间" class="headerlink" title="零空间"></a>零空间</h3><p>对于给定的矩阵<strong>A</strong>，在映射的作用下满足等式<strong>Ax</strong>=0成立的向量<strong>x</strong>的集合，我们称之为矩阵<strong>A</strong>零空间，记作：<strong>N(A)</strong>。</p>
+<p>如果一个矩阵<strong>A</strong>存在着逆映射，则意味着其映射后的点是要能被唯一还原的，因此显然，矩阵<strong>A</strong>的零空间<strong>N(A)</strong>对应的不能是一维直线或者是一个二维平面，而只能是一个点，也就是原始空间中的零向量。即，如果一个矩阵满足可逆，他的零空间<strong>N(A)</strong>必须是0维的。</p>
+<h3 id="列空间"><a href="#列空间" class="headerlink" title="列空间"></a>列空间</h3><p>一个原始空间经过矩阵<strong>A</strong>的映射得到的对应空间，本质上就是该矩阵各列所有线性组合的结果集合，我们就将其称之为矩阵<strong>A</strong>的列空间<strong>C(A)</strong>。</p>
+<h3 id="逆矩阵存在条件"><a href="#逆矩阵存在条件" class="headerlink" title="逆矩阵存在条件"></a>逆矩阵存在条件</h3><p>首先，<strong>矩阵必须首先得是一个方阵</strong>，否则目标空间中的向量要么<strong>对应多个</strong>原始空间中的向量，要么<strong>找不到</strong>原始空间中的向量。换句话说，在<strong>y=Ax</strong>的映射中，对应在原始空间中的向量<strong>x</strong>的存在性和唯一性至少有一个被破坏了。</p>
+<p>其次，在矩阵<strong>A</strong>是n阶方阵的前提条件下，以下的任意一个条件都与矩阵满足可逆性等价：</p>
+<ul>
+<li><p>矩阵<strong>A</strong>的<strong>零空间的维数为0</strong>，或<strong>列空间的维数为n</strong>； </p>
+</li>
+<li><p>列向量<strong>a<sub>1</sub>, a<sub>2</sub>, a<sub>3</sub>, ……a<sub>n</sub></strong>满足线性无关。</p>
+</li>
+</ul>
+<h3 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> linalg</span><br><span class="line">A = np.array([[<span class="number">1</span>, <span class="number">35</span>, <span class="number">0</span>],</span><br><span class="line">              [<span class="number">0</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">              [<span class="number">0</span>, <span class="number">0</span>, <span class="number">4</span>]])</span><br><span class="line"></span><br><span class="line">A_n = linalg.inv(A)</span><br><span class="line"><span class="built_in">print</span>(A_n)</span><br><span class="line"><span class="built_in">print</span>(np.dot(A, A_n))</span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br><span class="line"><span class="string">运行结果</span></span><br><span class="line"><span class="string">[[  1.    -17.5    13.125]</span></span><br><span class="line"><span class="string"> [  0.      0.5    -0.375]</span></span><br><span class="line"><span class="string"> [  0.      0.      0.25 ]]</span></span><br><span class="line"><span class="string">[[1. 0. 0.]</span></span><br><span class="line"><span class="string"> [0. 1. 0.]</span></span><br><span class="line"><span class="string"> [0. 0. 1.]]</span></span><br><span class="line"><span class="string">&quot;&quot;&quot;</span></span><br></pre></td></tr></table></figure>
+<h2 id="向量空间和子空间"><a href="#向量空间和子空间" class="headerlink" title="向量空间和子空间"></a>向量空间和子空间</h2><h3 id="向量空间"><a href="#向量空间" class="headerlink" title="向量空间"></a>向量空间</h3><p>向量空间当然不仅仅局限于<strong>R<sup>n</sup></strong></p>
+<p>那么针对一个向量集合<strong>V</strong>，如果任取<strong>V</strong>中的两个向量<strong>u</strong>和<strong>v</strong>，只要满足以下两个条件,这个向量集合<strong>V</strong>就构成了一个向量空间。</p>
+<ul>
+<li><p><strong>u+v</strong>仍然存在于<strong>V</strong>中；</p>
+</li>
+<li><p>任取标量c ，满足c<strong>u</strong>仍然也在<strong>V</strong>中。</p>
+</li>
+</ul>
+<h3 id="子空间"><a href="#子空间" class="headerlink" title="子空间"></a>子空间</h3><p>如果一个向量空间<strong>U</strong>，他的子集<strong>V</strong>也是一个向量空间（满足向量加法和标量乘法的性质要求），那么<strong>V</strong>是<strong>U</strong>的子空间。</p>
+<p>一个空间的子空间有以下四种形式： </p>
+<ul>
+<li>空间自身</li>
+<li>空间中过原点的平面</li>
+<li>空间中过原点的直线</li>
+<li>零向量自身</li>
+</ul>
+<p>一个向量空间的任意子空间都必须包含零向量。</p>
+<h3 id="列空间-1"><a href="#列空间-1" class="headerlink" title="列空间"></a>列空间</h3><p>对于这个矩阵A而言，它包含了n个m维的列向量，那么矩阵A的列空间就包含所有这n个m维列向量的线性组合。</p>
+<p>由于各列都在<strong>R<sup>m</sup></strong> 空间中，并且列空间中任意两个向量的和以及任意向量与任意标量的数量积依然都可以表示为列向量的线性组合的形式，意味着矩阵A的列空间<strong>C(A)</strong>是一个向量空间，并且是<strong>R<sup>m</sup></strong> 空间的子空间。</p>
+<h3 id="零空间-1"><a href="#零空间-1" class="headerlink" title="零空间"></a>零空间</h3><p>同样对于一个规模m<em>n的矩阵A而言，所有满足等式<strong>Ax=0</strong>的向量x的集合，就被称之为矩阵<strong>A</strong>的零空间，我们将其记作：<em>*N(A)</em></em>。</p>
+<p>我们依照定义来看，零空间也是一个向量空间，对于一个规模m<em>n的矩阵而言，他的零空间里的向量都是n维的，因此零空间是空间<em>*R<sup>m</sup></em></em>里的一个子空间。</p>
+<h3 id="行空间"><a href="#行空间" class="headerlink" title="行空间"></a>行空间</h3><p>对于规模m×n的矩阵<strong>A</strong>，他的行空间就是由矩阵各行的向量所张成的空间。</p>
+<p>矩阵<strong>A</strong>的行向量就是转置矩阵的列向量  。</p>
+<p>矩阵<strong>A</strong>的行空间就是转置矩阵的列空间，我们将其记作：<strong>C(A<sup>T</sup>)</strong> 。</p>
+<h3 id="左零空间"><a href="#左零空间" class="headerlink" title="左零空间"></a>左零空间</h3><p>对于规模m×n的矩阵<strong>A</strong>，他的左零空间就是转置矩阵<strong>A<sup>T</sup></strong>的零空间，即满足：<strong>A<sup>T</sup>x=0</strong> 等式成立的所有向量的集合，我们将其记作<strong>N(A<sup>T</sup>)</strong></p>
+<h3 id="秩与4个子空间关系"><a href="#秩与4个子空间关系" class="headerlink" title="秩与4个子空间关系"></a>秩与4个子空间关系</h3><p>4个子空间：列空间、零空间、行空间、左零空间</p>
+<ul>
+<li><p>列空间与零空间</p>
+<p>列空间<strong>C(A)</strong>的维度就是矩阵<strong>A</strong>的秩<strong>r</strong>。</p>
+<p>变化前原始空间是n维，线性映射后的列空间是r维，零空间<strong>N(A)</strong>的维数<strong>n-r</strong>。</p>
+</li>
+<li><p>列空间与行空间</p>
+<p>线性无关的行向量个数与线性无关的列向量个数相等。</p>
+<p>列空间<strong>C(A<sup>T</sup>)</strong>的维度也是矩阵<strong>A</strong>的秩<strong>r</strong>。</p>
+</li>
+<li><p>行空间与左零空间</p>
+<p><strong>C(A<sup>T</sup>)</strong>的维度为<strong>r</strong>，<strong>A<sup>T</sup></strong>的原始空间维度是<strong>m</strong>，则左零空间<strong>N(A<sup>T</sup>)</strong>的维度是<strong>m-r</strong>。</p>
+</li>
+</ul>
+<h2 id="解方程组"><a href="#解方程组" class="headerlink" title="解方程组"></a>解方程组</h2><h3 id="解个数决定因素"><a href="#解个数决定因素" class="headerlink" title="解个数决定因素"></a>解个数决定因素</h3><ul>
+<li><p><strong>r=m=n</strong></p>
+<p>方阵映射过程不存在空间压缩，且任意一个向量都在矩阵<strong>A</strong>的列空间上。</p>
+<p>方程组有唯一解</p>
+</li>
+<li><p><strong>r=m&lt;n</strong></p>
+<p>方阵映射过程存在空间压缩。</p>
+<p>方程组有无数多个解</p>
+</li>
+<li><p><strong>r=n&lt;m</strong></p>
+<p>目标空间中挑选的向量<strong>b</strong>可能不在列空间上。</p>
+<p>方程要么无解，要么唯一解</p>
+</li>
+<li><p><strong>r&lt;n&amp;r&lt;m</strong></p>
+<ul>
+<li><p>向量b位于矩阵A的列空间上</p>
+<p>无数个解</p>
+</li>
+<li><p>向量b位于矩阵A的列空间之外</p>
+<p>无解</p>
+</li>
+</ul>
+</li>
+</ul>
+<h3 id="从空间理解"><a href="#从空间理解" class="headerlink" title="从空间理解"></a>从空间理解</h3><p>当方程组有唯一解的时候，他的解就是一个向量。</p>
+<p><img src="../img/image-20221016103358576.png" alt="image-20221016103358576" style="zoom: 80%;" /></p>
+<p>当方程组有无数个解的时候，实质上所有的解向量<strong>x</strong>就构成了一个解的空间，最终方程组解的表达式</p>
+<p><img src="../img/image-20221016103346359.png" alt="image-20221016103346359" style="zoom:50%;" /></p>
+<p>当矩阵<strong>A</strong>是一个满秩方阵的时候，依据定义他的零空间就是一个唯一的零向量。</p>
+<h3 id="实现-1"><a href="#实现-1" class="headerlink" title="实现"></a>实现</h3><p><img src="../img/image-20221016101450786.png" alt="image-20221016101450786" style="zoom:67%;" /></p>
+<p><img src="../img/image-20221016101503453.png" alt="image-20221016101503453" style="zoom:67%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> linalg</span><br><span class="line"></span><br><span class="line">A = np.array([[<span class="number">1</span>, <span class="number">2</span>, <span class="number">3</span>],</span><br><span class="line">              [<span class="number">1</span>, -<span class="number">1</span>, <span class="number">4</span>],</span><br><span class="line">              [<span class="number">2</span>, <span class="number">3</span>, -<span class="number">1</span>]])</span><br><span class="line"></span><br><span class="line">y = np.array([<span class="number">14</span>, <span class="number">11</span>, <span class="number">5</span>])</span><br><span class="line">x = linalg.solve(A, y)</span><br><span class="line"><span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
+<p>结果：[1. 2. 3.]</p>
+<h1 id="近似与拟合（第三章）"><a href="#近似与拟合（第三章）" class="headerlink" title="近似与拟合（第三章）"></a>近似与拟合（第三章）</h1><h2 id="投影"><a href="#投影" class="headerlink" title="投影"></a>投影</h2><h3 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h3><ul>
+<li><p>线性方程组解问题</p>
+<p>没有精确解的情况下，如何获得近似解</p>
+</li>
+<li><p>直线拟合问题</p>
+</li>
+</ul>
+<h3 id="“最近”投影"><a href="#“最近”投影" class="headerlink" title="“最近”投影"></a>“最近”投影</h3><ul>
+<li>向量<strong>b</strong></li>
+<li>投影方向<strong>p</strong></li>
+<li>误差向量<strong>e=b-p</strong>，该长度是最短距离</li>
+<li><strong>p</strong>方向基向量<strong>a</strong>(<strong>A=[a<sub>1</sub> a<sub>2</sub> …… a<sub>n</sub>]</strong>)</li>
+<li>系数x_hat，<strong>p=xa</strong></li>
+<li>投影矩阵<strong>P</strong>,<strong>p=Pb</strong></li>
+</ul>
+<p><img src="../img/image-20221016151953789.png" alt="image-20221016151953789" style="zoom:80%;" /><img src="../img/image-20221016152532253.png" alt="image-20221016152532253" style="zoom: 70%;" /></p>
+<p><img src="../img/image-20221016152010316.png" alt="image-20221016152010316" style="zoom: 67%;" /></p>
+<p><img src="../img/image-20221016152046545.png" alt="image-20221016152046545" style="zoom:67%;" /></p>
+<p><img src="../img/image-20221016152055645.png" alt="image-20221016152055645" style="zoom:67%;" /></p>
+<h2 id="最小二乘法"><a href="#最小二乘法" class="headerlink" title="最小二乘法"></a>最小二乘法</h2><h3 id="互补的子空间"><a href="#互补的子空间" class="headerlink" title="互补的子空间"></a>互补的子空间</h3><p>互补的子空间一方面由不同的基向量所张成，另一方面他们的维数之和为整个空间的维数。空间中的任意一个向量<strong>b</strong>，其在互补子空间上的投影向量之和，就是向量自身。</p>
+<h3 id="正交的子空间"><a href="#正交的子空间" class="headerlink" title="正交的子空间"></a>正交的子空间</h3><p>子空间<strong>V</strong>和子空间<strong>W</strong>满足正交关系成立的条件是：子空间<strong>V</strong>中任意一个向量<strong>v</strong>和子空间<strong>W</strong>中任意一个向量<strong>w</strong>都垂直。</p>
+<p><img src="../img/image-20221016165138248.png" alt="image-20221016165138248"></p>
+<h3 id="相互正交补的子空间"><a href="#相互正交补的子空间" class="headerlink" title="相互正交补的子空间"></a>相互正交补的子空间</h3><p><strong>R<sup>m</sup></strong>空间中的两个互补的子空间，如果满足相互正交的关系，则他们满足正交补的关系，他们的空间维数之和应该为m。</p>
+<p><img src="../img/image-20221016165454746.png" alt="image-20221016165454746"></p>
+<p><img src="../img/image-20221016165502309.png" alt="image-20221016165502309"></p>
+<p>结论</p>
+<ul>
+<li>矩阵 A行空间和零空间满足正交补的关系</li>
+<li>转置矩阵的行空间和零空间当然也是相互正交的，因此，矩阵 A的列空间和左零空间在中同样满足正交补的关系</li>
+</ul>
+<h3 id="近似解"><a href="#近似解" class="headerlink" title="近似解"></a>近似解</h3><p>套用公式<img src="../img/image-20221016170012977.png" alt="image-20221016170012977">进行求解。</p>
+<p><img src="../img/image-20221016170026173.png" alt="image-20221016170026173" style="zoom: 33%;" /></p>
+<p>n维空间中的向量<strong>x</strong>和向量<strong>y</strong>的距离<img src="../img/image-20221016170222883.png" alt="image-20221016170222883" style="zoom: 50%;" /></p>
+<p>实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> linalg</span><br><span class="line"></span><br><span class="line">A = np.array([[<span class="number">2</span>, <span class="number">1</span>],</span><br><span class="line">              [<span class="number">1</span>, <span class="number">2</span>],</span><br><span class="line">              [<span class="number">1</span>, <span class="number">4</span>]])</span><br><span class="line"></span><br><span class="line">b = np.array([[<span class="number">4</span>],</span><br><span class="line">              [<span class="number">3</span>],</span><br><span class="line">              [<span class="number">9</span>]])</span><br><span class="line"></span><br><span class="line">A_T_A = np.dot(A.T,A)</span><br><span class="line">x = np.dot(np.dot(linalg.inv(A_T_A),A.T),b)</span><br><span class="line"><span class="built_in">print</span>(x)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<p>[[0.83870968]<br> [1.87096774]]</p>
+<h3 id="最小二乘线性拟合"><a href="#最小二乘线性拟合" class="headerlink" title="最小二乘线性拟合"></a>最小二乘线性拟合</h3><p>最小二乘法的目标就是使得误差向量<strong>e</strong>的模长最小，这个最优化的目标就被表示为：</p>
+<p><img src="../img/image-20221016170432016.png" alt="image-20221016170432016" style="zoom:67%;" /></p>
+<p>两个要点：</p>
+<ul>
+<li><p>绘制一条距离三个点最近的直线，判定的指标是三个点到直线的竖直线，而不是直观上最容易想到的垂直线。</p>
+</li>
+<li><p>为什么叫最小二乘，最小二乘就是最小平方的意思，我们的优化目标就是去求解三条竖直线长度的平方和开根号后的最小值。</p>
+</li>
+</ul>
+<h2 id="施密特正交化——寻找最佳投影基"><a href="#施密特正交化——寻找最佳投影基" class="headerlink" title="施密特正交化——寻找最佳投影基"></a>施密特正交化——寻找最佳投影基</h2><h3 id="简化投影计算"><a href="#简化投影计算" class="headerlink" title="简化投影计算"></a>简化投影计算</h3><p>若矩阵<strong>A<sup>T</sup>A</strong>相乘的结果是一个单位矩阵<strong>I</strong>那真的就好了，由于单位矩阵<strong>I</strong>满足等式<strong>I<sup>-1</sup>=I</strong>成立，那么投影向量<strong>p</strong>的表达式就可以变得特别简单<strong>p=AI<sup>-1</sup>A<sup>T</sup>b=AA<sup>T</sup>b</strong>。</p>
+<h3 id="标准正交化"><a href="#标准正交化" class="headerlink" title="标准正交化"></a>标准正交化</h3><p><img src="../img/image-20221016174553927.png" alt="image-20221016174553927"></p>
+<p>如果想要得到的最终结果，则我们选取的这一组列向量必须满足以下两个条件</p>
+<ul>
+<li><p>在结果矩阵中，矩阵对角线上的元素必须都为1，即当<strong>i=j,q<sub>i</sub><sup>T</sup>q<sub>j</sub>=1</strong></p>
+</li>
+<li><p>在结果矩阵中，矩阵非对角线上的元素必须都为0，即当<strong>i≠j,q<sub>i</sub><sup>T</sup>q<sub>j</sub>=0</strong></p>
+</li>
+</ul>
+<p><strong>QQ<sup>T</sup>=I</strong>,<strong>Q</strong>不要求是方阵，当Q是方阵时，<strong>Q<sup>T</sup>=Q<sup>-1</sup></strong></p>
+<h3 id="向标准正交向量上投影"><a href="#向标准正交向量上投影" class="headerlink" title="向标准正交向量上投影"></a>向标准正交向量上投影</h3><p>我们用正交矩阵<strong>Q</strong>来代替一般矩阵<strong>A</strong>，同时由于<strong>Q<sup>T</sup>Q=I</strong>的原因，之前推导出的投影向量<strong>p</strong>和投影向量<strong>P</strong>的表达式都得以简化：<img src="../img/image-20221016175131176.png" alt="image-20221016175131176" style="zoom:50%;" /></p>
+<h3 id="施密特正交化"><a href="#施密特正交化" class="headerlink" title="施密特正交化"></a>施密特正交化</h3><p>任意选取三个线性无关的向量：<strong>a</strong>，<strong>b</strong>，<strong>c</strong>，探索如何在他们的基础上最终通过运算</p>
+<p>获得一组标准正交向量<strong>q<sub>1</sub>q<sub>2</sub>q<sub>3</sub></strong>来作为三维空间   中更优的一组新基。</p>
+<p>思路：首先从a，b，c三个向量中，通过运算变换得出三个<strong><em>q<sub>1</sub>q<sub>2</sub>q<sub>3</sub></em></strong>然后再分别将其转化成模长为1的单位向量，由此得到最终的结果：一组标准正交向量。</p>
+<p><img src="../img/image-20221016175408957.png" alt="image-20221016175408957" style="zoom:50%;" /></p>
+<p><img src="../img/e1197b06de0d4480a41f4a971125a80a.png" alt="img"></p>
+<h1 id="相似与特征（第四章）"><a href="#相似与特征（第四章）" class="headerlink" title="相似与特征（第四章）"></a>相似与特征（第四章）</h1><h2 id="相似变换"><a href="#相似变换" class="headerlink" title="相似变换"></a>相似变换</h2><h3 id="坐标值取决于基底"><a href="#坐标值取决于基底" class="headerlink" title="坐标值取决于基底"></a>坐标值取决于基底</h3><p>对于一个指定的向量而言，他在空间中的位置是绝对的，而他的坐标值却是相对的。向量坐标的取值依托于空间中所选取的基底。更直白的说法就是，对于同一个向量，如果选取的基底不同，其所对应的坐标值就不同。</p>
+<p><img src="../img/image-20221017083624242.png" alt="image-20221017083624242"></p>
+<h3 id="描述线性变换的矩阵也取决于基底"><a href="#描述线性变换的矩阵也取决于基底" class="headerlink" title="描述线性变换的矩阵也取决于基底"></a>描述线性变换的矩阵也取决于基底</h3><p>一个向量可以从某个空间中的位置<strong>P</strong>移动到位置<strong>Q</strong>，这里可以用一个特定的矩阵来表示向量空间位置的改变过程。如果我们选取的基底不同，同一个运动在不同基底下，显然对应的矩阵表示也应该是不同的。</p>
+<p><img src="../img/image-20221017083733471.png" alt="image-20221017083733471"></p>
+<h3 id="相似矩阵和相似变换"><a href="#相似矩阵和相似变换" class="headerlink" title="相似矩阵和相似变换"></a>相似矩阵和相似变换</h3><ul>
+<li>相似矩阵：指定向量的同一个空间变换，用来在不同基底下进行描述的不同矩阵，彼此之间称之为相似矩阵</li>
+<li>相似变换：相似矩阵所表示的线性变换，彼此之间称之为相似变换</li>
+</ul>
+<h3 id="利用基底变换推导相似矩阵间的关系式"><a href="#利用基底变换推导相似矩阵间的关系式" class="headerlink" title="利用基底变换推导相似矩阵间的关系式"></a>利用基底变换推导相似矩阵间的关系式</h3><p><img src="../img/image-20221017084108811.png" alt="image-20221017084108811"></p>
+<p>在基底 <strong>(e<sub>1</sub>, e<sub>2</sub>)</strong>下，坐标为<strong>x</strong>的向量通过矩阵<strong>A</strong>完成了线性变换的过程，线性变换后的向量坐标为x’，我们也可以通过矩阵<strong>P</strong>，将向量变换到新基底<strong>(e<sub>1</sub>‘, e<sub>2</sub>‘)</strong>下的坐标表示，即用新的基底下的坐标来表示向量，记作<strong>Px</strong>。</p>
+<p>上述变换过程的矩阵 <strong>A=P<sup>-1</sup>BP</strong></p>
+<h3 id="相似矩阵中的最佳矩阵"><a href="#相似矩阵中的最佳矩阵" class="headerlink" title="相似矩阵中的最佳矩阵"></a>相似矩阵中的最佳矩阵</h3><p>结论：<span style="color: red;">对角矩阵</span></p>
+<p><img src="../img/image-20221017084526388.png" alt="image-20221017084526388" style="zoom:67%;" /></p>
+<p>优势：</p>
+<ul>
+<li><p>一个n维列向量在n阶对角矩阵的作用下，其线性变换的方式仅仅反映在<strong>各个维度轴向上的长度拉伸，而不对应着平移或者旋转变换</strong>。</p>
+<p><img src="../img/image-20221017084554339.png" alt="image-20221017084554339" style="zoom:67%;" /></p>
+</li>
+<li><p>对角矩阵的优势之处还体现在连续的线性变换上连续的线性变换用矩阵的乘法来表示。</p>
+<p><img src="../img/image-20221017084632894.png" alt="image-20221017084632894" style="zoom: 50%;" /></p>
+</li>
+</ul>
+<h3 id="对角矩阵的构造方法"><a href="#对角矩阵的构造方法" class="headerlink" title="对角矩阵的构造方法"></a>对角矩阵的构造方法</h3><p>寻找到一个可逆矩阵P，使得转换后的结果为<strong>P<sup>-1</sup>BP=Λ</strong></p>
+<p><img src="../img/image-20221017084841893.png" alt="image-20221017084841893" style="zoom:50%;" /></p>
+<h2 id="对角化"><a href="#对角化" class="headerlink" title="对角化"></a>对角化</h2><p>基本含义：只有主对角线上含有非零元素</p>
+<h3 id="构造对角化转换矩阵P的思路"><a href="#构造对角化转换矩阵P的思路" class="headerlink" title="构造对角化转换矩阵P的思路"></a>构造对角化转换矩阵P的思路</h3><p>通过<img src="../img/image-20221017092058977.png" alt="image-20221017092058977" style="zoom:67%;" />的矩阵乘法形式得到矩阵A的相似对角矩阵。</p>
+<p><img src="../img/image-20221017092105579.png" alt="image-20221017092105579" style="zoom: 80%;" />       （p<sub>i</sub>为向量）      </p>
+<p><strong>AP=PΛ</strong></p>
+<p><img src="../img/image-20221017093117927.png" alt="image-20221017093117927" style="zoom: 50%;" /></p>
+<p>进一步具体化：</p>
+<p>① 我们需要找到满足上述等式的这一组向量<img src="../img/image-20221017093200021.png" alt="image-20221017093200021" style="zoom:67%;" /></p>
+<p>② 我们把与向量<img src="../img/image-20221017093220361.png" alt="image-20221017093220361" style="zoom:67%;" /> 分别对应的值<img src="../img/image-20221017093232874.png" alt="image-20221017093232874" style="zoom:67%;" />依照顺序沿着对角线进行排列，就构成了与矩阵 A 相似的对角矩阵：</p>
+<p><img src="../img/image-20221017093303885.png" alt="image-20221017093303885" style="zoom:67%;" /></p>
+<p><img src="../img/image-20221017182839077.png" alt="image-20221017182839077"></p>
+<h3 id="特征向量和特征值"><a href="#特征向量和特征值" class="headerlink" title="特征向量和特征值"></a>特征向量和特征值</h3><p><strong>Ap=λp</strong>的非零列向量<strong>p<sub>i</sub></strong>和与之对应的标量值 λ<sub>i</sub>，我们分别将其称之为方阵<strong>A</strong>的<strong>特征向量</strong>和<strong>特征值</strong>。</p>
+<p><span style="color: red;">在方阵<strong>A</strong>的变换作用下，特征向量<strong>p</strong>的线性变换就是在其向量方向上进行λ倍的伸缩变换</span>【几何意义】。</p>
+<ul>
+<li><p>矩阵<strong>P</strong>要求必须是可逆的，也就是说方阵<strong>A</strong>的特征向量必须满足线性无关，这样矩阵<strong>A</strong>才能进行对角化。</p>
+</li>
+<li><p><strong>(A-λI)p=0</strong>,用向量<strong>p</strong>位于矩阵的零空间中，由于向量<strong>p</strong>有非零向量的前提条件，因此矩阵是一个不可逆矩阵。</p>
+</li>
+</ul>
+<h2 id="特征向量与特征值"><a href="#特征向量与特征值" class="headerlink" title="特征向量与特征值"></a>特征向量与特征值</h2><h3 id="几何意义"><a href="#几何意义" class="headerlink" title="几何意义"></a>几何意义</h3><p>这个有关矩阵特征向量和特征值的核心表达式：从空间几何意义的角度来理解，对于一个方阵A，若向量p是他的特征向量，标量值λ是对应的特征值，则意味着向量p在方阵A的作用下，他的空间变换就是其长度沿着向量的方向进行λ倍的伸缩。</p>
+<h3 id="基本几何性质"><a href="#基本几何性质" class="headerlink" title="基本几何性质"></a>基本几何性质</h3><ul>
+<li><p>矩阵特征值为0的情况</p>
+<p>若方阵某个特征值0，Ap=λp=0，表示空间压缩变换。</p>
+<p>是个<strong>不可逆矩阵</strong>，即奇异矩阵。</p>
+</li>
+<li><p>对角矩阵的情况</p>
+<p>对角矩阵的对角线各元素是他的特征值</p>
+</li>
+<li><p>相似矩阵的情况</p>
+<p>矩阵<strong>A</strong>的特征向量为<strong>p</strong>，特征值为λ，相似矩阵S<sup>-1</sup>AS的特征值保持不变，特征向量变为S<sup>-1</sup>p。推导：</p>
+<p><strong>(S<sup>-1</sup>AS)<span style="color: blue;">(S<sup>-1</sup>p)</span>=S<sup>-1</sup>ASS<sup>-1</sup>p=S<sup>-1</sup>Ap=S<sup>-1</sup>λp=λ<span style="color: blue;">(S<sup>-1</sup>p)</span></strong></p>
+</li>
+</ul>
+<h3 id="特征向量的线性无关性"><a href="#特征向量的线性无关性" class="headerlink" title="特征向量的线性无关性"></a>特征向量的线性无关性</h3><p>如果一个n阶方阵<strong>A</strong>，有n个<strong>两两不相同</strong>的特征值：<img src="../img/image-20221017150838376.png" alt="image-20221017150838376" style="zoom:67%;" />，那么这些特征值所对应的一组特征向量      <img src="../img/image-20221017150902839.png" alt="image-20221017150902839" style="zoom:67%;" /> ，具备彼此之间线性无关的特性。</p>
+<h3 id="实现-2"><a href="#实现-2" class="headerlink" title="实现"></a>实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy <span class="keyword">import</span> linalg</span><br><span class="line"></span><br><span class="line">A = np.array([[<span class="number">2</span>, <span class="number">1</span>],</span><br><span class="line">              [<span class="number">1</span>, <span class="number">2</span>]])</span><br><span class="line">evalue, evector = linalg.eig(A)</span><br><span class="line"><span class="built_in">print</span>(evalue)</span><br><span class="line"><span class="built_in">print</span>(evector)</span><br></pre></td></tr></table></figure>
+<p>对于一个n阶方阵<strong>A</strong>，包括多重特征值在内，一共有n个特征值。对于任意特征值，如果对应的线性无关的特征向量与其重数相同，换句话说，即该矩阵<strong>A</strong>一共有n个线性无关的特征向量，那么由矩阵<strong>A</strong>的特征向量所组成的特征矩阵就是可逆矩阵，矩阵<strong>A</strong>就可以被对角化。</p>
+<h1 id="降维与压缩（第五章）"><a href="#降维与压缩（第五章）" class="headerlink" title="降维与压缩（第五章）"></a>降维与压缩（第五章）</h1><h2 id="对称矩阵"><a href="#对称矩阵" class="headerlink" title="对称矩阵"></a>对称矩阵</h2><h3 id="对称矩阵基本特性"><a href="#对称矩阵基本特性" class="headerlink" title="对称矩阵基本特性"></a>对称矩阵基本特性</h3><p>一个对称矩阵通过转置操作得到的结果仍然是他自身，即满足：<img src="../img/image-20221017171941847.png" alt="image-20221017171941847" style="zoom:50%;" /> 的运算要求</p>
+<p>对阵矩阵<strong>S</strong>所蕴含的一个前提条件：他必须是一个方阵。</p>
+<p>有一种获取对称矩阵的简单方法：一个矩阵乘以自己的转置矩阵，其所得到的运算结果必然是一个对称矩阵。</p>
+<p><img src="../img/image-20221017172019311.png" alt="image-20221017172019311" style="zoom: 50%;" /></p>
+<h3 id="实对称矩阵一定可以对角化"><a href="#实对称矩阵一定可以对角化" class="headerlink" title="实对称矩阵一定可以对角化"></a>实对称矩阵一定可以对角化</h3><p>对于一个<strong>任意的方阵</strong>，如果他的特征值两两不同，那么特征值所对应的特征向量彼此之间满足线性无关，这个方阵<strong>可以被对角化</strong>。</p>
+<p>如果方阵有相同的特征值，他很可能存在<strong>线性相关</strong>的特征向量，那么如果发生了这种情况，该方阵就<strong>不能够被对角化</strong>了。</p>
+<p>对于<span style="color: red;">任意一个实数对称矩阵</span>而言，他都<span style="color: red;">一定可以被对角化</span>。</p>
+<p>换句话说，对于一个对称矩阵，无论他的特征值是否重复，他的<span style="color: red;">特征向量都一定满足线性无关</span>。</p>
+<p><img src="../img/image-20221017184021086.png" alt="image-20221017184021086" style="zoom:50%;" /></p>
+<h3 id="特征向量标准正交"><a href="#特征向量标准正交" class="headerlink" title="特征向量标准正交"></a>特征向量标准正交</h3><p>任意一个实对称矩阵都可以获得一组标准正交的特征向量。</p>
+<p>首先，实对称矩阵<strong>S</strong>一定能够被对角化，可以被写成的<img src="../img/image-20221017183042823.png" alt="image-20221017183042823" style="zoom:50%;" /> 形式，其中对角矩阵<strong>Λ</strong>的各元素一定均由实数构成，并且最为关键的一点是任何一个对称矩阵分解得到的特征向量矩阵都可以是标准正交矩阵。</p>
+<p>推导过程：<strong>S=S<sup>T</sup></strong>    =&gt;   <img src="../img/image-20221017183145786.png" alt="image-20221017183145786" style="zoom:50%;" /></p>
+<p>要使该等式相等，需要满足对应位置元素相等，因此<strong>X<sup>-1</sup>=X<sup>T</sup></strong>.</p>
+<p>实对称矩阵的对角化过程变换成更好的形式，写作<img src="../img/image-20221017183704719.png" alt="image-20221017183704719" style="zoom:50%;" />.</p>
+<h3 id="对称矩阵的分解形式"><a href="#对称矩阵的分解形式" class="headerlink" title="对称矩阵的分解形式"></a>对称矩阵的分解形式</h3><p>对称矩阵<strong>S</strong>一定可以得到由一组标准正交特征向量所构成的特征矩阵<strong>Q</strong>。即，矩阵<strong>Q</strong>可以表示成<img src="../img/image-20221017184235774.png" alt="image-20221017184235774" style="zoom:67%;" /> 的形式。</p>
+<p><img src="../img/image-20221017184250016.png" alt="image-20221017184250016" style="zoom: 33%;" /></p>
+<p>广义理解为方阵之间满足”正交”。</p>
+<h3 id="AAT与ATA的秩"><a href="#AAT与ATA的秩" class="headerlink" title="AAT与ATA的秩"></a>AA<sup>T</sup>与A<sup>T</sup>A的秩</h3><p>对于任意一个m×n形状的矩阵<strong>A</strong>，他的列向量中线性无关向量的个数等于其行向量中线性无关向量的个数。</p>
+<p><strong>Ax=0</strong>与<strong>A<sup>T</sup>Ax=0</strong>同解，矩阵<strong>A</strong>和矩阵<strong>A<sup>T</sup>A</strong>这两个矩阵拥有相同的零空间。</p>
+<p>结论：</p>
+<p><img src="../img/image-20221017184624844.png" alt="image-20221017184624844" style="zoom:67%;" /></p>
+<h3 id="ATA对称矩阵的正定性描述"><a href="#ATA对称矩阵的正定性描述" class="headerlink" title="ATA对称矩阵的正定性描述"></a>A<sup>T</sup>A对称矩阵的正定性描述</h3><p>如果一个矩阵的所有特征值都为正，我们称他是“正定的”矩阵，如果均为非负（即，最小的特征值为0），相当于结论上稍稍弱了一些，我们称之为“半正定的”矩阵，如果他含有负的特征值，那么显然，他是非正定的。</p>
+<p>就正定性而言，一般的对称矩阵其实没有太多的特殊性，他的<strong>特征值一定是非负的</strong>，换句话说，他至少是半正定的。</p>
+<p>实对称矩阵中非零特征值的个数等于该矩阵的秩。这个结论非常明显：因为矩阵A与相似对角化后的矩阵  拥有相同的特征值，同时由于相似性可知：这两个矩阵的秩相等。</p>
+<p>结论：对称矩阵<strong>A<sup>T</sup>A</strong>的所有特征值都满足非负性，如果<strong>A</strong>的列向量满足线性无关，则该矩阵是一个正定矩阵，其特征值均为正。</p>
+<h3 id="AAT与ATA的特征值"><a href="#AAT与ATA的特征值" class="headerlink" title="AAT与ATA的特征值"></a>AA<sup>T</sup>与A<sup>T</sup>A的特征值</h3><p>AA<sup>T</sup>与A<sup>T</sup>A拥有完全一样的非零特征值。</p>
+<h3 id="对称矩阵的性质总结"><a href="#对称矩阵的性质总结" class="headerlink" title="对称矩阵的性质总结"></a>对称矩阵的性质总结</h3><p><img src="../img/image-20221017190247416.png" alt="image-20221017190247416" style="zoom: 50%;" /></p>
+<h2 id="数据分布的度量"><a href="#数据分布的度量" class="headerlink" title="数据分布的度量"></a>数据分布的度量</h2><h3 id="期望与方差"><a href="#期望与方差" class="headerlink" title="期望与方差"></a>期望与方差</h3><ul>
+<li><p>期望</p>
+<p>衡量的是一组变量  取值分布的平均值，我们一般将其记作<img src="../img/image-20221018100754782.png" alt="image-20221018100754782" style="zoom:67%;" /></p>
+</li>
+<li><p>方差</p>
+<p>反映的是一组数据的离散程度。通俗的说就是：对于一组数据而言你，其方差越大，数据的分布就越发散，而方差越小，数据的分布就越集中。</p>
+<p>定义式：<img src="../img/image-20221018100844149.png" alt="image-20221018100844149" style="zoom:67%;" />，其中μ=E[X]</p>
+</li>
+<li><p>实现</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">eng, mat, phy = np.loadtxt(<span class="string">&#x27;score.csv&#x27;</span>, delimiter=<span class="string">&#x27;,&#x27;</span>,</span><br><span class="line">                           usecols=(<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>), unpack=<span class="literal">True</span>)</span><br><span class="line"><span class="built_in">print</span>(eng.mean(), mat.mean(), phy.mean())</span><br><span class="line"><span class="built_in">print</span>(np.cov(eng), np.cov(mat), np.cov(phy))</span><br></pre></td></tr></table></figure>
+<p>数据（score.csv）：</p>
+<p>| 78   | 95   | 98   |<br>| —— | —— | —— |<br>| 79   | 80   | 77   |<br>| 72   | 65   | 58   |<br>| 85   | 90   | 90   |<br>| 74   | 71   | 75   |<br>| 72   | 56   | 62   |<br>| 70   | 77   | 80   |<br>| 92   | 84   | 79   |<br>| 88   | 100  | 99   |<br>| 81   | 88   | 83   |</p>
+<p>结果：</p>
+<p>79.1 80.6 80.1<br>54.98888888888888 188.04444444444442 181.87777777777777</p>
+</li>
+</ul>
+<h3 id="协方差与协方差矩阵"><a href="#协方差与协方差矩阵" class="headerlink" title="协方差与协方差矩阵"></a>协方差与协方差矩阵</h3><p>对于随机变量<strong>X</strong>和<strong>Y</strong>，二者的协方差定义：<img src="../img/image-20221018101145128.png" alt="image-20221018101145128" style="zoom:67%;" />,其中μ，v分别是随机变量X和随机变量Y的期望。</p>
+<p>当随机变量X和随机变量Y的协方差为正的时候，表示当X增大时，Y也倾向于随之增大；而当协方差为负时，表示当X增大，Y却倾向于减小；当协方差为0时，表示当X增大时，Y没有明显的增大或减小的倾向，二者是相互独立的。</p>
+<p>协方差矩阵表达：<img src="../img/image-20221018101439944.png" alt="image-20221018101439944"></p>
+<p>实现：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">eng, mat, phy = np.loadtxt(<span class="string">&#x27;score.csv&#x27;</span>, delimiter=<span class="string">&#x27;,&#x27;</span>,</span><br><span class="line">                           usecols=(<span class="number">0</span>, <span class="number">1</span>, <span class="number">2</span>), unpack=<span class="literal">True</span>)</span><br><span class="line">S = np.vstack((eng,mat,phy))</span><br><span class="line"><span class="built_in">print</span>(np.cov(S))</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p>[[ 54.98888889  70.82222222  56.76666667]<br> [ 70.82222222 188.04444444 175.15555556]<br> [ 56.76666667 175.15555556 181.87777778]]</p>
+<p>显然，协方差矩阵是一个对称矩阵</p>
+<p>总结：<strong>方差度量了变量自身的离散程度，而协方差矩阵表征了两组随机变量之间的<span style="color: red;">相关程度</span></strong>。</p>
+<h2 id="利用特征值分解（EVD）期望与方差主成分分析（PCA）"><a href="#利用特征值分解（EVD）期望与方差主成分分析（PCA）" class="headerlink" title="利用特征值分解（EVD）期望与方差主成分分析（PCA）"></a>利用特征值分解（EVD）期望与方差主成分分析（PCA）</h2><h3 id="数据降维的需求背景"><a href="#数据降维的需求背景" class="headerlink" title="数据降维的需求背景"></a>数据降维的需求背景</h3><p>随着样本特征属性数量的增多，我们需要分析处理的数据量也是直线上升的，在进行样本聚类、回归等数据分析的过程中，样本的数据维度过大，无疑会使得问题的研究变得愈加复杂。</p>
+<p>因此，这种现状让我们感觉到，用这么多彼此相关的特征属性去描述一件事物，一方面非常复杂，另一方面似乎也显得不是那么有必要。我们希望能在原有基础上减少特征属性的数量。</p>
+<h3 id="数据降维目标"><a href="#数据降维目标" class="headerlink" title="数据降维目标"></a>数据降维目标</h3><ul>
+<li><p><strong>特征维度要变小</strong>，不能使用那么多的特征属性了。</p>
+</li>
+<li><p>描述样本的信息<strong>损失要尽量少</strong>。数据降维，一定伴随着信息的损失，但是如果损失的太多了，自然也就失去了意义。</p>
+</li>
+</ul>
+<h3 id="主成分分析法降维的思路"><a href="#主成分分析法降维的思路" class="headerlink" title="主成分分析法降维的思路"></a>主成分分析法降维的思路</h3><ul>
+<li><p>要考虑去除掉特征之间的相关性，想法是创造另一组新的特征来描述样本，并且新的特征必须彼此之间不相关。</p>
+</li>
+<li><p>在新的彼此无关的特征集中，舍弃掉不重要的特征，保留较少的特征，实现数据的特征维度降维，保持尽量少的信息损失。</p>
+</li>
+</ul>
+<p><img src="../img/image-20221018102433498.png" alt="image-20221018102433498" style="zoom: 50%;" /></p>
+<p>很明显简单粗暴地降维是不可取的</p>
+<h3 id="剖析PCA"><a href="#剖析PCA" class="headerlink" title="剖析PCA"></a>剖析PCA</h3><p><strong>构造彼此无关的新特征</strong></p>
+<p>要让两个特征彼此无关，则要让这两个新特征的协方差为0。而原始特征的协方差不为0。</p>
+<p>实施主成分分析的具体方法：</p>
+<ul>
+<li><p>如果X和Y的均值都为0，那么协方差的式子就会变得简单。</p>
+<p>协方差定义：<img src="../img/image-20221018103013652.png" alt="image-20221018103013652" style="zoom:50%;" /> </p>
+<p>操作方法：每个变量减去其均值，X每个变量减去μ，Y每个变量减去v。</p>
+<p>不会改变方差与协方差，离散程度没有改变。</p>
+<p>经过<span style="color: red;">零均值化</span>处理后的X和Y协方差矩阵如下：</p>
+<p><img src="../img/image-20221018103223236.png" alt="image-20221018103223236"></p>
+</li>
+<li><p>显然</p>
+<p><img src="../img/image-20221018103328688.png" alt="image-20221018103328688" style="zoom:67%;" /></p>
+<p>C是对称、正定的满秩矩阵，一定能对角化，且特征值都是正的</p>
+</li>
+<li><p>取一组新基表达，要求彼此正交</p>
+<p>问题变为寻找让C对角化的矩阵P</p>
+<p>使用前面结论：对称矩阵一定可以得到由一组标准正交特征向量构成的特征矩阵<strong>Q</strong>，<strong>P=Q<sup>T</sup></strong>。</p>
+</li>
+</ul>
+<h3 id="实现-3"><a href="#实现-3" class="headerlink" title="实现"></a>实现</h3><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = [<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">8</span>,<span class="number">4</span>]</span><br><span class="line">y = [<span class="number">2</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">8</span>]</span><br><span class="line">S = np.vstack((x,y))</span><br><span class="line"><span class="built_in">print</span>(np.cov(S))</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p>[[6. 4.]<br> [4. 6.]]</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">x = [<span class="number">2</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">8</span>,<span class="number">4</span>]</span><br><span class="line">y = [<span class="number">2</span>,<span class="number">6</span>,<span class="number">6</span>,<span class="number">8</span>,<span class="number">8</span>]</span><br><span class="line"></span><br><span class="line">x = x - np.mean(x)</span><br><span class="line">y = y - np.mean(y)</span><br><span class="line">S = np.vstack((x,y))</span><br><span class="line"><span class="built_in">print</span>(S)</span><br><span class="line"><span class="built_in">print</span>(np.cov(S))</span><br></pre></td></tr></table></figure>
+<p>结果：<br>[[-2. -2.  0.  4.  0.]<br> [-4.  0.  0.  2.  2.]]<br>[[6. 4.]<br> [4. 6.]]</p>
+<h3 id="新特征取舍"><a href="#新特征取舍" class="headerlink" title="新特征取舍"></a>新特征取舍</h3><p>最大方差理论:方差越大，信息量就越大。</p>
+<p>方差越大的特征，表明这个特征里数据分布的离散程度就越大，特征所包含的信息量就越大；反之，如果特征里数据的方差小，则意味着数据分布集中，表明其包含的信息量就小。</p>
+<p>方差λ就是方阵C的特征值</p>
+<p>主成分贡献率：<img src="../img/image-20221018111631885.png" alt="image-20221018111631885" style="zoom: 33%;" /></p>
+<h3 id="n个特征的降维"><a href="#n个特征的降维" class="headerlink" title="n个特征的降维"></a>n个特征的降维</h3><p><img src="../img/image-20221018111716409.png" alt="image-20221018111716409"></p>
+<h2 id="奇异值分解（SVD）"><a href="#奇异值分解（SVD）" class="headerlink" title="奇异值分解（SVD）"></a>奇异值分解（SVD）</h2><h3 id="Av-σu奇异值分解"><a href="#Av-σu奇异值分解" class="headerlink" title="Av=σu奇异值分解"></a>Av=σu奇异值分解</h3><p>矩阵<strong>A</strong>是一个m×n形状的矩阵，他所表示的线性变换是将n维原空间中的向量映射到更高维的m维目标空间中去，这个等式<img src="../img/image-20221020225154033.png" alt="image-20221020225154033" style="zoom:50%;" />意味着在原空间中找到一组新的标准正交向量<img src="../img/image-20221020225147324.png" alt="image-20221020225147324" style="zoom:80%;" />在目标空间中存在着对应的一组标准正交向量<img src="../img/image-20221020225222279.png" alt="image-20221020225222279" style="zoom:67%;" />。</p>
+<p>当矩阵A作用在原空间上的某个基向量<img src="../img/image-20221020225248649.png" alt="image-20221020225248649" style="zoom:80%;" />上时，其线性变换的结果就是对应在目标空间中的基向量<img src="../img/image-20221020225314049.png" alt="image-20221020225314049" style="zoom: 50%;" />沿着自身方向伸长<img src="../img/image-20221020225320811.png" alt="image-20221020225320811" style="zoom: 50%;" />倍。</p>
+<p><img src="../img/image-20221020225724898.png" alt="image-20221020225724898" style="zoom:80%;" /></p>
+<p><img src="../img/image-20221020225734197.png" alt="image-20221020225734197" style="zoom:67%;" /></p>
+<p><img src="../img/image-20221020230232592.png" alt="image-20221020230232592"></p>
+<h3 id="分解过程中的细节"><a href="#分解过程中的细节" class="headerlink" title="分解过程中的细节"></a>分解过程中的细节</h3><p>在维数不等的原空间和目标空间中各找一组标准正交基，就轻轻松松的把对角化的一系列苛刻要求给化解掉了。直接得到了数据采样矩阵<strong>A</strong>的矩阵分解形式<img src="../img/image-20221020230324026.png" alt="image-20221020230324026" style="zoom:67%;" /></p>
+<p><img src="../img/image-20221020230338769.png" alt="image-20221020230338769" style="zoom:80%;" /></p>
+<p><img src="../img/image-20221020230351289.png" alt="image-20221020230351289" style="zoom:50%;" /></p>
+<p><img src="../img/resize,m_fixed,w_750.webp" alt="【李航】统计学习方法--15. 奇异值分解（详细推导）_线性代数"></p>
+<p>【学长小课堂】什么是奇异值分解SVD—SVD如何分解时空矩阵</p>
+<div style="position: relative; padding: 30% 45%;">
+<iframe style="position: absolute; width: 100%; height: 100%; left: 0; top: 0;" src="//player.bilibili.com/player.html?bvid=BV16A411T7zX" scrolling="no" border="0" frameborder="no" framespacing="0" allowfullscreen="true"> </iframe>
+</div>
+
+<h2 id="利用奇异值分解进行数据降维"><a href="#利用奇异值分解进行数据降维" class="headerlink" title="利用奇异值分解进行数据降维"></a>利用奇异值分解进行数据降维</h2><h3 id="数据降维"><a href="#数据降维" class="headerlink" title="数据降维"></a>数据降维</h3><ul>
+<li><p>行压缩数据降维</p>
+<p><img src="../img/image-20221020230429893.png" alt="image-20221020230429893"></p>
+</li>
+<li><p>列压缩数据降维</p>
+<p><img src="../img/image-20221020230458929.png" alt="image-20221020230458929"></p>
+</li>
+<li><p>对矩阵整体进行数据压缩</p>
+<p><img src="../img/image-20221020230519015.png" alt="image-20221020230519015"></p>
+</li>
+</ul>
+<h3 id="应用"><a href="#应用" class="headerlink" title="应用"></a>应用</h3><p>奇异值分解</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">A=[[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>],</span><br><span class="line">   [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">3</span>],</span><br><span class="line">   [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>],</span><br><span class="line">   [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">   [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">   [<span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">   [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>]]</span><br><span class="line">U, sigma, VT = np.linalg.svd(A)</span><br><span class="line"><span class="built_in">print</span>(U)</span><br><span class="line"><span class="built_in">print</span>(sigma)</span><br><span class="line"><span class="built_in">print</span>(VT)</span><br></pre></td></tr></table></figure>
+<p>行列压缩</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">A=[[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>],</span><br><span class="line">   [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">3</span>],</span><br><span class="line">   [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>],</span><br><span class="line">   [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">   [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">   [<span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">   [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>]]</span><br><span class="line"></span><br><span class="line">U, sigma, VT = np.linalg.svd(A)</span><br><span class="line">U_T_2x7 = U.T[:<span class="number">2</span>,:]</span><br><span class="line"><span class="built_in">print</span>(np.dot(U_T_2x7,A))</span><br><span class="line">VT_2x5=VT[:<span class="number">2</span>,:]</span><br><span class="line"><span class="built_in">print</span>(np.dot(VT_2x5,np.mat(A).T).T)</span><br></pre></td></tr></table></figure>
+<p>数据压缩</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">A=[[<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">2</span>, <span class="number">2</span>],</span><br><span class="line">   [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">3</span>, <span class="number">3</span>],</span><br><span class="line">   [<span class="number">0</span>, <span class="number">0</span>, <span class="number">0</span>, <span class="number">1</span>, <span class="number">1</span>],</span><br><span class="line">   [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">   [<span class="number">2</span>, <span class="number">2</span>, <span class="number">2</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">   [<span class="number">5</span>, <span class="number">5</span>, <span class="number">5</span>, <span class="number">0</span>, <span class="number">0</span>],</span><br><span class="line">   [<span class="number">1</span>, <span class="number">1</span>, <span class="number">1</span>, <span class="number">0</span>, <span class="number">0</span>]]</span><br><span class="line"></span><br><span class="line">U, sigma, VT = np.linalg.svd(A)</span><br><span class="line">A_1 = sigma[<span class="number">0</span>]*np.dot(np.mat(U[:, <span class="number">0</span>]).T, np.mat(VT[<span class="number">0</span>, :]))</span><br><span class="line">A_2 = sigma[<span class="number">1</span>]*np.dot(np.mat(U[:, <span class="number">1</span>]).T, np.mat(VT[<span class="number">1</span>, :]))</span><br><span class="line"><span class="built_in">print</span>(A_1+A_2)</span><br></pre></td></tr></table></figure>
+<h1 id="实践与应用（第六章）"><a href="#实践与应用（第六章）" class="headerlink" title="实践与应用（第六章）"></a>实践与应用（第六章）</h1><h2 id="推荐系统"><a href="#推荐系统" class="headerlink" title="推荐系统"></a>推荐系统</h2><figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">scoreData = np.mat([</span><br><span class="line">[<span class="number">5</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">1</span>,<span class="number">0</span>,<span class="number">5</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">0</span>,<span class="number">1</span>],</span><br><span class="line">[<span class="number">0</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">5</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">5</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">3</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">0</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">5</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">5</span>],</span><br><span class="line">[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">3</span>],</span><br><span class="line">[<span class="number">4</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">0</span>,<span class="number">1</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">2</span>,<span class="number">1</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">2</span>,<span class="number">5</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">5</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">2</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">0</span>,<span class="number">2</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">3</span>,<span class="number">4</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>],</span><br><span class="line">[<span class="number">0</span>,<span class="number">3</span>,<span class="number">5</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">4</span>,<span class="number">1</span>,<span class="number">0</span>,<span class="number">0</span>,<span class="number">0</span>]</span><br><span class="line">])</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">cosSim</span>(<span class="params">vec_1, vec_2</span>):</span><br><span class="line">    dotProd = <span class="built_in">float</span>(np.dot(vec_1.T, vec_2))</span><br><span class="line">    normProd = np.linalg.norm(vec_1)*np.linalg.norm(vec_2)</span><br><span class="line">    <span class="keyword">return</span> <span class="number">0.5</span>+<span class="number">0.5</span>*(dotProd/normProd)</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">estScore</span>(<span class="params">scoreData,scoreDataRC,userIndex,itemIndex</span>):</span><br><span class="line">    n = np.shape(scoreData)[<span class="number">1</span>]</span><br><span class="line">    simSum = <span class="number">0</span></span><br><span class="line">    simSumScore = <span class="number">0</span></span><br><span class="line">    <span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">        userScore = scoreData[userIndex,i]</span><br><span class="line">        <span class="keyword">if</span> userScore == <span class="number">0</span> <span class="keyword">or</span> i == itemIndex:</span><br><span class="line">            <span class="keyword">continue</span></span><br><span class="line">        sim = cosSim(scoreDataRC[:, i], scoreDataRC[:, itemIndex])</span><br><span class="line">        simSum = <span class="built_in">float</span>(simSum + sim)</span><br><span class="line">        simSumScore = simSumScore + userScore * sim</span><br><span class="line">    <span class="keyword">if</span> simSum == <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">return</span> <span class="number">0</span></span><br><span class="line">    <span class="keyword">return</span> simSumScore / simSum</span><br><span class="line"></span><br><span class="line">U, sigma, VT = np.linalg.svd(scoreData)</span><br><span class="line"></span><br><span class="line">sigmaSum = <span class="number">0</span></span><br><span class="line">k_num = <span class="number">0</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(sigma)):</span><br><span class="line">    sigmaSum = sigmaSum + sigma[k] * sigma[k]</span><br><span class="line">    <span class="keyword">if</span> <span class="built_in">float</span>(sigmaSum)/<span class="built_in">float</span>(np.<span class="built_in">sum</span>(sigma ** <span class="number">2</span>)) &gt; <span class="number">0.9</span>:</span><br><span class="line">        k_num = k+<span class="number">1</span></span><br><span class="line">        <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">sigma_K = np.mat(np.eye(k_num)*sigma[:k_num])</span><br><span class="line">scoreDataRC = sigma_K * U.T[:k_num, :] * scoreData</span><br><span class="line"></span><br><span class="line">n = np.shape(scoreData)[<span class="number">1</span>]</span><br><span class="line">userIndex = <span class="number">17</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> i <span class="keyword">in</span> <span class="built_in">range</span>(n):</span><br><span class="line">    userScore = scoreData[<span class="number">17</span>, i]</span><br><span class="line">    <span class="keyword">if</span> userScore != <span class="number">0</span>:</span><br><span class="line">        <span class="keyword">continue</span></span><br><span class="line">    <span class="built_in">print</span>(<span class="string">&quot;index:&#123;&#125;,score:&#123;&#125;&quot;</span>.<span class="built_in">format</span>(i, estScore(scoreData, scoreDataRC, userIndex, i)))</span><br></pre></td></tr></table></figure>
+<h2 id="图像压缩"><a href="#图像压缩" class="headerlink" title="图像压缩"></a>图像压缩</h2><p>test.png</p>
+<p><img src="../img/test.PNG" alt="test"></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> PIL <span class="keyword">import</span> Image</span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">imgCompress</span>(<span class="params">channel,percent</span>):</span><br><span class="line">    U, sigma, V_T = np.linalg.svd(channel)</span><br><span class="line">    m = U.shape[<span class="number">0</span>]</span><br><span class="line">    n = V_T.shape[<span class="number">0</span>]</span><br><span class="line">    reChannel = np.zeros((m,n))</span><br><span class="line"></span><br><span class="line">    <span class="keyword">for</span> k <span class="keyword">in</span> <span class="built_in">range</span>(<span class="built_in">len</span>(sigma)):</span><br><span class="line">        reChannel = reChannel + sigma[k]* np.dot(U[:,k].reshape(m,<span class="number">1</span>),V_T[k,:].reshape(<span class="number">1</span>,n))</span><br><span class="line">        <span class="keyword">if</span> <span class="built_in">float</span>(k)/<span class="built_in">len</span>(sigma) &gt; percent:</span><br><span class="line">            reChannel[reChannel &lt; <span class="number">0</span>] = <span class="number">0</span></span><br><span class="line">            reChannel[reChannel &gt; <span class="number">255</span>] = <span class="number">255</span></span><br><span class="line">            <span class="keyword">break</span></span><br><span class="line"></span><br><span class="line">    <span class="keyword">return</span> np.rint(reChannel).astype(<span class="string">&quot;uint8&quot;</span>)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line">oriImage = Image.<span class="built_in">open</span>(<span class="string">r&#x27;test.png&#x27;</span>, <span class="string">&#x27;r&#x27;</span>)</span><br><span class="line">imgArray = np.array(oriImage)</span><br><span class="line"></span><br><span class="line">R = imgArray[:, :, <span class="number">0</span>]</span><br><span class="line">G = imgArray[:, :, <span class="number">1</span>]</span><br><span class="line">B = imgArray[:, :, <span class="number">2</span>]</span><br><span class="line">A = imgArray[:, :, <span class="number">3</span>]</span><br><span class="line"></span><br><span class="line"><span class="keyword">for</span> p <span class="keyword">in</span> [<span class="number">0.001</span>,<span class="number">0.005</span>,<span class="number">0.01</span>,<span class="number">0.02</span>,<span class="number">0.03</span>,<span class="number">0.04</span>,<span class="number">0.05</span>,<span class="number">0.1</span>,<span class="number">0.2</span>,<span class="number">0.3</span>,<span class="number">0.4</span>,<span class="number">0.5</span>,<span class="number">0.6</span>,<span class="number">0.7</span>,<span class="number">0.8</span>,<span class="number">0.9</span>,<span class="number">1</span>]:</span><br><span class="line">    reR = imgCompress(R, p)</span><br><span class="line">    reG = imgCompress(G, p)</span><br><span class="line">    reB = imgCompress(B, p)</span><br><span class="line">    reA = imgCompress(A, p)</span><br><span class="line">    reI = np.stack((reR, reG, reB, reA), <span class="number">2</span>)</span><br><span class="line"></span><br><span class="line">    Image.fromarray(reI).save(<span class="string">&quot;&#123;&#125;&quot;</span>.<span class="built_in">format</span>(p)+<span class="string">&quot;img.png&quot;</span>)</span><br></pre></td></tr></table></figure>
+<h1 id="函数与复数域（第七章）"><a href="#函数与复数域（第七章）" class="headerlink" title="函数与复数域（第七章）"></a>函数与复数域（第七章）</h1><h2 id="傅里叶级数"><a href="#傅里叶级数" class="headerlink" title="傅里叶级数"></a>傅里叶级数</h2><h3 id="函数：无穷维向量"><a href="#函数：无穷维向量" class="headerlink" title="函数：无穷维向量"></a>函数：无穷维向量</h3><p>函数反映的是自变量和因变量之间的一种映射关系，如果我们给定自变量元素<strong>x</strong>，对他施加映射规则<strong>f</strong>，就得到了因变量元素<strong>y</strong>，即我们所熟悉的表示方法：y=f(x)</p>
+<h3 id="寻找一组正交的基函数"><a href="#寻找一组正交的基函数" class="headerlink" title="寻找一组正交的基函数"></a>寻找一组正交的基函数</h3><p>两个n维向量<strong>u</strong>和<strong>v</strong>进行内积运算的运算法则：</p>
+<p><img src="../img/image-20221021170709096.png" alt="image-20221021170709096"></p>
+<p>如果要满足向量u和向量v之间彼此正交，则他们的内积运算结果必须为0。<img src="../img/image-20221021170719622.png" alt="image-20221021170719622" style="zoom:67%;" /></p>
+<p>两个函数内积的表示方法：<img src="../img/image-20221021170729114.png" alt="image-20221021170729114" style="zoom:67%;" /></p>
+<p>一组满足彼此之间两两正交的无穷序列作为基函数</p>
+<p><img src="../img/image-20221021170802731.png" alt="image-20221021170802731" style="zoom:67%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">from</span> sympy <span class="keyword">import</span> integrate, cos, sin</span><br><span class="line"><span class="keyword">from</span> sympy.abc <span class="keyword">import</span> x</span><br><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"></span><br><span class="line">e1 = integrate(sin(<span class="number">2</span>*x)*cos(<span class="number">5</span>*x), (x, <span class="number">0</span>, <span class="number">2</span>*np.pi))</span><br><span class="line">e2 = integrate(sin(<span class="number">4</span>*x)*cos(<span class="number">0</span>*x), (x, <span class="number">0</span>, <span class="number">2</span>*np.pi))</span><br><span class="line">e3 = integrate(sin(x)*cos(<span class="number">2</span>*x), (x, <span class="number">0</span>, <span class="number">2</span>*np.pi))</span><br><span class="line"><span class="built_in">print</span>(e1.evalf())</span><br><span class="line"><span class="built_in">print</span>(e2.evalf())</span><br><span class="line"><span class="built_in">print</span>(e3.evalf())</span><br></pre></td></tr></table></figure>
+<p>结果：</p>
+<p>0<br>0<br>0</p>
+<h3 id="周期函数与傅里叶级数"><a href="#周期函数与傅里叶级数" class="headerlink" title="周期函数与傅里叶级数"></a>周期函数与傅里叶级数</h3><p><img src="../img/image-20221021170936612.png" alt="image-20221021170936612"></p>
+<p>周期为2π的函数的傅里叶级数f(x)，这里有几点我们需要注意一下：</p>
+<ul>
+<li><p>周期为2π 的函数   被表示成了正弦函数<strong>sin⁡kx</strong>和余弦函数<strong>cos⁡kx</strong>所构成的基函数的线性组合，并且在通常的情况下，基函数的个数是无穷多个。</p>
+</li>
+<li><p>这一组基函数是彼此正交的</p>
+</li>
+<li><p>按照傅里叶级数对函数进行展开的操作，其物理意义是非常重大的</p>
+</li>
+</ul>
+<h3 id="傅里叶级数中的系数"><a href="#傅里叶级数中的系数" class="headerlink" title="傅里叶级数中的系数"></a>傅里叶级数中的系数</h3><p><img src="../img/image-20221021171200807.png" alt="image-20221021171200807" style="zoom:67%;" />架起了时域和频域之间的联通桥梁，从一个随着时间 不断变化的函数曲线中提取出了他的频谱。傅里叶级数中的<img src="../img/image-20221021171224503.png" alt="image-20221021171224503" style="zoom:67%;" />等称之为傅里叶系数。</p>
+<p>各个基函数彼此之间满足正交的特性：</p>
+<p>系数<img src="../img/image-20221021171236059.png" alt="image-20221021171236059" style="zoom:67%;" /><img src="../img/image-20221021171244031.png" alt="image-20221021171244031" style="zoom:67%;" /></p>
+<p>系数<img src="../img/image-20221021171252514.png" alt="image-20221021171252514" style="zoom:67%;" /></p>
+<p><img src="../img/image-20221021171306172.png" alt="image-20221021171306172" style="zoom:67%;" /></p>
+<p><img src="../img/image-20221021171629097.png" alt="image-20221021171629097" style="zoom:67%;" /></p>
+<h2 id="复数域中的向量和矩阵"><a href="#复数域中的向量和矩阵" class="headerlink" title="复数域中的向量和矩阵"></a>复数域中的向量和矩阵</h2><h3 id="共轭转置"><a href="#共轭转置" class="headerlink" title="共轭转置"></a>共轭转置</h3><p><img src="../img/image-20221021171722602.png" alt="image-20221021171722602"></p>
+<p><img src="../img/image-20221021171733779.png" alt="image-20221021171733779"></p>
+<h3 id="厄米特矩阵"><a href="#厄米特矩阵" class="headerlink" title="厄米特矩阵"></a>厄米特矩阵</h3><p><img src="../img/image-20221021171750100.png" alt="image-20221021171750100"></p>
+<p>实数域内的转置操作就是复数域中共轭转置的一种特殊情况。</p>
+<p>引出复数域中的一个极其重要的矩阵：厄米特矩阵，又称为自共轭矩阵。</p>
+<p><img src="../img/image-20221021171809339.png" alt="image-20221021171809339"></p>
+<p>矩阵<strong>S</strong>满足<strong>S<sup>H</sup>=S</strong></p>
+<p>共轭转置矩阵等于他自身，矩阵<strong>S</strong>就是一个厄米特矩阵，他的对角线上的元素必须是实数。</p>
+<p>厄米特矩阵性质：</p>
+<ul>
+<li><p>厄米特矩阵<strong>S</strong>的特征值一定是实数。</p>
+</li>
+<li><p>厄米特矩阵<strong>S</strong>中，不同特征值对应的特征向量满足彼此正交。</p>
+</li>
+</ul>
+<h3 id="酉矩阵"><a href="#酉矩阵" class="headerlink" title="酉矩阵"></a>酉矩阵</h3><p>矩阵<strong>Q</strong>是一个方阵，他的各列 由一组标准正交向量<img src="../img/image-20221021171911748.png" alt="image-20221021171911748" style="zoom:67%;" />所构成，方阵<strong>Q</strong>满足的等式<img src="../img/image-20221021171923862.png" alt="image-20221021171923862" style="zoom:67%;" />关系，我们称之为正交矩阵。</p>
+<p>在复数域中各列满足标准正交的方阵<strong>Q</strong>我们也给他起了一个新名字，叫酉矩阵。很显然，基于复数向量内积的定义，这里实矩阵的转置操作就应该变成复数矩阵的共轭转置操作，即<img src="../img/image-20221021171936853.png" alt="image-20221021171936853" style="zoom:67%;" /></p>
+<p>酉矩阵<strong>Q</strong>是一个方阵，满足<img src="../img/image-20221021171947760.png" alt="image-20221021171947760" style="zoom:67%;" /></p>
+<h3 id="傅里叶矩阵与离散傅里叶变换"><a href="#傅里叶矩阵与离散傅里叶变换" class="headerlink" title="傅里叶矩阵与离散傅里叶变换"></a>傅里叶矩阵与离散傅里叶变换</h3><p><img src="../img/image-20221021172010174.png" alt="image-20221021172010174" style="zoom:67%;" /></p>
+<p>傅里叶矩阵的用处：傅里叶矩阵是用来辅助计算机进行傅里叶变换的。</p>
+<p>机器能够处理什么样的信号？一方面是有限长度的信号，另一方面是离散的信号，这里的离散包含两个方面，一个是傅里叶变换前时域的信号必须离散，另一个是变换后频域里的频谱也必须离散。</p>
+<p>要想使用机器来进行傅里叶变换，就必须满足这三个条件，这称之为离散傅里叶变换（<strong>DFT</strong>）。</p>
+<p>傅里叶矩阵是离散傅里叶变换中的核心数据结构，而通过针对矩阵结构进行优化设计而形成的高速、优化的算法，我们称之为快速傅里叶变换，也就是我们常听说的FFT。</p>
+<p>最后我们利用python语言来实际进行离散傅里叶变换的处理，首先我们来看看我们要处理的时域信号：</p>
+<p><img src="../img/image-20221021172050267.png" alt="image-20221021172050267" style="zoom:67%;" /></p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> numpy <span class="keyword">as</span> np</span><br><span class="line"><span class="keyword">from</span> scipy.fftpack <span class="keyword">import</span> fft</span><br><span class="line"><span class="keyword">import</span> matplotlib.pyplot <span class="keyword">as</span> plt</span><br><span class="line"></span><br><span class="line">x = np.linspace(<span class="number">0</span>, <span class="number">2</span>*np.pi, <span class="number">128</span>)</span><br><span class="line">y = np.sin(x)+<span class="number">2</span>*np.sin(<span class="number">3</span>*x)+<span class="number">2</span>*np.cos(<span class="number">3</span>*x)+<span class="number">4</span>*np.sin(<span class="number">15</span>*x)</span><br><span class="line"></span><br><span class="line">xf = np.arange(<span class="built_in">len</span>(y))               <span class="comment">#离散频率</span></span><br><span class="line">xf_half = xf[<span class="built_in">range</span>(<span class="built_in">int</span>(<span class="built_in">len</span>(x)/<span class="number">2</span>))]   <span class="comment">#由于对称性，只取一半区域</span></span><br><span class="line">yf = <span class="built_in">abs</span>(fft(y))/<span class="built_in">len</span>(x)              <span class="comment">#执行完fft后，对各频率的能量归一化处理</span></span><br><span class="line">yf_half = yf[<span class="built_in">range</span>(<span class="built_in">int</span>(<span class="built_in">len</span>(x)/<span class="number">2</span>))]   <span class="comment">#由于对称性，只取一半区间</span></span><br><span class="line"></span><br><span class="line">plt.plot(xf_half, yf_half)</span><br><span class="line">plt.show()</span><br></pre></td></tr></table></figure>
+<p><img src="../img/image-20221021172100846.png" alt="image-20221021172100846"></p>
+<p>（完）</p>
+</article><div class="post-copyright"><div class="post-copyright__author"><span class="post-copyright-meta">文章作者: </span><span class="post-copyright-info"><a href="https://blog.huii.top">HUII</a></span></div><div class="post-copyright__type"><span class="post-copyright-meta">文章链接: </span><span class="post-copyright-info"><a href="https://blog.huii.top/MachineLearning/89747e24e95f.html">https://blog.huii.top/MachineLearning/89747e24e95f.html</a></span></div><div class="post-copyright__notice"><span class="post-copyright-meta">版权声明: </span><span class="post-copyright-info">本博客所有文章除特别声明外，均采用 <a href="https://creativecommons.org/licenses/by-nc-sa/4.0/" target="_blank">CC BY-NC-SA 4.0</a> 许可协议。转载请注明来自 <a href="https://blog.huii.top" target="_blank">HUII's Blog</a>！</span></div></div><div class="tag_share"><div class="post-meta__tag-list"><a class="post-meta__tags" href="/tags/%E6%9C%BA%E5%99%A8%E5%AD%A6%E4%B9%A0/">机器学习</a><a class="post-meta__tags" href="/tags/%E7%BA%BF%E6%80%A7%E4%BB%A3%E6%95%B0/">线性代数</a></div><div class="post_share"><div class="social-share" data-image="/img/machinelearning.jpeg" data-sites="qq,wechat,weibo,facebook,twitter"></div><link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/css/share.min.css" media="print" onload="this.media='all'"><script src="https://cdn.jsdelivr.net/npm/butterfly-extsrc/sharejs/dist/js/social-share.min.js" defer></script></div></div><nav class="pagination-post" id="pagination"><div class="prev-post pull-left"><a href="/MachineLearning/fd4c3de630b6.html" title="机器学习中的概率统计"><img class="cover" src="/img/machinelearning.jpeg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of previous post"><div class="pagination-info"><div class="label">上一篇</div><div class="prev_info">机器学习中的概率统计</div></div></a></div><div class="next-post pull-right"><a href="/Note/12d6d3a0881a.html" title="C&amp;C++ from 于仕琪 南科大"><img class="cover" src="/img/1676641492749-1024x640.jpg" onerror="onerror=null;src='/img/404.jpg'" alt="cover of next post"><div class="pagination-info"><div class="label">下一篇</div><div class="next_info">C&amp;C++ from 于仕琪 南科大</div></div></a></div></nav><div class="relatedPosts"><div class="headline"><i class="fas fa-thumbs-up fa-fw"></i><span>相关推荐</span></div><div class="relatedPosts-list"><div><a href="/Note/12d6d3a0881a.html" title="C&amp;C++ from 于仕琪 南科大"><img class="cover" src="/img/1676641492749-1024x640.jpg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-02-17</div><div class="title">C&amp;C++ from 于仕琪 南科大</div></div></a></div><div><a href="/MachineLearning/9de011f33507.html" title="Fast R-CNN——RCNN系列算法Ⅱ"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-23</div><div class="title">Fast R-CNN——RCNN系列算法Ⅱ</div></div></a></div><div><a href="/MachineLearning/b91d8b42ccc3.html" title="Faster R-CNN——RCNN系列算法Ⅲ"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-27</div><div class="title">Faster R-CNN——RCNN系列算法Ⅲ</div></div></a></div><div><a href="/MachineLearning/40a2efd7e498.html" title="PyTorch中的一些函数"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2023-04-16</div><div class="title">PyTorch中的一些函数</div></div></a></div><div><a href="/MachineLearning/74e60f4fb549.html" title="RNN循环神经网络"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-10-17</div><div class="title">RNN循环神经网络</div></div></a></div><div><a href="/MachineLearning/794a5634681d.html" title="R-CNN——RCNN系列算法Ⅰ"><img class="cover" src="/img/machinelearning.jpeg" alt="cover"><div class="content is-center"><div class="date"><i class="far fa-calendar-alt fa-fw"></i> 2022-12-21</div><div class="title">R-CNN——RCNN系列算法Ⅰ</div></div></a></div></div></div><hr class="custom-hr"/><div id="post-comment"><div class="comment-head"><div class="comment-headline"><i class="fas fa-comments fa-fw"></i><span> 评论</span></div></div><div class="comment-wrap"><div><div id="gitalk-container"></div></div></div></div></div><div class="aside-content" id="aside-content"><div class="sticky_layout"><div class="card-widget" id="card-toc"><div class="item-headline"><i class="fas fa-stream"></i><span>目录</span><span class="toc-percentage"></span></div><div class="toc-content"><ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#%E6%A6%82%E8%BF%B0"><span class="toc-number">1.</span> <span class="toc-text">概述</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%AC%E4%B9%A6%E4%BB%8B%E7%BB%8D"><span class="toc-number">1.1.</span> <span class="toc-text">本书介绍</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%98%85%E8%AF%BB%E7%9B%AE%E7%9A%84"><span class="toc-number">1.2.</span> <span class="toc-text">阅读目的</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E5%85%B3%E8%B5%84%E6%96%99"><span class="toc-number">1.3.</span> <span class="toc-text">相关资料</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%9D%90%E6%A0%87%E4%B8%8E%E5%8F%98%E5%8C%96%EF%BC%88%E7%AC%AC%E4%B8%80%E7%AB%A0%EF%BC%89"><span class="toc-number">2.</span> <span class="toc-text">坐标与变化（第一章）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%91%E9%87%8F"><span class="toc-number">2.1.</span> <span class="toc-text">向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E6%84%8F%E4%B9%89"><span class="toc-number">2.1.1.</span> <span class="toc-text">基本意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E5%90%91%E9%87%8F"><span class="toc-number">2.1.2.</span> <span class="toc-text">列向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B9%98%E6%B3%95"><span class="toc-number">2.1.3.</span> <span class="toc-text">乘法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E5%BA%95"><span class="toc-number">2.2.</span> <span class="toc-text">基底</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E5%BA%95%E6%9D%A1%E4%BB%B6"><span class="toc-number">2.2.1.</span> <span class="toc-text">基底条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BC%A0%E6%88%90%E7%A9%BA%E9%97%B4"><span class="toc-number">2.2.2.</span> <span class="toc-text">张成空间</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5"><span class="toc-number">2.3.</span> <span class="toc-text">矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E6%AE%8A%E7%9F%A9%E9%98%B5"><span class="toc-number">2.3.1.</span> <span class="toc-text">特殊矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E9%97%B4%E4%B9%98%E6%B3%95"><span class="toc-number">2.3.2.</span> <span class="toc-text">矩阵间乘法</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E4%B9%98%E5%90%91%E9%87%8F"><span class="toc-number">2.3.3.</span> <span class="toc-text">矩阵乘向量</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5%E4%B9%98%E5%90%91%E9%87%8F-1"><span class="toc-number">2.4.</span> <span class="toc-text">矩阵乘向量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E4%BA%8B%E5%AE%9E"><span class="toc-number">2.4.1.</span> <span class="toc-text">基本事实</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E7%9A%84%E8%A7%92%E5%BA%A6"><span class="toc-number">2.4.2.</span> <span class="toc-text">列的角度</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E7%9A%84%E5%9F%BA%E5%BA%95%E5%8F%98%E6%8D%A2"><span class="toc-number">2.4.3.</span> <span class="toc-text">向量的基底变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#m%C3%97n%E7%9F%A9%E9%98%B5%E4%B9%98%E4%BB%A5n%E7%BB%B4%E5%88%97%E5%90%91%E9%87%8F"><span class="toc-number">2.4.4.</span> <span class="toc-text">m×n矩阵乘以n维列向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B4%E6%98%8E"><span class="toc-number">2.4.5.</span> <span class="toc-text">说明</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E4%B8%8E%E6%98%A0%E5%B0%84%EF%BC%88%E7%AC%AC%E4%BA%8C%E7%AB%A0%EF%BC%89"><span class="toc-number">3.</span> <span class="toc-text">空间与映射（第二章）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9F%A9%E9%98%B5-1"><span class="toc-number">3.1.</span> <span class="toc-text">矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A9%BA%E9%97%B4%E6%98%A0%E5%B0%84"><span class="toc-number">3.1.1.</span> <span class="toc-text">空间映射</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#m-lt-n%E7%9F%AE%E8%83%96%E7%9F%A9%E9%98%B5%E7%A9%BA%E9%97%B4%E5%8E%8B%E7%BC%A9%EF%BC%88%E9%99%8D%E7%BB%B4%EF%BC%89"><span class="toc-number">3.1.2.</span> <span class="toc-text">m&lt;n矮胖矩阵空间压缩（降维）</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#m-gt-n%E9%AB%98%E7%98%A6%E7%9F%A9%E9%98%B5%E6%97%A0%E6%B3%95%E8%A6%86%E7%9B%96%E7%9B%AE%E6%A0%87%E7%A9%BA%E9%97%B4"><span class="toc-number">3.1.3.</span> <span class="toc-text">m&gt;n高瘦矩阵无法覆盖目标空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#n%C3%97n%E6%96%B9%E9%98%B5"><span class="toc-number">3.1.4.</span> <span class="toc-text">n×n方阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%A9"><span class="toc-number">3.1.5.</span> <span class="toc-text">秩</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%86%E7%9F%A9%E9%98%B5%E5%92%8C%E9%80%86%E6%98%A0%E5%B0%84"><span class="toc-number">3.2.</span> <span class="toc-text">逆矩阵和逆映射</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%86%E7%9F%A9%E9%98%B5"><span class="toc-number">3.2.1.</span> <span class="toc-text">逆矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%B6%E7%A9%BA%E9%97%B4"><span class="toc-number">3.2.2.</span> <span class="toc-text">零空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E7%A9%BA%E9%97%B4"><span class="toc-number">3.2.3.</span> <span class="toc-text">列空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%80%86%E7%9F%A9%E9%98%B5%E5%AD%98%E5%9C%A8%E6%9D%A1%E4%BB%B6"><span class="toc-number">3.2.4.</span> <span class="toc-text">逆矩阵存在条件</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0"><span class="toc-number">3.2.5.</span> <span class="toc-text">实现</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E7%A9%BA%E9%97%B4%E5%92%8C%E5%AD%90%E7%A9%BA%E9%97%B4"><span class="toc-number">3.3.</span> <span class="toc-text">向量空间和子空间</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E9%87%8F%E7%A9%BA%E9%97%B4"><span class="toc-number">3.3.1.</span> <span class="toc-text">向量空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AD%90%E7%A9%BA%E9%97%B4"><span class="toc-number">3.3.2.</span> <span class="toc-text">子空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%97%E7%A9%BA%E9%97%B4-1"><span class="toc-number">3.3.3.</span> <span class="toc-text">列空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%9B%B6%E7%A9%BA%E9%97%B4-1"><span class="toc-number">3.3.4.</span> <span class="toc-text">零空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A1%8C%E7%A9%BA%E9%97%B4"><span class="toc-number">3.3.5.</span> <span class="toc-text">行空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B7%A6%E9%9B%B6%E7%A9%BA%E9%97%B4"><span class="toc-number">3.3.6.</span> <span class="toc-text">左零空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%A7%A9%E4%B8%8E4%E4%B8%AA%E5%AD%90%E7%A9%BA%E9%97%B4%E5%85%B3%E7%B3%BB"><span class="toc-number">3.3.7.</span> <span class="toc-text">秩与4个子空间关系</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%A7%A3%E6%96%B9%E7%A8%8B%E7%BB%84"><span class="toc-number">3.4.</span> <span class="toc-text">解方程组</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%A7%A3%E4%B8%AA%E6%95%B0%E5%86%B3%E5%AE%9A%E5%9B%A0%E7%B4%A0"><span class="toc-number">3.4.1.</span> <span class="toc-text">解个数决定因素</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BB%8E%E7%A9%BA%E9%97%B4%E7%90%86%E8%A7%A3"><span class="toc-number">3.4.2.</span> <span class="toc-text">从空间理解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0-1"><span class="toc-number">3.4.3.</span> <span class="toc-text">实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E8%BF%91%E4%BC%BC%E4%B8%8E%E6%8B%9F%E5%90%88%EF%BC%88%E7%AC%AC%E4%B8%89%E7%AB%A0%EF%BC%89"><span class="toc-number">4.</span> <span class="toc-text">近似与拟合（第三章）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8A%95%E5%BD%B1"><span class="toc-number">4.1.</span> <span class="toc-text">投影</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%97%AE%E9%A2%98"><span class="toc-number">4.1.1.</span> <span class="toc-text">问题</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E2%80%9C%E6%9C%80%E8%BF%91%E2%80%9D%E6%8A%95%E5%BD%B1"><span class="toc-number">4.1.2.</span> <span class="toc-text">“最近”投影</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E6%B3%95"><span class="toc-number">4.2.</span> <span class="toc-text">最小二乘法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%92%E8%A1%A5%E7%9A%84%E5%AD%90%E7%A9%BA%E9%97%B4"><span class="toc-number">4.2.1.</span> <span class="toc-text">互补的子空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%AD%A3%E4%BA%A4%E7%9A%84%E5%AD%90%E7%A9%BA%E9%97%B4"><span class="toc-number">4.2.2.</span> <span class="toc-text">正交的子空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E4%BA%92%E6%AD%A3%E4%BA%A4%E8%A1%A5%E7%9A%84%E5%AD%90%E7%A9%BA%E9%97%B4"><span class="toc-number">4.2.3.</span> <span class="toc-text">相互正交补的子空间</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%91%E4%BC%BC%E8%A7%A3"><span class="toc-number">4.2.4.</span> <span class="toc-text">近似解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%80%E5%B0%8F%E4%BA%8C%E4%B9%98%E7%BA%BF%E6%80%A7%E6%8B%9F%E5%90%88"><span class="toc-number">4.2.5.</span> <span class="toc-text">最小二乘线性拟合</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96%E2%80%94%E2%80%94%E5%AF%BB%E6%89%BE%E6%9C%80%E4%BD%B3%E6%8A%95%E5%BD%B1%E5%9F%BA"><span class="toc-number">4.3.</span> <span class="toc-text">施密特正交化——寻找最佳投影基</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%AE%80%E5%8C%96%E6%8A%95%E5%BD%B1%E8%AE%A1%E7%AE%97"><span class="toc-number">4.3.1.</span> <span class="toc-text">简化投影计算</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%8C%96"><span class="toc-number">4.3.2.</span> <span class="toc-text">标准正交化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%90%91%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4%E5%90%91%E9%87%8F%E4%B8%8A%E6%8A%95%E5%BD%B1"><span class="toc-number">4.3.3.</span> <span class="toc-text">向标准正交向量上投影</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%BD%E5%AF%86%E7%89%B9%E6%AD%A3%E4%BA%A4%E5%8C%96"><span class="toc-number">4.3.4.</span> <span class="toc-text">施密特正交化</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E7%9B%B8%E4%BC%BC%E4%B8%8E%E7%89%B9%E5%BE%81%EF%BC%88%E7%AC%AC%E5%9B%9B%E7%AB%A0%EF%BC%89"><span class="toc-number">5.</span> <span class="toc-text">相似与特征（第四章）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%9B%B8%E4%BC%BC%E5%8F%98%E6%8D%A2"><span class="toc-number">5.1.</span> <span class="toc-text">相似变换</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9D%90%E6%A0%87%E5%80%BC%E5%8F%96%E5%86%B3%E4%BA%8E%E5%9F%BA%E5%BA%95"><span class="toc-number">5.1.1.</span> <span class="toc-text">坐标值取决于基底</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%8F%8F%E8%BF%B0%E7%BA%BF%E6%80%A7%E5%8F%98%E6%8D%A2%E7%9A%84%E7%9F%A9%E9%98%B5%E4%B9%9F%E5%8F%96%E5%86%B3%E4%BA%8E%E5%9F%BA%E5%BA%95"><span class="toc-number">5.1.2.</span> <span class="toc-text">描述线性变换的矩阵也取决于基底</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E4%BC%BC%E7%9F%A9%E9%98%B5%E5%92%8C%E7%9B%B8%E4%BC%BC%E5%8F%98%E6%8D%A2"><span class="toc-number">5.1.3.</span> <span class="toc-text">相似矩阵和相似变换</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E5%9F%BA%E5%BA%95%E5%8F%98%E6%8D%A2%E6%8E%A8%E5%AF%BC%E7%9B%B8%E4%BC%BC%E7%9F%A9%E9%98%B5%E9%97%B4%E7%9A%84%E5%85%B3%E7%B3%BB%E5%BC%8F"><span class="toc-number">5.1.4.</span> <span class="toc-text">利用基底变换推导相似矩阵间的关系式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%9B%B8%E4%BC%BC%E7%9F%A9%E9%98%B5%E4%B8%AD%E7%9A%84%E6%9C%80%E4%BD%B3%E7%9F%A9%E9%98%B5"><span class="toc-number">5.1.5.</span> <span class="toc-text">相似矩阵中的最佳矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E8%A7%92%E7%9F%A9%E9%98%B5%E7%9A%84%E6%9E%84%E9%80%A0%E6%96%B9%E6%B3%95"><span class="toc-number">5.1.6.</span> <span class="toc-text">对角矩阵的构造方法</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E8%A7%92%E5%8C%96"><span class="toc-number">5.2.</span> <span class="toc-text">对角化</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9E%84%E9%80%A0%E5%AF%B9%E8%A7%92%E5%8C%96%E8%BD%AC%E6%8D%A2%E7%9F%A9%E9%98%B5P%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="toc-number">5.2.1.</span> <span class="toc-text">构造对角化转换矩阵P的思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F%E5%92%8C%E7%89%B9%E5%BE%81%E5%80%BC"><span class="toc-number">5.2.2.</span> <span class="toc-text">特征向量和特征值</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F%E4%B8%8E%E7%89%B9%E5%BE%81%E5%80%BC"><span class="toc-number">5.3.</span> <span class="toc-text">特征向量与特征值</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%A0%E4%BD%95%E6%84%8F%E4%B9%89"><span class="toc-number">5.3.1.</span> <span class="toc-text">几何意义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%9F%BA%E6%9C%AC%E5%87%A0%E4%BD%95%E6%80%A7%E8%B4%A8"><span class="toc-number">5.3.2.</span> <span class="toc-text">基本几何性质</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F%E7%9A%84%E7%BA%BF%E6%80%A7%E6%97%A0%E5%85%B3%E6%80%A7"><span class="toc-number">5.3.3.</span> <span class="toc-text">特征向量的线性无关性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0-2"><span class="toc-number">5.3.4.</span> <span class="toc-text">实现</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E9%99%8D%E7%BB%B4%E4%B8%8E%E5%8E%8B%E7%BC%A9%EF%BC%88%E7%AC%AC%E4%BA%94%E7%AB%A0%EF%BC%89"><span class="toc-number">6.</span> <span class="toc-text">降维与压缩（第五章）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E7%9F%A9%E9%98%B5"><span class="toc-number">6.1.</span> <span class="toc-text">对称矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E7%9F%A9%E9%98%B5%E5%9F%BA%E6%9C%AC%E7%89%B9%E6%80%A7"><span class="toc-number">6.1.1.</span> <span class="toc-text">对称矩阵基本特性</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E5%AF%B9%E7%A7%B0%E7%9F%A9%E9%98%B5%E4%B8%80%E5%AE%9A%E5%8F%AF%E4%BB%A5%E5%AF%B9%E8%A7%92%E5%8C%96"><span class="toc-number">6.1.2.</span> <span class="toc-text">实对称矩阵一定可以对角化</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%89%B9%E5%BE%81%E5%90%91%E9%87%8F%E6%A0%87%E5%87%86%E6%AD%A3%E4%BA%A4"><span class="toc-number">6.1.3.</span> <span class="toc-text">特征向量标准正交</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E7%9F%A9%E9%98%B5%E7%9A%84%E5%88%86%E8%A7%A3%E5%BD%A2%E5%BC%8F"><span class="toc-number">6.1.4.</span> <span class="toc-text">对称矩阵的分解形式</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AAT%E4%B8%8EATA%E7%9A%84%E7%A7%A9"><span class="toc-number">6.1.5.</span> <span class="toc-text">AAT与ATA的秩</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ATA%E5%AF%B9%E7%A7%B0%E7%9F%A9%E9%98%B5%E7%9A%84%E6%AD%A3%E5%AE%9A%E6%80%A7%E6%8F%8F%E8%BF%B0"><span class="toc-number">6.1.6.</span> <span class="toc-text">ATA对称矩阵的正定性描述</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#AAT%E4%B8%8EATA%E7%9A%84%E7%89%B9%E5%BE%81%E5%80%BC"><span class="toc-number">6.1.7.</span> <span class="toc-text">AAT与ATA的特征值</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E7%A7%B0%E7%9F%A9%E9%98%B5%E7%9A%84%E6%80%A7%E8%B4%A8%E6%80%BB%E7%BB%93"><span class="toc-number">6.1.8.</span> <span class="toc-text">对称矩阵的性质总结</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E5%88%86%E5%B8%83%E7%9A%84%E5%BA%A6%E9%87%8F"><span class="toc-number">6.2.</span> <span class="toc-text">数据分布的度量</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%9C%9F%E6%9C%9B%E4%B8%8E%E6%96%B9%E5%B7%AE"><span class="toc-number">6.2.1.</span> <span class="toc-text">期望与方差</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8D%8F%E6%96%B9%E5%B7%AE%E4%B8%8E%E5%8D%8F%E6%96%B9%E5%B7%AE%E7%9F%A9%E9%98%B5"><span class="toc-number">6.2.2.</span> <span class="toc-text">协方差与协方差矩阵</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E7%89%B9%E5%BE%81%E5%80%BC%E5%88%86%E8%A7%A3%EF%BC%88EVD%EF%BC%89%E6%9C%9F%E6%9C%9B%E4%B8%8E%E6%96%B9%E5%B7%AE%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90%EF%BC%88PCA%EF%BC%89"><span class="toc-number">6.3.</span> <span class="toc-text">利用特征值分解（EVD）期望与方差主成分分析（PCA）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%99%8D%E7%BB%B4%E7%9A%84%E9%9C%80%E6%B1%82%E8%83%8C%E6%99%AF"><span class="toc-number">6.3.1.</span> <span class="toc-text">数据降维的需求背景</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%99%8D%E7%BB%B4%E7%9B%AE%E6%A0%87"><span class="toc-number">6.3.2.</span> <span class="toc-text">数据降维目标</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%BB%E6%88%90%E5%88%86%E5%88%86%E6%9E%90%E6%B3%95%E9%99%8D%E7%BB%B4%E7%9A%84%E6%80%9D%E8%B7%AF"><span class="toc-number">6.3.3.</span> <span class="toc-text">主成分分析法降维的思路</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%89%96%E6%9E%90PCA"><span class="toc-number">6.3.4.</span> <span class="toc-text">剖析PCA</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AE%9E%E7%8E%B0-3"><span class="toc-number">6.3.5.</span> <span class="toc-text">实现</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%96%B0%E7%89%B9%E5%BE%81%E5%8F%96%E8%88%8D"><span class="toc-number">6.3.6.</span> <span class="toc-text">新特征取舍</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#n%E4%B8%AA%E7%89%B9%E5%BE%81%E7%9A%84%E9%99%8D%E7%BB%B4"><span class="toc-number">6.3.7.</span> <span class="toc-text">n个特征的降维</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%EF%BC%88SVD%EF%BC%89"><span class="toc-number">6.4.</span> <span class="toc-text">奇异值分解（SVD）</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#Av-%CF%83u%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3"><span class="toc-number">6.4.1.</span> <span class="toc-text">Av&#x3D;σu奇异值分解</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%88%86%E8%A7%A3%E8%BF%87%E7%A8%8B%E4%B8%AD%E7%9A%84%E7%BB%86%E8%8A%82"><span class="toc-number">6.4.2.</span> <span class="toc-text">分解过程中的细节</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%88%A9%E7%94%A8%E5%A5%87%E5%BC%82%E5%80%BC%E5%88%86%E8%A7%A3%E8%BF%9B%E8%A1%8C%E6%95%B0%E6%8D%AE%E9%99%8D%E7%BB%B4"><span class="toc-number">6.5.</span> <span class="toc-text">利用奇异值分解进行数据降维</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E6%95%B0%E6%8D%AE%E9%99%8D%E7%BB%B4"><span class="toc-number">6.5.1.</span> <span class="toc-text">数据降维</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%94%A8"><span class="toc-number">6.5.2.</span> <span class="toc-text">应用</span></a></li></ol></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%AE%9E%E8%B7%B5%E4%B8%8E%E5%BA%94%E7%94%A8%EF%BC%88%E7%AC%AC%E5%85%AD%E7%AB%A0%EF%BC%89"><span class="toc-number">7.</span> <span class="toc-text">实践与应用（第六章）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E6%8E%A8%E8%8D%90%E7%B3%BB%E7%BB%9F"><span class="toc-number">7.1.</span> <span class="toc-text">推荐系统</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9B%BE%E5%83%8F%E5%8E%8B%E7%BC%A9"><span class="toc-number">7.2.</span> <span class="toc-text">图像压缩</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%E4%B8%8E%E5%A4%8D%E6%95%B0%E5%9F%9F%EF%BC%88%E7%AC%AC%E4%B8%83%E7%AB%A0%EF%BC%89"><span class="toc-number">8.</span> <span class="toc-text">函数与复数域（第七章）</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0"><span class="toc-number">8.1.</span> <span class="toc-text">傅里叶级数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0%EF%BC%9A%E6%97%A0%E7%A9%B7%E7%BB%B4%E5%90%91%E9%87%8F"><span class="toc-number">8.1.1.</span> <span class="toc-text">函数：无穷维向量</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%BB%E6%89%BE%E4%B8%80%E7%BB%84%E6%AD%A3%E4%BA%A4%E7%9A%84%E5%9F%BA%E5%87%BD%E6%95%B0"><span class="toc-number">8.1.2.</span> <span class="toc-text">寻找一组正交的基函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%91%A8%E6%9C%9F%E5%87%BD%E6%95%B0%E4%B8%8E%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0"><span class="toc-number">8.1.3.</span> <span class="toc-text">周期函数与傅里叶级数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%82%85%E9%87%8C%E5%8F%B6%E7%BA%A7%E6%95%B0%E4%B8%AD%E7%9A%84%E7%B3%BB%E6%95%B0"><span class="toc-number">8.1.4.</span> <span class="toc-text">傅里叶级数中的系数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%A4%8D%E6%95%B0%E5%9F%9F%E4%B8%AD%E7%9A%84%E5%90%91%E9%87%8F%E5%92%8C%E7%9F%A9%E9%98%B5"><span class="toc-number">8.2.</span> <span class="toc-text">复数域中的向量和矩阵</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%85%B1%E8%BD%AD%E8%BD%AC%E7%BD%AE"><span class="toc-number">8.2.1.</span> <span class="toc-text">共轭转置</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%8E%84%E7%B1%B3%E7%89%B9%E7%9F%A9%E9%98%B5"><span class="toc-number">8.2.2.</span> <span class="toc-text">厄米特矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E9%85%89%E7%9F%A9%E9%98%B5"><span class="toc-number">8.2.3.</span> <span class="toc-text">酉矩阵</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%82%85%E9%87%8C%E5%8F%B6%E7%9F%A9%E9%98%B5%E4%B8%8E%E7%A6%BB%E6%95%A3%E5%82%85%E9%87%8C%E5%8F%B6%E5%8F%98%E6%8D%A2"><span class="toc-number">8.2.4.</span> <span class="toc-text">傅里叶矩阵与离散傅里叶变换</span></a></li></ol></li></ol></li></ol></div></div></div></div></main><footer id="footer" style="background-image: url('/img/machinelearning.jpeg')"><div id="footer-wrap"><div class="copyright">&copy;2015 - 2025 By HUII</div><div class="footer_custom_text"><span>备案号：<a href="https://beian.miit.gov.cn/" target="_blank">闽ICP备18005042号-2</a></span></div></div></footer></div><div id="rightside"><div id="rightside-config-hide"><button id="readmode" type="button" title="阅读模式"><i class="fas fa-book-open"></i></button><button id="darkmode" type="button" title="浅色和深色模式转换"><i class="fas fa-adjust"></i></button><button id="hide-aside-btn" type="button" title="单栏和双栏切换"><i class="fas fa-arrows-alt-h"></i></button></div><div id="rightside-config-show"><button id="rightside_config" type="button" title="设置"><i class="fas fa-cog fa-spin"></i></button><button class="close" id="mobile-toc-button" type="button" title="目录"><i class="fas fa-list-ul"></i></button><a id="to_comment" href="#post-comment" title="直达评论"><i class="fas fa-comments"></i></a><button id="go-up" type="button" title="回到顶部"><span class="scroll-percent"></span><i class="fas fa-arrow-up"></i></button></div></div><div><script src="/js/utils.js"></script><script src="/js/main.js"></script><script src="https://cdn.jsdelivr.net/npm/@fancyapps/ui/dist/fancybox/fancybox.umd.min.js"></script><div class="js-pjax"><script>if (!window.MathJax) {
+  window.MathJax = {
+    tex: {
+      inlineMath: [['$', '$'], ['\\(', '\\)']],
+      tags: 'ams'
+    },
+    chtml: {
+      scale: 1.1
+    },
+    options: {
+      renderActions: {
+        findScript: [10, doc => {
+          for (const node of document.querySelectorAll('script[type^="math/tex"]')) {
+            const display = !!node.type.match(/; *mode=display/)
+            const math = new doc.options.MathItem(node.textContent, doc.inputJax[0], display)
+            const text = document.createTextNode('')
+            node.parentNode.replaceChild(text, node)
+            math.start = {node: text, delim: '', n: 0}
+            math.end = {node: text, delim: '', n: 0}
+            doc.math.push(math)
+          }
+        }, '']
+      }
+    }
+  }
+  
+  const script = document.createElement('script')
+  script.src = 'https://cdn.jsdelivr.net/npm/mathjax/es5/tex-mml-chtml.min.js'
+  script.id = 'MathJax-script'
+  script.async = true
+  document.head.appendChild(script)
+} else {
+  MathJax.startup.document.state(0)
+  MathJax.texReset()
+  MathJax.typesetPromise()
+}</script><script>function loadGitalk () {
+  function initGitalk () {
+    var gitalk = new Gitalk(Object.assign({
+      clientID: 'ce436d2d4a3e549dad64',
+      clientSecret: '9a40a66c694e77b58120d1b62b2dcee193963143',
+      repo: 'huiiz.github.io',
+      owner: 'huiiz',
+      admin: ['huiiz'],
+      id: 'e08801890d37c3b0011cc876885e6d4c',
+      updateCountCallback: commentCount
+    },null))
+
+    gitalk.render('gitalk-container')
+  }
+
+  if (typeof Gitalk === 'function') initGitalk()
+  else {
+    getCSS('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.css')
+    getScript('https://cdn.jsdelivr.net/npm/gitalk/dist/gitalk.min.js').then(initGitalk)
+  }
+}
+
+function commentCount(n){
+  let isCommentCount = document.querySelector('#post-meta .gitalk-comment-count')
+  if (isCommentCount) {
+    isCommentCount.textContent= n
+  }
+}
+
+if ('Gitalk' === 'Gitalk' || !false) {
+  if (false) btf.loadComment(document.getElementById('gitalk-container'), loadGitalk)
+  else loadGitalk()
+} else {
+  function loadOtherComment () {
+    loadGitalk()
+  }
+}</script></div><div style="display:none;"><script type="text/javascript" src="https://v1.cnzz.com/z_stat.php?id=1279897347&web_id=1279897347"></script></div><script async data-pjax src="//busuanzi.ibruce.info/busuanzi/2.3/busuanzi.pure.mini.js"></script></div></body></html>
