@@ -1,0 +1,1662 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>操作系统 from 蒋炎岩nju2023 | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="注意：本页面停止更新，后续内容更新在我的notion笔记：操作系统 (notion.site) 2023年6月29日，by:HUII 概述 本课程来源于南京大学计算机软件研究所的jyy老师。绿导师原谅你了的个人空间 哔哩哔哩 bilibili 课程资料官网：操作系统：设计与实现"><meta property="og:title" content="操作系统 from 蒋炎岩nju2023 | HUII's Blog"><meta property="og:description" content="注意：本页面停止更新，后续内容更新在我的notion笔记：操作系统 (notion.site) 2023年6月29日，by:HUII 概述 本课程来源于南京大学计算机软件研究所的jyy老师。绿导师原谅你了的个人空间 哔哩哔哩 bilibili 课程资料官网：操作系统：设计与实现"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-from-%E8%92%8B%E7%82%8E%E5%B2%A9nju2023/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#4e8cff"><link rel="canonical" href="https://blog.huii.top/posts/%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F-from-%E8%92%8B%E7%82%8E%E5%B2%A9nju2023/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.iMrdDItP.css"></head> <body> <div class="page" id="body-wrap"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>操作系统 from 蒋炎岩nju2023</h1> <p>注意：本页面停止更新，后续内容更新在我的notion笔记：操作系统 (notion.site) 2023年6月29日，by:HUII 概述 本课程来源于南京大学计算机软件研究所的jyy老师。绿导师原谅你了的个人空间 哔哩哔哩 bilibili 课程资料官网：操作系统：设计与实现</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2023年2月14日</span> <span>阅读约 141 分钟</span> </div> <div class="reading-categories"> <a href="/categories/note/">Note</a> </div> <div class="reading-tags"> <a href="/tags/操作系统/">#操作系统</a><a href="/tags/os/">#OS</a> </div> </header> <div class="post-content reading-content"><p>注意：本页面停止更新，后续内容更新在我的notion笔记：<a href="https://zhuii.notion.site/zhuii/9e6aec0d43eb417eb695779716d8bda6" target="_blank" rel="noreferrer">操作系统 (notion.site)</a> </p><p>2023年6月29日，by:HUII</p><p><strong>概述</strong></p><p>本课程来源于南京大学<a href="http://ics.nju.edu.cn/" target="_blank" rel="noreferrer">计算机软件研究所</a>的jyy老师。<a href="https://space.bilibili.com/202224425" target="_blank" rel="noreferrer">绿导师原谅你了的个人空间_哔哩哔哩_bilibili</a></p><p>课程资料官网：<a href="https://jyywiki.cn/OS/2023/" target="_blank" rel="noreferrer">操作系统：设计与实现 (2023 春季学期) (jyywiki.cn)</a></p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>操作系统课程</p><p>去年（2022）就尝试看完jyy老师的课程，但最终没能成功😅，希望今年能够尽量跟上jyy老师的进度。</p><hr /><p>失败了</p><h2 id="绪论1-操作系统概述-2023-2-14">绪论1_操作系统概述_2023.2.14</h2><div class="embed-frame"><iframe src="https://jyywiki.cn/OS/2023/build/lect1.ipynb.html" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div><h3 id="why为什么学操作系统">Why为什么学操作系统</h3><ul><li>觉醒体内“编程能力”</li><li>补完编程技能体系</li></ul><h3 id="what什么是操作系统">What什么是操作系统</h3><blockquote><p>Operating System: A body of software, in fact, that is responsible for &lt;em making it easy to run programs</em> (even allowing you to seemingly run many at the same time), allowing programs to share memory, enabling programs to interact with devices, and other fun stuff like that. (OSTEP)</p></blockquote><p>让程序可以与其它程序以及硬件交互</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>什么是操作系统</p><p>操作系统：硬件和软件的中间层</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>Fortran卡片</p><p>历史：</p><ul><li><p>ENIAC: 1946.2.14</p></li><li><p>1940s</p> <ul> <li>&lt;p 硬件</p> <ul> &lt;li 逻辑门：<a href="https://www.bilibili.com/video/av59005720" target="_blank" rel="noreferrer">真空电子管</a> </li> <li>存储器：延迟线 (delay lines)</li> <li>输入/输出：打孔纸带/指示灯</li> </ul> </li> <li>&lt;p 软件：打印平方数、素数表、计算弹道……</p> </li> <li>&lt;p 操作系统：没有</p> <ul> &lt;li 程序直接用指令操作硬件</li> <li>不需要画蛇添足的程序来管理它</li> </ul> </li> </ul></li><li><p>硬件</p> <ul> <li>逻辑门：<a href="https://www.bilibili.com/video/av59005720" target="_blank" rel="noreferrer">真空电子管</a> </li> <li>存储器：延迟线 (delay lines)</li> <li>输入/输出：打孔纸带/指示灯</li> </ul></li><li>逻辑门：<a href="https://www.bilibili.com/video/av59005720" target="_blank" rel="noreferrer">真空电子管</a></li><li>存储器：延迟线 (delay lines)</li><li>输入/输出：打孔纸带/指示灯</li><li><p>软件：打印平方数、素数表、计算弹道……</p></li><li><p>操作系统：没有</p> <ul> <li>程序直接用指令操作硬件</li> <li>不需要画蛇添足的程序来管理它</li> </ul></li><li>程序直接用指令操作硬件</li><li>不需要画蛇添足的程序来管理它</li><li><p>1950s</p> <ul> <li>硬件：更快更小的逻辑门 (晶体管)、更大的内存 (磁芯)、丰富的 I/O 设备<ul> &lt;li I/O 设备的速度已经严重低于处理器的速度，中断机制出现 (1953)</li> </ul> </li> <li>软件：更复杂的通用的数值计算。自然科学、工程机械、军事……对计算机的需求暴涨<ul> &lt;li 高级语言和 API 诞生 (Fortran, 1957)：一行代码，一张卡片</li> <li>80 行的规范沿用至今 (细节：打印机会印刷本行代码)</li> </ul> </li> <li>操作系统：库函数 + 管理程序排队运行的调度代码。<ul> &lt;li 写程序 (戳纸带)、跑程序都是非常费事的<ul> &lt;li 计算机非常贵 ($50,000−$1,000,000$50,000−$1,000,000)，一个学校只有一台</li> <li>算力成为一种服务：多用户轮流共享计算机，operator 负责调度</li> </ul> </li> <li>操作 (operate) 任务 (jobs) 的系统 (system)<ul> &lt;li “批处理系统” = 程序的自动切换 (换卡) + 库函数 API</li> <li>Disk Operating Systems (DOS)<ul> &lt;li 操作系统中开始出现 “设备”、“文件”、“任务” 等对象和 API</li> </ul> </li> </ul> </li> </ul> </li> </ul></li><li>硬件：更快更小的逻辑门 (晶体管)、更大的内存 (磁芯)、丰富的 I/O 设备<ul> <li>I/O 设备的速度已经严重低于处理器的速度，中断机制出现 (1953)</li> </ul></li><li>I/O 设备的速度已经严重低于处理器的速度，中断机制出现 (1953)</li><li>软件：更复杂的通用的数值计算。自然科学、工程机械、军事……对计算机的需求暴涨<ul> <li>高级语言和 API 诞生 (Fortran, 1957)：一行代码，一张卡片</li> <li>80 行的规范沿用至今 (细节：打印机会印刷本行代码)</li> </ul></li><li>高级语言和 API 诞生 (Fortran, 1957)：一行代码，一张卡片</li><li>80 行的规范沿用至今 (细节：打印机会印刷本行代码)</li><li>操作系统：库函数 + 管理程序排队运行的调度代码。<ul> <li>写程序 (戳纸带)、跑程序都是非常费事的<ul> &lt;li 计算机非常贵 ($50,000−$1,000,000$50,000−$1,000,000)，一个学校只有一台</li> <li>算力成为一种服务：多用户轮流共享计算机，operator 负责调度</li> </ul> </li> <li>操作 (operate) 任务 (jobs) 的系统 (system)<ul> &lt;li “批处理系统” = 程序的自动切换 (换卡) + 库函数 API</li> <li>Disk Operating Systems (DOS)<ul> &lt;li 操作系统中开始出现 “设备”、“文件”、“任务” 等对象和 API</li> </ul> </li> </ul> </li> </ul></li><li>写程序 (戳纸带)、跑程序都是非常费事的<ul> <li>计算机非常贵 ($50,000−$1,000,000$50,000−$1,000,000)，一个学校只有一台</li> <li>算力成为一种服务：多用户轮流共享计算机，operator 负责调度</li> </ul></li><li>计算机非常贵 ($50,000−$1,000,000$50,000−$1,000,000)，一个学校只有一台</li><li>算力成为一种服务：多用户轮流共享计算机，operator 负责调度</li><li>操作 (operate) 任务 (jobs) 的系统 (system)<ul> <li>“批处理系统” = 程序的自动切换 (换卡) + 库函数 API</li> <li>Disk Operating Systems (DOS)<ul> &lt;li 操作系统中开始出现 “设备”、“文件”、“任务” 等对象和 API</li> </ul> </li> </ul></li><li>“批处理系统” = 程序的自动切换 (换卡) + 库函数 API</li><li>Disk Operating Systems (DOS)<ul> <li>操作系统中开始出现 “设备”、“文件”、“任务” 等对象和 API</li> </ul></li><li>操作系统中开始出现 “设备”、“文件”、“任务” 等对象和 API</li><li><p>1960s</p> <ul> <li>硬件：集成电路、总线出现<ul> &lt;li 更快的处理器</li> <li>更快、更大的内存；虚拟存储出现<ul> &lt;li 可以同时载入多个程序而不用 “换卡” 了</li> </ul> </li> <li>更丰富的 I/O 设备；完善的中断/异常机制</li> </ul> </li> <li>软件：更多的高级语言和编译器出现<ul> &lt;li COBOL (1960), APL (1962), BASIC (1965)<ul> &lt;li Bill Gates 和 Paul Allen 在 1975 年实现了 Altair 8800 上的 BASIC 解释器</li> </ul> </li> </ul> </li> <li>操作系统：能载入多个程序到内存且调度它们的管理程序。<ul> &lt;li 为防止程序之间形成干扰，操作系统自然地将共享资源 (如设备) 以 API 形式管理起来<ul> &lt;li 有了进程 (process) 的概念</li> <li>进程在执行 I/O 时，可以将 CPU 让给另一个进程<ul> &lt;li 在多个地址空间隔离的程序之间切换</li> <li>虚拟存储使一个程序出 bug 不会 crash 整个系统</li> </ul> </li> </ul> </li> <li>操作系统中自然地增加进程管理 API<ul> &lt;li 既然可以在程序之间切换，为什么不让它们定时切换呢？</li> <li>Multics (MIT, 1965)：现代分时操作系统诞生</li> </ul> </li> </ul> </li> </ul></li><li>硬件：集成电路、总线出现<ul> <li>更快的处理器</li> <li>更快、更大的内存；虚拟存储出现<ul> &lt;li 可以同时载入多个程序而不用 “换卡” 了</li> </ul> </li> <li>更丰富的 I/O 设备；完善的中断/异常机制</li> </ul></li><li>更快的处理器</li><li>更快、更大的内存；虚拟存储出现<ul> <li>可以同时载入多个程序而不用 “换卡” 了</li> </ul></li><li>可以同时载入多个程序而不用 “换卡” 了</li><li>更丰富的 I/O 设备；完善的中断/异常机制</li><li>软件：更多的高级语言和编译器出现<ul> <li>COBOL (1960), APL (1962), BASIC (1965)<ul> &lt;li Bill Gates 和 Paul Allen 在 1975 年实现了 Altair 8800 上的 BASIC 解释器</li> </ul> </li> </ul></li><li>COBOL (1960), APL (1962), BASIC (1965)<ul> <li>Bill Gates 和 Paul Allen 在 1975 年实现了 Altair 8800 上的 BASIC 解释器</li> </ul></li><li>Bill Gates 和 Paul Allen 在 1975 年实现了 Altair 8800 上的 BASIC 解释器</li><li>操作系统：能载入多个程序到内存且调度它们的管理程序。<ul> <li>为防止程序之间形成干扰，操作系统自然地将共享资源 (如设备) 以 API 形式管理起来<ul> &lt;li 有了进程 (process) 的概念</li> <li>进程在执行 I/O 时，可以将 CPU 让给另一个进程<ul> &lt;li 在多个地址空间隔离的程序之间切换</li> <li>虚拟存储使一个程序出 bug 不会 crash 整个系统</li> </ul> </li> </ul> </li> <li>操作系统中自然地增加进程管理 API<ul> &lt;li 既然可以在程序之间切换，为什么不让它们定时切换呢？</li> <li>Multics (MIT, 1965)：现代分时操作系统诞生</li> </ul> </li> </ul></li><li>为防止程序之间形成干扰，操作系统自然地将共享资源 (如设备) 以 API 形式管理起来<ul> <li>有了进程 (process) 的概念</li> <li>进程在执行 I/O 时，可以将 CPU 让给另一个进程<ul> &lt;li 在多个地址空间隔离的程序之间切换</li> <li>虚拟存储使一个程序出 bug 不会 crash 整个系统</li> </ul> </li> </ul></li><li>有了进程 (process) 的概念</li><li>进程在执行 I/O 时，可以将 CPU 让给另一个进程<ul> <li>在多个地址空间隔离的程序之间切换</li> <li>虚拟存储使一个程序出 bug 不会 crash 整个系统</li> </ul></li><li>在多个地址空间隔离的程序之间切换</li><li>虚拟存储使一个程序出 bug 不会 crash 整个系统</li><li>操作系统中自然地增加进程管理 API<ul> <li>既然可以在程序之间切换，为什么不让它们定时切换呢？</li> <li>Multics (MIT, 1965)：现代分时操作系统诞生</li> </ul></li><li>既然可以在程序之间切换，为什么不让它们定时切换呢？</li><li>Multics (MIT, 1965)：现代分时操作系统诞生</li><li><p>1970s+</p> <ul> <li>硬件：集成电路空前发展，个人电脑兴起，“计算机” 已与今日无大异<ul> &lt;li CISC 指令集；中断、I/O、异常、MMU、网络</li> <li>个人计算机 (PC 机)、超级计算机……</li> </ul> </li> <li>软件<ul> &lt;li PASCAL (1970), C (1972), …</li> <li>今天能办到的，那个时代已经都能办到了——上天入地、图像声音视频、人工智能……</li> <li>个人开发者 (Geek Network) 走上舞台</li> </ul> </li> <li>操作系统：分时系统走向成熟，UNIX 诞生并走向完善，奠定了现代操作系统的形态。<ul> &lt;li 1973: 信号 API、管道 (对象)、grep (应用程序)</li> <li>1983: BSD socket (对象)</li> <li>1984: procfs (对象)……</li> <li>UNIX 衍生出的大家族<ul> &lt;li 1BSD (1977), GNU (1983), MacOS (1984), AIX (1986), Minix (1987), Windows (1985), Linux 0.01 (1991), Windows NT (1993), Debian (1996), Windows XP (2002), Ubuntu (2004), iOS (2007), Android (2008), Windows 10 (2015), ……</li> </ul> </li> </ul> </li> </ul></li><li>硬件：集成电路空前发展，个人电脑兴起，“计算机” 已与今日无大异<ul> <li>CISC 指令集；中断、I/O、异常、MMU、网络</li> <li>个人计算机 (PC 机)、超级计算机……</li> </ul></li><li>CISC 指令集；中断、I/O、异常、MMU、网络</li><li>个人计算机 (PC 机)、超级计算机……</li><li>软件<ul> <li>PASCAL (1970), C (1972), …</li> <li>今天能办到的，那个时代已经都能办到了——上天入地、图像声音视频、人工智能……</li> <li>个人开发者 (Geek Network) 走上舞台</li> </ul></li><li>PASCAL (1970), C (1972), …</li><li>今天能办到的，那个时代已经都能办到了——上天入地、图像声音视频、人工智能……</li><li>个人开发者 (Geek Network) 走上舞台</li><li>操作系统：分时系统走向成熟，UNIX 诞生并走向完善，奠定了现代操作系统的形态。<ul> <li>1973: 信号 API、管道 (对象)、grep (应用程序)</li> <li>1983: BSD socket (对象)</li> <li>1984: procfs (对象)……</li> <li>UNIX 衍生出的大家族<ul> &lt;li 1BSD (1977), GNU (1983), MacOS (1984), AIX (1986), Minix (1987), Windows (1985), Linux 0.01 (1991), Windows NT (1993), Debian (1996), Windows XP (2002), Ubuntu (2004), iOS (2007), Android (2008), Windows 10 (2015), ……</li> </ul> </li> </ul></li><li>1973: 信号 API、管道 (对象)、grep (应用程序)</li><li>1983: BSD socket (对象)</li><li>1984: procfs (对象)……</li><li>UNIX 衍生出的大家族<ul> <li>1BSD (1977), GNU (1983), MacOS (1984), AIX (1986), Minix (1987), Windows (1985), Linux 0.01 (1991), Windows NT (1993), Debian (1996), Windows XP (2002), Ubuntu (2004), iOS (2007), Android (2008), Windows 10 (2015), ……</li> </ul></li><li>1BSD (1977), GNU (1983), MacOS (1984), AIX (1986), Minix (1987), Windows (1985), Linux 0.01 (1991), Windows NT (1993), Debian (1996), Windows XP (2002), Ubuntu (2004), iOS (2007), Android (2008), Windows 10 (2015), ……</li><li><p>今天的操作系统</p> <ul> <li>通过 “虚拟化” 硬件资源为程序运行提供服务的软件。</li> </ul></li><li>通过 “虚拟化” 硬件资源为程序运行提供服务的软件。</li></ul><h3 id="how怎样学操作系统">How怎样学操作系统</h3><h3 id="课程代码">课程代码</h3><h4 id="模拟数字系统">模拟数字系统</h4><ul><li>seven seg.py</li></ul><pre><code>import fileinput
+ 
+DISPLAY = &#39;&#39;&#39;
+     AAAAAAAAA
+    FF       BB
+    FF       BB
+    FF       BB
+    FF       BB
+     GGGGGGGG
+   EE       CC
+   EE       CC
+   EE       CC
+   EE       CC
+    DDDDDDDDD
+&#39;&#39;&#39; 
+
+# STFW: ANSI Escape Code
+CLEAR = &#39;\033[2J\033[1;1f&#39;
+BLOCK = {
+    0: &#39;\033[37m░\033[0m&#39;,
+    1: &#39;\033[31m█\033[0m&#39;,
+}
+
+for line in fileinput.input():
+    # Load &quot;A=0; B=1; ...&quot; to current context
+    exec(line)
+
+    # Render the seven-segment display
+    pic = DISPLAY
+    for seg in set(DISPLAY):
+        if seg.isalpha():
+            val = globals()[seg]  # 0 or 1
+            pic = pic.replace(seg, BLOCK[val])
+
+    # Clear screen and display
+    print(CLEAR + pic)</code></pre><ul><li>logisim.c</li></ul><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdbool.h&gt;
+#include &lt;unistd.h&gt;
+
+typedef bool wire; // Wires
+typedef struct {
+  bool value;
+  wire *in, *out;
+} reg; // Flip-flops
+
+// Circuit constructs
+#define CLOCK       for (; ; END_CYCLE)
+#define NAND(X, Y)  (!((X) &amp;&amp; (Y)))
+#define NOT(X)      (NAND(X, 1))
+#define AND(X, Y)   (NOT(NAND(X, Y)))
+#define OR(X, Y)    (NAND(NOT(X), NOT(Y)))
+
+// Circuit emulation helpers
+#define END_CYCLE ({ end_cycle(); putchar(&#39;\n&#39;); fflush(stdout); sleep(1); })
+#define PRINT(X) printf(#X &quot; = %d; &quot;, X)
+
+// Wire and register specification
+wire X, Y, X1, Y1, A, B, C, D, E, F, G;
+reg b1 = {.in = &amp;X1, .out = &amp;X};
+reg b0 = {.in = &amp;Y1, .out = &amp;Y};
+
+// Dump wire values at the end of each cycle
+void end_cycle() {
+  PRINT(A); PRINT(B); PRINT(C); PRINT(D);
+  PRINT(E); PRINT(F); PRINT(G);
+}
+
+int main() {
+  CLOCK {
+    // 1. Wire network specification (logic gates)
+    X1 = AND(NOT(X), Y);
+    Y1 = NOT(OR(X, Y));
+    A = D = E = NOT(Y);
+    B = 1;
+    C = NOT(X);
+    F = Y1;
+    G = X;
+
+    // 2. Lock data in flip-flops and propagate output to wires
+    b0.value = *b0.in;
+    b1.value = *b1.in;
+    *b0.out = b0.value;
+    *b1.out = b1.value;
+  }
+}</code></pre><ul><li>Makefile</li></ul><pre><code>a.out: logisim.c
+	gcc $(CFLAGS) logisim.c
+
+run: a.out
+	./a.out | python3 seven-seg.py  # The UNIX Philosophy
+
+clean:
+	rm -f a.out</code></pre><ul><li>编译</li></ul><p>在当前目录下执行<code>make</code></p><ul><li>运行</li></ul><p>在当前目录下执行<code>make run</code>或.<code>/a.out | python3 seven-seg.py</code>。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>模拟数字系统运行结果</p><h4 id="模拟-risc-v-指令执行">模拟 RISC-V 指令执行</h4><p>这里解决了一个鸡兔同笼问题</p><ul><li>jitu.txt</li></ul><pre><code>00050713
+00151793
+40f587b3
+0017d793
+00200513
+40f705b3
+00100073
+00100513
+02000593
+00100073
+00200513
+00078593
+00100073
+00100513
+00a00593
+00100073
+00300513
+00100073
+0000006f</code></pre><ul><li>uncore.c</li></ul><pre><code>static inline bool inst_fetch(inst_t *in) {
+  union {
+    inst_t i;
+    u32 u;
+  } u;
+  int r = scanf(&quot;%x&quot;, &amp;u.u);
+  *in = u.i;
+  return r &gt; 0;
+}
+
+static inline void ebreak(CPUState *cpu) {
+  switch (cpu-&gt;x[10]) {
+    case 1: { putchar(cpu-&gt;x[11]); break; }
+    case 2: { printf(&quot;%d&quot;, cpu-&gt;x[11]); break; }
+    case 3: { cpu-&gt;on = false; break; }
+    default: assert(0);
+  }
+}</code></pre><ul><li>rvemu.c</li></ul><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdint.h&gt;
+#include &lt;assert.h&gt;
+#include &lt;stdlib.h&gt;
+#include &lt;stdbool.h&gt;
+typedef uint32_t u32;
+
+typedef struct { u32 op:7, rd:5, f3:3, rs1:5, rs2:5, f7:7; } inst_t;
+typedef struct {
+  u32 on, x[32];
+} CPUState;
+
+// Uncore:
+//   inst_fetch - read an instruction from stdin
+//   ebreak - hyper call: putchar/putd/exit
+#include &quot;uncore.c&quot;
+
+static inline u32 sext(u32 val, u32 n) {
+  // Sign extend n-bit integer val to 32-bit
+  u32 mask = ~((1 &lt;&lt; n) - 1);
+  u32 set = (val &gt;&gt; n) &amp; 1;
+  u32 ret = set ? (val | mask) : val;
+  return ret;
+}
+
+int main(int argc, char *argv[]) {
+  CPUState cpu = {.on = 1, .x = { 0 }}; // The RESET state
+  for (int i = 0; argv[i + 1] &amp;&amp; i &lt; 8; i++) {
+    cpu.x[10 + i] = atoi(argv[i + 1]); // Set a0-a7 to arguments
+  }
+
+  inst_t in;
+  while (cpu.on &amp;&amp; inst_fetch(&amp;in)) {
+    // For each fetched instruction, execute it following the RV32I spec
+    u32 op = in.op, f3 = in.f3, f7 = in.f7;
+    u32 imm = sext((f7 &lt;&lt; 5) | in.rs2, 12), shamt = in.rs2;
+    u32 rd = in.rd, rs1_u = cpu.x[in.rs1], rs2_u = cpu.x[in.rs2], res = 0;
+
+    #define __ else if // Bad syntactic sugar!
+    if (op == 0b0110011 &amp;&amp; f3 == 0b000 &amp;&amp; f7 == 0b0000000) res = rs1_u + rs2_u;
+    __ (op == 0b0110011 &amp;&amp; f3 == 0b000 &amp;&amp; f7 == 0b0100000) res = rs1_u - rs2_u;
+    __ (op == 0b0010011 &amp;&amp; f3 == 0b000)                    res = rs1_u + imm;
+    __ (op == 0b0010011 &amp;&amp; f3 == 0b001 &amp;&amp; f7 == 0b0000000) res = rs1_u &lt;&lt; shamt;
+    __ (op == 0b0010011 &amp;&amp; f3 == 0b101 &amp;&amp; f7 == 0b0000000) res = rs1_u &gt;&gt; shamt;
+    __ (op == 0b1110011 &amp;&amp; f3 == 0b000 &amp;&amp; rd == 0 &amp;&amp; imm == 1) ebreak(&amp;cpu);
+    else assert(0);
+    if (rd) cpu.x[rd] = res;
+  }
+}</code></pre><ul><li>Makefile</li></ul><pre><code>a.out: rvemu.c uncore.c
+# RTFM: Automatic variables
+	gcc $(CFLAGS) $&lt;
+
+run: a.out
+	@echo 2 Head, 4 Feet:
+	@cat ji-tu.txt | ./a.out 2 4
+	@echo 2 Head, 6 Feet:
+	@cat ji-tu.txt | ./a.out 2 6
+	@echo 2 Head, 8 Feet:
+	@cat ji-tu.txt | ./a.out 2 8
+	@echo 35 Head, 94 Feet:
+	@cat ji-tu.txt | ./a.out 35 94
+
+clean:
+	rm -f a.out</code></pre><ul><li>编译</li></ul><p>在当前目录下执行<code>make</code></p><ul><li>运行</li></ul><p>在当前目录下执行<code>make run</code>。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>模拟 RISC-V 指令执行</p><h2 id="绪论2-应用视角的操作系统-2023-2-16">绪论2_应用视角的操作系统_2023.2.16</h2><h3 id="汇编代码和最小可执行文件">汇编代码和最小可执行文件</h3><h4 id="构造最小的-hello-world-应用程序">构造最小的 Hello, World “应用程序”</h4><p>编译完成后文件大小为16KB。</p><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+  printf(&quot;Hello World\n&quot;);
+}</code></pre><p>使用objdump工具查看汇编代码<code>objdump -d a.out | less</code>。</p><p>使用静态文件进行编译，<code>gcc hello.c -static</code>，编译完成后大小为880kb，查看行数，<code>objdump -d a.out | wc -l</code>，共154193行。</p><p>打开gcc的日志功能<code>gcc hello.c -static --verbose</code>，可以打印出编译时的运行日志。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>gcc运行日志</p><p>编译过程：.c(源代码)-&gt;.i(预编译源代码)-gcc-&gt;.S(汇编代码)-as-&gt;.o-ld-&gt;a.out</p><p>打印链接选项<code>gcc hello.c -static -Wl,--verbose</code>。可以看到它链接了很多东西。</p><h4 id="强行构造最小的-hello-world">强行构造最小的 Hello, World？</h4><p>使用<code>gcc -E hello.c</code>可以看到预编译结果。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>预编译结果（部分）</p><p>使用<code>gcc -c hello.c</code>生成hello.o,使用<code>objdump -d hello.o</code>查看内容。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>查看内容</p><p>使用ld命令强行链接，<code>ld hello.o</code>，会出现一个warning和一个error。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>强行链接结果</p><p>去除外部依赖，重新编译。</p><pre><code>#include &lt;stdio.h&gt;
+
+int main() {
+}</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>查看内容</p><p>链接后只存在一个warning，可以使用<code>ld hello.o -e main</code>强行消除警告。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>链接警告</p><p>使用objdump查看。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>最小a.out</p><p>不过运行存在错误。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行提示Segmentation fault</p><p>将代码改为死循环，程序可正常运行。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>改为死循环</p><h4 id="为什么会-segmentation-fault">为什么会 Segmentation Fault？</h4><p>使用调试器gbd工具进行调试，<code>gdb a.out</code>。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>启动gdb</p><p>（在gdb中）执行<code>starti</code>程序将从指令第一条开始执行。使用<code>layout asm</code>可以将汇编显示在界面上方（text ui）。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>text ui</p><p>使用info registers查看寄存器状态。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>寄存器状态</p><p>通过 调试可以看到，是在返回时出现错误，最后指到了0x00000001地址。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>返回时的出错</p><h4 id="解决异常退出">解决异常退出</h4><p>纯计算指令不能“停下来”，因此系统提供了一个指令syscall，系统调用。</p><pre><code>movq $SYS_exit,  %rax   # exit(
+movq $1,         %rdi   #   status=1
+syscall                 # );</code></pre><ul><li>把 “系统调用” 的参数放到寄存器中</li><li>执行 syscall，操作系统接管程序<ul> <li>程序把控制权完全交给操作系统</li> <li>操作系统可以改变程序状态甚至终止程序</li> </ul></li><li>程序把控制权完全交给操作系统</li><li>操作系统可以改变程序状态甚至终止程序</li></ul><p>实现真正的最小的Hello World，<strong>minimal.S</strong></p><pre><code>#include &lt;sys/syscall.h&gt;
+
+.globl _start
+_start:
+  movq $SYS_write, %rax   // write(
+  movq $1,         %rdi   //   fd=1,
+  movq $st,        %rsi   //   buf=st,
+  movq $(ed - st), %rdx   //   count=ed-st
+  syscall                 // );
+
+  movq $SYS_exit,  %rax   // exit(
+  movq $1,         %rdi   //   status=1
+  syscall                 // );
+
+st:
+  .ascii &quot;\033[01;31mHello, OS World\033[0m\n&quot;
+ed:</code></pre><p>使用<code>gcc -c minimal.S</code>进行编译，<code>ld minimal.o</code>进行链接，Hello World就可以正常工作了，这个大小为4.65KB,使用<code>objdump -d a.out | wc -l</code>查看。仅32行。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行结果</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>查看行数</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>调试查看内容</p><h4 id="对一些细节的补充解释">对一些细节的补充解释</h4><p>为什么用 gcc 编译？</p><ul><li>gcc 会进行预编译 (可以使用 <code>ASSEMBLER </code> 宏区分汇编/C 代码)</li></ul><p>ANSI Escape Code 的更多应用</p><ul><li><a href="https://git.busybox.net/busybox/tree/editors/vi.c" target="_blank" rel="noreferrer">vi.c</a> from busybox</li><li><code>dialog msgbox & 39;Hello, OS World!& 39; 8 32</code></li><li><code>ssh o & 39;HostKeyAlgorithms +ssh rsa& 39; sshtron.zachlatta.com</code></li></ul><h4 id="汇编代码的状态机模型">汇编代码的状态机模型</h4><p>Everything is a state machine: 计算机 = 数字电路 = 状态机</p><p>所有的指令都只能计算</p><h3 id="理解高级语言程序">理解高级语言程序</h3><h4 id="非递归汉诺塔实现">非递归汉诺塔实现</h4><ul><li>hanoi main.c</li></ul><pre><code>#include &lt;stdio.h&gt;
+#include &lt;assert.h&gt;
+
+#include &quot;hanoi-nr.c&quot;
+
+int main() {
+  hanoi(3, &#39;A&#39;, &#39;B&#39;, &#39;C&#39;);
+}</code></pre><ul><li>一般使用递归解决hanoi r.c</li></ul><pre><code>void hanoi(int n, char from, char to, char via) {
+  if (n == 1) {
+    printf(&quot;%c -&gt; %c\n&quot;, from, to);
+  } else {
+    hanoi(n - 1, from, via, to);
+    hanoi(1,     from, to,  via);
+    hanoi(n - 1, via,  to,  from);
+  }
+}</code></pre><ul><li>但是可以使用非递归进行实现</li></ul><pre><code>typedef struct {
+  int pc, n;
+  char from, to, via;
+} Frame;
+
+#define call(...) ({ *(++top) = (Frame) { .pc = 0, __VA_ARGS__ }; })
+#define ret()     ({ top--; })
+#define goto(loc) ({ f-&gt;pc = (loc) - 1; })
+
+void hanoi(int n, char from, char to, char via) {
+  Frame stk[64], *top = stk - 1;
+  call(n, from, to, via);
+  for (Frame *f; (f = top) &gt;= stk; f-&gt;pc++) {
+    n = f-&gt;n; from = f-&gt;from; to = f-&gt;to; via = f-&gt;via;
+    switch (f-&gt;pc) {
+      case 0: if (n == 1) { printf(&quot;%c -&gt; %c\n&quot;, from, to); goto(4); } break;
+      case 1: call(n - 1, from, via, to);   break;
+      case 2: call(    1, from, to,  via);  break;
+      case 3: call(n - 1, via,  to,  from); break;
+      case 4: ret();                        break;
+      default: assert(0);
+    }
+  }
+}</code></pre><p>通过与chatGPT的交流，可以了解该程序的实现原理。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>chatGPT理解的程序实现原理</p><p>对 C 程序做出简化</p><ul><li>简化：改写成每条语句至多一次运算/函数调用的形式<ul> <li><a href="https://cil project.github.io/cil/" target="_blank" rel="noreferrer">真的有这种工具</a> (C Intermediate Language) 和<a href="https://gitlab.com/zsaleeba/picoc" target="_blank" rel="noreferrer">解释器</a> </li> </ul></li><li><a href="https://cil project.github.io/cil/" target="_blank" rel="noreferrer">真的有这种工具</a> (C Intermediate Language) 和<a href="https://gitlab.com/zsaleeba/picoc" target="_blank" rel="noreferrer">解释器</a></li></ul><p>状态机定义</p><ul><li>状态 = 堆 + 栈</li><li>初始状态 = <code>main</code> 的第一条语句</li><li>状态迁移 = 执行一条语句中的一小步</li></ul><h3 id="理解编译器">理解编译器</h3><p>我们有两种状态机</p><ul><li><p>高级语言代码.</p> <p>c</p> <ul> <li>状态：栈、全局变量；状态迁移：语句执行</li> </ul></li><li>状态：栈、全局变量；状态迁移：语句执行</li><li><p>汇编指令序列.</p> <p>s</p> <ul> <li>状态：(&lt;em M</em> ,&lt;em R</em> )；状态迁移：指令执行</li> </ul></li><li>状态：(<em>M</em> ,<em>R</em> )；状态迁移：指令执行</li><li><p>编译器是二者之间的桥梁：.&lt;em s</em> =compile(.&lt;em c</em> )</p></li></ul><p>.<em>s</em>=compile(.<em>c</em>)：编译正确性</p><p>.<em>c</em> 执行中所有外部观测者可见的行为，必须在 .<em>s</em> 中保持一致</p><p>在此前提下，任何翻译都是合法的 (例如我们期望更快或更短的代码)</p><h3 id="操作系统上的软件-应用程序">操作系统上的软件 (应用程序)</h3><h4 id="操作系统中的任何程序">操作系统中的任何程序</h4><blockquote><p>任何程序 = minimal.S = 调用 syscall 的状态机</p></blockquote><p>可执行文件是操作系统中的对象</p><ul><li>与大家日常使用的文件 (a.c, README.txt) 没有本质区别</li><li>操作系统提供 API 打开、读取、改写 (都需要相应的权限)</li></ul><p>查看可执行文件</p><ul><li><pre> <code>vim </code> </pre> <p>, </p> <pre> <code>cat </code> </pre> <p>, </p> <pre> <code>xxd </code> </pre> <p>都可以直接 “查看” 可执行文件</p> <ul> <li><code>vim</code> 中二进制的部分无法 “阅读”，但可以看到字符串常量</li> <li>使用 <code>xxd</code> 可以看到文件以 <code>&quot;\x7f&quot; &quot;ELF&quot;</code> 开头</li> <li>Vscode 有 binary editor 插件</li> </ul></li><li><code>vim</code> 中二进制的部分无法 “阅读”，但可以看到字符串常量</li><li>使用 <code>xxd</code> 可以看到文件以 <code>&quot;\x7f&quot; &quot;ELF&quot;</code> 开头</li><li>Vscode 有 binary editor 插件</li></ul><p>尝试使用文本编辑器打开之前的最小Hello World程序，可以在里面找到对应的字样。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>使用文本编辑器查看a.out</p><p>在vim中使用命令<code>:%!xxd</code>，实现编辑区域中文本传递中到xxd。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>处理后</p><h4 id="系统中常见的应用程序">系统中常见的应用程序</h4><p>Core Utilities (coreutils)</p><ul><li><p>&lt;em Standard</em> programs for text and file manipulation</p></li><li><p>系统中安装的是 </p> <p>GNU Coreutils</p> <ul> <li>有较小的替代品 <a href="https://www.busybox.net/" target="_blank" rel="noreferrer">busybox</a> </li> </ul></li><li>有较小的替代品 <a href="https://www.busybox.net/" target="_blank" rel="noreferrer">busybox</a></li></ul><p>系统/工具程序</p><ul><li><p>bash, </p> <p>binutils</p> <p>, apt, ip, ssh, vim, tmux, jdk, python, ...</p> <ul> <li>这些工具的原理不复杂 (例如 apt 是 dpkg 的套壳)，但琐碎</li> <li><a href="https://packages.ubuntu.com/" target="_blank" rel="noreferrer">Ubuntu Packages</a> (和 apt file 工具) 支持文件名检索</li> </ul></li><li>这些工具的原理不复杂 (例如 apt 是 dpkg 的套壳)，但琐碎</li><li><a href="https://packages.ubuntu.com/" target="_blank" rel="noreferrer">Ubuntu Packages</a> (和 apt file 工具) 支持文件名检索</li></ul><p>其他各种应用程序</p><ul><li>Vscode, 浏览器、音乐播放器……</li></ul><h4 id="打开程序的执行-trace-追踪">打开程序的执行：Trace (追踪)</h4><p>使用strace ./a.out进行追踪程序的系统调用。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>strace</p><h4 id="操作系统中-任何程序-的一生">操作系统中 “任何程序” 的一生</h4><blockquote><p>任何程序 = minimal.S = 调用 syscall 的状态机</p></blockquote><h3 id="总结">总结</h3><p>无论是汇编代码还是高级语言程序，它们都可以表示成状态机：</p><ul><li>高级语言代码 .c<ul> <li>状态：栈、全局变量；状态迁移：语句执行</li> </ul></li><li>状态：栈、全局变量；状态迁移：语句执行</li><li>汇编指令序列 .s<ul> <li>状态：(M,R)；状态迁移：指令执行</li> </ul></li><li>状态：(M,R)；状态迁移：指令执行</li><li>编译器实现了两种状态机之间的翻译</li></ul><p>应用程序与操作系统沟通的唯一桥梁是系统调用指令 (例如 x86-64 的 syscall)。计算机系统不存在玄学；一切都建立在确定的机制上。</p><ul><li>理解操作系统的重要工具：gcc, binutils, gdb, strace。</li></ul><h2 id="绪论3-硬件视角的操作系统-2023-2-28">绪论3_硬件视角的操作系统_2023.2.28</h2><h3 id="回顾-计算机硬件">回顾：计算机硬件</h3><h4 id="计算机硬件-数字电路">计算机硬件 = 数字电路</h4><p>基本构件：wire, reg, NAND</p><p>程序是 “严格的数学对象”</p><p>不仅是程序，整个计算机系统也是一个状态机</p><ul><li>状态：内存和寄存器数值</li><li><strong>初始状态</strong> ：手册规定 (CPU Reset)</li><li>状态迁移<ul> <li>任意选择一个处理器 cpu</li> <li>响应处理器外部中断</li> <li>从 cpu.PC 取指令执行</li> </ul></li><li>任意选择一个处理器 cpu</li><li>响应处理器外部中断</li><li>从 cpu.PC 取指令执行</li></ul><h3 id="硬件与程序员的约定">硬件与程序员的约定</h3><p>Bare-metal 与厂商的约定</p><ul><li><p>CPU Reset 后的状态</p> <p>(寄存器值)</p> <ul> <li>厂商自由处理这个地址上的值</li> <li>Memory mapped I/O</li> </ul></li><li>厂商自由处理这个地址上的值</li><li>Memory mapped I/O</li></ul><p>厂商为操作系统开发者提供 Firmware</p><ul><li>管理硬件和系统配置</li><li>把存储设备上的代码加载到内存<ul> <li>例如存储介质上的第二级 loader (加载器)</li> <li>或者直接加载操作系统 (嵌入式系统)</li> </ul></li><li>例如存储介质上的第二级 loader (加载器)</li><li>或者直接加载操作系统 (嵌入式系统)</li></ul><h4 id="x86-family-cpu-reset">x86 Family: CPU Reset</h4><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>intel-cpu-reset</p><ul><li><p>寄存器会有确定的初始状态</p> <ul> <li>&lt;p <code>EIP = 0x0000fff0</code> </p> </li> <li><pre> <code>CR0 = 0x60000010 </code> </pre> <ul> &lt;li 处理器处于 16 bit 模式</li> </ul> </li> <li><pre> <code>EFLAGS = 0x00000002 </code> </pre> <ul> &lt;li Interrupt disabled</li> </ul> </li> </ul></li><li><p><code>EIP = 0x0000fff0</code> </p></li><li><pre> <code>CR0 = 0x60000010 </code> </pre> <ul> <li>处理器处于 16 bit 模式</li> </ul></li><li>处理器处于 16 bit 模式</li><li><pre> <code>EFLAGS = 0x00000002 </code> </pre> <ul> <li>Interrupt disabled</li> </ul></li><li>Interrupt disabled</li><li><p>TFM (5,000 页+)</p> <ul> <li>最需要的 Volume 3A 只有 ~400 页 (我们更需要 AI)</li> </ul></li><li>最需要的 Volume 3A 只有 ~400 页 (我们更需要 AI)</li></ul><h4 id="其他平台上的-cpu-reset">其他平台上的 CPU Reset</h4><p>Reset 后处理器都从固定地址 (Reset Vector) 启动</p><ul><li>MIPS: 0xbfc00000<ul> <li>Specification 规定</li> </ul></li><li>Specification 规定</li><li>ARM: 0x00000000<ul> <li>Specification 规定</li> <li>允许配置 Reset Vector Base Address Register</li> </ul></li><li>Specification 规定</li><li>允许配置 Reset Vector Base Address Register</li><li>RISC V: Implementation defined<ul> <li>给厂商最大程度的自由</li> </ul></li><li>给厂商最大程度的自由</li></ul><p>Firmware 负责加载操作系统</p><ul><li>开发板：直接把加载器写入 ROM</li><li>QEMU：<code>kernel</code> 可以绕过 Firmware 直接加载内核 (<a href="https://www.qemu.org/docs/master/system/invocation.html hxtool 8" target="_blank" rel="noreferrer">RTFM</a> )</li></ul><h4 id="x86-cpu-reset-之后-到底执行了什么">x86 CPU Reset 之后：到底执行了什么？</h4><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>bios-firmware</p><p>状态机 (初始状态) 开始执行</p><ul><li>从 PC 取指令、译码、执行……</li><li>开始执行厂商 “安排好” 的 Firmware 代码<ul> <li>x86 Reset Vector 是一条向 Firmware 跳转的 jmp 指令</li> </ul></li><li>x86 Reset Vector 是一条向 Firmware 跳转的 jmp 指令</li></ul><p>Firmware: <a href="https://www.zhihu.com/question/21672895" target="_blank" rel="noreferrer">BIOS vs. UEFI</a></p><ul><li>一个小 “操作系统”<ul> <li>管理、配置硬件；加载操作系统</li> </ul></li><li>管理、配置硬件；加载操作系统</li><li>Legacy BIOS (Basic I/O System)<ul> <li>IBM PC 所有设备/BIOS 中断是有 specification 的 (成就了 “兼容机”)</li> </ul></li><li>IBM PC 所有设备/BIOS 中断是有 specification 的 (成就了 “兼容机”)</li><li>UEFI (Unified Extensible Firmware Interface)</li></ul><h4 id="为什么需要-uefi">为什么需要 UEFI？</h4><p>今天的 Firmware 面临麻烦得多的硬件：</p><ul><li>指纹锁、USB 转接器上的 Linux to Go 优盘、山寨网卡上的 PXE 网络启动、USB 蓝牙转接器连接的蓝牙键盘、……<ul> <li>这些设备都需要 “驱动程序” 才能访问</li> <li>解决 BIOS 逐渐碎片化的问题</li> </ul></li><li>这些设备都需要 “驱动程序” 才能访问</li><li>解决 BIOS 逐渐碎片化的问题</li></ul><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>UEFI-booting-seq</p><h4 id="回到-legacy-bios-约定">回到 Legacy BIOS: 约定</h4><p>BIOS 提供机制，将<strong>程序员的代码</strong>载入内存</p><ul><li><p>Legacy BIOS 把第一个可引导设备的第一个 </p> <p>512 </p> <p>字节加载到物理内存的 </p> <pre> <code>7c00 </code> </pre> <p>位置</p> <ul> <li>&lt;p 此时处理器处于 16 bit 模式</p> </li> <li>&lt;p 规定 </p> <pre> <code>CS:IP = 0x7c00 </code> </pre> &lt;p , </p> <pre> <code>(R[CS] &lt;&lt; 4) | R[IP] == 0x7c00 </code> </pre> <ul> &lt;li 可能性1：<code>CS = 0x07c0, IP = 0</code> </li> <li>可能性2：<code>CS = 0, IP = 0x7c00</code> </li> </ul> </li> <li>&lt;p 其他没有任何约束</p> </li> </ul></li><li><p>此时处理器处于 16 bit 模式</p></li><li><p>规定 </p> <pre> <code>CS:IP = 0x7c00 </code> </pre> <p>, </p> <pre> <code>(R[CS] &lt;&lt; 4) | R[IP] == 0x7c00 </code> </pre> <ul> <li>可能性1：<code>CS = 0x07c0, IP = 0</code> </li> <li>可能性2：<code>CS = 0, IP = 0x7c00</code> </li> </ul></li><li>可能性1：<code>CS = 0x07c0, IP = 0</code></li><li>可能性2：<code>CS = 0, IP = 0x7c00</code></li><li><p>其他没有任何约束</p></li></ul><p>虽然最多只有 446 字节代码 (64B 分区表 + 2B 标识)</p><ul><li>但控制权已经回到程序员手中了！</li><li>你甚至可以让 ChatGPT 给你写一个 Hello World<ul> <li>当然，他是抄作业的 (而且是有些小问题的)</li> </ul></li><li>当然，他是抄作业的 (而且是有些小问题的)</li></ul><p>计算机系统公理：你想到的就一定有人做到</p><ul><li><p>模拟方案：QEMU</p> <ul> <li>&lt;p 传奇黑客、天才程序员 </p> &lt;p Fabrice Bellard</p> &lt;p 的杰作</p> <ul> &lt;li <a href="https://www.usenix.org/legacy/publications/library/proceedings/usenix05/tech/freenix/full papers/bellard/bellard.pdf">QEMU, A fast and portable dynamic translator</a> (USENIX ATC& 39;05)</li> <li>Android Virtual Device, VirtualBox, ... 背后都是 QEMU</li> </ul> </li> </ul></li><li><p>传奇黑客、天才程序员 </p> <p>Fabrice Bellard</p> <p>的杰作</p> <ul> <li><a href="https://www.usenix.org/legacy/publications/library/proceedings/usenix05/tech/freenix/full papers/bellard/bellard.pdf">QEMU, A fast and portable dynamic translator</a> (USENIX ATC& 39;05)</li> <li>Android Virtual Device, VirtualBox, ... 背后都是 QEMU</li> </ul></li><li><a href="https://www.usenix.org/legacy/publications/library/proceedings/usenix05/tech/freenix/full papers/bellard/bellard.pdf">QEMU, A fast and portable dynamic translator</a> (USENIX ATC& 39;05)</li><li>Android Virtual Device, VirtualBox, ... 背后都是 QEMU</li><li><p>真机方案：JTAG (Joint Test Action Group) debugger</p> <ul> <li>一系列 (物理) 调试寄存器，可以实现 gdb 接口 (!!!)</li> </ul></li><li>一系列 (物理) 调试寄存器，可以实现 gdb 接口 (!!!)</li><li><p>Makefile</p></li></ul><pre><code>mbr.img: mbr.S
+	gcc -ggdb -c $&lt;
+	ld mbr.o -Ttext 0x7c00
+	objcopy -S -O binary -j .text a.out $@
+
+run: mbr.img
+	qemu-system-x86_64 $&lt;
+
+debug: mbr.img
+	qemu-system-x86_64 -s -S $&lt; &amp;  # Run QEMU in background
+	gdb -x init.gdb  # RTFM: gdb (1)
+
+clean:
+	rm -f *.img *.o a.out</code></pre><ul><li>mbr.S</li></ul><pre><code>#define SECT_SIZE  512
+
+.code16  // 16-bit assembly
+
+// Entry of the code
+.globl _start
+_start:
+  lea   (msg), %si   // R[si] = &amp;msg;
+
+again:
+  movb  (%si), %al   // R[al] = *R[si]; &lt;--+
+  incw  %si          // R[si]++;           |
+  orb   %al, %al     // if (!R[al])        |
+  jz    done         //   goto done; --+   |
+  movb  $0x0e, %ah   // R[ah] = 0x0e;  |   |
+  movb  $0x00, %bh   // R[bh] = 0x00;  |   |
+  int   $0x10        // bios_call();   |   |
+  jmp   again        // goto again; ---+---+
+                     //                |
+done:                //                |
+  jmp   .            // goto done; &lt;---+
+
+// Data: const char msg[] = &quot;...&quot;;
+msg:
+  .asciz &quot;This is a baby step towards operating systems!\r\n&quot;
+
+// Magic number for bootable device
+.org SECT_SIZE - 2
+.byte 0x55, 0xAA</code></pre><ul><li>init.gdb</li></ul><pre><code># Kill process (QEMU) on gdb exits
+define hook-quit
+  kill
+end
+
+# Connect to remote
+target remote localhost:1234
+file a.out
+break *0x7c00
+layout src
+continue</code></pre><p>运行make run可以看到结果，编译生成的mbr.img大小为512字节。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行</p><p>注意得要先安装一个qemu，命令<code>sudo apt-get install qemu-system-x86</code>。</p><p>由于已经写好脚本，可以使用<code>make debug</code>便捷启动debug。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>debug</p><h4 id="uefi-上的操作系统加载">UEFI 上的操作系统加载</h4><p>标准化的加载流程</p><ul><li><p>磁盘必须按 GPT (GUID Partition Table) 方式格式化</p></li><li><p>预留一个 FAT32 分区 (lsblk/fdisk 可以看到)</p></li><li><p>Firmware 能够加载任意大小的 PE 可执行文件 </p> <pre> <code>.efi </code> </pre> <ul> <li>没有 legacy boot 512 字节限制</li> <li>EFI 应用可以返回 firmware</li> </ul></li><li>没有 legacy boot 512 字节限制</li><li>EFI 应用可以返回 firmware</li></ul><p>更好的程序支持</p><ul><li>设备驱动框架</li><li>更多的功能，例如 Secure Boot，只能启动 “信任” 的操作系统</li></ul><h3 id="实现最小-操作系统">实现最小 “操作系统”</h3><h4 id="我们已经获得的能力">我们已经获得的能力</h4><p>为硬件直接编程</p><ul><li>可以让机器运行任意不超过 510 字节的指令序列</li><li>编写任何指令序列 (状态机)<ul> <li>只要能问出问题，就可以 RTFM/STFW/ChatGPT 找到答案<ul> &lt;li “如何在汇编里生成 &lt;em n</em> 个字节的 0”</li> <li>“如何在 x86 16 bit mode 打印字符”</li> </ul> </li> </ul></li><li>只要能问出问题，就可以 RTFM/STFW/ChatGPT 找到答案<ul> <li>“如何在汇编里生成 &lt;em n</em> 个字节的 0”</li> <li>“如何在 x86 16 bit mode 打印字符”</li> </ul></li><li>“如何在汇编里生成 <em>n</em> 个字节的 0”</li><li>“如何在 x86 16 bit mode 打印字符”</li></ul><p>操作系统：就一个 C 程序</p><ul><li>用 510 字节的指令完成磁盘 → 内存的加载</li><li>初始化 C 程序的执行环境</li><li>操作系统就开始运行了！</li></ul><h4 id="bare-metal-上的-c-代码">Bare-metal 上的 C 代码</h4><p>为了让下列程序能够 “运行起来”：</p><pre><code>int main() {
+  printf(&quot;Hello, World\n&quot;);
+}</code></pre><p>我们需要准备什么？</p><ul><li><p>MBR 上的 “启动加载器” (Boot Loader)</p></li><li><p>我们可以通过编译器控制 C 程序的行为</p> <ul> <li>静态链接/PIC (位置无关代码)</li> <li>Freestanding (不使用任何标准库)</li> <li>自己手工实现库函数 (putch, printf, ...)<ul> &lt;li 有亿点点细节：RTFSC!</li> </ul> </li> </ul></li><li>静态链接/PIC (位置无关代码)</li><li>Freestanding (不使用任何标准库)</li><li>自己手工实现库函数 (putch, printf, ...)<ul> <li>有亿点点细节：RTFSC!</li> </ul></li><li>有亿点点细节：RTFSC!</li><li><p>hello.c</p></li></ul><pre><code>#include &lt;am.h&gt;
+
+#define ESC &quot;\033[&quot;
+#define RED ESC &quot;01;31m&quot;
+#define CLR ESC &quot;0m&quot;
+
+const char *MESSAGE = RED &quot;Hello, OS World\n&quot; CLR;
+
+int main() {
+  for (const char *s = MESSAGE; *s; s++) {
+    putch(*s);  // Prints to platform-dependent debug console
+  }
+}</code></pre><ul><li>kernel.c</li></ul><pre><code>#include &lt;am.h&gt;
+#include &lt;klib.h&gt;
+#include &lt;klib-macros.h&gt;
+
+typedef union task {
+  struct {
+    const char *name;
+    union task *next;
+    void      (*entry)(void *);
+    Context    *context;
+  };
+  uint8_t stack[8192];
+} Task;
+
+Task *current;
+
+void func(void *arg) {
+  while (1) {
+    putch(*(char *)arg);
+    for (int volatile i = 0; i &lt; 100000; i++) ;
+  }
+}
+
+Task tasks[] = {
+  { .name = &quot;a&quot;, .entry = func },
+  { .name = &quot;b&quot;, .entry = func },
+};
+
+Context *on_interrupt(Event ev, Context *ctx) {
+  if (!current) {
+    current = &amp;tasks[0];
+  } else {
+    current-&gt;context = ctx;
+  }
+  return (current = current-&gt;next)-&gt;context;
+}
+
+int main() {
+  cte_init(on_interrupt);  // call on_interrupt() on traps/interrupts
+
+  for (int i = 0; i &lt; LENGTH(tasks); i++) {
+    Task *task    = &amp;tasks[i];
+    Area stack    = (Area) { &amp;task-&gt;context + 1, task + 1 };
+    task-&gt;context = kcontext(stack, task-&gt;entry, (void *)task-&gt;name);
+    task-&gt;next    = &amp;tasks[(i + 1) % LENGTH(tasks)];
+  }
+  iset(true);  // Enable external interrupts (timer, I/O, ...)
+  yield();  // Trap
+}</code></pre><ul><li>Makefile</li></ul><pre><code>NAME := hello
+SRCS := hello.c
+export ARCH := x86_64-qemu
+
+include $(AM_HOME)/Makefile</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行结果</p><p>运行这段代码，我们需要设置 <code>AM_HOME</code> 环境变量为实验框架代码中的 AbstractMachine 所在目录 (绝对路径)</p><p>框架地址：<a href="https://github.com/NJU-ProjectN/abstract-machine" target="_blank" rel="noreferrer">NJU-ProjectN/abstract-machine: A minimal, modularized, and machine-independent hardware abstraction layer (github.com)</a></p><p>设置方法：<code>vim ~/.bashrc </code> ，然后添加<code>export AM_HOME=绝对路径</code>  ，然后按Esc, :wq, 回车，然后<code>source ~/.bashrc</code>即可生效。</p><p>坑：可能出现报错：</p><pre><code>/usr/include/stdint.h:26:10: fatal error: bits/libc-header-start.h: No such file or directory
+   26 | #include &lt;bits/libc-header-start.h&gt;
+      |     </code></pre><p>原因：编译的项目是在64位机器上生成32位的项目，你需要安装对应的gcc 32位的库</p><p>解决：<code>sudo apt install gcc-multilib</code></p><p>对于vscode的&lt;am.h&gt;头文件报红，可以使用快速修复解决。（因此建议将其放在同一项目文件夹下）</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>快速修复</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>自动添加</p><h2 id="绪论4-python实现操作系统模型-2023-3-2">绪论4_Python实现操作系统模型_2023.3.2</h2><h3 id="理解操作系统的新途径">理解操作系统的新途径</h3><h4 id="回顾-程序-硬件的状态机模型">回顾：程序/硬件的状态机模型</h4><p>计算机软件</p><ul><li>状态机 (C/汇编)<ul> <li>允许执行特殊指令 (syscall) 请求操作系统</li> <li>操作系统 = API + 对象</li> </ul></li><li>允许执行特殊指令 (syscall) 请求操作系统</li><li>操作系统 = API + 对象</li></ul><p>计算机硬件</p><ul><li>“无情执行指令的机器”<ul> <li>从 CPU Reset 状态开始执行 Firmware 代码</li> <li>操作系统 = C 程序</li> </ul></li><li>从 CPU Reset 状态开始执行 Firmware 代码</li><li>操作系统 = C 程序</li></ul><h4 id="一个大胆的想法">一个大胆的想法</h4><p>无论是软件还是硬件，都是状态机</p><ul><li>而状态和状态的迁移是可以 “画” 出来的！</li><li>理论上说，只需要两个 API<ul> <li><code>dump state()</code> 获取当前程序状态</li> <li><code>single step()</code> 执行一步</li> <li>gdb 不就是做这个的吗！</li> </ul></li><li><code>dump state()</code> 获取当前程序状态</li><li><code>single step()</code> 执行一步</li><li>gdb 不就是做这个的吗！</li></ul><h3 id="操作系统-玩具-设计与实现">操作系统 “玩具”：设计与实现</h3><h4 id="操作系统玩具-api">操作系统玩具：API</h4><p>四个 “系统调用” API</p><ul><li>choose(xs): 返回 <code>xs</code> 中的一个随机选项</li><li>write(s): 输出字符串 <code>s</code></li><li>spawn(fn): 创建一个可运行的状态机 <code>fn</code></li><li>sched(): 随机切换到任意状态机执行</li></ul><p>除此之外，所有的代码都是确定 (deterministic) 的纯粹计算</p><ul><li>允许使用 list, dict 等数据结构</li></ul><p>软件就是状态机，操作系统是状态机的管理者。</p><pre><code>count = 0
+
+def Tprint(name):
+    global count
+    for i in range(3):
+        count += 1
+        sys_write(f&#39;#{count:02} Hello from {name}{i+1}\n&#39;)
+        sys_sched()
+
+def main():
+    n = sys_choose([3, 4, 5])
+    sys_write(f&#39;#Thread = {n}\n&#39;)
+    for name in &#39;ABCDE&#39;[:n]:
+        sys_spawn(Tprint, name)
+    sys_sched()</code></pre><h4 id="实现系统调用">实现系统调用</h4><p>有些 “系统调用” 的实现是显而易见的</p><pre><code>def sys_write(s): print(s)
+def sys_choose(xs): return random.choice(xs)
+def sys_spawn(t): runnables.append(t)</code></pre><p>有些就困难了</p><pre><code>def sys_sched():
+    raise NotImplementedError(&#39;No idea how&#39;)</code></pre><p>我们需要</p><ul><li>封存当前状态机的状态</li><li>恢复另一个 “被封存” 状态机的执行<ul> <li>没错，我们离真正的 “分时操作系统” 就只差这一步</li> </ul></li><li>没错，我们离真正的 “分时操作系统” 就只差这一步</li></ul><h4 id="借用-python-的语言机制">借用 Python 的语言机制</h4><p>Generator objects (无栈协程/轻量级线程/...)</p><p>利用了yield</p><pre><code>def numbers():
+    i = 0
+    while True:
+        ret = yield f&#39;{i:b}&#39;  # “封存” 状态机状态
+        i += ret</code></pre><p>使用方法：</p><pre><code>n = numbers()  # 封存状态机初始状态
+n.send(None)  # 恢复封存的状态
+n.send(0)  # 恢复封存的状态 (并传入返回值)</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>generator</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>send，以二进制结果输出</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>另外开一个线程m，切换</p><ul><li>os model.py</li></ul><pre><code>#!/usr/bin/env python3
+
+import sys
+import random
+from pathlib import Path
+
+class OperatingSystem():
+    &quot;&quot;&quot;A minimal executable operating system model.&quot;&quot;&quot;
+
+    SYSCALLS = [&#39;choose&#39;, &#39;write&#39;, &#39;spawn&#39;, &#39;sched&#39;]
+
+    class Thread:
+        &quot;&quot;&quot;A &quot;freezed&quot; thread state.&quot;&quot;&quot;
+
+        def __init__(self, func, *args):
+            self._func = func(*args)
+            self.retval = None
+
+        def step(self):
+            &quot;&quot;&quot;Proceed with the thread until its next trap.&quot;&quot;&quot;
+            syscall, args, *_ = self._func.send(self.retval)
+            self.retval = None
+            return syscall, args
+
+    def __init__(self, src):
+        variables = {}
+        exec(src, variables)
+        self._main = variables[&#39;main&#39;]
+
+    def run(self):
+        threads = [OperatingSystem.Thread(self._main)]
+        while threads:  # Any thread lives
+            try:
+                match (t := threads[0]).step():
+                    case &#39;choose&#39;, xs:  # Return a random choice
+                        t.retval = random.choice(xs)
+                    case &#39;write&#39;, xs:  # Write to debug console
+                        print(xs, end=&#39;&#39;)
+                    case &#39;spawn&#39;, (fn, args):  # Spawn a new thread
+                        threads += [OperatingSystem.Thread(fn, *args)]
+                    case &#39;sched&#39;, _:  # Non-deterministic schedule
+                        random.shuffle(threads)
+            except StopIteration:  # A thread terminates
+                threads.remove(t)
+                random.shuffle(threads)  # sys_sched()
+
+if __name__ == &#39;__main__&#39;:
+    if len(sys.argv) &lt; 2:
+        print(f&#39;Usage: {sys.argv[0]} file&#39;)
+        exit(1)
+
+    src = Path(sys.argv[1]).read_text()
+    for syscall in OperatingSystem.SYSCALLS:
+        src = src.replace(f&#39;sys_{syscall}&#39;,        # sys_write(...)
+                          f&#39;yield &quot;{syscall}&quot;, &#39;)  #  -&gt; yield &#39;write&#39;, (...)
+
+    OperatingSystem(src).run()</code></pre><ul><li>hello.py</li></ul><pre><code>def main():
+    sys_write(&#39;Hello, OS World\n&#39;)  # sys_write -&gt; print</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>调用结果</p><ul><li>threads.py</li></ul><pre><code>count = 0
+
+def Tprint(name):
+    global count
+    for i in range(3):
+        count += 1
+        sys_write(f&#39;#{count:02} Hello from {name}{i+1}\n&#39;)
+        sys_sched()
+
+def main():
+    n = sys_choose([3, 4, 5])
+    sys_write(f&#39;#Thread = {n}\n&#39;)
+    for name in &#39;ABCDE&#39;[:n]:
+        sys_spawn(Tprint, name)
+    sys_sched()</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>threads</p><h3 id="建模操作系统">建模操作系统</h3><h4 id="一个更-全面-的操作系统模型">一个更 “全面” 的操作系统模型</h4><p>进程 + 线程 + 终端 + 存储 (崩溃一致性)</p><pre><code>系统调用/Linux 对应 | 行为
+sys spawn(fn)/pthread create | 创建从 fn 开始执行的线程
+sys fork()/fork | 创建当前状态机的完整复制
+sys sched()/定时被动调用 | 切换到随机的线程/进程执行
+sys choose(xs)/rand | 返回一个 xs 中的随机的选择
+sys write(s)/printf | 向调试终端输出字符串 s
+sys bread(k)/read | 读取虚拟设磁盘块 k 的数据
+sys bwrite(k, v)/write | 向虚拟磁盘块 k 写入数据 v
+sys sync()/sync | 将所有向虚拟磁盘的数据写入落盘
+sys crash()/长按电源按键 | 模拟系统崩溃</code></pre><p>行为</p><h4 id="模型做出的简化">模型做出的简化</h4><p>被动进程/线程切换</p><ul><li>实际程序随时都可能被动调用 <code>sys sched()</code> 切换</li></ul><p>只有一个终端</p><ul><li>没有 <code>read()</code> (用 choose 替代 “允许读到任意值”)</li></ul><p>磁盘是一个 <code>dict</code></p><ul><li>把任意 key 映射到任意 value</li><li>实际的磁盘<ul> <li>key 为整数</li> <li>value 是固定大小 (例如 4KB) 的数据</li> <li>二者在某种程度上是可以 “互相转换” 的</li> </ul></li><li>key 为整数</li><li>value 是固定大小 (例如 4KB) 的数据</li><li>二者在某种程度上是可以 “互相转换” 的</li></ul><h4 id="模型实现">模型实现</h4><p>原理与刚才的 “最小操作系统玩具” 类似</p><ul><li><a href="https://jyywiki.cn/pages/OS/2023/mosaic/mosaic.py" target="_blank" rel="noreferrer">mosaic.py</a> 500 行建模操作系统</li><li>进程/线程都是 Generator Object</li><li>共享内存用 heap 变量访问<ul> <li>线程会得到共享 heap 的指针</li> <li>进程会得到一个独立的 heap clone</li> </ul></li><li>线程会得到共享 heap 的指针</li><li>进程会得到一个独立的 heap clone</li></ul><p>输出程序运行的 “状态图”</p><ul><li><p>JSON Object</p></li><li><p>Vertices: 线程/进程、内存快照、设备历史输出</p></li><li><p>Edges: 系统调用</p> <ul> <li>操作系统就是 “状态机的管理者”</li> </ul></li><li>操作系统就是 “状态机的管理者”</li><li><p>mosaic.py</p></li></ul><pre><code>#!/usr/bin/env python3
+
+# Mosaic Emulator and Checker
+
+import argparse
+import ast
+import copy
+import inspect
+import json
+import random
+from dataclasses import dataclass
+from itertools import compress, product
+from pathlib import Path
+from typing import Callable, Generator
+
+## 1. Mosaic system calls
+
+### 1.1 Process, thread, and context switching
+
+sys_fork = lambda: os.sys_fork()
+sys_spawn = lambda fn, *args: os.sys_spawn(fn, *args)
+sys_sched = lambda: os.sys_sched()
+
+### 1.2 Virtual character device
+
+sys_choose = lambda choices: os.sys_choose(choices)
+sys_write = lambda *args: os.sys_write(*args)
+
+### 1.3 Virtual block storage device
+
+sys_bread = lambda k: os.sys_bread(k)
+sys_bwrite = lambda k, v: os.sys_bwrite(k, v)
+sys_sync = lambda: os.sys_sync()
+sys_crash = lambda: os.sys_crash()
+
+### 1.4 System call helpers
+
+SYSCALLS = []
+
+def syscall(func):  # @syscall decorator
+    SYSCALLS.append(func.__name__)
+    return func
+
+## 2. Mosaic operating system emulator
+
+### 2.1 Data structures
+
+class Heap:
+    pass  # no member: self.__dict__ is the heap
+
+@dataclass
+class Thread:
+    context: Generator  # program counter, local variables, etc.
+    heap: Heap  # a pointer to thread&#39;s &quot;memory&quot;
+
+@dataclass
+class Storage:
+    persist: dict  # persisted storage state
+    buf: dict  # outstanding operations yet to be persisted
+
+### 2.2 The OperatingSystem class
+
+class OperatingSystem:
+    &quot;&quot;&quot;An executable operating system model.
+
+    The operating system model hosts a single Python application with a
+    main() function accessible to a shared heap and 9 system calls
+    (marked by the @syscall decorator). An example:
+
+        def main():
+            pid = sys_fork()
+            sys_sched()  # non-deterministic context switch
+            if pid == 0:
+                sys_write(&#39;World&#39;)
+            else:
+                sys_write(&#39;Hello&#39;)
+
+    At any moment, this model keeps tracking a set of threads and a
+    &quot;currently running&quot; one. Each thread consists of a reference to a
+    heap object (may be shared with other threads) and a private context
+    (program counters, local variables, etc.). A thread context is a
+    Python generator object, i.e., a stack-less coroutine [1] that can
+    save the running context and yield itself.
+
+    For applications, the keyword &quot;yield&quot; is reserved for system calls.
+    For example, a &quot;choose&quot; system call [2]:
+
+        sys_choose([&#39;A&#39;, &#39;B&#39;])
+
+    is transpiled as yielding the string &quot;sys_choose&quot; followed by its
+    parameters (choices):
+
+        res = yield &#39;sys_choose&#39;, [&#39;A&#39;, &#39;B&#39;].
+
+    Yield will transfer the control to the OS for system call handling
+    and eventually returning a value (&#39;A&#39; or &#39;B&#39;) to the application.
+
+    Right after transferring control to the OS by &quot;yield&quot;, the function
+    state is &quot;frozen&quot;, where program counters and local variables are
+    accessible via the generator object. Therefore, OS can serialize its
+    internal state--all thread&#39;s contexts, heaps, and virtual device
+    states at this moment.
+
+    In this sense, operating system is a system-call driven state
+    transition system:
+
+        (s0) --run first thread (main)-&gt; (s1)
+             --sys_choose and application execution-&gt; (s2)
+             --sys_sched and application execution-&gt; (s3) ...
+
+    Real operating systems can be preemptive--context switching can
+    happen non-deterministically at any program point, simply because
+    processor can non-deterministically interrupt its currently running
+    code and transfer the control to the operating system.
+
+    The OS internal implementation does NOT immediately process the
+    system call: it returns all possible choices available at the moment
+    and their corresponding processing logic as callbacks. For the
+    example above, the &quot;choose&quot; system call returns a non-deterministic
+    choice among given choices. The internal implementation thus returns
+
+        choices = {
+            &#39;A&#39;: (lambda: &#39;A&#39;),
+            &#39;B&#39;: (lambda: &#39;B&#39;),
+        }
+
+    for later processing. Another example is non-deterministic context
+    switching by yielding &#39;sys_sched&#39;. Suppose there are threads t1 and
+    t2 at the moment. The system call handler will return
+
+        choices = {
+            &#39;t1&#39;: (lambda: switch_to(t1)),
+            &#39;t2&#39;: (lambda: switch_to(t2)),
+        }
+
+    in which switch_to(th) replaces the OS&#39;s current running thread with
+    th (changes the global &quot;heap&quot; variable). Such deferred execution of
+    system calls separates the mechanism of non-deterministic choices
+    from the actual decision makers (e.g., an interpreter or a model
+    checker). Once the decision is made, the simply call step(choice)
+    and the OS will execute this choice by
+
+        choices[choice]()
+
+    with the application code (generator) being resumed.
+
+    This model provides &quot;write&quot; system call to immediately push data to
+    a hypothetical character device like a tty associated with stdout.
+    We model a block device (key-value store) that may lose data upon
+    crash. The model assumes atomicity of each single block write (a
+    key-value update). However, writes are merely to a volatile buffer
+    which may non-deterministically lose data upon crash 3]. The &quot;sync&quot;
+    system call persists buffered writes.
+
+    References:
+
+    [1] N. Schemenauer, T. Peters, and M. L. Hetland. PEP 255 -
+        Simple generators. https://peps.python.org/pep-0255/
+    [2] J. Yang, C. Sar, and D. Engler. eXplode: a lightweight, general
+        system for finding serious storage system errors. OSDI&#39;06.
+    [3] T. S. Pillai, V. Chidambaram, R. Alagappan, A. Al-Kiswany, A. C.
+        Arpaci-Dusseau, and R. H. Arpaci-Dusseau. All file systems are
+        not created equal: On the complexity of crafting crash
+        consistent applications. OSDI&#39;14.
+    &quot;&quot;&quot;
+
+    def __init__(self, init: Callable):
+        &quot;&quot;&quot;Create a new OS instance with pending-to-execute init thread.&quot;&quot;&quot;
+        # Operating system states
+        self._threads = [Thread(context=init(), heap=Heap())]
+        self._current = 0
+        self._choices = {init.__name__: lambda: None}
+        self._stdout = &#39;&#39;
+        self._storage = Storage(persist={}, buf={})
+
+        # Internal states
+        self._init = init
+        self._trace = []
+        self._newfork = set()
+
+### 2.3 System call implementation
+
+#### 2.3.1 Process, thread, and context switching
+
+    @syscall
+    def sys_spawn(self, func: Callable, *args):
+        &quot;&quot;&quot;Spawn a heap-sharing new thread executing func(args).&quot;&quot;&quot;
+        def do_spawn():
+            self._threads.append(
+                Thread(
+                    context=func(*args),  # func() returns a new generator
+                    heap=self.current().heap,  # shared heap
+                )
+            )
+        return {&#39;spawn&#39;: (lambda: do_spawn())}
+
+    @syscall
+    def sys_fork(self):
+        &quot;&quot;&quot;Create a clone of the current thread with a copied heap.&quot;&quot;&quot;
+        if all(not f.frame.f_locals[&#39;fork_child&#39;]
+                for f in inspect.stack()
+                    if f.function == &#39;_step&#39;):  # this is parent; do fork
+            # Deep-copying generators causes troubles--they are twined with
+            # Python&#39;s runtime state. We use an (inefficient) hack here: replay 
+            # the entire trace and override the last fork() to avoid infinite
+            # recursion.
+            os_clone = OperatingSystem(self._init)
+            os_clone.replay(self._trace[:-1])
+            os_clone._step(self._trace[-1], fork_child=True)
+
+            # Now os_clone._current is the forked process. Cloned thread just 
+            # yields a sys_fork and is pending for fork()&#39;s return value. It
+            # is necessary to mark cloned threads (in self._newfork) and send
+            # child&#39;s fork() return value when they are scheduled for the
+            # first time.
+            def do_fork():
+                self._threads.append(os_clone.current())
+                self._newfork.add((pid := len(self._threads)) - 1)
+                return 1000 + pid  # returned pid starts from 1000
+
+            return {&#39;fork&#39;: (lambda: do_fork())}
+        else:
+            return None  # overridden fork; this value is never used because
+                         # os_clone is destroyed immediately after fork()
+
+    @syscall
+    def sys_sched(self):
+        &quot;&quot;&quot;Return a non-deterministic context switch to a runnable thread.&quot;&quot;&quot;
+        return {
+            f&#39;t{i+1}&#39;: (lambda i=i: self._switch_to(i))
+                for i, th in enumerate(self._threads)
+                    if th.context.gi_frame is not None  # thread still alive?
+        }
+
+### 2.3.2 Virtual character device (byte stream)
+
+    @syscall
+    def sys_choose(self, choices):
+        &quot;&quot;&quot;Return a non-deterministic value from choices.&quot;&quot;&quot;
+        return {f&#39;choose {c}&#39;: (lambda c=c: c) for c in choices}
+
+    @syscall
+    def sys_write(self, *args):
+        &quot;&quot;&quot;Write strings (space separated) to stdout.&quot;&quot;&quot;
+        def do_write():
+            self._stdout += &#39; &#39;.join(str(arg) for arg in args)
+        return {&#39;write&#39;: (lambda: do_write())}
+
+### 2.3.3 Virtual block storage device
+
+    @syscall
+    def sys_bread(self, key):
+        &quot;&quot;&quot;Return the specific key&#39;s associated value in block device.&quot;&quot;&quot;
+        storage = self._storage
+        return {&#39;bread&#39;: (lambda:
+            storage.buf.get(key,  # always try to read from buffer first
+                storage.persist.get(key, None)  # and then persistent storage
+            )
+        )}
+
+    @syscall
+    def sys_bwrite(self, key, value):
+        &quot;&quot;&quot;Write (key, value) pair to block device&#39;s buffer.&quot;&quot;&quot;
+        def do_bwrite():
+            self._storage.buf[key] = value
+        return {&#39;bwrite&#39;: (lambda: do_bwrite())}
+
+    @syscall
+    def sys_sync(self):
+        &quot;&quot;&quot;Persist all buffered writes.&quot;&quot;&quot;
+        def do_sync():
+            store = self._storage
+            self._storage = Storage(
+                persist=store.persist | store.buf,  # write back
+                buf={}
+            )
+        return {&#39;sync&#39;: (lambda: do_sync())}
+
+    @syscall
+    def sys_crash(self):
+        &quot;&quot;&quot;Simulate a system crash that non-deterministically persists
+        outstanding writes in the buffer.
+        &quot;&quot;&quot;
+        persist = self._storage.persist
+        btrace = self._storage.buf.items()  # block trace
+
+        crash_sites = (
+            lambda subset=subset:
+                setattr(self, &#39;_storage&#39;,
+                    Storage(  # persist only writes in the subset
+                        persist=persist | dict(compress(btrace, subset)),
+                        buf={}
+                    )
+                ) for subset in  # Mosaic allows persisting any subset of
+                    product(     # pending blocks in the buffer
+                        *([(0, 1)] * len(btrace))
+                    )
+        )
+        return dict(enumerate(crash_sites))
+
+### 2.4 Operating system as a state machine
+
+    def replay(self, trace: list) -&gt; dict:
+        &quot;&quot;&quot;Replay an execution trace and return the resulting state.&quot;&quot;&quot;
+        for choice in trace:
+            self._step(choice)
+        return self.state_dump()
+
+    def _step(self, choice, fork_child=False):
+        self._switch_to(self._current)
+        self._trace.append(choice)  # keep all choices for replay-based fork()
+        action = self._choices[choice]  # return value of sys_xxx: a lambda
+        res = action()
+
+        try:  # Execute current thread for one step
+            func, args = self.current().context.send(res)
+            assert func in SYSCALLS
+            self._choices = getattr(self, func)(*args)
+        except StopIteration:  # ... and thread terminates
+            self._choices = self.sys_sched()
+
+        # At this point, the operating system&#39;s state is
+        #   (self._threads, self._current, self._stdout, self._storage)
+        # and outgoing transitions are saved in self._choices.
+
+### 2.5 Misc and helper functions
+
+    def state_dump(self) -&gt; dict:
+        &quot;&quot;&quot;Create a serializable Mosaic state dump with hash code.&quot;&quot;&quot;
+        heaps = {}
+        for th in self._threads:
+            if (i := id(th.heap)) not in heaps:  # unique heaps
+                heaps[i] = len(heaps) + 1
+
+        os_state = {
+            &#39;current&#39;: self._current,
+            &#39;choices&#39;: sorted(list(self._choices.keys())),
+            &#39;contexts&#39;: [
+                {
+                    &#39;heap&#39;: heaps[id(th.heap)],  # the unique heap id
+                    &#39;pc&#39;: th.context.gi_frame.f_lineno,
+                    &#39;locals&#39;: th.context.gi_frame.f_locals,
+                } if th.context.gi_frame is not None else None
+                    for th in self._threads
+            ],
+            &#39;heaps&#39;: {
+                heaps[id(th.heap)]: th.heap.__dict__
+                    for th in self._threads
+            },
+            &#39;stdout&#39;: self._stdout,
+            &#39;store_persist&#39;: self._storage.persist,
+            &#39;store_buffer&#39;: self._storage.buf,
+        }
+
+        h = hash(json.dumps(os_state, sort_keys=True)) + 2**63
+        return (copy.deepcopy(os_state)  # freeze the runtime state
+                | dict(hashcode=f&#39;{h:016x}&#39;))
+
+    def current(self) -&gt; Thread:
+        &quot;&quot;&quot;Return the current running thread object.&quot;&quot;&quot;
+        return self._threads[self._current]
+
+    def _switch_to(self, tid: int):
+        self._current = tid
+        globals()[&#39;os&#39;] = self
+        globals()[&#39;heap&#39;] = self.current().heap
+        if tid in self._newfork:
+            self._newfork.remove(tid)  # tricky: forked process must receive 0
+            return 0                   # to indicate a child
+
+## 3. The Mosaic runtime
+
+class Mosaic:
+    &quot;&quot;&quot;The operating system interpreter and model checker.
+
+    The operating system model is a state transition system: os.replay()
+    maps any trace to a state (with its outgoing transitions). Based
+    on this model, two state space explorers are implemented:
+
+    - run:   Choose outgoing transitions uniformly at random, yielding a
+             single execution trace.
+    - check: Exhaustively explore all reachable states by a breadth-
+             first search. Duplicated states are not visited twice.
+
+    Both explorers produce the visited portion of the state space as a
+    serializable object containing:
+
+    - source:   The application source code
+    - vertices: A list of operating system state dumps. The first vertex
+                in the list is the initial state. Each vertex has a
+                unique &quot;hashcode&quot; id.
+    - edges:    A list of 3-tuples: (source, target, label) denoting an 
+                explored source --[label]-&gt; target edge. Both source and
+                target are state hashcode ids.
+    &quot;&quot;&quot;
+
+### 3.1 Model interpreter and checker
+
+    def run(self) -&gt; dict:
+        &quot;&quot;&quot;Interpret the model with non-deterministic choices.&quot;&quot;&quot;
+        os = OperatingSystem(self.entry)
+        V, E = [os.state_dump() | dict(depth=0)], []
+
+        while (choices := V[-1][&#39;choices&#39;]):
+            choice = random.choice(choices)  # uniformly at random
+            V.append(os.replay([choice]) | dict(depth=len(V)))
+            E.append((V[-2][&#39;hashcode&#39;], V[-1][&#39;hashcode&#39;], choice))
+
+        return dict(source=self.src, vertices=V, edges=E)
+
+    def check(self) -&gt; dict:
+        &quot;&quot;&quot;Exhaustively explore the state space.&quot;&quot;&quot;
+        class State:
+            entry = self.entry
+
+            def __init__(self, trace):
+                self.trace = trace
+                self.state = OperatingSystem(State.entry).replay(trace)
+                self.state |= dict(depth=0)
+                self.hashcode = self.state[&#39;hashcode&#39;]
+
+            def extend(self, c):
+                st = State(self.trace + (c,))
+                st.state = st.state | dict(depth=self.state[&#39;depth&#39;] + 1)
+                return st
+
+        st0 = State(tuple())  # initial state of empty trace
+        queued, V, E = [st0], {st0.hashcode: st0.state}, []
+
+        while queued:
+            st = queued.pop(0)
+            for choice in st.state[&#39;choices&#39;]:
+                st1 = st.extend(choice)
+                if st1.hashcode not in V:  # found an unexplored state
+                    V[st1.hashcode] = st1.state
+                    queued.append(st1)
+                E.append((st.hashcode, st1.hashcode, choice))
+
+        return dict(
+            source=self.src,
+            vertices=sorted(V.values(), key=lambda st: st[&#39;depth&#39;]),
+            edges=E
+        )
+
+### 3.1 Source code parsing and rewriting
+
+    class Transformer(ast.NodeTransformer):
+        def visit_Call(self, node):
+            # Rewrite system calls as yields
+            if (isinstance(node.func, ast.Name) and
+                    node.func.id in SYSCALLS):  # rewrite system calls
+                return ast.Yield(ast.Tuple(     #   -&gt; yield (&#39;sys_xxx&#39;, args)
+                    elts=[
+                        ast.Constant(value=node.func.id),
+                        ast.Tuple(elts=node.args),
+                    ]
+                ))
+            else:
+                return node
+
+    def __init__(self, src: str):
+        tree = ast.parse(src)
+        hacked_ast = self.Transformer().visit(tree)
+        hacked_src = ast.unparse(hacked_ast)
+
+        context = {}
+        exec(hacked_src, globals(), context)
+        globals().update(context)
+
+        self.src = src
+        self.entry = context[&#39;main&#39;]  # must have a main()
+
+## 4. Utilities
+
+if __name__ == &#39;__main__&#39;:
+    parser = argparse.ArgumentParser(
+        description=&#39;The modeled operating system and state explorer.&#39;
+    )
+    parser.add_argument(
+        &#39;source&#39;,
+        help=&#39;application code (.py) to be checked; must have a main()&#39;
+    )
+    parser.add_argument(&#39;-r&#39;, &#39;--run&#39;, action=&#39;store_true&#39;)
+    parser.add_argument(&#39;-c&#39;, &#39;--check&#39;, action=&#39;store_true&#39;)
+    args = parser.parse_args()
+
+    src = Path(args.source).read_text()
+    mosaic = Mosaic(src)
+    if args.check:
+        explored = mosaic.check()
+    else:
+        explored = mosaic.run()  # run is the default option
+
+    # Serialize the explored states and write to stdout. This encourages piping
+    # the results to another tool following the UNIX philosophy. Examples:
+    #
+    #   mosaic --run foo.py | grep stdout | tail -n 1  # quick and dirty check
+    #   mosaic --check bar.py | fx  # or any other interactive visualizer
+    #
+    print(json.dumps(explored, ensure_ascii=False, indent=2))</code></pre><ul><li>hello.py</li></ul><pre><code>def hello(s):
+    return f&#39;Hello, {s}\n&#39;
+
+def main():
+    sys_write(hello(&#39;OS&#39;))
+    sys_write(hello(&#39;World&#39;))</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行结果</p><p>输出的json内容如下：</p><pre><code>{
+  &quot;source&quot;: &quot;def hello(s):\n    return f&#39;Hello, {s}\\n&#39;\n\ndef main():\n    sys_write(hello(&#39;OS&#39;))\n    sys_write(hello(&#39;World&#39;))\n&quot;,
+  &quot;vertices&quot;: [
+    {
+      &quot;current&quot;: 0,
+      &quot;choices&quot;: [
+        &quot;main&quot;
+      ],
+      &quot;contexts&quot;: [
+        {
+          &quot;heap&quot;: 1,
+          &quot;pc&quot;: 4,
+          &quot;locals&quot;: {}
+        }
+      ],
+      &quot;heaps&quot;: {
+        &quot;1&quot;: {}
+      },
+      &quot;stdout&quot;: &quot;&quot;,
+      &quot;store_persist&quot;: {},
+      &quot;store_buffer&quot;: {},
+      &quot;hashcode&quot;: &quot;406bec4fbd4b5d4f&quot;,
+      &quot;depth&quot;: 0
+    },
+    {
+      &quot;current&quot;: 0,
+      &quot;choices&quot;: [
+        &quot;write&quot;
+      ],
+      &quot;contexts&quot;: [
+        {
+          &quot;heap&quot;: 1,
+          &quot;pc&quot;: 5,
+          &quot;locals&quot;: {}
+        }
+      ],
+      &quot;heaps&quot;: {
+        &quot;1&quot;: {}
+      },
+      &quot;stdout&quot;: &quot;&quot;,
+      &quot;store_persist&quot;: {},
+      &quot;store_buffer&quot;: {},
+      &quot;hashcode&quot;: &quot;9e2e4498c1ff0567&quot;,
+      &quot;depth&quot;: 1
+    },
+    {
+      &quot;current&quot;: 0,
+      &quot;choices&quot;: [
+        &quot;write&quot;
+      ],
+      &quot;contexts&quot;: [
+        {
+          &quot;heap&quot;: 1,
+          &quot;pc&quot;: 6,
+          &quot;locals&quot;: {}
+        }
+      ],
+      &quot;heaps&quot;: {
+        &quot;1&quot;: {}
+      },
+      &quot;stdout&quot;: &quot;Hello, OS\n&quot;,
+      &quot;store_persist&quot;: {},
+      &quot;store_buffer&quot;: {},
+      &quot;hashcode&quot;: &quot;b2475d0bbff9b748&quot;,
+      &quot;depth&quot;: 2
+    },
+    {
+      &quot;current&quot;: 0,
+      &quot;choices&quot;: [],
+      &quot;contexts&quot;: [
+        null
+      ],
+      &quot;heaps&quot;: {
+        &quot;1&quot;: {}
+      },
+      &quot;stdout&quot;: &quot;Hello, OS\nHello, World\n&quot;,
+      &quot;store_persist&quot;: {},
+      &quot;store_buffer&quot;: {},
+      &quot;hashcode&quot;: &quot;27f2e79cbd5a9d60&quot;,
+      &quot;depth&quot;: 3
+    }
+  ],
+  &quot;edges&quot;: [
+    [
+      &quot;406bec4fbd4b5d4f&quot;,
+      &quot;9e2e4498c1ff0567&quot;,
+      &quot;main&quot;
+    ],
+    [
+      &quot;9e2e4498c1ff0567&quot;,
+      &quot;b2475d0bbff9b748&quot;,
+      &quot;write&quot;
+    ],
+    [
+      &quot;b2475d0bbff9b748&quot;,
+      &quot;27f2e79cbd5a9d60&quot;,
+      &quot;write&quot;
+    ]
+  ]
+}</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>可视化结果</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>多线程程序最小值</p><h2 id="并发1-多处理器编程-2023-3-7">并发1_多处理器编程_2023.3.7</h2><h3 id="多处理器编程入门">多处理器编程入门</h3><p>操作系统作为 “状态机的管理者”，引入了共享的状态</p><ul><li>带来了并发</li><li>(操作系统是最早的并发程序)</li></ul><p>对hello.py，不同时间运行结果不一致</p><pre><code>def Tprint(name):
+  sys_write(f&#39;{name}&#39;)
+
+def main():
+  for name in &#39;AB&#39;:
+    sys_spawn(Tprint, name)</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行结果</p><h4 id="多线程共享内存并发">多线程共享内存并发</h4><p>线程：共享内存的执行流</p><ul><li>执行流拥有独立的堆栈/寄存器</li></ul><p>简化的线程 API (thread.h)</p><ul><li><pre> <code>spawn(fn) </code> </pre> <ul> <li>&lt;p 创建一个入口函数是 </p> <pre> <code>fn </code> </pre> &lt;p 的线程，并立即开始执行</p> <ul> &lt;li <code>void fn(int tid) { ... }</code> </li> <li>参数 <code>tid</code> 从 1 开始编号</li> </ul> </li> <li>&lt;p 行为：<code>sys spawn(fn, tid)</code> </p> </li> </ul></li><li><p>创建一个入口函数是 </p> <pre> <code>fn </code> </pre> <p>的线程，并立即开始执行</p> <ul> <li><code>void fn(int tid) { ... }</code> </li> <li>参数 <code>tid</code> 从 1 开始编号</li> </ul></li><li><code>void fn(int tid) { ... }</code></li><li>参数 <code>tid</code> 从 1 开始编号</li><li><p>行为：<code>sys spawn(fn, tid)</code> </p></li><li><pre> <code>join() </code> </pre> <ul> <li>等待所有运行线程的返回 (也可以不调用)</li> <li>行为：<code>while (done != T) sys sched()</code> </li> </ul></li><li>等待所有运行线程的返回 (也可以不调用)</li><li>行为：<code>while (done != T) sys sched()</code></li></ul><p>hello.c</p><pre><code>#include &quot;thread.h&quot;
+
+void Thello(int id) {
+  while (1) {
+    printf(&quot;%c&quot;, &quot;_ABCDEFGHIJKLMNOPQRSTUVWXYZ&quot;[id]);
+  }
+}
+
+int main() {
+  for (int i = 0; i &lt; 10; i++) {
+    create(Thello);
+  }
+}</code></pre><p>thread.h</p><pre><code>#include &lt;stdlib.h&gt;
+#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdatomic.h&gt;
+#include &lt;assert.h&gt;
+#include &lt;unistd.h&gt;
+#include &lt;pthread.h&gt;
+
+#define NTHREAD 64
+enum { T_FREE = 0, T_LIVE, T_DEAD, };
+struct thread {
+  int id, status;
+  pthread_t thread;
+  void (*entry)(int);
+};
+
+struct thread tpool[NTHREAD], *tptr = tpool;
+
+void *wrapper(void *arg) {
+  struct thread *thread = (struct thread *)arg;
+  thread-&gt;entry(thread-&gt;id);
+  return NULL;
+}
+
+void create(void *fn) {
+  assert(tptr - tpool &lt; NTHREAD);
+  *tptr = (struct thread) {
+    .id = tptr - tpool + 1,
+    .status = T_LIVE,
+    .entry = fn,
+  };
+  pthread_create(&amp;(tptr-&gt;thread), NULL, wrapper, tptr);
+  ++tptr;
+}
+
+void join() {
+  for (int i = 0; i &lt; NTHREAD; i++) {
+    struct thread *t = &amp;tpool[i];
+    if (t-&gt;status == T_LIVE) {
+      pthread_join(t-&gt;thread, NULL);
+      t-&gt;status = T_DEAD;
+    }
+  }
+}
+
+__attribute__((destructor)) void cleanup() {
+  join();
+}</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行结果</p><p>查看cpu发现，cpu占用达到800%，说明可以使用多处理器。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>800%</p><h4 id="多线程共享内存并发-入门">多线程共享内存并发：入门</h4><p>多处理器编程：一个 API 搞定</p><pre><code>#include &quot;thread.h&quot;
+
+void Ta() { while (1) { printf(&quot;a&quot;); } }
+void Tb() { while (1) { printf(&quot;b&quot;); } }
+
+int main() {
+  create(Ta);
+  create(Tb);
+}</code></pre><ul><li>这个程序可以利用系统中的多处理器<ul> <li>操作系统会自动把线程放置在不同的处理器上</li> <li>CPU 使用率超过了 100%</li> </ul></li><li>操作系统会自动把线程放置在不同的处理器上</li><li>CPU 使用率超过了 100%</li></ul><h4 id="问出更多的问题">问出更多的问题</h4><p><code>Ta</code> 和 <code>Tb</code> 真的共享内存吗？</p><ul><li>如何证明/否证这件事？</li></ul><p>如何证明线程具有独立堆栈 (以及确定堆栈的范围)？</p><ul><li>输出混乱，应该如何处理？</li></ul><p>更多的 “好问题” 和解决</p><ul><li>创建线程使用的是哪个系统调用？</li><li>能不能用 gdb 调试？<ul> <li>基本原则：有需求，就能做到 (<a href="https://sourceware.org/gdb/onlinedocs/gdb/Threads.html" target="_blank" rel="noreferrer">RTFM</a> )</li> </ul></li><li>基本原则：有需求，就能做到 (<a href="https://sourceware.org/gdb/onlinedocs/gdb/Threads.html" target="_blank" rel="noreferrer">RTFM</a> )</li></ul><p>stack-probe.c</p><pre><code>#include &quot;thread.h&quot;
+#include &lt;stdint.h&gt;
+void * volatile low[64];
+void * volatile high[64];
+
+void update_range(int T, void *ptr) {
+    if (ptr &lt; low[T]) low[T] = ptr;
+    if (ptr &gt; high[T]) high[T] = ptr;
+}
+
+void probe(int T, int n) {
+  update_range(T, &amp;n);
+  long sz = (uintptr_t)high[T] - (uintptr_t)low[T];
+  if (sz % 1024 &lt; 32) {
+    printf(&quot;Stack(T%d) &gt;= %ld KB\n&quot;, T, sz / 1024);
+  }
+  probe(T, n + 1);  // Infinite recursion
+}
+
+void Tprobe(int T) {
+  low[T] = (void *)-1;
+  high[T] = (void *)0;
+  update_range(T, &amp;T);
+  probe(T, 0);
+}
+
+int main() {
+  setbuf(stdout, NULL);
+  for (int i = 0; i &lt; 4; i++) {
+    create(Tprobe);
+  }
+}</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结果</p><p>最多8192kb。排序后最大可以看到的是8177。</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>排序后结果</p><h4 id="thread-h-背后-posix-threads"><code>thread.h</code> 背后：POSIX Threads</h4><p>想进一步配置线程？</p><ul><li>设置更大的线程栈</li><li>设置 detach 运行 (不在进程结束后被杀死，也不能 join)</li><li>……</li></ul><p>POSIX 为我们提供了线程库 (pthreads)</p><ul><li><code>man 7 pthreads</code></li><li>练习：改写 thread.h，使得线程拥有更大的栈<ul> <li>可以用 stack probe 的程序验证</li> </ul></li><li>可以用 stack probe 的程序验证</li></ul><h3 id="放弃-1-原子性">放弃 (1)：原子性</h3><h4 id="状态机的隐含假设">状态机的隐含假设</h4><p>“世界上只有一个状态机”</p><ul><li>没有其他任何人能 “干涉” 程序的状态</li><li>推论：对变量的 load 一定返回本线程最后一次 store 的值<ul> <li>这也是编译优化的基本假设</li> </ul></li><li>这也是编译优化的基本假设</li></ul><p>但共享内存推翻了这个假设</p><pre><code>int Tworker() {
+  printf(&quot;%d\n&quot;, x);  // Global x
+  printf(&quot;%d\n&quot;, x);
+}</code></pre><ul><li><p>其他线程随时可以修改 </p> <pre> <code>x </code> </pre> <ul> <li>导致两次可能读到不同的 <code>x</code> </li> </ul></li><li>导致两次可能读到不同的 <code>x</code></li></ul><p>潘多拉的魔盒已经打开……</p><pre><code>unsigned int balance = 100;
+
+int Talipay_withdraw(int amt) {
+  if (balance &gt;= amt) {
+    balance -= amt;
+    return SUCCESS;
+  } else {
+    return FAIL;
+  }
+}</code></pre><p>两个线程并发支付 ¥100 会发生什么 (代码演示)</p><ul><li>账户里会多出用不完的钱！</li><li>Bug/漏洞不跟你开玩笑：Mt. Gox Hack 损失 650,000 BTC<ul> <li>时值 ~$28,000,000,000</li> </ul></li><li>时值 ~$28,000,000,000</li></ul><p>alipay.c</p><pre><code>#include &quot;thread.h&quot;
+
+unsigned long balance = 100;
+
+void Alipay_withdraw(int amt) {
+  if (balance &gt;= amt) {
+    usleep(1);  // Unexpected delays
+    balance -= amt;
+  }
+}
+
+void Talipay(int id) {
+  Alipay_withdraw(100);
+}
+
+int main() {
+  create(Talipay);
+  create(Talipay);
+  join();
+  printf(&quot;balance = %lu\n&quot;, balance);
+}</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行结果</p><h4 id="例子-diablo-i-1996">例子：Diablo I (1996)</h4><p>在捡起要复制物品的瞬间拿起 1 块钱</p><ul><li>1 块钱会被 “覆盖” 成捡起的物品</li></ul><h4 id="例子-求和">例子：求和</h4><p>分两个线程，计算 1+1+1+…+11+1+1+…+1 (共计 2<em>n</em> 个 1)</p><pre><code>#define N 100000000
+long sum = 0;
+
+void Tsum() { for (int i = 0; i &lt; N; i++) sum++; }
+
+int main() {
+  create(Tsum);
+  create(Tsum);
+  join();
+  printf(&quot;sum = %ld\n&quot;, sum);
+}</code></pre><p>可能的结果</p><ul><li>119790390, 99872322 (结果可以比 <code>N</code> 还要小), ...</li><li>直接使用汇编指令也不行</li></ul><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结果</p><h4 id="指令-代码执行原子性假设">指令/代码执行原子性假设</h4><blockquote><p>“处理器一次执行一条指令” 的基本假设在今天的计算机系统上不再成立 (我们的模型作出了简化的假设)。</p></blockquote><p>单处理器多线程</p><ul><li>线程在运行时可能被中断，切换到另一个线程执行</li></ul><p>多处理器多线程</p><ul><li>线程根本就是并行执行的</li></ul><p>(历史) 1960s，大家争先在共享内存上实现原子性 (互斥)</p><ul><li>但几乎所有的实现都是错的，直到 <a href="https://en.wikipedia.org/wiki/Dekker's algorithm" target="_blank" rel="noreferrer">Dekker& 39;s Algorithm</a> ，还只能保证两个线程的互斥</li></ul><h4 id="放弃原子性假设的后果">放弃原子性假设的后果</h4><p><code>printf</code> 还能在多线程程序里调用吗？</p><pre><code>void thread1() { while (1) { printf(&quot;a&quot;); } }
+void thread2() { while (1) { printf(&quot;b&quot;); } }</code></pre><p>我们都知道 printf 是有缓冲区的 (为什么？)</p><ul><li>如果执行 <code>buf[pos++] = ch</code> (<code>pos</code> 共享) 不就 💥 了吗？</li></ul><h3 id="放弃-2-执行顺序">放弃 (2)：执行顺序</h3><p>分两个线程，计算 1+1+1+…+11+1+1+…+1 (共计 2<em>n</em> 个 1)</p><pre><code>#define N 100000000
+long sum = 0;
+
+void Tsum() { for (int i = 0; i &lt; N; i++) sum++; }
+
+int main() {
+  create(Tsum);
+  create(Tsum);
+  join();
+  printf(&quot;sum = %ld\n&quot;, sum);
+}</code></pre><p>如果添加编译优化？</p><ul><li><code>O1</code> : 100000000 😱😱</li><li><code>O2</code> : 200000000 😱😱😱</li></ul><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结果</p><p><strong>编译器仅对顺序执行的程序负责！</strong></p><blockquote><p>编译器对内存访问 “eventually consistent” 的处理导致共享内存作为线程同步工具的失效。</p></blockquote><p>刚才的例子</p><ul><li><code>O1</code> : <code>R[eax] = sum; R[eax] += N; sum = R[eax]</code></li><li><code>O2</code> : <code>sum += N;</code></li><li>(你的编译器也许是不同的结果)</li></ul><p>另一个例子</p><pre><code>while (!done);
+// would be optimized to
+if (!done) while (1);</code></pre><h4 id="保证执行顺序">保证执行顺序</h4><p>回忆 “编译正确性”</p><ul><li><p>C 状态和汇编状态机的 “可观测行为等价”</p></li><li><p>方法 1：插入 “不可优化” 代码</p> <ul> <li><pre> <code>asm volatile (&quot;&quot; ::: &quot;memory&quot;); </code> </pre> <ul> &lt;li “Clobbers memory”</li> </ul> </li> </ul></li><li><pre> <code>asm volatile (&quot;&quot; ::: &quot;memory&quot;); </code> </pre> <ul> <li>“Clobbers memory”</li> </ul></li><li>“Clobbers memory”</li><li><p>方法 2：标记变量 load/store 为不可优化</p> <ul> <li>使用 <code>volatile</code> 变量</li> </ul></li><li>使用 <code>volatile</code> 变量</li></ul><pre><code>extern int volatile done;
+
+while (!done) ;</code></pre><h3 id="放弃-3-处理器间的可见性">放弃 (3)：处理器间的可见性</h3><pre><code>int x = 0, y = 0;
+
+void T1() {
+  x = 1;  // Store(x)
+  __sync_synchronize();
+  printf(&quot;%d&quot;, y);  // Load(y)
+}
+
+void T2() {
+  y = 1;  // Store(y)
+  __sync_synchronize();
+  printf(&quot;%d&quot;, x); // Load(x)
+}</code></pre><p>遍历模型告诉我们：01, 10, 11</p><ul><li>机器永远是对的</li><li>Model checker 的结果和实际的结果不同 → 假设错了</li></ul><p>store-load.c</p><pre><code>#include &quot;thread.h&quot;
+#include &lt;stdatomic.h&gt;
+
+int x = 0, y = 0;
+
+atomic_int flag;
+#define FLAG atomic_load(&amp;flag)
+#define FLAG_XOR(val) atomic_fetch_xor(&amp;flag, val)
+#define WAIT_FOR(cond) while (!(cond)) ;
+
+ __attribute__((noinline))
+void write_x_read_y() {
+  int y_val;
+  asm volatile(
+    &quot;movl $1, %0;&quot; // x = 1
+    &quot;movl %2, %1;&quot; // y_val = y
+    : &quot;=m&quot;(x), &quot;=r&quot;(y_val) : &quot;m&quot;(y)
+  );
+  printf(&quot;%d &quot;, y_val);
+}
+
+ __attribute__((noinline))
+void write_y_read_x() {
+  int x_val;
+  asm volatile(
+    &quot;movl $1, %0;&quot; // y = 1
+    &quot;movl %2, %1;&quot; // x_val = x
+    : &quot;=m&quot;(y), &quot;=r&quot;(x_val) : &quot;m&quot;(x)
+  );
+  printf(&quot;%d &quot;, x_val);
+}
+
+void T1(int id) {
+  while (1) {
+    WAIT_FOR((FLAG &amp; 1));
+    write_x_read_y();
+    FLAG_XOR(1);
+  }
+}
+
+void T2() {
+  while (1) {
+    WAIT_FOR((FLAG &amp; 2));
+    write_y_read_x();
+    FLAG_XOR(2);
+  }
+}
+
+void Tsync() {
+  while (1) {
+    x = y = 0;
+    __sync_synchronize(); // full barrier
+    usleep(1);            // + delay
+    assert(FLAG == 0);
+    FLAG_XOR(3);
+    // T1 and T2 clear 0/1-bit, respectively
+    WAIT_FOR(FLAG == 0);
+    printf(&quot;\n&quot;); fflush(stdout);
+  }
+}
+
+int main() {
+  create(T1);
+  create(T2);
+  create(Tsync);
+}</code></pre><p>然而实际输出如下，11出现得极少。
+1 0
+0 1
+0 0</p><p>解释：赋值操作不是原子性，load操作往往比store快。使得两边同时load到0。</p><h4 id="现代处理器也是-动态-编译器">现代处理器也是 (动态) 编译器！</h4><p>错误 (简化) 的假设</p><ul><li>一个 CPU 执行一条指令到达下一状态</li></ul><p>实际的实现</p><ul><li><p>电路将连续的指令 “编译” 成更小的 </p> <p>μ</p> <p>ops</p> <ul> <li>RF[9] = load(RF[7] + 400)</li> <li>store(RF[12], RF[13])</li> <li>RF[3] = RF[4] + RF[5]</li> </ul></li><li>RF[9] = load(RF[7] + 400)</li><li>store(RF[12], RF[13])</li><li>RF[3] = RF[4] + RF[5]</li></ul><p>在任何时刻，处理器都维护一个 <em>μ</em>op 的 “池子”</p><ul><li>与编译器一样，做 “顺序执行” 假设：没有其他处理器 “干扰”</li><li>每一周期执行尽可能多的 <em>μ</em> op 多路发射、乱序执行、按序提交</li></ul><blockquote><p>满足单处理器 eventual memory consistency 的执行，在多处理器系统上可能无法序列化！</p></blockquote><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><pre><code>     # &lt;-----------+
+movl $1, (x)   #   |
+movl (y), %eax # --+</code></pre><ul><li>在多处理器上的表现<ul> <li>两个处理器分别看到y=0和&lt;em x</em> =0</li> </ul></li><li>两个处理器分别看到y=0和<em>x</em> =0</li></ul><h4 id="宽松内存模型-relaxed-weak-memory-model">宽松内存模型 (Relaxed/Weak Memory Model)</h4><blockquote><p>宽松内存模型的目的是使单处理器的执行更高效。</p></blockquote><p>x86 已经是市面上能买到的 “最强” 的内存模型了 😂</p><ul><li>这也是 Intel 自己给自己加的包袱</li><li>看看 <a href="https://research.swtch.com/mem weak@2x.png" target="_blank" rel="noreferrer">ARM/RISC V</a> 吧，根本就是个分布式系统</li></ul><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>(x86-TSO in <a href="https://research.swtch.com/hwmm" target="_blank" rel="noreferrer">Hardware memory models</a> by Russ Cox)</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p><a href="https://research.swtch.com/mem-weak@2x.png" target="_blank" rel="noreferrer">ARM/RISC-V</a></p><p>so，老老实实地用lock和unlock。</p><h2 id="并发2-并发控制基础-2023-3-9">并发2_并发控制基础_2023.3.9</h2><h3 id="互斥问题">互斥问题</h3><h4 id="并发编程-从入门到放弃">并发编程：从入门到放弃</h4><p>人类是 sequential creature</p><ul><li>编译优化 + weak memory model 导致难以理解的并发执行</li><li>有多难理解呢？<ul> <li><a href="https://epubs.siam.org/doi/10.1137/S0097539794279614" target="_blank" rel="noreferrer">Verifying sequential consistency 是 NP 完全问题</a> </li> </ul></li><li><a href="https://epubs.siam.org/doi/10.1137/S0097539794279614" target="_blank" rel="noreferrer">Verifying sequential consistency 是 NP 完全问题</a></li></ul><p>人类是 (不轻言放弃的) sequential creature</p><ul><li>有问题，就会试着去解决</li><li>手段：“回退到” 顺序执行<ul> <li>标记若干块代码，使得这些代码一定能按某个顺序执行</li> <li>例如，我们可以安全地在块里记录执行的顺序</li> </ul></li><li>标记若干块代码，使得这些代码一定能按某个顺序执行</li><li>例如，我们可以安全地在块里记录执行的顺序</li></ul><h4 id="回退到顺序执行-互斥">回退到顺序执行：互斥</h4><p>插入 “神秘代码”，使得所有其他 “神秘代码” 都不能并发</p><ul><li>由 “神秘代码” 领导不会并发的代码 (例如 pure functions) 执行</li></ul><pre><code>void Tsum() {
+  stop_the_world();
+  // 临界区 critical section
+  sum++;
+  resume_the_world();
+}</code></pre><p>Stop the world 真的是可能的</p><ul><li>Java 有 “stop the world GC”</li><li>单个处理器可以关闭中断</li><li>多个处理器也可以发送核间中断</li></ul><h4 id="失败的尝试">失败的尝试</h4><pre><code>int locked = UNLOCK;
+
+void critical_section() {
+retry:
+  if (locked != UNLOCK) {
+    goto retry;
+  }
+  locked = LOCK;
+
+  // critical section
+
+  locked = UNLOCK;
+}</code></pre><p>和 “山寨支付宝” 完全一样的错误</p><ul><li>并发程序不能保证 load + store 的原子性</li></ul><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>出错</p><h4 id="更严肃地尝试-确定假设-设计算法">更严肃地尝试：确定假设、设计算法</h4><p>假设：内存的读/写可以保证顺序、原子完成</p><ul><li><pre> <code>val = atomic load(ptr) </code> </pre> <ul> <li>对应往某个地方 “贴一张纸条” (必须闭眼盲贴)</li> <li>贴完一瞬间就可能被别人覆盖</li> </ul></li><li>对应往某个地方 “贴一张纸条” (必须闭眼盲贴)</li><li>贴完一瞬间就可能被别人覆盖</li><li><pre> <code>atomic store(ptr, val) </code> </pre> <ul> <li>看一眼某个地方的字条 (只能看到瞬间的字)</li> <li>刚看完就可能被改掉</li> </ul></li><li>看一眼某个地方的字条 (只能看到瞬间的字)</li><li>刚看完就可能被改掉</li></ul><p>对应于 model checker</p><ul><li>每一行可以执行一次全局变量读或写</li><li>每个操作执行之后都发生 <code>sys sched()</code></li></ul><h4 id="正确性不明的奇怪尝试-peterson-算法">正确性不明的奇怪尝试 (Peterson 算法)</h4><p>A 和 B 争用厕所的包厢</p><ul><li><p>想进入包厢之前，A/B 都首先举起自己的旗子</p> <ul> <li>A 往厕所门上贴上 “B 正在使用” 的标签</li> <li>B 往厕所门上贴上 “A 正在使用” 的标签</li> </ul></li><li>A 往厕所门上贴上 “B 正在使用” 的标签</li><li>B 往厕所门上贴上 “A 正在使用” 的标签</li><li><p>然后，</p> <p>如果对方举着旗，且门上的名字是对方</p> <p>，等待</p> <ul> <li>否则可以进入包厢</li> </ul></li><li>否则可以进入包厢</li><li><p>出包厢后，放下自己的旗子 (完全不管门上的标签)</p></li></ul><h4 id="习题-证明-peterson-算法正确-或给出反例">习题：证明 Peterson 算法正确，或给出反例</h4><p>进入临界区的情况</p><ul><li>如果只有一个人举旗，他就可以直接进入</li><li>如果两个人同时举旗，由厕所门上的标签决定谁进<ul> <li>手快 🈶️ (被另一个人的标签覆盖)、手慢 🈚</li> </ul></li><li>手快 🈶️ (被另一个人的标签覆盖)、手慢 🈚</li></ul><p>一些具体的细节情况</p><ul><li>A 看到 B 没有举旗<ul> <li>B 一定不在临界区</li> <li>或者 B 想进但还没来得及把 “A 正在使用” 贴在门上</li> </ul></li><li>B 一定不在临界区</li><li>或者 B 想进但还没来得及把 “A 正在使用” 贴在门上</li><li>A 看到 B 举旗子<ul> <li>A 一定已经把旗子举起来了</li> <li>(&lt;em !@^ </em> &amp;!%^(&amp;^!@% </li> </ul></li><li>A 一定已经把旗子举起来了</li><li>(<em>!@^ </em> &amp;!%^(&amp;^!@%</li></ul><h4 id="绕来绕去很容易有错漏的情况">绕来绕去很容易有错漏的情况</h4><p>Prove by brute-force</p><ul><li>枚举状态机的全部状态(<em>P C</em> 1,<em>P C</em> 2,<em>x</em> ,<em>y</em> ,&lt;em t<strong>u</strong> r n</em> )</li><li>但手写还是很容易错啊——可执行的状态机模型有用了！</li></ul><pre><code>void TA() { while (1) {
+/* ❶ */  x = 1;
+/* ❷ */  turn = B;
+/* ❸ */  while (y &amp;&amp; turn == B) ;
+/* ❹ */  x = 0; } }
+
+void TB() { while (1) {
+/* ① */  y = 1;
+/* ② */  turn = A;
+/* ③ */  while (x &amp;&amp; turn == A) ;
+/* ④ */  y = 0; } }</code></pre><h3 id="模型-模型检验与现实">模型、模型检验与现实</h3><h4 id="push-button-verification">“Push-button” Verification 🎖</h4><blockquote><p>我们 (在完全不理解算法的前提下) 证明了 Sequential 内存模型下 Peterson& 39;s Protocol 的 Safety。它能够实现互斥。</p></blockquote><p>并发编程比大家想象得困难</p><ul><li>感受一下 <a href="https://series1.github.io/blog/dekkers algorithm/" target="_blank" rel="noreferrer">Dekker& 39;s Algorithm</a></li><li>“<a href="https://zoo.cs.yale.edu/classes/cs323/doc/Peterson.pdf">Myths about the mutual exclusion problem</a> ” (IPL, 1981)</li></ul><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><h4 id="自动遍历状态空间的乐趣">自动遍历状态空间的乐趣</h4><p>可以帮助我们快速回答更多问题</p><ul><li>如果结束后把门上的字条撕掉，算法还正确吗？<ul> <li>在放下旗子之前撕</li> <li>在放下旗子之后撕</li> </ul></li><li>在放下旗子之前撕</li><li>在放下旗子之后撕</li><li>如果先贴标签再举旗，算法还正确吗？</li><li>我们有两个 “查看” 的操作<ul> <li>看对方的旗有没有举起来</li> <li>看门上的贴纸是不是自己</li> <li>这两个操作的顺序影响算法的正确性吗？</li> </ul></li><li>看对方的旗有没有举起来</li><li>看门上的贴纸是不是自己</li><li>这两个操作的顺序影响算法的正确性吗？</li><li>是否存在 “两个人谁都无法进入临界区” (liveness)、“对某一方不公平” (fairness) 等行为？<ul> <li>都转换成图 (状态空间) 上的遍历问题了！</li> </ul></li><li>都转换成图 (状态空间) 上的遍历问题了！</li></ul><p>peterson.py</p><pre><code>def T1():
+  while True:
+    heap.x = &#39;🏴&#39;
+    sys_sched()
+    heap.turn = &#39;❷&#39;
+    sys_sched()
+    while True:
+      t = heap.turn
+      sys_sched()
+      y = heap.y != &#39;&#39;
+      sys_sched()
+      if not y or t == &#39;❶&#39;:
+        break
+    sys_sched()
+    heap.cs += &#39;❶&#39;
+    sys_sched()
+    heap.cs = heap.cs.replace(&#39;❶&#39;, &#39;&#39;)
+    sys_sched()
+    heap.x = &#39;&#39;
+    sys_sched()
+ 
+def T2():
+  while True:
+    heap.y = &#39;🏁&#39;
+    sys_sched()
+    heap.turn = &#39;❶&#39;
+    sys_sched()
+    while True:
+      t = heap.turn
+      sys_sched()
+      x = heap.x
+      sys_sched()
+      if not x or t == &#39;❷&#39;:
+        break
+      sys_sched()
+    sys_sched()
+    heap.cs += &#39;❷&#39;
+    sys_sched()
+    heap.cs = heap.cs.replace(&#39;❷&#39;, &#39;&#39;)
+    sys_sched()
+    heap.y = &#39;&#39;
+    sys_sched()
+
+def main():
+  heap.x = &#39;&#39;
+  heap.y = &#39;&#39;
+  heap.turn = &#39;&#39;
+  heap.cs = &#39;&#39;
+  sys_spawn(T1)
+  sys_spawn(T2)</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>验证了正确性</p><h4 id="从模型回到现实">从模型回到现实……</h4><p>回到我们的假设 (体现在模型)</p><ul><li>Atomic load &amp; store<ul> <li>读/写单个全局变量是 “原子不可分割” 的</li> <li>但这个假设在现代多处理器上并不成立</li> </ul></li><li>读/写单个全局变量是 “原子不可分割” 的</li><li>但这个假设在现代多处理器上并不成立</li><li>所以实际上按照模型直接写 Peterson 算法应该是错的？</li></ul><p>“实现正确的 Peterson 算法” 是合理需求，它一定能实现</p><ul><li><p>Compiler barrier/volatile 保证不被优化的前提下</p> <ul> <li>&lt;p 处理器提供特殊指令保证可见性</p> </li> <li>&lt;p 编译器提供 </p> <pre> <code>sync synchronize() </code> </pre> &lt;p 函数</p> <ul> &lt;li x86: <code>mfence</code> ; ARM: <code>dmb ish</code> ; RISC V: <code>fence rw, rw</code> </li> <li>同时含有一个 compiler barrier</li> </ul> </li> </ul></li><li><p>处理器提供特殊指令保证可见性</p></li><li><p>编译器提供 </p> <pre> <code>sync synchronize() </code> </pre> <p>函数</p> <ul> <li>x86: <code>mfence</code> ; ARM: <code>dmb ish</code> ; RISC V: <code>fence rw, rw</code> </li> <li>同时含有一个 compiler barrier</li> </ul></li><li>x86: <code>mfence</code> ; ARM: <code>dmb ish</code> ; RISC V: <code>fence rw, rw</code></li><li>同时含有一个 compiler barrier</li></ul><p>peterson.c</p><pre><code>#include &quot;thread.h&quot;
+
+#define A 1
+#define B 2
+
+#define BARRIER __sync_synchronize()
+
+atomic_int nested;
+atomic_long count;
+
+void critical_section() {
+  long cnt = atomic_fetch_add(&amp;count, 1);
+  int i = atomic_fetch_add(&amp;nested, 1) + 1;
+  if (i != 1) {
+    printf(&quot;%d threads in the critical section @ count=%ld\n&quot;, i, cnt);
+    assert(0);
+  }
+  atomic_fetch_add(&amp;nested, -1);
+}
+
+int volatile x = 0, y = 0, turn;
+
+void TA() {
+  while (1) {
+    x = 1;                   BARRIER;
+    turn = B;                BARRIER; // &lt;- this is critcal for x86
+    while (1) {
+      if (!y) break;         BARRIER;
+      if (turn != B) break;  BARRIER;
+    }
+    critical_section();
+    x = 0;                   BARRIER;
+  }
+}
+
+void TB() {
+  while (1) {
+    y = 1;                   BARRIER;
+    turn = A;                BARRIER;
+    while (1) {
+      if (!x) break;         BARRIER;
+      if (turn != A) break;  BARRIER;
+    }
+    critical_section();
+    y = 0;                   BARRIER;
+  }
+}
+
+int main() {
+  create(TA);
+  create(TB);
+}</code></pre><p>如果把第六行的<strong>BARRIER</strong>定义为空，则会出错</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>出错</p><h3 id="原子指令">原子指令</h3><h4 id="并发编程困难的解决">并发编程困难的解决</h4><p>普通的变量读写在编译器 + 处理器的双重优化下行为变得复杂</p><pre><code>retry:
+  if (locked != UNLOCK) {
+    goto retry;
+  }
+  locked = LOCK;</code></pre><p>解决方法：编译器和硬件共同提供不可优化、不可打断的指令</p><ul><li>“原子指令” + compiler barrier</li></ul><h4 id="实现正确的求和">实现正确的求和</h4><pre><code>for (int i = 0; i &lt; N; i++)
+  asm volatile(&quot;lock incq %0&quot; : &quot;+m&quot;(sum));</code></pre><p>“Bus lock”——从 80386 开始引入 (bus control signal)</p><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>sum-atomic.c</p><pre><code>#include &quot;thread.h&quot;
+
+#define N 100000000
+
+long sum = 0;
+
+void atomic_inc(long *ptr) {
+  asm volatile(
+    &quot;lock incq %0&quot;  // Atomic + memory fence
+    : &quot;+m&quot;(*ptr)
+    :
+    : &quot;memory&quot;
+  );
+}
+
+void Tsum() {
+  for (int i = 0; i &lt; N; i++) {
+    atomic_inc(&amp;sum);
+  }
+}
+
+int main() {
+  create(Tsum);
+  create(Tsum);
+  join();
+  printf(&quot;sum = %ld\n&quot;, sum);
+}</code></pre><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>正确结果，但是很慢</p><h4 id="编译器和硬件的协作">编译器和硬件的协作</h4><p>Acquire/release semantics</p><ul><li><p>对于一对配对的 release acquire</p> <ul> <li>(逻辑上) release 之前的 store 都对 acquire 之后的 load 可见</li> <li><a href="https://davekilian.com/acquire release.html" target="_blank" rel="noreferrer">Making Sense of Acquire Release Semantics</a> </li> </ul></li><li>(逻辑上) release 之前的 store 都对 acquire 之后的 load 可见</li><li><a href="https://davekilian.com/acquire release.html" target="_blank" rel="noreferrer">Making Sense of Acquire Release Semantics</a></li><li><p>std::atomic</p> <ul> <li>&lt;p std::memory order acquire: guarantees that subsequent loads are not moved before the current load or any preceding loads.</p> </li> <li>&lt;p std::memory order release: preceding stores are not moved past the current store or any subsequent stores.</p> </li> <li>&lt;p <code>x.load()</code> /<code>x.store()</code> 会根据 <a href="https://en.cppreference.com/w/cpp/atomic/memory order" target="_blank" rel="noreferrer">memory order</a> 插入 fence</p> </li> <li>&lt;p <code>x.fetch add()</code> </p> &lt;p 将会保证 cst (sequentially consistent)</p> <ul> &lt;li 去 <a href="https://godbolt.org/" target="_blank" rel="noreferrer">godbolt</a> 上试一下吧</li> </ul> </li> </ul></li><li><p>std::memory order acquire: guarantees that subsequent loads are not moved before the current load or any preceding loads.</p></li><li><p>std::memory order release: preceding stores are not moved past the current store or any subsequent stores.</p></li><li><p><code>x.load()</code> /<code>x.store()</code> 会根据 <a href="https://en.cppreference.com/w/cpp/atomic/memory order" target="_blank" rel="noreferrer">memory order</a> 插入 fence</p></li><li><p><code>x.fetch add()</code> </p> <p>将会保证 cst (sequentially consistent)</p> <ul> <li>去 <a href="https://godbolt.org/" target="_blank" rel="noreferrer">godbolt</a> 上试一下吧</li> </ul></li><li>去 <a href="https://godbolt.org/" target="_blank" rel="noreferrer">godbolt</a> 上试一下吧</li></ul><h2 id="并发3-并发控制-互斥-2023-3-14">并发3_并发控制：互斥_2023.3.14</h2><h3 id="互斥问题-定义与假设">互斥问题：定义与假设</h3><h4 id="互斥问题-定义">互斥问题：定义</h4><p>互斥 (mutual exclusion)，“互相排斥”</p><ul><li>实现 <code>lock t</code> 数据结构和 <code>lock/unlock</code> API:</li></ul><pre><code>typedef struct {
+  ...
+} lock_t;
+void lock(lock_t *lk);
+void unlock(lock_t *lk);</code></pre><p>一把 “排他性” 的锁——对于锁对象 <code>lk</code></p><ul><li>如果某个线程持有锁，则其他线程的 <code>lock</code> 不能返回 (Safety)</li><li>在多个线程执行 <code>lock</code> 时，至少有一个可以返回 (Liveness)</li><li>能正确处理处理器乱序、宽松内存模型和编译优化</li></ul><h4 id="互斥问题的经典算法">互斥问题的经典算法</h4><p>Peterson 算法</p><ul><li>包间、旗子和门上的字条</li><li>假设 atomic load/store<ul> <li>实现这个假设也不是非常容易的 (<a href="https://jyywiki.cn/pages/OS/2023/c/peterson.c" target="_blank" rel="noreferrer">peterson.c</a> )</li> </ul></li><li>实现这个假设也不是非常容易的 (<a href="https://jyywiki.cn/pages/OS/2023/c/peterson.c" target="_blank" rel="noreferrer">peterson.c</a> )</li></ul><p>因此，假设很重要</p><ul><li>不能同时读/写共享内存 (1960s) 不是一个好的假设<ul> <li>Load (环顾四周) 的时候不能写，“看一眼就把眼睛闭上”</li> <li>Store (改变物理世界状态) 的时候不能读，“闭着眼睛动手”</li> <li>这是《操作系统&gt;课<ul> &lt;li 更喜欢直观、简单、粗暴 (稳定)、有效的解决方法</li> </ul> </li> </ul></li><li>Load (环顾四周) 的时候不能写，“看一眼就把眼睛闭上”</li><li>Store (改变物理世界状态) 的时候不能读，“闭着眼睛动手”</li><li>这是《操作系统&gt;课<ul> <li>更喜欢直观、简单、粗暴 (稳定)、有效的解决方法</li> </ul></li><li>更喜欢直观、简单、粗暴 (稳定)、有效的解决方法</li></ul><h4 id="实现互斥的基本假设">实现互斥的基本假设</h4><p>允许使用使我们可以不管一切麻烦事的原子指令</p><pre><code>void atomic_inc(long *ptr);
+int atomic_xchg(int val, int *ptr);</code></pre><p>看起来是一个普通的函数，但假设：</p><ul><li>包含一个原子指令<ul> <li>指令的执行不能被打断</li> </ul></li><li>指令的执行不能被打断</li><li>包含一个 compiler barrier<ul> <li>无论何种优化都不可越过此函数</li> </ul></li><li>无论何种优化都不可越过此函数</li><li>包含一个 memory fence<ul> <li>保证处理器在 stop the world 前所有对内存的 store 都 “生效”</li> <li>即对 resume the world 之后的 load 可见</li> </ul></li><li>保证处理器在 stop the world 前所有对内存的 store 都 “生效”</li><li>即对 resume the world 之后的 load 可见</li></ul><p>对未来可见：release；读到过去的内容：acquire。共同组成锁。</p><h4 id="atomic-exchange-实现">Atomic Exchange 实现</h4><pre><code>int xchg(int volatile *ptr, int newval) {
+  int result;
+  asm volatile(
+    // 指令自带 memory barrier
+    &quot;lock xchgl %0, %1&quot;
+    : &quot;+m&quot;(*ptr), &quot;=a&quot;(result)
+    : &quot;1&quot;(newval)
+    // Compiler barrier
+    : &quot;memory&quot;
+  );
+  return result;
+}</code></pre><h3 id="自旋锁-spin-lock">自旋锁 (Spin Lock)</h3><h4 id="自旋锁-spin-lock-2">自旋锁 (Spin Lock)</h4><pre><code>void lock(lock_t *lk);
+void unlock(lock_t *lk);</code></pre><p>做题家：拿到题就开始排列组合</p><ul><li>熟练得让人心疼<ul> <li>如果长久的训练都是 “必须在规定的时间内正确解出问题”，那么浪费时间的思考自然就少了</li> </ul></li><li>如果长久的训练都是 “必须在规定的时间内正确解出问题”，那么浪费时间的思考自然就少了</li></ul><p>科学家：考虑更多更根本的问题</p><ul><li>我们可以设计出怎样的原子指令？<ul> <li>它们的表达能力如何？</li> </ul></li><li>它们的表达能力如何？</li><li>计算机硬件可以提供比 “一次 load/store” 更强的原子性吗？<ul> <li>如果硬件很困难，软件/编译器可以么？</li> </ul></li><li>如果硬件很困难，软件/编译器可以么？</li></ul><h4 id="自旋锁-用-xchg-实现互斥">自旋锁：用 <code>xchg</code> 实现互斥</h4><p>在厕所门口放一个桌子 (共享变量)</p><ul><li>初始时放着 🔑</li></ul><p>自旋锁 (Spin Lock)</p><ul><li>想上厕所的同学 (一条 xchg 指令)<ul> <li>Stop the world</li> <li>看一眼桌子上有什么 (🔑 或 🔞)</li> <li>把 🔞 放到桌上 (覆盖之前有的任何东西)</li> <li>Resume the world</li> <li>期间看到 🔑 才可以进厕所，否则重复</li> </ul></li><li>Stop the world</li><li>看一眼桌子上有什么 (🔑 或 🔞)</li><li>把 🔞 放到桌上 (覆盖之前有的任何东西)</li><li>Resume the world</li><li>期间看到 🔑 才可以进厕所，否则重复</li><li>出厕所的同学<ul> <li>把 🔑 放到桌上</li> </ul></li><li>把 🔑 放到桌上</li></ul><h4 id="实现互斥-自旋锁">实现互斥：自旋锁</h4><pre><code>int table = YES;
+
+void lock() {
+retry:
+  int got = xchg(&amp;table, NOPE);
+  if (got == NOPE)
+    goto retry;
+  assert(got == YES);
+}
+
+void unlock() {
+  xchg(&amp;table, YES);  // 为什么不是 table = YES; ?
+}</code></pre><p>在 xchg 的假设下简化实现</p><ul><li>包含一个原子指令</li><li>包含一个 compiler barrier</li><li>包含一个 memory fence<ul> <li>sum spinlock demo</li> </ul></li><li>sum spinlock demo</li></ul><pre><code>int locked = 0;
+
+void lock() {
+  while (xchg(&amp;locked, 1));
+}
+
+void unlock() {
+  xchg(&amp;locked, 0);
+}</code></pre><p>sum-spinlock.c</p><pre><code>#include &quot;thread.h&quot;
+
+#define N 100000000
+#define M 10
+
+long sum = 0;
+
+int xchg(int volatile *ptr, int newval) {
+  int result;
+  asm volatile(
+    &quot;lock xchgl %0, %1&quot;
+    : &quot;+m&quot;(*ptr), &quot;=a&quot;(result)
+    : &quot;1&quot;(newval)
+    : &quot;memory&quot;
+  );
+  return result;
+}
+
+int locked = 0;
+
+void lock() {
+  while (xchg(&amp;locked, 1)) ;
+}
+
+void unlock() {
+  xchg(&amp;locked, 0);
+}
+
+void Tsum() {
+  long nround = N / M;
+  for (int i = 0; i &lt; nround; i++) {
+    lock();
+    for (int j = 0; j &lt; M; j++) {
+      sum++;  // Non-atomic; can optimize
+    }
+    unlock();
+  }
+}
+
+int main() {
+  assert(N % M == 0);
+  create(Tsum);
+  create(Tsum);
+  join();
+  printf(&quot;sum = %ld\n&quot;, sum);
+}</code></pre><p>结果sum = 200000000</p><h3 id="更强大的原子指令">更强大的原子指令</h3><h4 id="更强大的原子指令-2">更强大的原子指令</h4><p>Compare and exchange (“test and set”)</p><p>Compare and exchange (“test and set”)</p><ul><li>(lock) cmpxchg SRC, DEST</li></ul><pre><code>TEMP = DEST
+if accumulator == TEMP:
+    ZF = 1
+    DEST = SRC
+else:
+    ZF = 0
+    accumulator = TEMP</code></pre><ul><li>🤔 看起来没复杂多少，好像又复杂了很多<ul> <li>学编程/操作系统 “纸面理解” 是不行的</li> <li>一定要写代码加深印象<ul> &lt;li 对于这个例子：我们可以列出 “真值表”</li> </ul> </li> </ul></li><li>学编程/操作系统 “纸面理解” 是不行的</li><li>一定要写代码加深印象<ul> <li>对于这个例子：我们可以列出 “真值表”</li> </ul></li><li>对于这个例子：我们可以列出 “真值表”</li></ul><h4 id="在自旋锁中代替-xchg">在自旋锁中代替 xchg</h4><p>在自旋锁中代替 xchg</p><pre><code>// cmpxchg(old=&#39;🔑&#39;, new=&#39;🔞&#39;, *ptr)
+int tmp = *ptr;
+if (tmp == &#39;🔑&#39;) {
+  *ptr = &#39;🔞&#39;
+  assert(tmp == &#39;🔑&#39;);
+} else {
+  assert(tmp == &#39;🔞&#39;);
+}
+return tmp;</code></pre><ul><li>这么做有什么好处吗？<ul> <li>有的，在自旋失败的时候减少了一次 store</li> <li>当然，现代处理器也可以优化 xchg</li> </ul></li><li>有的，在自旋失败的时候减少了一次 store</li><li>当然，现代处理器也可以优化 xchg</li></ul><h4 id="多出的-compare-用处">多出的 Compare: 用处</h4><p>同时检查上一次获得的值是否仍然有效 + 修改生效</p><pre><code>// Create a new node
+retry:
+  expected = head;
+  node-&gt;next = expected;
+  seen = cmpxchg(expected, node, &amp;head);
+  if (seen != expected)
+    goto retry;</code></pre><h3 id="在操作系统上实现互斥">在操作系统上实现互斥</h3><h4 id="自旋锁的缺陷">自旋锁的缺陷</h4><p>性能问题 (1)</p><ul><li>除了进入临界区的线程，其他处理器上的线程都在空转</li><li>争抢锁的处理器越多，利用率越低<ul> <li>4 个 CPU 运行 4 个 sum spinlock 和 1 个 OBS<ul> &lt;li 任意时刻都只有一个 sum atomic 在有效计算</li> </ul> </li> <li>均分 CPU, OBS 就分不到 100% 的 CPU 了</li> </ul></li><li>4 个 CPU 运行 4 个 sum spinlock 和 1 个 OBS<ul> <li>任意时刻都只有一个 sum atomic 在有效计算</li> </ul></li><li>任意时刻都只有一个 sum atomic 在有效计算</li><li>均分 CPU, OBS 就分不到 100% 的 CPU 了</li></ul><p>性能问题 (2)</p><ul><li>持有自旋锁的线程可能被操作系统切换出去<ul> <li>操作系统不 “感知” 线程在做什么</li> <li>(但为什么不能呢？)</li> </ul></li><li>操作系统不 “感知” 线程在做什么</li><li>(但为什么不能呢？)</li><li>实现 100% 的资源浪费</li></ul><h4 id="scalability-性能的新维度">Scalability: 性能的新维度</h4><blockquote><p>同一份计算任务，时间 (CPU cycles) 和空间 (mapped memory) 会随处理器数量的增长而变化。</p></blockquote><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.jpg" alt="img" /><figcaption>img</figcaption></figure><p>用自旋锁实现 sum++ 的性能问题</p><ul><li>严谨的统计很难<ul> <li>CPU 动态功耗</li> <li>系统中的其他进程</li> <li>超线程</li> <li>NUMA</li> <li>……</li> <li><a href="https://www.cse.unsw.edu.au/~gernot/benchmarking crimes.html" target="_blank" rel="noreferrer">Benchmarking crimes</a> </li> </ul></li><li>CPU 动态功耗</li><li>系统中的其他进程</li><li>超线程</li><li>NUMA</li><li>……</li><li><a href="https://www.cse.unsw.edu.au/~gernot/benchmarking crimes.html" target="_blank" rel="noreferrer">Benchmarking crimes</a></li></ul><h4 id="自旋锁的使用场景">自旋锁的使用场景</h4><ol><li>临界区几乎不 “拥堵”</li><li>持有自旋锁时禁止执行流切换</li></ol><p>使用场景：操作系统内核的并发数据结构 (短临界区)</p><ul><li>操作系统可以关闭中断和抢占<ul> <li>保证锁的持有者在很短的时间内可以释放锁</li> </ul></li><li>保证锁的持有者在很短的时间内可以释放锁</li><li>(如果是虚拟机呢...😂)<ul> <li>PAUSE 指令会触发 VM Exit</li> </ul></li><li>PAUSE 指令会触发 VM Exit</li><li>但依旧很难做好<ul> <li><a href="https://www.usenix.org/conference/osdi10/analysis linux scalability many cores" target="_blank" rel="noreferrer">An analysis of Linux scalability to many cores</a> (OSDI& 39;10)</li> </ul></li><li><a href="https://www.usenix.org/conference/osdi10/analysis linux scalability many cores" target="_blank" rel="noreferrer">An analysis of Linux scalability to many cores</a> (OSDI& 39;10)</li></ul><h4 id="实现线程-长临界区的互斥">实现线程 + 长临界区的互斥</h4><p>“让” 不是 C 语言代码可以做到的 (C 代码只能执行指令)</p><ul><li><p>但有一种特殊的指令：syscall</p></li><li><p>把锁的实现放到操作系统里就好啦</p> <ul> <li><pre> <code>syscall(SYSCALL lock, &amp;lk); </code> </pre> <ul> &lt;li 试图获得 <code>lk</code> ，但如果失败，就切换到其他线程</li> </ul> </li> <li><pre> <code>syscall(SYSCALL unlock, &amp;lk); </code> </pre> <ul> &lt;li 释放 <code>lk</code> ，如果有等待锁的线程就唤醒</li> </ul> </li> </ul></li><li><pre> <code>syscall(SYSCALL lock, &amp;lk); </code> </pre> <ul> <li>试图获得 <code>lk</code> ，但如果失败，就切换到其他线程</li> </ul></li><li>试图获得 <code>lk</code> ，但如果失败，就切换到其他线程</li><li><pre> <code>syscall(SYSCALL unlock, &amp;lk); </code> </pre> <ul> <li>释放 <code>lk</code> ，如果有等待锁的线程就唤醒</li> </ul></li><li>释放 <code>lk</code> ，如果有等待锁的线程就唤醒</li></ul><p>操作系统 = 更衣室管理员</p><ul><li>先到的人 (线程)<ul> <li>成功获得手环，进入游泳馆</li> <li><code>lk = 🔒</code> ，系统调用直接返回</li> </ul></li><li>成功获得手环，进入游泳馆</li><li><code>lk = 🔒</code> ，系统调用直接返回</li><li>后到的人 (线程)<ul> <li>不能进入游泳馆，排队等待</li> <li>线程放入等待队列，执行线程切换 (yield)</li> </ul></li><li>不能进入游泳馆，排队等待</li><li>线程放入等待队列，执行线程切换 (yield)</li><li>洗完澡出来的人 (线程)<ul> <li>交还手环给管理员；管理员把手环再交给排队的人</li> <li>如果等待队列不空，从等待队列中取出一个线程允许执行</li> <li>如果等待队列为空，<code>lk = ✅</code> </li> </ul></li><li>交还手环给管理员；管理员把手环再交给排队的人</li><li>如果等待队列不空，从等待队列中取出一个线程允许执行</li><li>如果等待队列为空，<code>lk = ✅</code></li><li>管理员 (OS) 使用自旋锁确保自己处理手环的过程是原子的</li></ul><h2 id="并发4-并发控制-调试理论与实践-2023-3-16">并发4_并发控制：调试理论与实践_2023.3.16</h2><h3 id="调试理论">调试理论</h3><p>调试理论：如果我们能判定任意程序状态的正确性，那么给定一个 failure，我们可以通过二分查找定位到第一个 error 的状态，此时的代码就是 fault (bug)。</p><p>实际中的调试：观察状态机执行 (trace) 的某个侧面</p><ul><li>缩小错误状态 (error) 可能产生的位置</li><li>作出适当的假设</li><li>再进行细粒度的定位和诊断</li></ul><p>最重要的两个工具</p><ul><li>printf → 自定义 log 的 trace<ul> <li>灵活可控、能快速定位问题大概位置、适用于大型软件</li> <li>无法精确定位、大量的 logs 管理起来比较麻烦</li> </ul></li><li>灵活可控、能快速定位问题大概位置、适用于大型软件</li><li>无法精确定位、大量的 logs 管理起来比较麻烦</li><li>gdb → 指令/语句级 trace<ul> <li>精确、指令级定位、任意查看程序内部状态</li> <li>耗费大量时间</li> </ul></li><li>精确、指令级定位、任意查看程序内部状态</li><li>耗费大量时间</li></ul><h3 id="使用-gdb-调试程序">使用 GDB 调试程序</h3><h3 id="gdb-入门">GDB: 入门</h3><p>GDB: 最常用的命令在 <a href="https://jyywiki.cn/pages/OS/manuals/gdb-cheat-sheet.pdf">gdb cheat sheet</a></p><ul><li>打印贴在电脑前，调试时候看一遍，很快就大致记住了</li></ul><p>想要更好的体验？</p><ul><li>GDB 本身也是一个编程语言<ul> <li>它甚至支持 Python</li> <li>我们可以执行一些初始化代码 ( x)</li> </ul></li><li>它甚至支持 Python</li><li>我们可以执行一些初始化代码 ( x)</li><li>库函数也是代码<ul> <li>directory 命令增加源码路径</li> </ul></li><li>directory 命令增加源码路径</li><li>GDB 有许多前端<ul> <li>cgdb, pwndbg, vscode, ...</li> </ul></li><li>cgdb, pwndbg, vscode, ...</li><li><a href="https://sourceware.org/gdb/current/onlinedocs/gdb.html/" target="_blank" rel="noreferrer">RTFM</a> M 比 ChatGPT 好用在于它不需要 prompt 且全面</li></ul><p><strong>musl</strong></p><h3 id="futex-fast-userspace-mutexes-cont-d">🌶️ Futex: Fast Userspace muTexes (cont'd)</h3><p>一个简单的设计：先在用户空间自旋</p><ul><li>如果获得锁，直接进入 (Fast Path，无系统调用)</li><li>未能获得锁，系统调用 (Slow Path)</li><li>解锁后用系统调用唤醒潜在的 Slow Path 线程<ul> <li>更好的设计可以彻底消除 fast path 的系统调用</li> </ul></li><li>更好的设计可以彻底消除 fast path 的系统调用</li></ul><p>RTFM (劝退)</p><ul><li>futex (7), futex (2)</li><li><a href="https://lwn.net/Articles/360699/" target="_blank" rel="noreferrer">A futex overview and update</a> (LWN)</li><li><a href="https://jyywiki.cn/pages/OS/manuals/futexes are tricky.pdf">Futexes are tricky</a> (论 model checker 的重要性)</li><li>(我们不讲并发算法)<ul> <li>但我们可以调试它的实现</li> </ul></li><li>但我们可以调试它的实现</li></ul><h3 id="调试理论-应用">调试理论：应用</h3><h3 id="调试理论-应用-again">调试理论：应用 (Again)</h3><p>需求 → 设计 → 代码 → Fault → Error → Failure</p><p>“Technical Debt”</p><blockquote><p>每当你写出不好维护的代码，你都在给你未来的调试/需求变更挖坑。</p> <p>中枪了？</p></blockquote><ul><li>为了快点跑程序，随便写的 klib</li><li>为了赶紧实现指令，随手写的代码</li><li>为了应付老板，随便写的系统实现<ul> <li>jyy 的 code review: &lt;del 日常血压升高时间&lt;/del </li> </ul></li><li>jyy 的 code review: &lt;del 日常血压升高时间&lt;/del</li></ul><h3 id="编程基本准则-回顾">编程基本准则：回顾</h3><blockquote><p>Programs are meant to be read by humans (AIs) and only incidentally for computers to execute. — &lt;em D. E. Knuth</em> </p> <p>(程序首先是拿给人读的，其次才是被机器执行。)</p></blockquote><p>好的程序</p><ul><li><p>不言自明：能知道是做什么的 (</p> <p>specification</p> <p>)</p> <ul> <li>因此代码风格很重要</li> </ul></li><li>因此代码风格很重要</li><li><p>不言自证：能确认代码和 specification 一致</p> <ul> <li>因此代码中的逻辑流很重要</li> </ul></li></ul><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure><figure><img src="/notion/操作系统-from-蒋炎岩nju2023/image/img.png" alt="img" /><figcaption>img</figcaption></figure></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/posts/yolov2-yolo9000-笔记/">YOLOv2(YOLO9000)笔记</a> </div> <div> <span>下一篇</span> <a href="/posts/yolo-v1笔记/">YOLO v1笔记</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关内容</h3> </div> <div class="related-post-list"> <a href="/posts/c-c-from-于仕琪-南科大/">C&amp;C++ from 于仕琪 南科大</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-2" href="#绪论1-操作系统概述-2023-2-14" data-toc-link="绪论1-操作系统概述-2023-2-14"> 绪论1_操作系统概述_2023.2.14 </a><a class="toc-level-3" href="#why为什么学操作系统" data-toc-link="why为什么学操作系统"> Why为什么学操作系统 </a><a class="toc-level-3" href="#what什么是操作系统" data-toc-link="what什么是操作系统"> What什么是操作系统 </a><a class="toc-level-3" href="#how怎样学操作系统" data-toc-link="how怎样学操作系统"> How怎样学操作系统 </a><a class="toc-level-3" href="#课程代码" data-toc-link="课程代码"> 课程代码 </a><a class="toc-level-4" href="#模拟数字系统" data-toc-link="模拟数字系统"> 模拟数字系统 </a><a class="toc-level-4" href="#模拟-risc-v-指令执行" data-toc-link="模拟-risc-v-指令执行"> 模拟 RISC-V 指令执行 </a><a class="toc-level-2" href="#绪论2-应用视角的操作系统-2023-2-16" data-toc-link="绪论2-应用视角的操作系统-2023-2-16"> 绪论2_应用视角的操作系统_2023.2.16 </a><a class="toc-level-3" href="#汇编代码和最小可执行文件" data-toc-link="汇编代码和最小可执行文件"> 汇编代码和最小可执行文件 </a><a class="toc-level-4" href="#构造最小的-hello-world-应用程序" data-toc-link="构造最小的-hello-world-应用程序"> 构造最小的 Hello, World “应用程序” </a><a class="toc-level-4" href="#强行构造最小的-hello-world" data-toc-link="强行构造最小的-hello-world"> 强行构造最小的 Hello, World？ </a><a class="toc-level-4" href="#为什么会-segmentation-fault" data-toc-link="为什么会-segmentation-fault"> 为什么会 Segmentation Fault？ </a><a class="toc-level-4" href="#解决异常退出" data-toc-link="解决异常退出"> 解决异常退出 </a><a class="toc-level-4" href="#对一些细节的补充解释" data-toc-link="对一些细节的补充解释"> 对一些细节的补充解释 </a><a class="toc-level-4" href="#汇编代码的状态机模型" data-toc-link="汇编代码的状态机模型"> 汇编代码的状态机模型 </a><a class="toc-level-3" href="#理解高级语言程序" data-toc-link="理解高级语言程序"> 理解高级语言程序 </a><a class="toc-level-4" href="#非递归汉诺塔实现" data-toc-link="非递归汉诺塔实现"> 非递归汉诺塔实现 </a><a class="toc-level-3" href="#理解编译器" data-toc-link="理解编译器"> 理解编译器 </a><a class="toc-level-3" href="#操作系统上的软件-应用程序" data-toc-link="操作系统上的软件-应用程序"> 操作系统上的软件 (应用程序) </a><a class="toc-level-4" href="#操作系统中的任何程序" data-toc-link="操作系统中的任何程序"> 操作系统中的任何程序 </a><a class="toc-level-4" href="#系统中常见的应用程序" data-toc-link="系统中常见的应用程序"> 系统中常见的应用程序 </a><a class="toc-level-4" href="#打开程序的执行-trace-追踪" data-toc-link="打开程序的执行-trace-追踪"> 打开程序的执行：Trace (追踪) </a><a class="toc-level-4" href="#操作系统中-任何程序-的一生" data-toc-link="操作系统中-任何程序-的一生"> 操作系统中 “任何程序” 的一生 </a><a class="toc-level-3" href="#总结" data-toc-link="总结"> 总结 </a><a class="toc-level-2" href="#绪论3-硬件视角的操作系统-2023-2-28" data-toc-link="绪论3-硬件视角的操作系统-2023-2-28"> 绪论3_硬件视角的操作系统_2023.2.28 </a><a class="toc-level-3" href="#回顾-计算机硬件" data-toc-link="回顾-计算机硬件"> 回顾：计算机硬件 </a><a class="toc-level-4" href="#计算机硬件-数字电路" data-toc-link="计算机硬件-数字电路"> 计算机硬件 = 数字电路 </a><a class="toc-level-3" href="#硬件与程序员的约定" data-toc-link="硬件与程序员的约定"> 硬件与程序员的约定 </a><a class="toc-level-4" href="#x86-family-cpu-reset" data-toc-link="x86-family-cpu-reset"> x86 Family: CPU Reset </a><a class="toc-level-4" href="#其他平台上的-cpu-reset" data-toc-link="其他平台上的-cpu-reset"> 其他平台上的 CPU Reset </a><a class="toc-level-4" href="#x86-cpu-reset-之后-到底执行了什么" data-toc-link="x86-cpu-reset-之后-到底执行了什么"> x86 CPU Reset 之后：到底执行了什么？ </a><a class="toc-level-4" href="#为什么需要-uefi" data-toc-link="为什么需要-uefi"> 为什么需要 UEFI？ </a><a class="toc-level-4" href="#回到-legacy-bios-约定" data-toc-link="回到-legacy-bios-约定"> 回到 Legacy BIOS: 约定 </a><a class="toc-level-4" href="#uefi-上的操作系统加载" data-toc-link="uefi-上的操作系统加载"> UEFI 上的操作系统加载 </a><a class="toc-level-3" href="#实现最小-操作系统" data-toc-link="实现最小-操作系统"> 实现最小 “操作系统” </a><a class="toc-level-4" href="#我们已经获得的能力" data-toc-link="我们已经获得的能力"> 我们已经获得的能力 </a><a class="toc-level-4" href="#bare-metal-上的-c-代码" data-toc-link="bare-metal-上的-c-代码"> Bare-metal 上的 C 代码 </a><a class="toc-level-2" href="#绪论4-python实现操作系统模型-2023-3-2" data-toc-link="绪论4-python实现操作系统模型-2023-3-2"> 绪论4_Python实现操作系统模型_2023.3.2 </a><a class="toc-level-3" href="#理解操作系统的新途径" data-toc-link="理解操作系统的新途径"> 理解操作系统的新途径 </a><a class="toc-level-4" href="#回顾-程序-硬件的状态机模型" data-toc-link="回顾-程序-硬件的状态机模型"> 回顾：程序/硬件的状态机模型 </a><a class="toc-level-4" href="#一个大胆的想法" data-toc-link="一个大胆的想法"> 一个大胆的想法 </a><a class="toc-level-3" href="#操作系统-玩具-设计与实现" data-toc-link="操作系统-玩具-设计与实现"> 操作系统 “玩具”：设计与实现 </a><a class="toc-level-4" href="#操作系统玩具-api" data-toc-link="操作系统玩具-api"> 操作系统玩具：API </a><a class="toc-level-4" href="#实现系统调用" data-toc-link="实现系统调用"> 实现系统调用 </a><a class="toc-level-4" href="#借用-python-的语言机制" data-toc-link="借用-python-的语言机制"> 借用 Python 的语言机制 </a><a class="toc-level-3" href="#建模操作系统" data-toc-link="建模操作系统"> 建模操作系统 </a><a class="toc-level-4" href="#一个更-全面-的操作系统模型" data-toc-link="一个更-全面-的操作系统模型"> 一个更 “全面” 的操作系统模型 </a><a class="toc-level-4" href="#模型做出的简化" data-toc-link="模型做出的简化"> 模型做出的简化 </a><a class="toc-level-4" href="#模型实现" data-toc-link="模型实现"> 模型实现 </a><a class="toc-level-2" href="#并发1-多处理器编程-2023-3-7" data-toc-link="并发1-多处理器编程-2023-3-7"> 并发1_多处理器编程_2023.3.7 </a><a class="toc-level-3" href="#多处理器编程入门" data-toc-link="多处理器编程入门"> 多处理器编程入门 </a><a class="toc-level-4" href="#多线程共享内存并发" data-toc-link="多线程共享内存并发"> 多线程共享内存并发 </a><a class="toc-level-4" href="#多线程共享内存并发-入门" data-toc-link="多线程共享内存并发-入门"> 多线程共享内存并发：入门 </a><a class="toc-level-4" href="#问出更多的问题" data-toc-link="问出更多的问题"> 问出更多的问题 </a><a class="toc-level-4" href="#thread-h-背后-posix-threads" data-toc-link="thread-h-背后-posix-threads"> thread.h 背后：POSIX Threads </a><a class="toc-level-3" href="#放弃-1-原子性" data-toc-link="放弃-1-原子性"> 放弃 (1)：原子性 </a><a class="toc-level-4" href="#状态机的隐含假设" data-toc-link="状态机的隐含假设"> 状态机的隐含假设 </a><a class="toc-level-4" href="#例子-diablo-i-1996" data-toc-link="例子-diablo-i-1996"> 例子：Diablo I (1996) </a><a class="toc-level-4" href="#例子-求和" data-toc-link="例子-求和"> 例子：求和 </a><a class="toc-level-4" href="#指令-代码执行原子性假设" data-toc-link="指令-代码执行原子性假设"> 指令/代码执行原子性假设 </a><a class="toc-level-4" href="#放弃原子性假设的后果" data-toc-link="放弃原子性假设的后果"> 放弃原子性假设的后果 </a><a class="toc-level-3" href="#放弃-2-执行顺序" data-toc-link="放弃-2-执行顺序"> 放弃 (2)：执行顺序 </a><a class="toc-level-4" href="#保证执行顺序" data-toc-link="保证执行顺序"> 保证执行顺序 </a><a class="toc-level-3" href="#放弃-3-处理器间的可见性" data-toc-link="放弃-3-处理器间的可见性"> 放弃 (3)：处理器间的可见性 </a><a class="toc-level-4" href="#现代处理器也是-动态-编译器" data-toc-link="现代处理器也是-动态-编译器"> 现代处理器也是 (动态) 编译器！ </a><a class="toc-level-4" href="#宽松内存模型-relaxed-weak-memory-model" data-toc-link="宽松内存模型-relaxed-weak-memory-model"> 宽松内存模型 (Relaxed/Weak Memory Model) </a><a class="toc-level-2" href="#并发2-并发控制基础-2023-3-9" data-toc-link="并发2-并发控制基础-2023-3-9"> 并发2_并发控制基础_2023.3.9 </a><a class="toc-level-3" href="#互斥问题" data-toc-link="互斥问题"> 互斥问题 </a><a class="toc-level-4" href="#并发编程-从入门到放弃" data-toc-link="并发编程-从入门到放弃"> 并发编程：从入门到放弃 </a><a class="toc-level-4" href="#回退到顺序执行-互斥" data-toc-link="回退到顺序执行-互斥"> 回退到顺序执行：互斥 </a><a class="toc-level-4" href="#失败的尝试" data-toc-link="失败的尝试"> 失败的尝试 </a><a class="toc-level-4" href="#更严肃地尝试-确定假设-设计算法" data-toc-link="更严肃地尝试-确定假设-设计算法"> 更严肃地尝试：确定假设、设计算法 </a><a class="toc-level-4" href="#正确性不明的奇怪尝试-peterson-算法" data-toc-link="正确性不明的奇怪尝试-peterson-算法"> 正确性不明的奇怪尝试 (Peterson 算法) </a><a class="toc-level-4" href="#习题-证明-peterson-算法正确-或给出反例" data-toc-link="习题-证明-peterson-算法正确-或给出反例"> 习题：证明 Peterson 算法正确，或给出反例 </a><a class="toc-level-4" href="#绕来绕去很容易有错漏的情况" data-toc-link="绕来绕去很容易有错漏的情况"> 绕来绕去很容易有错漏的情况 </a><a class="toc-level-3" href="#模型-模型检验与现实" data-toc-link="模型-模型检验与现实"> 模型、模型检验与现实 </a><a class="toc-level-4" href="#push-button-verification" data-toc-link="push-button-verification"> “Push-button” Verification 🎖 </a><a class="toc-level-4" href="#自动遍历状态空间的乐趣" data-toc-link="自动遍历状态空间的乐趣"> 自动遍历状态空间的乐趣 </a><a class="toc-level-4" href="#从模型回到现实" data-toc-link="从模型回到现实"> 从模型回到现实…… </a><a class="toc-level-3" href="#原子指令" data-toc-link="原子指令"> 原子指令 </a><a class="toc-level-4" href="#并发编程困难的解决" data-toc-link="并发编程困难的解决"> 并发编程困难的解决 </a><a class="toc-level-4" href="#实现正确的求和" data-toc-link="实现正确的求和"> 实现正确的求和 </a><a class="toc-level-4" href="#编译器和硬件的协作" data-toc-link="编译器和硬件的协作"> 编译器和硬件的协作 </a><a class="toc-level-2" href="#并发3-并发控制-互斥-2023-3-14" data-toc-link="并发3-并发控制-互斥-2023-3-14"> 并发3_并发控制：互斥_2023.3.14 </a><a class="toc-level-3" href="#互斥问题-定义与假设" data-toc-link="互斥问题-定义与假设"> 互斥问题：定义与假设 </a><a class="toc-level-4" href="#互斥问题-定义" data-toc-link="互斥问题-定义"> 互斥问题：定义 </a><a class="toc-level-4" href="#互斥问题的经典算法" data-toc-link="互斥问题的经典算法"> 互斥问题的经典算法 </a><a class="toc-level-4" href="#实现互斥的基本假设" data-toc-link="实现互斥的基本假设"> 实现互斥的基本假设 </a><a class="toc-level-4" href="#atomic-exchange-实现" data-toc-link="atomic-exchange-实现"> Atomic Exchange 实现 </a><a class="toc-level-3" href="#自旋锁-spin-lock" data-toc-link="自旋锁-spin-lock"> 自旋锁 (Spin Lock) </a><a class="toc-level-4" href="#自旋锁-spin-lock-2" data-toc-link="自旋锁-spin-lock-2"> 自旋锁 (Spin Lock) </a><a class="toc-level-4" href="#自旋锁-用-xchg-实现互斥" data-toc-link="自旋锁-用-xchg-实现互斥"> 自旋锁：用 xchg 实现互斥 </a><a class="toc-level-4" href="#实现互斥-自旋锁" data-toc-link="实现互斥-自旋锁"> 实现互斥：自旋锁 </a><a class="toc-level-3" href="#更强大的原子指令" data-toc-link="更强大的原子指令"> 更强大的原子指令 </a><a class="toc-level-4" href="#更强大的原子指令-2" data-toc-link="更强大的原子指令-2"> 更强大的原子指令 </a><a class="toc-level-4" href="#在自旋锁中代替-xchg" data-toc-link="在自旋锁中代替-xchg"> 在自旋锁中代替 xchg </a><a class="toc-level-4" href="#多出的-compare-用处" data-toc-link="多出的-compare-用处"> 多出的 Compare: 用处 </a><a class="toc-level-3" href="#在操作系统上实现互斥" data-toc-link="在操作系统上实现互斥"> 在操作系统上实现互斥 </a><a class="toc-level-4" href="#自旋锁的缺陷" data-toc-link="自旋锁的缺陷"> 自旋锁的缺陷 </a><a class="toc-level-4" href="#scalability-性能的新维度" data-toc-link="scalability-性能的新维度"> Scalability: 性能的新维度 </a><a class="toc-level-4" href="#自旋锁的使用场景" data-toc-link="自旋锁的使用场景"> 自旋锁的使用场景 </a><a class="toc-level-4" href="#实现线程-长临界区的互斥" data-toc-link="实现线程-长临界区的互斥"> 实现线程 + 长临界区的互斥 </a><a class="toc-level-2" href="#并发4-并发控制-调试理论与实践-2023-3-16" data-toc-link="并发4-并发控制-调试理论与实践-2023-3-16"> 并发4_并发控制：调试理论与实践_2023.3.16 </a><a class="toc-level-3" href="#调试理论" data-toc-link="调试理论"> 调试理论 </a><a class="toc-level-3" href="#使用-gdb-调试程序" data-toc-link="使用-gdb-调试程序"> 使用 GDB 调试程序 </a><a class="toc-level-3" href="#gdb-入门" data-toc-link="gdb-入门"> GDB: 入门 </a><a class="toc-level-3" href="#futex-fast-userspace-mutexes-cont-d" data-toc-link="futex-fast-userspace-mutexes-cont-d"> 🌶️ Futex: Fast Userspace muTexes (cont&#39;d) </a><a class="toc-level-3" href="#调试理论-应用" data-toc-link="调试理论-应用"> 调试理论：应用 </a><a class="toc-level-3" href="#调试理论-应用-again" data-toc-link="调试理论-应用-again"> 调试理论：应用 (Again) </a><a class="toc-level-3" href="#编程基本准则-回顾" data-toc-link="编程基本准则-回顾"> 编程基本准则：回顾 </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = [...document.querySelectorAll(".reading-content h2[id], .reading-content h3[id], .reading-content h4[id]")];
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

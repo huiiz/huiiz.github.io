@@ -1,0 +1,201 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JavaWeb学习之路（四）——JSP | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="初识JSP 什么是Java Server Pages? JSP 简介 | 菜鸟教程 (runoob.com) JSP全称Java Server Pages，是一种动态网页开发技术。它使用JSP标签在HTML网页中插入Java代码。标签通常以<%开头以% 结束。 JSP是一种Jav"><meta property="og:title" content="JavaWeb学习之路（四）——JSP | HUII's Blog"><meta property="og:description" content="初识JSP 什么是Java Server Pages? JSP 简介 | 菜鸟教程 (runoob.com) JSP全称Java Server Pages，是一种动态网页开发技术。它使用JSP标签在HTML网页中插入Java代码。标签通常以<%开头以% 结束。 JSP是一种Jav"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/posts/javaweb%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF-%E5%9B%9B-jsp/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#4e8cff"><link rel="canonical" href="https://blog.huii.top/posts/javaweb%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF-%E5%9B%9B-jsp/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.iMrdDItP.css"></head> <body> <div class="page" id="body-wrap"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>JavaWeb学习之路（四）——JSP</h1> <p>初识JSP 什么是Java Server Pages? JSP 简介 | 菜鸟教程 (runoob.com) JSP全称Java Server Pages，是一种动态网页开发技术。它使用JSP标签在HTML网页中插入Java代码。标签通常以&lt;%开头以% 结束。 JSP是一种Jav</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2021年5月2日</span> <span>阅读约 11 分钟</span> </div> <div class="reading-categories"> <a href="/categories/coding/">Coding</a> </div> <div class="reading-tags"> <a href="/tags/java/">#Java</a><a href="/tags/web/">#Web</a><a href="/tags/tomcat/">#Tomcat</a><a href="/tags/idea/">#IDEA</a> </div> </header> <div class="post-content reading-content"><h3 id="初识jsp">初识JSP</h3><h4 id="什么是java-server-pages">什么是Java Server Pages?</h4><p><a href="https://www.runoob.com/jsp/jsp-intro.html" target="_blank" rel="noreferrer">JSP 简介 | 菜鸟教程 (runoob.com)</a></p><p>JSP全称Java Server Pages，是一种动态网页开发技术。它使用JSP标签在HTML网页中插入Java代码。标签通常以&lt;%开头以%&gt;结束。</p><p>JSP是一种Java servlet，主要用于实现Java web应用程序的用户界面部分。网页开发者们通过结合HTML代码、XHTML代码、XML元素以及嵌入JSP操作和命令来编写JSP。</p><p>JSP通过网页表单获取用户输入数据、访问数据库及其他数据源，然后动态地创建网页。</p><p>JSP标签有多种功能，比如访问数据库、记录用户选择信息、访问JavaBeans组件等，还可以在不同的网页中传递控制信息和共享信息。</p><h4 id="本质">本质</h4><p>其本质还是servlet</p><figure><img src="/notion/javaweb学习之路-四-jsp/image/image-20210502001932990.png" alt="image-20210502001932990" /><figcaption>image-20210502001932990</figcaption></figure><figure><img src="/notion/javaweb学习之路-四-jsp/image/image-20210502002152260.png" alt="image-20210502002152260" /><figcaption>image-20210502002152260</figcaption></figure><ul><li><p>java代码会被原封不动地输出，HTML代码会被转化：</p> <pre> <code>class="language java" out.write(&quot;\n&quot;); out.write(&quot;\n&quot;); out.write(&quot;&lt;html&gt;\n&quot;); out.write(&quot; &lt;head&gt;\n&quot;); out.write(&quot; &lt;title&gt;$Title$&lt;/title&gt;\n&quot;); out.write(&quot; &lt;/head&gt;\n&quot;); out.write(&quot; &lt;body&gt;\n&quot;); out.write(&quot; $END$\n&quot;); out.write(&quot; &lt;/body&gt;\n&quot;); out.write(&quot;&lt;/html&gt;\n&quot;); </code> </pre></li></ul><h3 id="jsp的基础语法">JSP的基础语法</h3><ul><li>java语法都支持，还拥有一些扩充语法</li></ul><h4 id="jsp表达式">JSP表达式</h4><ul><li>作用：将程序的输出，输出到客户端</li><li>语法： <code>&lt;%= 表达式%&gt;</code></li></ul><pre><code>&lt;%= new java.util.Date()%&gt;</code></pre><figure><img src="/notion/javaweb学习之路-四-jsp/image/image-20210502004116581.png" alt="image-20210502004116581" /><figcaption>image-20210502004116581</figcaption></figure><ul><li><pre> <code>class="language jsp" &lt;% int sum = 0; for (int i = 0; i &lt; 100; i++) { sum += i; } out.println(&quot;&lt;h1&gt;&quot;+sum+&quot;&lt;/h1&gt;&quot;); %&gt; </code> </pre> <p><img src="/img/image 20210502004240605.png" alt="image 20210502004240605" /></p></li></ul><pre><code>&lt;%
+    for (int i = 0; i &lt; 100; i++) {
+        %&gt;
+&lt;h1&gt;Hello World &lt;%=i%&gt;&lt;/h1&gt;
+&lt;%
+    }
+%&gt;</code></pre><figure><img src="/notion/javaweb学习之路-四-jsp/image/image-20210502004044714.png" alt="image-20210502004044714" /><figcaption>image-20210502004044714</figcaption></figure><pre><code>out.write(&quot;\r\n&quot;);
+out.write(&quot;\r\n&quot;);
+out.write(&quot;&lt;html&gt;\r\n&quot;);
+out.write(&quot;&lt;head&gt;\r\n&quot;);
+out.write(&quot;    &lt;title&gt;Title&lt;/title&gt;\r\n&quot;);
+out.write(&quot;&lt;/head&gt;\r\n&quot;);
+out.write(&quot;&lt;body&gt;\r\n&quot;);
+out.print( new java.util.Date());
+out.write(&#39;\r&#39;);
+out.write(&#39;\n&#39;);
+
+int sum = 0;
+for (int i = 0; i &lt; 100; i++) {
+    sum += i;
+}
+out.println(&quot;&lt;h1&gt;&quot;+sum+&quot;&lt;/h1&gt;&quot;);
+
+out.write(&#39;\r&#39;);
+out.write(&#39;\n&#39;);
+
+for (int i = 0; i &lt; 100; i++) {
+
+    out.write(&quot;\r\n&quot;);
+    out.write(&quot;&lt;h1&gt;Hello World &quot;);
+    out.print(i);
+    out.write(&quot;&lt;/h1&gt;\r\n&quot;);
+
+}
+
+out.write(&quot;\r\n&quot;);
+out.write(&quot;&lt;/body&gt;\r\n&quot;);
+out.write(&quot;&lt;/html&gt;\r\n&quot;);</code></pre><h4 id="jsp声明">JSP声明</h4><p>jsp声明会被编译到java类中，其他的会被生成到jspService方法中</p><pre><code>&lt;%!
+    static {
+        System.out.println(&quot;Loading Servlet&quot;);
+    }
+    private int globalVar = 0;
+    public void kkk(){
+        System.out.println(&quot;进入了kkk方法&quot;);
+    }
+%&gt;</code></pre><h4 id="el表达式">EL表达式</h4><p><a href="https://blog.csdn.net/w_linux/article/details/79850223" target="_blank" rel="noreferrer">EL表达式详解_浅然的专栏-CSDN博客_el表达式</a></p><p><code>${}</code>等价于<code>&lt;%=%&gt;</code></p><ul><li><p>如果EL表达式无效，需要在头部配置</p> <pre> <code>class="language jsp" &lt;%@page isELIgnored=&quot;false&quot; %&gt; </code> </pre></li></ul><h4 id="注释">注释</h4><pre><code>&lt;%--注释--%&gt;</code></pre><h4 id="指令">指令</h4><pre><code>&lt;%@page 指令 %&gt;</code></pre><h4 id="错误页面配置">错误页面配置</h4><ul><li>直接在页面内配置</li></ul><pre><code>&lt;%@page errorPage=&quot;error/errorPage.jsp&quot; %&gt;</code></pre><ul><li><p>web.xml配置</p> <pre> <code>class="language xml" &lt;web app&gt; &lt;error page&gt; &lt;error code&gt;404&lt;/error code&gt; &lt;location&gt;/error/errorPage.jsp&lt;/location&gt; &lt;/error page&gt; &lt;error page&gt; &lt;error code&gt;500&lt;/error code&gt; &lt;location&gt;/error/errorPage.jsp&lt;/location&gt; &lt;/error page&gt; &lt;/web app&gt; </code> </pre></li></ul><h4 id="包含页面">包含页面</h4><ul><li>会将页面合二为一</li></ul><pre><code>&lt;%@include file=&quot;index.jsp&quot; %&gt;</code></pre><ul><li>拼接页面，本质还是几个（一般用这个，灵活性更高）</li></ul><pre><code>&lt;jsp:include page=&quot;index.jsp&quot;/&gt;</code></pre><h3 id="九大内置对象">九大内置对象</h3><ul><li>pageContext 存东西</li><li>Request 存东西</li><li>Response</li><li>Session 存东西</li><li>Application[ServletContext] 存东西</li><li>config[ServletConfig]</li><li>out 输出内容</li><li>page 几乎不用</li><li>exception</li></ul><pre><code>&lt;%
+    pageContext.setAttribute(&quot;name1&quot;, &quot;HUII&quot;);	// 保存的数据只在一个页面中有效
+    request.setAttribute(&quot;name2&quot;, &quot;HUII&quot;);		// 只在一次请求中有效，请求转发会携带这个数据
+    session.setAttribute(&quot;name3&quot;, &quot;HUII&quot;);		// 只在一次会话中有效，从打开浏览器到关闭浏览器
+    application.setAttribute(&quot;name4&quot;, &quot;HUII&quot;);	// 只在服务器中有效，从打开服务器到关闭服务器
+%&gt;</code></pre><p>脚本片段中的代码会被原封不动地生成到JSP.java中</p><p><strong>要求：Java语法正确</strong></p><pre><code>&lt;%
+    String name1 = (String) pageContext.findAttribute(&quot;name1&quot;);
+    String name2 = (String) pageContext.findAttribute(&quot;name2&quot;);
+    String name3 = (String) pageContext.findAttribute(&quot;name3&quot;);
+    String name4 = (String) pageContext.findAttribute(&quot;name4&quot;);
+    String name5 = (String) pageContext.findAttribute(&quot;name5&quot;);		// 不存在
+%&gt;
+&lt;h1&gt;取出的值&lt;/h1&gt;
+&lt;h3&gt;${name1}&lt;/h3&gt;
+&lt;h3&gt;${name2}&lt;/h3&gt;
+&lt;h3&gt;${name3}&lt;/h3&gt;
+&lt;h3&gt;${name4}&lt;/h3&gt;
+&lt;h3&gt;${name5}&lt;/h3&gt;</code></pre><figure><img src="/notion/javaweb学习之路-四-jsp/image/image-20210502105430443.png" alt="image-20210502105430443" /><figcaption>image-20210502105430443</figcaption></figure><ul><li><p>如果不使用EL表达式，而是使用<code>&lt;h3&gt;&lt;%=name5%&gt;</h3>&gt;</code> ,则会出现：</p> <p><img src="/img/image 20210502105618774.png" alt="image 20210502105618774" /></p></li><li><p>页面转发</p> <pre> <code>class="language jsp" &lt;% pageContext.forward(&quot;/success.jsp&quot;); %&gt; </code> </pre></li></ul><h3 id="jsp标签-jstl标签-el表达式">JSP标签、JSTL标签、EL表达式</h3><h4 id="el表达式-2">EL表达式</h4><ul><li>获取数据</li><li>执行运算</li><li>获取web开发的常用对象</li></ul><h4 id="jsp标签-几乎不用">JSP标签【几乎不用】</h4><ul><li><p>include</p> <pre> <code>class="language jsp" &lt;%@include file=&quot;index.jsp&quot; %&gt; </code> </pre></li><li><p>转发、传值</p> <pre> <code>class="language jsp" &lt;jsp:forward page=&quot;index.jsp&quot;&gt; &lt;jsp:param name=&quot;value&quot; value=&quot;valvalue&quot;/&gt; &lt;/jsp:forward&gt; </code> </pre> <p>对应页面取值</p> <pre> <code>class="language jsp" &lt;%=request.getParameter(&quot;value&quot;)%&gt; </code> </pre></li></ul><h4 id="jstl表达式">JSTL表达式</h4><ul><li><p><a href="https://www.runoob.com/jsp/jsp jstl.html" target="_blank" rel="noreferrer">JSP 标准标签库（JSTL） | 菜鸟教程 (runoob.com)</a> </p> <p>JSP标准标签库（JSTL）是一个JSP标签集合，它封装了JSP应用的通用核心功能。</p> <p>JSTL支持通用的、结构化的任务，比如迭代，条件判断，XML文档操作，国际化标签，SQL标签。 除了这些，它还提供了一个框架来使用集成JSTL的自定义标签。</p> <ul> &lt;li <strong>核心标签</strong> </li> &lt;li <strong>格式化标签</strong> </li> &lt;li <strong>SQL 标签</strong> </li> &lt;li <strong>XML 标签</strong> </li> &lt;li <strong>JSTL 函数</strong> </li> </ul> <p>弥补了html的不足</p></li><li><strong>核心标签</strong></li><li><strong>格式化标签</strong></li><li><strong>SQL 标签</strong></li><li><strong>XML 标签</strong></li><li><strong>JSTL 函数</strong></li><li><p>引入jstl核心标签库</p> <pre> <code>class="language jsp" &lt;%@ taglib prefix=&quot;c&quot; uri=&quot;http://java.sun.com/jsp/jstl/core&quot; %&gt; </code> </pre> <p><img src="/img/image 20210502111754085.png" alt="image 20210502111754085" /></p> <p>常用：<code>c:forEach</code> </p></li></ul><h3 id="javabean">JavaBean</h3><p>实体类</p><p>JavaBean有特定的写法</p><ul><li>必须有一个无参构造</li><li>属性必须私有化</li><li>必须有对应的get/set方法</li></ul><p>一般用来和数据库的字段做映射 ORM</p><p>ORM：对象关系映射</p><ul><li>表 &gt;类</li><li>字段 &gt;属性</li><li>行记录 对象、</li></ul><pre><code>package top.huii.pojo;
+
+public class People {
+    private int id;
+    private String name;
+    private int age;
+    private String address;
+
+    public People(int id, String name, int age, String address) {
+        this.id = id;
+        this.name = name;
+        this.age = age;
+        this.address = address;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;People{&quot; +
+                &quot;id=&quot; + id +
+                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &quot;, age=&quot; + age +
+                &quot;, address=&#39;&quot; + address + &#39;\&#39;&#39; +
+                &#39;}&#39;;
+    }
+}</code></pre></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/posts/javaweb学习之路-五-mvc-过滤器-监听器/">JavaWeb学习之路（五）——MVC、过滤器、监听器</a> </div> <div> <span>下一篇</span> <a href="/posts/javaweb学习之路-二-环境配置与项目创建/">JavaWeb学习之路（二）——环境配置与项目创建</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关内容</h3> </div> <div class="related-post-list"> <a href="/posts/javaweb学习之路-五-mvc-过滤器-监听器/">JavaWeb学习之路（五）——MVC、过滤器、监听器</a><a href="/posts/javaweb学习之路-二-环境配置与项目创建/">JavaWeb学习之路（二）——环境配置与项目创建</a><a href="/posts/javaweb学习之路-三-基本请求处理/">JavaWeb学习之路（三）——基本请求处理</a><a href="/posts/javaweb学习之路-六-mybatis入门/">JavaWeb学习之路（六）——Mybatis入门</a><a href="/posts/javaweb学习之路-七-mybatis常见操作/">JavaWeb学习之路（七）——Mybatis常见操作</a><a href="/posts/javaweb学习之路-一-动机与准备/">JavaWeb学习之路（一）——动机与准备</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-3" href="#初识jsp" data-toc-link="初识jsp"> 初识JSP </a><a class="toc-level-4" href="#什么是java-server-pages" data-toc-link="什么是java-server-pages"> 什么是Java Server Pages? </a><a class="toc-level-4" href="#本质" data-toc-link="本质"> 本质 </a><a class="toc-level-3" href="#jsp的基础语法" data-toc-link="jsp的基础语法"> JSP的基础语法 </a><a class="toc-level-4" href="#jsp表达式" data-toc-link="jsp表达式"> JSP表达式 </a><a class="toc-level-4" href="#jsp声明" data-toc-link="jsp声明"> JSP声明 </a><a class="toc-level-4" href="#el表达式" data-toc-link="el表达式"> EL表达式 </a><a class="toc-level-4" href="#注释" data-toc-link="注释"> 注释 </a><a class="toc-level-4" href="#指令" data-toc-link="指令"> 指令 </a><a class="toc-level-4" href="#错误页面配置" data-toc-link="错误页面配置"> 错误页面配置 </a><a class="toc-level-4" href="#包含页面" data-toc-link="包含页面"> 包含页面 </a><a class="toc-level-3" href="#九大内置对象" data-toc-link="九大内置对象"> 九大内置对象 </a><a class="toc-level-3" href="#jsp标签-jstl标签-el表达式" data-toc-link="jsp标签-jstl标签-el表达式"> JSP标签、JSTL标签、EL表达式 </a><a class="toc-level-4" href="#el表达式-2" data-toc-link="el表达式-2"> EL表达式 </a><a class="toc-level-4" href="#jsp标签-几乎不用" data-toc-link="jsp标签-几乎不用"> JSP标签【几乎不用】 </a><a class="toc-level-4" href="#jstl表达式" data-toc-link="jstl表达式"> JSTL表达式 </a><a class="toc-level-3" href="#javabean" data-toc-link="javabean"> JavaBean </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = [...document.querySelectorAll(".reading-content h2[id], .reading-content h3[id], .reading-content h4[id]")];
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

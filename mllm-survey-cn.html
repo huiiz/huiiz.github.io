@@ -1,0 +1,2368 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>多模态大语言模型综述报告</title>
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+SC:wght@700;900&family=Noto+Sans+SC:wght@400;500;600&display=swap" rel="stylesheet">
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- ECharts CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/echarts@5.4.3/dist/echarts.min.js"></script>
+
+    <!-- GSAP + ScrollTrigger CDN -->
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/ScrollTrigger.min.js"></script>
+
+    <style>
+        :root {
+            --primary: #1E3A5F;
+            --secondary: #2D6A4F;
+            --accent: #E76F51;
+            --background: #FAF8F5;
+            --text-primary: #2C3E50;
+            --text-secondary: #5A6B7D;
+        }
+
+        * {
+            font-family: 'Noto Sans SC', sans-serif;
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: 'Noto Serif SC', serif;
+        }
+
+        body {
+            background-color: var(--background);
+            color: var(--text-primary);
+            line-height: 1.7;
+            overflow-x: hidden;
+        }
+
+        body.is-embedded {
+            background: #fff;
+        }
+
+        body.is-embedded .progress-bar,
+        body.is-embedded #toc-sidebar,
+        body.is-embedded .lightbox {
+            display: none !important;
+        }
+
+        .section-title {
+            font-size: 2.5rem;
+            font-weight: 900;
+            color: var(--primary);
+            margin-bottom: 2rem;
+            position: relative;
+        }
+
+        .section-title::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(90deg, var(--secondary), var(--accent));
+            border-radius: 2px;
+        }
+
+        .card {
+            background: rgba(255, 255, 255, 0.8);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.3);
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+            transition: all 0.3s ease;
+        }
+
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
+        }
+
+        .hero-bg {
+            background: linear-gradient(135deg, rgba(30, 58, 95, 0.9) 0%, rgba(45, 106, 79, 0.8) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero-bg::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-image: url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23ffffff' fill-opacity='0.05'%3E%3Ccircle cx='30' cy='30' r='2'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+        }
+
+        .progress-bar {
+            position: fixed;
+            top: 0;
+            left: 0;
+            height: 4px;
+            background: linear-gradient(90deg, var(--accent), var(--secondary));
+            z-index: 1000;
+            width: 0%;
+            transition: width 0.3s ease;
+        }
+
+        .image-container {
+            position: relative;
+            overflow: hidden;
+            border-radius: 12px;
+            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+        }
+
+        .image-container img {
+            transition: transform 0.5s ease;
+        }
+
+        .image-container:hover img {
+            transform: scale(1.05);
+        }
+
+        .timeline-item {
+            position: relative;
+            padding-left: 2rem;
+            margin-bottom: 2rem;
+        }
+
+        .timeline-item::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 0.5rem;
+            width: 12px;
+            height: 12px;
+            background: var(--accent);
+            border-radius: 50%;
+            box-shadow: 0 0 0 4px rgba(231, 111, 81, 0.2);
+        }
+
+        .timeline-item::after {
+            content: '';
+            position: absolute;
+            left: 5.5px;
+            top: 1.75rem;
+            width: 2px;
+            height: calc(100% + 1rem);
+            background: linear-gradient(to bottom, var(--accent), transparent);
+        }
+
+        .tech-tag {
+            display: inline-block;
+            background: linear-gradient(135deg, var(--secondary), var(--accent));
+            color: white;
+            padding: 0.25rem 0.75rem;
+            border-radius: 20px;
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin: 0.25rem;
+        }
+
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 2rem 0;
+        }
+
+        .comparison-table th,
+        .comparison-table td {
+            padding: 1rem;
+            text-align: left;
+            border-bottom: 1px solid rgba(44, 62, 80, 0.1);
+        }
+
+        .comparison-table th {
+            background: rgba(30, 58, 95, 0.05);
+            font-weight: 600;
+            color: var(--primary);
+        }
+
+        .comparison-table tr:hover {
+            background: rgba(45, 106, 79, 0.05);
+        }
+
+        @media (max-width: 768px) {
+            .container { 
+                padding: 1rem; 
+            } 
+            h1 { 
+                font-size: 1.8rem !important; 
+            } 
+            h2 { 
+                font-size: 1.4rem !important; 
+            } 
+            h3 { 
+                font-size: 1.1rem !important; 
+            } 
+            .section { 
+                padding: 1.5rem 1rem !important; 
+            } 
+            table { 
+                font-size: 0.85rem; 
+                overflow-x: auto; 
+                display: block; 
+            } 
+            .grid { 
+                grid-template-columns: 1fr !important; 
+            } 
+            .flex-row { 
+                flex-direction: column !important; 
+            } 
+            img { 
+                max-width: 100% !important; 
+                height: auto !important; 
+            } 
+            .card { 
+                padding: 1rem !important; 
+            } 
+            pre { 
+                font-size: 0.8rem; 
+                overflow-x: auto; 
+            } 
+            body { 
+                font-size: 15px; 
+                line-height: 1.7; 
+            }
+            
+            .section-title {
+                font-size: 2rem;
+            }
+
+            .hero-content {
+                padding: 2rem 1rem;
+            }
+            
+            /* TOC Sidebar responsive */
+            #toc-sidebar {
+                display: none;
+            }
+        }
+
+        /* TOC Sidebar */
+        #toc-sidebar {
+            position: fixed;
+            right: 20px;
+            top: 50%;
+            transform: translateY(-50%);
+            z-index: 100;
+            background: rgba(255,255,255,0.95);
+            backdrop-filter: blur(10px);
+            border-radius: 12px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+            padding: 16px;
+            max-height: 70vh;
+            overflow-y: auto;
+            width: 220px;
+            font-size: 13px;
+            transition: all 0.3s ease;
+        }
+        
+        #toc-sidebar.collapsed {
+            width: 40px;
+            padding: 8px;
+            overflow: hidden;
+        }
+        
+        #toc-sidebar.collapsed .toc-content {
+            display: none;
+        }
+        
+        #toc-toggle {
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            cursor: pointer;
+            font-size: 18px;
+            color: #1E3A5F;
+        }
+        
+        .toc-link {
+            display: block;
+            padding: 4px 8px;
+            color: #333;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 2px 0;
+            transition: all 0.2s;
+        }
+        
+        .toc-link:hover, .toc-link.active {
+            background: #2D6A4F;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .toc-link.chapter {
+            font-weight: 600;
+            color: #1E3A5F;
+        }
+        
+        .toc-link.section {
+            padding-left: 16px;
+            font-size: 12px;
+            color: #666;
+        }
+        /* Lightbox */
+        .lightbox {
+            display: none;
+            position: fixed;
+            z-index: 9999;
+            left: 0;
+            top: 0;
+            width: 100%;
+            height: 100%;
+            background-color: rgba(0,0,0,0.9);
+            cursor: zoom-out;
+            justify-content: center;
+            align-items: center;
+        }
+        .lightbox.active {
+            display: flex;
+        }
+        .lightbox img {
+            max-width: 95%;
+            max-height: 95%;
+            object-fit: contain;
+            border-radius: 8px;
+            box-shadow: 0 0 30px rgba(255,255,255,0.1);
+        }
+        .image-container { cursor: zoom-in; }
+    </style>
+</head>
+<body class="min-h-screen">
+    <!-- Progress Bar -->
+    <div class="progress-bar" id="progressBar"></div>
+
+    <!-- Hero Section -->
+    <section class="hero-bg min-h-screen flex items-center justify-center text-white">
+        <div class="hero-content max-w-4xl mx-auto px-6 text-center">
+            <h1 class="text-5xl md:text-7xl font-black mb-6 leading-tight">
+                多模态大语言模型
+                <span class="block text-3xl md:text-4xl mt-4 opacity-90">技术发展与架构解析</span>
+            </h1>
+            <p class="text-xl md:text-2xl mb-8 opacity-90 max-w-3xl mx-auto">
+                深度剖析视觉基础模型、模态适配器、训练策略与前沿进展
+            </p>
+            <div class="flex flex-wrap justify-center gap-4 text-sm">
+                <span class="tech-tag">Vision Transformer</span>
+                <span class="tech-tag">CLIP</span>
+                <span class="tech-tag">Q-Former</span>
+                <span class="tech-tag">Perceiver</span>
+                <span class="tech-tag">LLaVA</span>
+                <span class="tech-tag">InternVL</span>
+            </div>
+        </div>
+    </section>
+
+    <!-- Table of Contents -->
+    <section class="py-16 bg-white">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="section-title">目录概览</h2>
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
+                <div class="card p-6">
+                    <h3 class="text-xl font-bold text-primary mb-3"><a href="#ch1">第一章：MLLM概述</a></h3>
+                    <p class="text-text-secondary">定义、核心价值与三要素架构</p>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-bold text-primary mb-3"><a href="#ch2">第二章：视觉基础模型</a></h3>
+                    <p class="text-text-secondary">ViT、CLIP、SigLIP等技术演进</p>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-bold text-primary mb-3"><a href="#ch3">第三章：模态适配器</a></h3>
+                    <p class="text-text-secondary">线性投影、MLP、Q-Former等对比分析</p>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-bold text-primary mb-3">第四章：大语言模型骨干</h3>
+                    <p class="text-text-secondary">LLaMA、Qwen、InternLM系列发展</p>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-bold text-primary mb-3">第五章：代表模型详解</h3>
+                    <p class="text-text-secondary">LLaVA、Gemini、GPT-4o等技术解析</p>
+                </div>
+                <div class="card p-6">
+                    <h3 class="text-xl font-bold text-primary mb-3">第六章：训练策略</h3>
+                    <p class="text-text-secondary">两阶段、三阶段训练与对齐方法</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 1: Introduction -->
+    <section id="ch1" class="py-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="section-title">第一章：多模态大语言模型概述</h2>
+
+            <div class="grid lg:grid-cols-2 gap-12 mb-16">
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-primary mb-4">MLLM定义与核心价值</h3>
+                    <p class="text-text-secondary mb-4">
+                        多模态大语言模型（Multimodal Large Language Model, MLLM）是指能够同时处理和理解多种模态信息（如文本、图像、音频等）的深度学习模型。
+                    </p>
+                    <ul class="list-disc list-inside text-text-secondary space-y-2">
+                        <li>突破单一模态限制，实现跨模态理解与生成</li>
+                        <li>具备强大的零样本和少样本学习能力</li>
+                        <li>在视觉问答、图像描述、文档理解等任务中表现出色</li>
+                        <li>推动AI从感知智能向认知智能迈进</li>
+                    </ul>
+                </div>
+
+                <div class="image-container">
+                    <img src="survey-assets/mllm/llava.png" loading="lazy" onerror="this.style.display='none'"
+                         alt="LLaVA总览架构图"
+                         class="w-full h-auto">
+                    <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
+                        <p class="text-white text-sm">图：LLaVA总体架构设计</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-white rounded-lg shadow-lg p-8 mb-16">
+                <h3 class="text-2xl font-bold text-primary mb-6">三要素架构图解</h3>
+                <div class="grid md:grid-cols-3 gap-6">
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-blue-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M10.394 2.08a1 1 0 00-.788 0l-7 3a1 1 0 000 1.84L5.25 8.051a.999.999 0 01.356-.257l4-1.714a1 1 0 11.788 1.838L7.667 9.088l1.94.831a1 1 0 00.787 0l7-3a1 1 0 000-1.838l-7-3z"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold text-primary mb-2">视觉编码器</h4>
+                        <p class="text-sm text-text-secondary">处理图像输入，提取视觉特征</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M8 5a1 1 0 100 2h5.586l-1.293 1.293a1 1 0 001.414 1.414l3-3a1 1 0 000-1.414l-3-3a1 1 0 10-1.414 1.414L13.586 5H8zM12 15a1 1 0 100-2H6.414l1.293-1.293a1 1 0 10-1.414-1.414l-3 3a1 1 0 000 1.414l3 3a1 1 0 001.414-1.414L6.414 15H12z"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold text-primary mb-2">模态适配器</h4>
+                        <p class="text-sm text-text-secondary">桥接视觉与语言表示空间</p>
+                    </div>
+                    <div class="text-center">
+                        <div class="w-16 h-16 bg-orange-100 rounded-full flex items-center justify-center mx-auto mb-4">
+                            <svg class="w-8 h-8 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                                <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                            </svg>
+                        </div>
+                        <h4 class="font-semibold text-primary mb-2">大语言模型</h4>
+                        <p class="text-sm text-text-secondary">基于Transformer的语言理解</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="bg-gradient-to-r from-blue-50 to-green-50 rounded-lg p-8">
+                <h3 class="text-2xl font-bold text-primary mb-4">与传统CV模型的区别</h3>
+                <div class="grid md:grid-cols-2 gap-6">
+                    <div>
+                        <h4 class="font-semibold text-secondary mb-3">传统CV模型</h4>
+                        <ul class="space-y-2 text-text-secondary">
+                            <li>• 单模态处理（纯图像）</li>
+                            <li>• 固定任务导向（分类、检测）</li>
+                            <li>• 缺乏语言交互能力</li>
+                            <li>• 预定义输出格式</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <h4 class="font-semibold text-secondary mb-3">MLLM模型</h4>
+                        <ul class="space-y-2 text-text-secondary">
+                            <li>• 多模态融合处理</li>
+                            <li>• 开放域任务适应</li>
+                            <li>• 自然语言交互</li>
+                            <li>• 灵活输出生成</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 2: Visual Foundation Models -->
+    <section id="ch2" class="py-20 bg-gray-50 text-gray-900">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="section-title">第二章：视觉基础模型发展</h2>
+
+            <div class="mb-16">
+                <h3 id="ch2-1" class="text-2xl font-bold text-primary mb-8">2.1 Vision Transformer (ViT)</h3>
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div>
+                        <h4 class="text-xl font-semibold text-secondary mb-4">核心思想</h4>
+                        <p class="text-text-secondary mb-4">
+                            ViT将图像分割为固定大小的patch（通常为16×16），展平后作为序列输入到标准Transformer encoder中。每个patch通过线性投影转换为嵌入向量，并添加位置编码以保留空间信息。
+                        </p>
+
+                        <h4 class="text-xl font-semibold text-secondary mb-4">关键技术</h4>
+                        <ul class="space-y-2 text-text-secondary">
+                            <li>• Patch分块：将224×224图像切分为196个16×16 patches</li>
+                            <li>• 线性投影：每个patch映射到768维嵌入</li>
+                            <li>• 位置编码：可学习的位置嵌入向量</li>
+                            <li>• Transformer encoder：多层自注意力机制</li>
+                        </ul>
+
+                        <div class="mt-6 p-4 bg-white rounded-lg shadow">
+                            <p class="text-sm text-text-secondary italic">
+                                "ViT的成功证明，仅使用注意力机制就能有效处理视觉数据，为后续多模态模型奠定了基础"
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="image-container">
+                        <img src="survey-assets/mllm/vit.png" loading="lazy" onerror="this.style.display='none'"
+                             alt="ViT架构图"
+                             class="w-full h-auto">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
+                            <p class="text-white text-sm">图：Vision Transformer架构流程</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-16">
+                <h3 id="ch2-2" class="text-2xl font-bold text-primary mb-8">2.2 CLIP（对比语言-图像预训练）</h3>
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="order-2 lg:order-1">
+                        <h4 class="text-xl font-semibold text-secondary mb-4">双塔架构设计</h4>
+                        <p class="text-text-secondary mb-4">
+                            CLIP采用双塔结构：Image Encoder（ViT）和Text Encoder（Transformer）。通过大规模图文对数据进行对比学习训练。
+                        </p>
+
+                        <h4 class="text-xl font-semibold text-secondary mb-4">训练细节</h4>
+                        <ul class="space-y-2 text-text-secondary">
+                            <li>• 训练数据：4亿高质量图文对从互联网收集</li>
+                            <li>• Image Encoder：ViT-B/32或ViT-L/14架构</li>
+                            <li>• Text Encoder：12层Transformer架构</li>
+                            <li>• Loss函数：InfoNCE对比损失</li>
+                        </ul>
+                    </div>
+
+                    <div class="order-1 lg:order-2 image-container">
+                        <img src="survey-assets/mllm/clip.png" loading="lazy" onerror="this.style.display='none'"
+                             alt="CLIP架构图"
+                             class="w-full h-auto">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
+                            <p class="text-white text-sm">图：CLIP对比学习架构</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="mt-8 bg-white rounded-lg shadow-lg p-6">
+                    <h4 class="text-lg font-semibold text-primary mb-4">为什么CLIP的表示对MLLM至关重要？</h4>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h5 class="font-medium text-secondary mb-2">语义对齐能力</h5>
+                            <p class="text-sm text-text-secondary">
+                                CLIP在海量数据上学习到的视觉-语言联合表示，使得图像和文本在同一个嵌入空间中，实现了跨模态的语义对齐。
+                            </p>
+                        </div>
+                        <div>
+                            <h5 class="font-medium text-secondary mb-2">zero-shot能力</h5>
+                            <p class="text-sm text-text-secondary">
+                                无需特定任务的微调，CLIP就能在新类别识别和自然语言描述任务上取得良好效果，这种泛化能力正是MLLM所需要的。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-16">
+                <h3 id="ch2-3" class="text-2xl font-bold text-primary mb-8">2.3 SigLIP改进</h3>
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-semibold text-secondary mb-4">核心创新</h4>
+                            <ul class="space-y-3 text-text-secondary">
+                                <li class="flex items-start">
+                                    <span class="text-accent mr-2">✓</span>
+                                    <span>用sigmoid替代softmax，避免batch内负样本归一化</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-accent mr-2">✓</span>
+                                    <span>支持更大batch size，训练更稳定</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-accent mr-2">✓</span>
+                                    <span>Google出品，性能显著优于原始CLIP</span>
+                                </li>
+                                <li class="flex items-start">
+                                    <span class="text-accent mr-2">✓</span>
+                                    <span>在ImageNet分类任务上达到87%+准确率</span>
+                                </li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-secondary mb-4">性能对比</h4>
+                            <div class="space-y-3">
+                                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                                    <span class="text-text-secondary">CLIP ViT-L/14</span>
+                                    <span class="font-semibold">85.8%</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                                    <span class="text-text-secondary">SigLIP ViT-g</span>
+                                    <span class="font-semibold text-secondary">91.1%</span>
+                                </div>
+                                <div class="flex justify-between items-center p-3 bg-gray-50 rounded">
+                                    <span class="text-text-secondary">SigLIP ViT-so400m</span>
+                                    <span class="font-semibold text-secondary">88.9%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 3: Modal Adapters -->
+    <section id="ch3" class="py-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="section-title">第三章：模态适配器深度对比</h2>
+
+            <div class="mb-16">
+                <h3 id="ch3-1" class="text-2xl font-bold text-primary mb-8">3.1 线性投影 (LLaVA)</h3>
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div>
+                        <h4 class="text-xl font-semibold text-secondary mb-4">实现原理</h4>
+                        <p class="text-text-secondary mb-4">
+                            LLaVA采用最简单的线性投影方法，将CLIP的视觉特征直接映射到LLM的输入维度。具体来说，将ViT输出的768维特征通过一个线性层投影到LLM的隐藏维度（如4096维）。
+                        </p>
+
+                        <h4 class="text-xl font-semibold text-secondary mb-4">优势特点</h4>
+                        <ul class="space-y-2 text-text-secondary">
+                            <li>• 参数极少：仅约26K参数，几乎不增加计算量</li>
+                            <li>• 实现简单：易于理解和部署</li>
+                            <li>• 效果显著：利用CLIP预训练的强大表示能力</li>
+                            <li>• 推理高效：线性变换计算开销小</li>
+                        </ul>
+
+                        <div class="mt-6 bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4">
+                            <p class="text-sm text-text-secondary">
+                                <strong>关键洞察：</strong>CLIP在4亿图文对上学到的语义表示已经足够丰富，简单的线性投影就能有效桥接视觉和语言空间。
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="image-container">
+                        <img src="survey-assets/mllm/llava.png" loading="lazy" onerror="this.style.display='none'"
+                             alt="LLaVA架构图"
+                             class="w-full h-auto">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
+                            <p class="text-white text-sm">图：LLaVA线性投影架构</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-16">
+                <h3 id="ch3-2" class="text-2xl font-bold text-primary mb-8">3.2 多层感知机MLP (LLaVA-1.5/1.6)</h3>
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-semibold text-secondary mb-4">架构升级</h4>
+                            <p class="text-text-secondary mb-4">
+                                LLaVA-1.5引入两层MLP结构：768 → 4096 → 4096 → 4096，相比单层线性投影增加了非线性变换能力。
+                            </p>
+
+                            <h4 class="text-xl font-semibold text-secondary mb-4">激活函数</h4>
+                            <ul class="space-y-2 text-text-secondary">
+                                <li>• 第一层：GELU激活函数</li>
+                                <li>• 第二层：线性输出</li>
+                                <li>• 参数量：约100K参数</li>
+                                <li>• 计算复杂度：略有增加但可控</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-secondary mb-4">实验结果</h4>
+                            <div class="space-y-3">
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                    <span class="text-text-secondary">基线线性投影</span>
+                                    <span class="font-semibold">45.2%</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                    <span class="text-text-secondary">MLP投影</span>
+                                    <span class="font-semibold text-secondary">48.7%</span>
+                                </div>
+                                <div class="flex items-center justify-between p-3 bg-gray-50 rounded">
+                                    <span class="text-text-secondary">相对提升</span>
+                                    <span class="font-semibold text-accent">+7.7%</span>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-16">
+                <h3 id="ch3-3" class="text-2xl font-bold text-primary mb-8">3.3 Q-Former (BLIP-2)</h3>
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="order-2 lg:order-1">
+                        <h4 class="text-xl font-semibold text-secondary mb-4">核心技术</h4>
+                        <p class="text-text-secondary mb-4">
+                            Q-Former是可学习的查询token（learnable queries）模块，通过交叉注意力机制从视觉特征中提取信息。包含两个关键组件：
+                        </p>
+
+                        <ul class="space-y-2 text-text-secondary mb-6">
+                            <li>• 可学习查询：固定数量的query tokens</li>
+                            <li>• 交叉注意力：连接视觉token和query tokens</li>
+                            <li>• 自注意力：处理query tokens间关系</li>
+                            <li>• 输出：固定长度的序列表示</li>
+                        </ul>
+
+                        <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4">
+                            <p class="text-sm text-text-secondary">
+                                <strong>参数效率：</strong>约188M参数，但通过预训练显著提升效果
+                            </p>
+                        </div>
+                    </div>
+
+                    <div class="order-1 lg:order-2 image-container">
+                        <img src="survey-assets/mllm/blip2.png" loading="lazy" onerror="this.style.display='none'"
+                             alt="BLIP-2架构图"
+                             class="w-full h-auto">
+                        <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
+                            <p class="text-white text-sm">图：BLIP-2 Q-Former架构</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-16">
+                <h3 id="ch3-5" class="text-2xl font-bold text-primary mb-8">3.5 动态切片与像素重排 (InternVL)</h3>
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-semibold text-secondary mb-4">InternVL系列核心创新</h4>
+                            <p class="text-text-secondary mb-4">
+                                InternVL采用动态切片策略，将高分辨率图像切分为多个tile（通常448x448），每个tile独立通过ViT编码，同时提供缩略图用于全局上下文理解。所有tile特征拼接后送入适配器。
+                            </p>
+
+                            <h4 class="text-xl font-semibold text-secondary mb-4">技术优势</h4>
+                            <ul class="space-y-2 text-text-secondary">
+                                <li>• 原生支持任意分辨率输入</li>
+                                <li>• 保持局部细节完整性</li>
+                                <li>• 内存效率高，适合大图像</li>
+                                <li>• 灵活的tile大小配置</li>
+                            </ul>
+
+                            <h4 class="text-xl font-semibold text-secondary mb-4">代表模型</h4>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag">InternVL</span>
+                                <span class="tech-tag">InternVL2</span>
+                                <span class="tech-tag">InternVL2.5</span>
+                                <span class="tech-tag">InternVL3</span>
+                            </div>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-secondary mb-4">技术劣势</h4>
+                            <ul class="space-y-2 text-text-secondary mb-6">
+                                <li>• tile边界效应可能导致信息不连续</li>
+                                <li>• 拼接过程可能引入伪影</li>
+                                <li>• tile数量影响计算量和序列长度</li>
+                                <li>• 实现复杂度相对较高</li>
+                            </ul>
+                            
+                            <div class="image-container">
+                                <img src="survey-assets/mllm/internvl.jpg" loading="lazy" onerror="this.style.display='none'"
+                                     alt="动态切片示意图"
+                                     class="w-full h-auto">
+                                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
+                                    <p class="text-white text-sm">图：动态切片处理高分辨率图像</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-16">
+                <h3 id="ch3-6" class="text-2xl font-bold text-primary mb-8">3.6 像素重排+MRoPE (Qwen2-VL)</h3>
+                <div class="grid lg:grid-cols-2 gap-12">
+                    <div class="order-2 lg:order-1">
+                        <h4 class="text-xl font-semibold text-secondary mb-4">Qwen2-VL核心技术</h4>
+                        <p class="text-text-secondary mb-4">
+                            Qwen2-VL通过2x2 pixel shuffle操作将相邻像素合并，使token数量降低4倍，同时引入MRoPE（多维度旋转位置编码）同时编码时间、高度、宽度三个维度。
+                        </p>
+
+                        <h4 class="text-xl font-semibold text-secondary mb-4">关键技术特点</h4>
+                        <ul class="space-y-2 text-text-secondary mb-6">
+                            <li>• 2x2 Pixel Shuffle：空间维度下采样</li>
+                            <li>• MRoPE：三维位置编码</li>
+                            <li>• 原生支持任意宽高比</li>
+                            <li>• 视频理解时时间维度独立编码</li>
+                        </ul>
+
+                        <div class="flex flex-wrap gap-2">
+                            <span class="tech-tag">Qwen2-VL</span>
+                            <span class="tech-tag">Qwen2.5-VL</span>
+                            <span class="tech-tag">Qwen3-VL</span>
+                        </div>
+                    </div>
+                    
+                    <div class="order-1 lg:order-2">
+                        <h4 class="text-xl font-semibold text-secondary mb-4">性能优势</h4>
+                        <ul class="space-y-2 text-text-secondary mb-6">
+                            <li>• 无需图像预处理和切片</li>
+                            <li>• 直接处理任意分辨率</li>
+                            <li>• 计算效率显著提升</li>
+                            <li>• 保持较好的空间连续性</li>
+                        </ul>
+
+                        <h4 class="text-xl font-semibold text-secondary mb-4">潜在问题</h4>
+                        <ul class="space-y-2 text-text-secondary">
+                            <li>• Pixel Shuffle可能损失部分空间细节</li>
+                            <li>• 需要特殊的RoPE实现</li>
+                            <li>• 对极端宽高比需要额外处理</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-16">
+                <h3 id="ch3-7" class="text-2xl font-bold text-primary mb-8">3.7 跨注意力深度融合 (Cross-Attention Fusion)</h3>
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-semibold text-secondary mb-4">深层融合机制</h4>
+                            <p class="text-text-secondary mb-4">
+                                不同于传统adapter只在输入层融合视觉信息，跨注意力机制在LLM的每一层都注入视觉信息，实现更深层次的模态交互。
+                            </p>
+
+                            <h4 class="text-xl font-semibold text-secondary mb-4">关键技术原理</h4>
+                            <ul class="space-y-2 text-text-secondary mb-6">
+                                <li>• 门控交叉注意力：Flamingo早期代表</li>
+                                <li>• 视觉专家模块：CogVLM特有设计</li>
+                                <li>• 多层视觉token注入：LLaVA-NeXT改进</li>
+                                <li>• 动态门控机制：调节视觉信息流</li>
+                            </ul>
+
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag">Flamingo</span>
+                                <span class="tech-tag">CogVLM</span>
+                                <span class="tech-tag">LLaVA-NeXT</span>
+                            </div>
+                        </div>
+                        
+                        <div>
+                            <h4 class="text-xl font-semibold text-secondary mb-4">优势分析</h4>
+                            <ul class="space-y-2 text-text-secondary mb-6">
+                                <li>• 视觉信息渗透到深层网络</li>
+                                <li>• 更充分的模态交互</li>
+                                <li>• 更好的长程依赖建模</li>
+                                <li>• 任务适应性更强</li>
+                            </ul>
+
+                            <h4 class="text-xl font-semibold text-secondary mb-4">挑战与代价</h4>
+                            <ul class="space-y-2 text-text-secondary">
+                                <li>• 参数量和计算量显著增加</li>
+                                <li>• 训练稳定性挑战</li>
+                                <li>• 推理延迟上升</li>
+                                <li>• 需要更多调优经验</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Updated Adapter Comparison Table -->
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-primary mb-8 text-center">模态适配器技术对比总表</h3>
+                <div class="overflow-x-auto">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>适配器类型</th>
+                                <th>参数量</th>
+                                <th>计算复杂度</th>
+                                <th>优势</th>
+                                <th>劣势</th>
+                                <th>代表模型</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>线性投影</strong></td>
+                                <td>~26K</td>
+                                <td>极低</td>
+                                <td>简单高效，效果好</td>
+                                <td>表达能力有限</td>
+                                <td>LLaVA</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MLP投影</strong></td>
+                                <td>~100K</td>
+                                <td>低</td>
+                                <td>增加非线性能力</td>
+                                <td>参数量和计算略增</td>
+                                <td>LLaVA-1.5</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Q-Former</strong></td>
+                                <td>~188M</td>
+                                <td>中</td>
+                                <td>参数高效，预训练效果好</td>
+                                <td>参数量较大</td>
+                                <td>BLIP-2</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Perceiver</strong></td>
+                                <td>可变</td>
+                                <td>中高</td>
+                                <td>支持长序列，灵活性强</td>
+                                <td>训练复杂度高</td>
+                                <td>Flamingo</td>
+                            </tr>
+                            <tr>
+                                <td><strong>动态切片</strong></td>
+                                <td>~100M</td>
+                                <td>高</td>
+                                <td>支持任意分辨率，细节保留好</td>
+                                <td>边缘效应，实现复杂</td>
+                                <td>InternVL</td>
+                            </tr>
+                            <tr>
+                                <td><strong>像素重排</strong></td>
+                                <td>~200M</td>
+                                <td>中高</td>
+                                <td>原生高分辨率支持，效率高</td>
+                                <td>可能损失空间细节</td>
+                                <td>Qwen2-VL</td>
+                            </tr>
+                            <tr>
+                                <td><strong>跨注意力</strong></td>
+                                <td>~1B+</td>
+                                <td>很高</td>
+                                <td>深层融合，交互充分</td>
+                                <td>计算量大，训练难</td>
+                                <td>CogVLM</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 3.X: Core Problems & Innovations -->
+    <section id="ch3b" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="section-title">第三章（续）：核心技术深度讨论</h2>
+
+            <div class="space-y-12">
+                <!-- Problem 1 -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-primary mb-6">问题1：视觉-语言对齐的本质是什么？</h3>
+                    
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold text-secondary mb-3">CLIP的对比学习如何建立跨模态语义空间</h4>
+                        <p class="text-text-secondary mb-4">
+                            CLIP采用双塔架构，通过对比学习在海量图文对数据上训练，将图像和文本映射到同一个高维嵌入空间中。这种对齐不是简单的特征匹配，而是学习一种共享的语义表示空间。
+                        </p>
+                        
+                        <h4 class="text-xl font-semibold text-secondary mb-3">对齐损失函数的设计</h4>
+                        <p class="text-text-secondary mb-4">
+                            使用InfoNCE（Noise Contrastive Estimation）损失函数：
+                        </p>
+                        <code class="block bg-gray-100 p-4 rounded-lg text-sm text-text-secondary mb-4">
+                            L_i = -log[exp(sim(v_i,t_i)/τ) / Σ_j exp(sim(v_i,t_j)/τ)]
+                        </code>
+                        <p class="text-text-secondary mb-4">
+                            其中sim(v_i,t_i)是图像v_i和文本t_i的余弦相似度，τ是温度参数。正样本对为(image, matching_text)，负样本为batch内其他图像-文本对。
+                        </p>
+                        
+                        <h4 class="text-xl font-semibold text-secondary mb-3">为什么这种对齐能迁移到下游任务？</h4>
+                        <p class="text-text-secondary">
+                            这种对比学习使得模型学到了一种通用的跨模态语义理解能力。由于CLIP在大规模数据上学到的表示具有强泛化性，因此可以直接用于各种多模态下游任务而无需大量任务特定数据。zero-shot能力的理论基础在于这种共享语义空间的建立。
+                        </p>
+                    </div>
+
+                    <div class="grid md:grid-cols-3 gap-4 mt-8">
+                        <div class="bg-blue-50 rounded-lg p-4">
+                            <h5 class="font-semibold text-blue-700 mb-2">对比式对齐</h5>
+                            <p class="text-sm text-text-secondary">CLIP：基于相似度对比</p>
+                        </div>
+                        <div class="bg-green-50 rounded-lg p-4">
+                            <h5 class="font-semibold text-green-700 mb-2">生成式对齐</h5>
+                            <p class="text-sm text-text-secondary">BLIP：caption生成</p>
+                        </div>
+                        <div class="bg-purple-50 rounded-lg p-4">
+                            <h5 class="font-semibold text-purple-700 mb-2">混合式对齐</h5>
+                            <p class="text-sm text-text-secondary">CoCa：结合两者优势</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem 2 -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-primary mb-6">问题2：为什么简单的线性投影就能让LLM理解图像？</h3>
+                    
+                    <div class="mb-6">
+                        <p class="text-text-secondary mb-4">
+                            这背后有几个关键原因。首先，CLIP的视觉编码器已经在4亿高质量图文对上学到了极其丰富的语义表示。这些表示包含了从低级视觉特征到高级语义概念的完整层次结构。
+                        </p>
+                        
+                        <h4 class="text-xl font-semibold text-secondary mb-3">技术原理分析</h4>
+                        <ul class="space-y-2 text-text-secondary mb-4">
+                            <li>• <strong>CLIP的视觉表示已经包含丰富的语义信息</strong>：ViT-L/14等架构能够提取出高度语义化的特征向量</li>
+                            <li>• <strong>线性投影只做维度匹配，不改变语义</strong>：从768维映射到4096维，只是适配LLM的输入格式</li>
+                            <li>• <strong>LLaVA实验证明简单方法的有效性</strong>：在充足数据下，线性投影效果显著</li>
+                        </ul>
+                        
+                        <p class="text-text-secondary mb-4">
+                            类比word embedding到LLM也是线性映射就足够，说明好的预训练表示本身就具有强大的表达能力。但在few-shot和复杂任务场景下，更复杂的adapter确实会有优势。
+                        </p>
+                        
+                        <div class="bg-gradient-to-r from-blue-50 to-purple-50 rounded-lg p-4 mt-6">
+                            <h5 class="font-semibold text-secondary mb-2">关键洞察</h5>
+                            <p class="text-sm text-text-secondary">
+                                现代AI系统中，基础模型的质量往往比复杂架构更重要。CLIP学到的通用视觉-语言对齐知识已经足够丰富，简单的线性变换就能有效桥接不同模态。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem 3 -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-primary mb-6">问题3：如何解决高分辨率图片处理问题？</h3>
+                    
+                    <div class="mb-6">
+                        <p class="text-text-secondary mb-4">
+                            传统固定分辨率方法的缺陷：小图丢失细节，大图计算爆炸。需要动态处理策略来解决这个问题。
+                        </p>
+                        
+                        <h4 class="text-xl font-semibold text-secondary mb-3">主流解决方案对比</h4>
+                        
+                        <div class="space-y-4">
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h5 class="font-semibold text-blue-700">动态切片 (InternVL)</h5>
+                                <p class="text-sm text-text-secondary mb-2">切成tile分别编码+缩略图全局理解</p>
+                                <ul class="text-xs text-text-secondary space-y-1">
+                                    <li>✓ 内存效率高，支持任意分辨率</li>
+                                    <li>✓ 保持局部细节完整性</li>
+                                    <li>✗ 边缘效应，拼接伪影</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="border-l-4 border-green-500 pl-4">
+                                <h5 class="font-semibold text-green-700">任意分辨率 (Qwen2-VL)</h5>
+                                <p class="text-sm text-text-secondary mb-2">2D-RoPE + Pixel Shuffle原生支持</p>
+                                <ul class="text-xs text-text-secondary space-y-1">
+                                    <li>✓ 原生支持宽高比变化</li>
+                                    <li>✓ 计算效率更高</li>
+                                    <li>✗ 需要特殊位置编码设计</li>
+                                </ul>
+                            </div>
+                            
+                            <div class="border-l-4 border-purple-500 pl-4">
+                                <h5 class="font-semibold text-purple-700">分级采样 (S2)</h5>
+                                <p class="text-sm text-text-secondary mb-2">低分辨率全局+高分辨率局部</p>
+                                <ul class="text-xs text-text-secondary space-y-1">
+                                    <li>✓ 自适应粒度控制</li>
+                                    <li>✓ 保留重要区域细节</li>
+                                    <li>✗ 实现复杂度较高</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <p class="text-text-secondary mt-4">
+                            这些方案大多借鉴了Stable Diffusion中的VAE分块编码思路，将传统CV方法与现代Transformer架构相结合。
+                        </p>
+                    </div>
+                </div>
+
+                <!-- Problem 4 -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-primary mb-6">问题4：多模态幻觉（Hallucination）问题</h3>
+                    
+                    <div class="mb-6">
+                        <h4 class="text-xl font-semibold text-secondary mb-3">定义与分类</h4>
+                        <p class="text-text-secondary mb-4">
+                            幻觉指的是MLLM生成的内容与输入视觉信息不符的现象，可分为三类：
+                        </p>
+                        <ul class="space-y-2 text-text-secondary mb-4">
+                            <li><strong>物体幻觉</strong>：描述不存在或不正确的物体</li>
+                            <li><strong>属性幻觉</strong>：错误的颜色、形状等属性描述</li>
+                            <li><strong>关系幻觉</strong>：错误的物体间关系描述</li>
+                        </ul>
+                        
+                        <h4 class="text-xl font-semibold text-secondary mb-3">根本原因</h4>
+                        <p class="text-text-secondary mb-4">
+                            主要是LLM先验知识过强，忽视或误解视觉证据。当视觉信息与语言先验冲突时，模型倾向于相信自己的"知识"而不是看到的图像。
+                        </p>
+                        
+                        <h4 class="text-xl font-semibold text-secondary mb-3">缓解方法</h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-red-50 rounded-lg p-4">
+                                <h5 class="font-semibold text-red-700 mb-2">数据层面</h5>
+                                <ul class="text-sm text-text-secondary space-y-1">
+                                    <li>• 负样本训练（POPE基准）</li>
+                                    <li>• 对比训练：正负样本对学习</li>
+                                    <li>• 高质量图文对齐数据</li>
+                                </ul>
+                            </div>
+                            <div class="bg-blue-50 rounded-lg p-4">
+                                <h5 class="font-semibold text-blue-700 mb-2">算法层面</h5>
+                                <ul class="text-sm text-text-secondary space-y-1">
+                                    <li>• DPO/RLHF：人类反馈减少幻觉</li>
+                                    <li>• 视觉grounding：强制关注图中区域</li>
+                                    <li>• 推理时解码策略：对比解码、DoLa</li>
+                                </ul>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem 5 -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-primary mb-6">问题5：多模态Agent——从理解到行动</h3>
+                    
+                    <div class="mb-6">
+                        <p class="text-text-secondary mb-4">
+                            MLLM传统上只做理解任务，但Agent需要能够采取行动。这是从被动理解到主动交互的关键跨越。
+                        </p>
+                        
+                        <h4 class="text-xl font-semibold text-secondary mb-3">代表工作</h4>
+                        <div class="space-y-3">
+                            <div class="flex items-start">
+                                <span class="text-accent mr-3">📱</span>
+                                <div>
+                                    <h5 class="font-semibold text-secondary">GUI Agent</h5>
+                                    <p class="text-sm text-text-secondary">屏幕截图→理解UI→生成操作（点击/输入）</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-accent mr-3">🌐</span>
+                                <div>
+                                    <h5 class="font-semibold text-secondary">Web Agent</h5>
+                                    <p class="text-sm text-text-secondary">网页截图+DOM→规划→执行浏览器操作</p>
+                                </div>
+                            </div>
+                            <div class="flex items-start">
+                                <span class="text-accent mr-3">🤖</span>
+                                <div>
+                                    <h5 class="font-semibold text-secondary">Claude Computer Use</h5>
+                                    <p class="text-sm text-text-secondary">端到端桌面操作能力标杆</p>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <h4 class="text-xl font-semibold text-secondary mb-3">核心挑战</h4>
+                        <ul class="space-y-2 text-text-secondary">
+                            <li>• <strong>精确定位</strong>：准确识别UI元素坐标</li>
+                            <li>• <strong>长程规划</strong>：多步骤任务的序列决策</li>
+                            <li>• <strong>错误恢复</strong>：应对意外情况的容错机制</li>
+                            <li>• <strong>安全约束</strong>：防止危险操作的防护机制</li>
+                        </ul>
+                        
+                        <div class="bg-gradient-to-r from-green-50 to-blue-50 rounded-lg p-4 mt-6">
+                            <h5 class="font-semibold text-secondary mb-2">未来趋势</h5>
+                            <p class="text-sm text-text-secondary">
+                                MLLM作为大脑+工具作为手脚的分层架构，将成为具身智能的核心组件。
+                            </p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Problem 6 -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-primary mb-6">问题6：统一理解与生成</h3>
+                    
+                    <div class="mb-6">
+                        <p class="text-text-secondary mb-4">
+                            传统架构分离理解和生成：理解用encoder+LLM，生成用diffusion model。新趋势是追求一个模型同时做理解和生成。
+                        </p>
+                        
+                        <h4 class="text-xl font-semibold text-secondary mb-3">代表工作</h4>
+                        <div class="grid md:grid-cols-2 gap-4">
+                            <div class="bg-purple-50 rounded-lg p-4">
+                                <h5 class="font-semibold text-purple-700 mb-2">Janus (DeepSeek)</h5>
+                                <p class="text-sm text-text-secondary">统一架构同时处理理解和生成任务</p>
+                            </div>
+                            <div class="bg-orange-50 rounded-lg p-4">
+                                <h5 class="font-semibold text-orange-700 mb-2">Show-o</h5>
+                                <p class="text-sm text-text-secondary">单模型零样本图像生成</p>
+                            </div>
+                            <div class="bg-red-50 rounded-lg p-4">
+                                <h5 class="font-semibold text-red-700 mb-2">Emu3</h5>
+                                <p class="text-sm text-text-secondary">Meta的统一多模态生成模型</p>
+                            </div>
+                            <div class="bg-teal-50 rounded-lg p-4">
+                                <h5 class="font-semibold text-teal-700 mb-2">InternVL3</h5>
+                                <p class="text-sm text-text-secondary">理解+生成统一框架</p>
+                            </div>
+                        </div>
+                        
+                        <h4 class="text-xl font-semibold text-secondary mb-3">技术路线对比</h4>
+                        <div class="space-y-3">
+                            <div class="border-l-4 border-blue-500 pl-4">
+                                <h5 class="font-semibold text-blue-700">离散tokenizer</h5>
+                                <p class="text-sm text-text-secondary">将图像分解为离散token，与文本统一处理</p>
+                                <ul class="text-xs text-text-secondary mt-1">
+                                    <li>✓ 与LLM天然兼容</li>
+                                    <li>✗ tokenizer训练复杂</li>
+                                </ul>
+                            </div>
+                            <div class="border-l-4 border-green-500 pl-4">
+                                <h5 class="font-semibold text-green-700">连续embedding</h5>
+                                <p class="text-sm text-text-secondary">直接处理像素级连续表示</p>
+                                <ul class="text-xs text-text-secondary mt-1">
+                                    <li>✓ 保留更多原始信息</li>
+                                    <li>✗ 计算开销大</li>
+                                </ul>
+                            </div>
+                        </div>
+                        
+                        <h4 class="text-xl font-semibold text-secondary mb-3">主要挑战</h4>
+                        <ul class="space-y-2 text-text-secondary">
+                            <li>• <strong>质量平衡</strong>：理解和生成能力的均衡优化</li>
+                            <li>• <strong>效率权衡</strong>：统一架构的计算开销控制</li>
+                            <li>• <strong>评估困难</strong>：缺乏统一的benchmark体系</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 4: LLMs Backbone -->
+    <section id="ch4" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="section-title">第四章：大语言模型骨干发展时间线</h2>
+
+            <!-- Unified Timeline Cards -->
+            <div class="space-y-6">
+                <!-- Era 1: Foundation Period (2023) -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-primary mb-6">🏗️ 奠基期 (2023年)</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">LLaMA-1</h4>
+                            <p class="text-sm text-text-secondary mb-2">2023.02 | Meta开源基础模型</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 7B/13B/33B/65B四种规模</li>
+                                <li>• 万亿级别token训练</li>
+                                <li>• 开源社区爆发起点</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Vicuna</h4>
+                            <p class="text-sm text-text-secondary mb-2">2023.03 | 基于LLaMA指令微调</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 使用ShareGPT数据</li>
+                                <li>• 13B达ChatGPT 90%水平</li>
+                                <li>• 开创开源指令微调路线</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">LLaMA-2</h4>
+                            <p class="text-sm text-text-secondary mb-2">2023.07 | 正式商用开源</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 7B/13B/70B版本</li>
+                                <li>• 引入RLHF安全对齐</li>
+                                <li>• MLLM主流LLM骨干</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">ChatGLM</h4>
+                            <p class="text-sm text-text-secondary mb-2">2023.06 | 清华GLM架构</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 中英双语支持</li>
+                                <li>• 6B参数规模</li>
+                                <li>• 开源学术社区首选</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Baichuan-13B</h4>
+                            <p class="text-sm text-text-secondary mb-2">2023.05 | 百川智能开源</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 中英双语能力</li>
+                                <li>• 支持4K上下文</li>
+                                <li>• 商业友好授权</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Qwen-7B</h4>
+                            <p class="text-sm text-text-secondary mb-2">2023.08 | 阿里通义千问</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 中文能力突出</li>
+                                <li>• 8K上下文窗口</li>
+                                <li>• Qwen-VL奠基之作</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Era 2: Development Period (2024) -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-primary mb-6">🚀 发展期 (2024年)</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-accent">LLaMA-3</h4>
+                            <p class="text-sm text-text-secondary mb-2">2024.04 | Meta新一代开源</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 8B/70B/405B三版本</li>
+                                <li>• 15T tokens训练数据</li>
+                                <li>• GQA + 128K词表</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-accent">Qwen/Qwen2</h4>
+                            <p class="text-sm text-text-secondary mb-2">2024.07 | 阿里升级版本</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 0.5B-70B全尺寸覆盖</li>
+                                <li>• 中文SOTA水平</li>
+                                <li>• 128K超长上下文</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-accent">InternLM2</h4>
+                            <p class="text-sm text-text-secondary mb-2">2024.06 | 上海AI Lab</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 20B参数规模</li>
+                                <li>• 中文理解优势</li>
+                                <li>• InternLM2-VL基础</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-accent">DeepSeek-V2/V3</h4>
+                            <p class="text-sm text-text-secondary mb-2">2024.05/12 | DeepSeek MoE架构</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• V2: 236B/200B参数</li>
+                                <li>• V3: 671B/37B激活</li>
+                                <li>• MLA + DeepSeekMoE</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-accent">Claude-3</h4>
+                            <p class="text-sm text-text-secondary mb-2">2024.03 | Anthropic旗舰</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• Haiku/Sonnet/Opus三档</li>
+                                <li>• 200K超长上下文</li>
+                                <li>• 推理能力业界领先</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-accent">Mistral/Mixtral</h4>
+                            <p class="text-sm text-text-secondary mb-2">2024.04/06 | 欧洲AI先锋</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• Mixtral 8x7B MoE</li>
+                                <li>• SWA + GQA技术</li>
+                                <li>• 极致推理效率</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-accent">Gemma-2</h4>
+                            <p class="text-sm text-text-secondary mb-2">2024.06 | Google轻量级</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 2B/9B/27B三种规模</li>
+                                <li>• 知识蒸馏训练</li>
+                                <li>• 端侧部署优化</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Era 3: Latest Frontier (2025-2026) -->
+                <div class="card p-8">
+                    <h3 class="text-2xl font-bold text-primary mb-6">🔥 最新前沿 (2025-2026年)</h3>
+                    <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-4">
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">LLaMA-4</h4>
+                            <p class="text-sm text-text-secondary mb-2">2025.04 | Meta原生多模态</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• Scout(109B)/Maverick(400B)</li>
+                                <li>• 10M+ token上下文</li>
+                                <li>• 开源社区最强MLLM</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Qwen3</h4>
+                            <p class="text-sm text-text-secondary mb-2">2025.06 | 阿里第三代旗舰</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 0.6B-235B全尺寸</li>
+                                <li>• 原生思考模式</li>
+                                <li>• 中文多模态SOTA</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">DeepSeek-R1</h4>
+                            <p class="text-sm text-text-secondary mb-2">2025.01 | 纯RL推理模型</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 671B MoE架构</li>
+                                <li>• 自发CoT能力</li>
+                                <li>• 匹敌OpenAI o1</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Claude Opus 4.5</h4>
+                            <p class="text-sm text-text-secondary mb-2">2025.08 | Anthropic最新旗舰</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• Computer Use 2.0</li>
+                                <li>• Extended Thinking</li>
+                                <li>• 安全对齐标杆</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">GPT-5/o4</h4>
+                            <p class="text-sm text-text-secondary mb-2">2025.12 | OpenAI下一代</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 原生推理+多模态</li>
+                                <li>• 深度推理模式</li>
+                                <li>• 全模态统一处理</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Gemini 2.5</h4>
+                            <p class="text-sm text-text-secondary mb-2">2025.06 | Google旗舰升级</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 1M token上下文</li>
+                                <li>• 原生思考模式</li>
+                                <li>• 编程/数学/科学SOTA</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">MiMo</h4>
+                            <p class="text-sm text-text-secondary mb-2">2025.03 | 小米推理模型</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• MiMo-V2-Pro版本</li>
+                                <li>• RL驱动思维链</li>
+                                <li>• 端侧部署优化</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Phi-4</h4>
+                            <p class="text-sm text-text-secondary mb-2">2025.02 | 微软轻量多模态</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• 5.6B参数规模</li>
+                                <li>• LoRA适配器方案</li>
+                                <li>• 小模型领域SOTA</li>
+                            </ul>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Kimi-VL/K2</h4>
+                            <p class="text-sm text-text-secondary mb-2">2025.04 | 月之暗面新锐</p>
+                            <ul class="text-xs text-text-secondary space-y-1">
+                                <li>• MoE架构设计</li>
+                                <li>• 长上下文处理</li>
+                                <li>• 中文多模态突出</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Comparison Summary Table -->
+            <div class="mt-16 bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-primary mb-8 text-center">骨干模型对比总结</h3>
+                <div class="overflow-x-auto">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>模型名称</th>
+                                <th>发布时间</th>
+                                <th>参数量</th>
+                                <th>架构特点</th>
+                                <th>代表能力</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>LLaMA-1</strong></td>
+                                <td>2023.02</td>
+                                <td>7B-65B</td>
+                                <td>标准Transformer</td>
+                                <td>开源社区奠基之作</td>
+                            </tr>
+                            <tr>
+                                <td><strong>LLaMA-2</strong></td>
+                                <td>2023.07</td>
+                                <td>7B-70B</td>
+                                <td>RLHF安全对齐</td>
+                                <td>MLLM主流选择</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mistral-7B</strong></td>
+                                <td>2023.09</td>
+                                <td>7B</td>
+                                <td>SWA + GQA</td>
+                                <td>极致推理效率</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Mixtral 8x7B</strong></td>
+                                <td>2023.12</td>
+                                <td>46.7B/12.9B</td>
+                                <td>MoE架构</td>
+                                <td>效率性能平衡</td>
+                            </tr>
+                            <tr>
+                                <td><strong>LLaMA-3</strong></td>
+                                <td>2024.04</td>
+                                <td>8B-405B</td>
+                                <td>GQA + 128K词表</td>
+                                <td>多语言增强</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Qwen2.5</strong></td>
+                                <td>2024.09</td>
+                                <td>0.5B-72B</td>
+                                <td>中文优化架构</td>
+                                <td>中文SOTA水平</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DeepSeek-V3</strong></td>
+                                <td>2024.12</td>
+                                <td>671B/37B</td>
+                                <td>MLA + DeepSeekMoE</td>
+                                <td>低成本高性能</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Claude-3.5 Sonnet</strong></td>
+                                <td>2024.06</td>
+                                <td>-</td>
+                                <td>强化学习优化</td>
+                                <td>综合能力领先</td>
+                            </tr>
+                            <tr>
+                                <td><strong>LLaMA-4</strong></td>
+                                <td>2025.04</td>
+                                <td>109B-400B</td>
+                                <td>原生多模态</td>
+                                <td>开源最强MLLM</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Qwen3</strong></td>
+                                <td>2025.06</td>
+                                <td>0.6B-235B</td>
+                                <td>原生思考模式</td>
+                                <td>中文多模态SOTA</td>
+                            </tr>
+                            <tr>
+                                <td><strong>DeepSeek-R1</strong></td>
+                                <td>2025.01</td>
+                                <td>671B/37B</td>
+                                <td>纯RL训练</td>
+                                <td>推理能力突破</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Claude Opus 4.5</strong></td>
+                                <td>2025.08</td>
+                                <td>-</td>
+                                <td>Computer Use 2.0</td>
+                                <td>Agent能力标杆</td>
+                            </tr>
+                            <tr>
+                                <td><strong>GPT-5/o4</strong></td>
+                                <td>2025.12</td>
+                                <td>-</td>
+                                <td>原生多模态+推理</td>
+                                <td>全模态统一处理</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Gemini 2.5</strong></td>
+                                <td>2025.06</td>
+                                <td>-</td>
+                                <td>1M token上下文</td>
+                                <td>超长篇幅理解</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <div class="space-y-12">
+                <!-- 2023：开源LLM奠基 -->
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-2xl font-bold text-primary mb-6">2023：开源LLM奠基</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">LLaMA-1 (2023.02)</h4>
+                            <p class="text-sm text-text-secondary">Meta开源基础模型，7B/13B/33B/65B，证明小模型也能匹敌GPT-3。在万亿token上训练，开源社区爆发的起点。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Vicuna (2023.03)</h4>
+                            <p class="text-sm text-text-secondary">基于LLaMA + ShareGPT微调，13B达到ChatGPT 90%水平。开创了指令微调开源路线。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">LLaMA-2 (2023.07)</h4>
+                            <p class="text-sm text-text-secondary">7B/13B/70B，正式商用开源。引入RLHF安全对齐，对话能力大幅提升，成为后续MLLM的主流LLM骨干。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Qwen-7B (2023.08)</h4>
+                            <p class="text-sm text-text-secondary">阿里通义千问开源版，中文能力突出。支持8K上下文，中英文均衡，为后续Qwen-VL系列奠基。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Mistral-7B (2023.09)</h4>
+                            <p class="text-sm text-text-secondary">法国Mistral AI出品，7B超越LLaMA-2-13B。引入滑动窗口注意力(SWA)和GQA，推理效率极高。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Mixtral 8x7B (2023.12)</h4>
+                            <p class="text-sm text-text-secondary">MoE架构先驱，8个7B专家网络，每次激活2个。总参46.7B但只用12.9B，效率与性能兼得。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2024：百花齐放 -->
+                <div class="bg-gradient-to-r from-blue-50 to-indigo-50 rounded-lg p-8 border-l-4 border-primary">
+                    <h3 class="text-2xl font-bold text-primary mb-6">2024：百花齐放</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Claude-3 (2024.03)</h4>
+                            <p class="text-sm text-text-secondary">Anthropic出品，Haiku/Sonnet/Opus三档。200K上下文，强安全对齐。Sonnet性价比最优。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">LLaMA-3 (2024.04)</h4>
+                            <p class="text-sm text-text-secondary">8B/70B/405B，15T tokens训练。GQA+128K词表。开源社区最强基座之一。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Gemma-2 (2024.06)</h4>
+                            <p class="text-sm text-text-secondary">Google轻量开源，2B/9B/27B。知识蒸馏，小模型性能强。适合端侧部署。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Claude 3.5 Sonnet (2024.06)</h4>
+                            <p class="text-sm text-text-secondary">综合性能超Opus，引入Computer Use能力（操控桌面）。性价比标杆。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">GPT-4o (2024.05)</h4>
+                            <p class="text-sm text-text-secondary">OpenAI原生多模态旗舰。文本/图像/音频/视频统一处理，实时语音对话。推理速度是GPT-4 Turbo的2倍。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Qwen2系列 (2024.06)</h4>
+                            <p class="text-sm text-text-secondary">0.5B-72B全尺寸。GQA+128K上下文。中文开源SOTA，多语言支持增强。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">InternLM2.5 (2024.07)</h4>
+                            <p class="text-sm text-text-secondary">上海AI Lab出品，7B/20B。数学推理和工具调用能力强，为InternVL系列提供LLM骨干。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">Qwen2.5 (2024.09)</h4>
+                            <p class="text-sm text-text-secondary">0.5B-72B，128K上下文。中文能力SOTA，代码和数学能力增强。Qwen2.5-VL紧随发布。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">DeepSeek-V2/V2.5 (2024.05-09)</h4>
+                            <p class="text-sm text-text-secondary">MoE+MLA架构创新，236B总参/21B激活。训练成本极低，开创高效训练范式。</p>
+                        </div>
+                        <div class="border-l-4 border-secondary pl-4">
+                            <h4 class="font-semibold text-secondary">DeepSeek-V3 (2024.12)</h4>
+                            <p class="text-sm text-text-secondary">671B总参/37B激活。MLA+DeepSeekMoE，训练仅$5.5M。匹敌GPT-4o和Claude 3.5。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- 2025-2026：推理时代与全模态 -->
+                <div class="bg-gradient-to-r from-amber-50 to-rose-50 rounded-lg p-8 border-l-4 border-accent">
+                    <h3 class="text-2xl font-bold text-primary mb-6">2025-2026：推理时代与全模态</h3>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">DeepSeek-R1 (2025.01)</h4>
+                            <p class="text-sm text-text-secondary">纯RL训练（无SFT冷启动），自发涌现CoT。671B MoE/37B激活。匹敌o1，引发"DeepSeek时刻"。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">Qwen2.5-VL (2025.01)</h4>
+                            <p class="text-sm text-text-secondary">原生动态分辨率+2D-RoPE。GUI Agent能力突出。7B版超GPT-4o-mini。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">DeepSeek-VL2 (2025.01)</h4>
+                            <p class="text-sm text-text-secondary">MoE视觉编码器+动态切片。OCR/图表/文档理解表现优异。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">GPT-4.5 (2025.02)</h4>
+                            <p class="text-sm text-text-secondary">强调"世界知识"和"EQ"。减少幻觉，原生多模态。定位过渡旗舰。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">Phi-4-multimodal (2025.02)</h4>
+                            <p class="text-sm text-text-secondary">微软5.6B轻量多模态。LoRA适配器方案，支持图像/语音/视频。小模型SOTA。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">Claude 3.5 Opus (2025.02)</h4>
+                            <p class="text-sm text-text-secondary">Anthropic旗舰。Extended Thinking深度推理模式。复杂指令遵循顶尖。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">Kimi-K2 (2025)</h4>
+                            <p class="text-sm text-text-secondary">月之暗面MoE架构。长上下文+复杂文档理解。中文多模态新锐。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">LLaMA 4 (2025)</h4>
+                            <p class="text-sm text-text-secondary">Meta原生多模态MoE。Scout(109B/17B激活)和Maverick(400B/17B激活)。10M上下文。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">Claude Opus 4.5 (2025)</h4>
+                            <p class="text-sm text-text-secondary">Computer Use 2.0桌面操控。Extended Thinking。代码生成和复杂推理顶尖。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">Qwen3-VL (2025-2026)</h4>
+                            <p class="text-sm text-text-secondary">思考模式+动态分辨率+视频+GUI Agent。0.6B-235B全尺寸。中文多模态SOTA。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">InternVL3 (2025)</h4>
+                            <p class="text-sm text-text-secondary">统一理解与生成。原生视频理解。MMBench/MMMU/MathVista开源领跑。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">GPT-5 / o4 (2025-2026)</h4>
+                            <p class="text-sm text-text-secondary">全模态+深度推理+Agent。o4系列数学/编程/科学推理大幅增强。自主工具调用。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">Gemini 2.5 Pro/Flash (2025-2026)</h4>
+                            <p class="text-sm text-text-secondary">思考模式+1M上下文。编程/数学/科学领跑。Flash版适合大规模部署。</p>
+                        </div>
+                        <div class="border-l-4 border-accent pl-4">
+                            <h4 class="font-semibold text-secondary">小米 MiMo (2025-2026)</h4>
+                            <p class="text-sm text-text-secondary">RL驱动CoT推理。数学/代码突出。端侧部署优化，小米生态整合。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- LLM骨干全景对比表 -->
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-2xl font-bold text-primary mb-6">LLM骨干全景对比</h3>
+                    <div class="overflow-x-auto">
+                        <table class="w-full text-sm border-collapse">
+                            <thead>
+                                <tr style="background-color:#1E3A5F" class="text-white">
+                                    <th class="p-3 text-left">模型</th>
+                                    <th class="p-3 text-left">时间</th>
+                                    <th class="p-3 text-left">出品方</th>
+                                    <th class="p-3 text-left">参数规模</th>
+                                    <th class="p-3 text-left">架构特点</th>
+                                    <th class="p-3 text-left">上下文</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                <tr class="border-b"><td class="p-3">LLaMA-2</td><td>2023.07</td><td>Meta</td><td>7/13/70B</td><td>GQA, RLHF</td><td>4K</td></tr>
+                                <tr class="border-b bg-gray-50"><td class="p-3">Mistral-7B</td><td>2023.09</td><td>Mistral AI</td><td>7B</td><td>SWA, GQA</td><td>32K</td></tr>
+                                <tr class="border-b"><td class="p-3">Mixtral 8x7B</td><td>2023.12</td><td>Mistral AI</td><td>46.7B(12.9B激活)</td><td>MoE 8专家</td><td>32K</td></tr>
+                                <tr class="border-b bg-gray-50"><td class="p-3">Claude-3</td><td>2024.03</td><td>Anthropic</td><td>未公开</td><td>安全对齐</td><td>200K</td></tr>
+                                <tr class="border-b"><td class="p-3">LLaMA-3</td><td>2024.04</td><td>Meta</td><td>8/70/405B</td><td>GQA, 15T tokens</td><td>8K→128K</td></tr>
+                                <tr class="border-b bg-gray-50"><td class="p-3">GPT-4o</td><td>2024.05</td><td>OpenAI</td><td>未公开</td><td>原生多模态</td><td>128K</td></tr>
+                                <tr class="border-b"><td class="p-3">Qwen2</td><td>2024.06</td><td>阿里</td><td>0.5-72B</td><td>GQA, 多语言</td><td>128K</td></tr>
+                                <tr class="border-b bg-gray-50"><td class="p-3">DeepSeek-V3</td><td>2024.12</td><td>DeepSeek</td><td>671B(37B激活)</td><td>MLA+MoE, $5.5M</td><td>128K</td></tr>
+                                <tr class="border-b"><td class="p-3">DeepSeek-R1</td><td>2025.01</td><td>DeepSeek</td><td>671B(37B激活)</td><td>纯RL, 自发CoT</td><td>128K</td></tr>
+                                <tr class="border-b bg-gray-50"><td class="p-3">LLaMA 4</td><td>2025</td><td>Meta</td><td>109-400B(17B激活)</td><td>原生多模态MoE</td><td>10M</td></tr>
+                                <tr class="border-b"><td class="p-3">Qwen3-VL</td><td>2025-26</td><td>阿里</td><td>0.6-235B</td><td>思考模式, MoE</td><td>128K+</td></tr>
+                                <tr class="border-b bg-gray-50"><td class="p-3">GPT-5/o4</td><td>2025-26</td><td>OpenAI</td><td>未公开</td><td>全模态+Agent</td><td>未公开</td></tr>
+                                <tr class="border-b"><td class="p-3">Gemini 2.5</td><td>2025-26</td><td>Google</td><td>未公开</td><td>思考模式</td><td>1M</td></tr>
+                                <tr><td class="p-3">MiMo</td><td>2025-26</td><td>小米</td><td>未公开</td><td>RL+端侧优化</td><td>未公开</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 5: Representative Models -->
+    <section id="ch5" class="py-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="section-title">第五章：代表模型详解</h2>
+
+            <div class="space-y-16">
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="grid lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold text-primary mb-4">LLaVA (2023.04)</h3>
+                            <p class="text-text-secondary mb-4">
+                                LLaVA是开创性工作，证明了简单方法的有效性。采用CLIP ViT-L/14作为视觉编码器，通过线性投影将视觉特征映射到LLM（LLaMA-7B）的输入空间。
+                            </p>
+                            <p class="text-text-secondary mb-4">
+                                创新点在于设计了大规模指令微调数据集，包含图像描述、视觉问答、图表理解等多种任务。结果显示，即使使用最简单的线性投影，也能获得出色的多模态能力。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag">开创性</span>
+                                <span class="tech-tag">线性投影</span>
+                                <span class="tech-tag">指令微调</span>
+                            </div>
+                        </div>
+                        <div class="image-container">
+                            <img src="survey-assets/mllm/llava.png" loading="lazy" onerror="this.style.display='none'"
+                                 alt="LLaVA模型"
+                                 class="w-full h-auto">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="grid lg:grid-cols-2 gap-8 items-center">
+                        <div class="order-2 lg:order-1">
+                            <h3 class="text-2xl font-bold text-primary mb-4">Gemini (2023.12)</h3>
+                            <p class="text-text-secondary mb-4">
+                                Google原生多模态模型，采用端到端训练方式。使用Pathways系统支持多模态并行处理，能够同时处理文本、图像、音频等多种输入。
+                            </p>
+                            <p class="text-text-secondary mb-4">
+                                Gemini Pro版本在MMLU基准测试中达到76.8%准确率，超过GPT-3.5。其优势在于原生多模态设计，避免了传统pipeline中的信息损失。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag">原生多模态</span>
+                                <span class="tech-tag">端到端训练</span>
+                                <span class="tech-tag">Pathways系统</span>
+                            </div>
+                        </div>
+                        <div class="order-1 lg:order-2 image-container">
+                            <img src="survey-assets/mllm/gemini.png" loading="lazy" onerror="this.style.display='none'"
+                                 alt="Gemini架构"
+                                 class="w-full h-auto">
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="grid lg:grid-cols-2 gap-8 items-center">
+                        <div>
+                            <h3 class="text-2xl font-bold text-primary mb-4">GPT-4o (2024.05)</h3>
+                            <p class="text-text-secondary mb-4">
+                                OpenAI推出的原生多模态模型，具有实时语音处理能力。支持文本、图像、音频等多种输入模态，响应速度显著提升。
+                            </p>
+                            <p class="text-text-secondary mb-4">
+                                GPT-4o在视觉理解、语音交互、跨模态推理等方面都达到了新的高度。其核心创新在于统一的多模态处理架构，能够无缝切换不同模态的处理模式。
+                            </p>
+                            <div class="flex flex-wrap gap-2">
+                                <span class="tech-tag">实时语音</span>
+                                <span class="tech-tag">统一架构</span>
+                                <span class="tech-tag">多模态切换</span>
+                            </div>
+                        </div>
+                        <div class="image-container">
+                            <img src="survey-assets/mllm/deepseek-vl2.png" loading="lazy" onerror="this.style.display='none'"
+                                 alt="DeepSeek-VL2"
+                                 class="w-full h-auto">
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 6: Training Strategies -->
+    <section id="ch6" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="section-title">第六章：训练策略深度解析</h2>
+
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-primary mb-8">6.1 两阶段训练</h3>
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="grid lg:grid-cols-2 gap-8">
+                        <div>
+                            <h4 class="text-xl font-semibold text-secondary mb-4">Stage 1: 特征对齐</h4>
+                            <p class="text-text-secondary mb-4">
+                                冻结视觉编码器和LLM参数，只训练模态适配器。学习率通常设置得较大（如1e-3），目的是快速找到视觉和语言特征的对应关系。
+                            </p>
+                            <ul class="space-y-2 text-text-secondary">
+                                <li>• 冻结视觉编码器</li>
+                                <li>• 冻结大语言模型</li>
+                                <li>• 仅训练adapter</li>
+                                <li>• 大学习率快速收敛</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="text-xl font-semibold text-secondary mb-4">Stage 2: 视觉指令微调</h4>
+                            <p class="text-text-secondary mb-4">
+                                全参或部分参数微调，使用高质量的指令数据集进行训练。学习率较小，精细调整模型行为。
+                            </p>
+                            <ul class="space-y-2 text-text-secondary">
+                                <li>• 全参数微调</li>
+                                <li>• 高质量指令数据</li>
+                                <li>• 小学习率精细调整</li>
+                                <li>• 任务特定优化</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mb-16">
+                <h3 class="text-2xl font-bold text-primary mb-8">6.2 高分辨率策略对比</h3>
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <div class="grid md:grid-cols-3 gap-6">
+                        <div class="text-center p-6 bg-gradient-to-b from-blue-50 to-blue-100 rounded-lg">
+                            <h4 class="font-semibold text-secondary mb-3">Dynamic Tiling</h4>
+                            <p class="text-sm text-text-secondary mb-4">
+                                InternVL采用的策略，将高分辨率图像切成多个tile，每个tile独立过ViT后再拼接。
+                            </p>
+                            <div class="text-xs space-y-1">
+                                <div>✓ 内存效率高</div>
+                                <div>✓ 支持任意分辨率</div>
+                                <div>✗ 边缘效应</div>
+                            </div>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-b from-green-50 to-green-100 rounded-lg">
+                            <h4 class="font-semibold text-secondary mb-3">AnyRes</h4>
+                            <p class="text-sm text-text-secondary mb-4">
+                                LLaVA-NeXT的自适应分块策略，根据内容重要性动态调整处理粒度。
+                            </p>
+                            <div class="text-xs space-y-1">
+                                <div>✓ 自适应处理</div>
+                                <div>✓ 细节保留好</div>
+                                <div>✗ 实现复杂</div>
+                            </div>
+                        </div>
+                        <div class="text-center p-6 bg-gradient-to-b from-purple-50 to-purple-100 rounded-lg">
+                            <h4 class="font-semibold text-secondary mb-3">原生分辨率</h4>
+                            <p class="text-sm text-text-secondary mb-4">
+                                Qwen2-VL的原生高分辨率支持，通过像素重排降低token数量。
+                            </p>
+                            <div class="text-xs space-y-1">
+                                <div>✓ 原生支持</div>
+                                <div>✓ 宽高比灵活</div>
+                                <div>✗ 需要特殊位置编码</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <div class="image-container">
+                <img src="survey-assets/mllm/internvl.jpg" loading="lazy" onerror="this.style.display='none'"
+                     alt="动态切片示意图"
+                     class="w-full h-auto">
+                <div class="absolute bottom-0 left-0 right-0 bg-gradient-to-t from-black/50 to-transparent p-4">
+                    <p class="text-white text-sm">图：动态切片处理高分辨率图像</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 7: Evaluation Benchmarks -->
+    <section id="ch7" class="py-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="section-title">第七章：评估基准</h2>
+
+            <div class="bg-white rounded-lg shadow-lg p-8">
+                <h3 class="text-2xl font-bold text-primary mb-8 text-center">主流评测基准对比</h3>
+                <div class="overflow-x-auto">
+                    <table class="comparison-table">
+                        <thead>
+                            <tr>
+                                <th>Benchmark</th>
+                                <th>主要任务</th>
+                                <th>模态</th>
+                                <th>难度</th>
+                                <th>特点</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td><strong>MMBench</strong></td>
+                                <td>多模态选择题</td>
+                                <td>图文</td>
+                                <td>中等</td>
+                                <td>覆盖12个子领域，人工标注</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MME</strong></td>
+                                <td>细粒度视觉理解</td>
+                                <td>图文</td>
+                                <td>高</td>
+                                <td>14个子任务，客观评估</td>
+                            </tr>
+                            <tr>
+                                <td><strong>SEED-Bench</strong></td>
+                                <td>视频理解</td>
+                                <td>音视频</td>
+                                <td>很高</td>
+                                <td>12000+样本，专业评估</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MMMU</strong></td>
+                                <td>大学水平考试</td>
+                                <td>图文</td>
+                                <td>极高</td>
+                                <td>涵盖STEM、人文等领域</td>
+                            </tr>
+                            <tr>
+                                <td><strong>MathVista</strong></td>
+                                <td>数学问题解决</td>
+                                <td>图文</td>
+                                <td>很高</td>
+                                <td>图表、公式理解</td>
+                            </tr>
+                            <tr>
+                                <td><strong>OCRBench</strong></td>
+                                <td>文本识别</td>
+                                <td>图文</td>
+                                <td>中等</td>
+                                <td>多语言、复杂场景</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 8: Future Directions -->
+    <section id="ch8" class="py-20 bg-gray-50">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="section-title">第八章：前沿发展方向</h2>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+                <div class="card p-6">
+                    <div class="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-blue-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M2 6a2 2 0 012-2h6a2 2 0 012 2v8a2 2 0 01-2 2H4a2 2 0 01-2-2V6zM14.553 7.106A1 1 0 0014 8v4a1 1 0 00.553.894l2 1A1 1 0 0018 13V7a1 1 0 00-1.447-.894l-2 1z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">视频MLLM</h3>
+                    <p class="text-text-secondary text-sm">
+                        长视频理解、时间推理、事件定位等方向的发展，支持更复杂的视频分析任务。
+                    </p>
+                </div>
+
+                <div class="card p-6">
+                    <div class="w-12 h-12 bg-green-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-green-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">MLLM as Agent</h3>
+                    <p class="text-text-secondary text-sm">
+                        GUI Agent、Computer Use等应用，让MLLM能够操作真实世界环境。
+                    </p>
+                </div>
+
+                <div class="card p-6">
+                    <div class="w-12 h-12 bg-purple-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-purple-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M9 6a3 3 0 11-6 0 3 3 0 016 0zM17 6a3 3 0 11-6 0 3 3 0 016 0zM12.93 17c.046-.327.07-.66.07-1a6.97 6.97 0 00-1.5-4.33A5 5 0 0119 16v1h-6.07zM6 11a5 5 0 015 5v1H1v-1a5 5 0 015-5z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">移动端轻量化</h3>
+                    <p class="text-text-secondary text-sm">
+                        Mobile VLM、MiniCPM-V等模型，在保持性能的同时大幅降低计算需求。
+                    </p>
+                </div>
+
+                <div class="card p-6">
+                    <div class="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-orange-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">理解与生成统一</h3>
+                    <p class="text-text-secondary text-sm">
+                        Janus、Show-o、Emu3等模型实现统一的视觉理解和生成能力。
+                    </p>
+                </div>
+
+                <div class="card p-6">
+                    <div class="w-12 h-12 bg-red-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-red-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path fill-rule="evenodd" d="M3 3a1 1 0 000 2v8a2 2 0 002 2h2.586l-1.293 1.293a1 1 0 101.414 1.414L10 15.414l2.293 2.293a1 1 0 001.414-1.414L12.414 15H15a2 2 0 002-2V5a1 1 0 100-2H3zm11.707 4.707a1 1 0 00-1.414 0L10 9.586l-2.293-2.293a1 1 0 00-1.414 1.414L8.586 11l-1.293 1.293a1 1 0 101.414 1.414L10 12.414l2.293 2.293a1 1 0 001.414-1.414L11.414 11l2.293-2.293z" clip-rule="evenodd"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">3D理解</h3>
+                    <p class="text-text-secondary text-sm">
+                        三维空间理解、物体重建、场景建模等新方向探索。
+                    </p>
+                </div>
+
+                <div class="card p-6">
+                    <div class="w-12 h-12 bg-indigo-100 rounded-lg flex items-center justify-center mb-4">
+                        <svg class="w-6 h-6 text-indigo-600" fill="currentColor" viewBox="0 0 20 20">
+                            <path d="M11 17a1 1 0 001.447.894l4-2A1 1 0 0017 15V9.236a1 1 0 00-1.447-.894l-4 2a1 1 0 00-.553.894V17zM15.211 6.276a1 1 0 000-1.788l-4.764-2.382a1 1 0 00-.894 0L5.789 4.488a1 1 0 000 1.788l4.764 2.382a1 1 0 00.894 0l4.764-2.382zM4.447 8.342A1 1 0 003 9.236V15a1 1 0 00.553.894l4 2A1 1 0 009 17v-5.764a1 1 0 00-.553-.894l-4-2z"/>
+                        </svg>
+                    </div>
+                    <h3 class="text-xl font-bold text-primary mb-3">具身智能</h3>
+                    <p class="text-text-secondary text-sm">
+                        机器人控制、物理交互等实际应用方向的深度融合。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Chapter 9: Interview Questions -->
+    <section id="ch9" class="py-20">
+        <div class="max-w-6xl mx-auto px-6">
+            <h2 class="section-title">第九章：面试高频问题</h2>
+
+            <div class="space-y-8">
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold text-primary mb-4">1. CLIP的训练目标是什么？对比学习Loss怎么计算？</h3>
+                    <p class="text-text-secondary mb-4">
+                        CLIP采用对比学习框架，目标是最大化正样本对的相似度，同时最小化负样本对的相似度。具体来说，对于每对图像-文本，计算它们在高维嵌入空间中的余弦相似度，然后使用InfoNCE损失函数进行优化。
+                    </p>
+                    <p class="text-text-secondary mb-4">
+                        InfoNCE公式：L = -log(exp(sim(i,t)/τ) / Σ exp(sim(i,t')/τ))
+                    </p>
+                    <p class="text-text-secondary">
+                        其中sim(i,t)是图像i和文本t的相似度，τ是温度参数，分母遍历所有负样本（其他图像-文本对）。这种方法使得模型学会将匹配的图像和文本拉近，不匹配的推远。
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold text-primary mb-4">2. Q-Former的作用是什么？和线性投影比有哪些优势和劣势？</h3>
+                    <p class="text-text-secondary mb-4">
+                        Q-Former的主要作用是作为视觉特征的"智能提取器"，它通过学习可查询tokens来有选择地关注视觉特征中的重要部分，而不是简单地使用全部视觉信息。
+                    </p>
+                    <div class="grid md:grid-cols-2 gap-6">
+                        <div>
+                            <h4 class="font-semibold text-secondary mb-2">优势</h4>
+                            <ul class="space-y-1 text-text-secondary text-sm">
+                                <li>• 参数高效：188M参数相比完整模型的几B参数</li>
+                                <li>• 预训练效果好：经过大规模数据预训练</li>
+                                <li>• 固定输出长度：便于后续处理</li>
+                                <li>• 更好的特征提取：选择性关注重要区域</li>
+                            </ul>
+                        </div>
+                        <div>
+                            <h4 class="font-semibold text-secondary mb-2">劣势</h4>
+                            <ul class="space-y-1 text-text-secondary text-sm">
+                                <li>• 参数量仍然较大</li>
+                                <li>• 训练复杂度高</li>
+                                <li>• 实现相对复杂</li>
+                                <li>• 对硬件要求较高</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold text-primary mb-4">3. 为什么LLaVA用简单的线性投影就能work？</h3>
+                    <p class="text-text-secondary mb-4">
+                        这主要是因为CLIP在4亿高质量图文对上学到的视觉表示本身就具有很强的语义丰富性。CLIP通过对比学习学会了将相似的图像和文本映射到相近的嵌入空间，这种跨模态对齐能力使得简单的线性变换就能有效桥接视觉和语言空间。
+                    </p>
+                    <p class="text-text-secondary mb-4">
+                        此外，LLaVA还采用了大规模多样化的指令微调数据，让模型学会如何正确地将视觉信息整合到语言生成过程中。这种"预训练+微调"的两阶段策略，加上CLIP的强大表示能力，使得简单的线性投影就足够有效。
+                    </p>
+                    <p class="text-text-secondary">
+                        这也说明了在现代AI系统中，基础模型的质量往往比复杂的架构更重要。好的预训练模型已经学到了丰富的通用知识，后续只需要较小的调整就能适应具体任务。
+                    </p>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold text-primary mb-4">4. MLLM如何处理高分辨率图片？对比不同策略的优缺点</h3>
+                    <p class="text-text-secondary mb-4">
+                        高分辨率图片处理主要有三种策略：动态切片、自适应分块和原生分辨率支持。
+                    </p>
+                    <div class="space-y-4">
+                        <div class="border-l-4 border-blue-500 pl-4">
+                            <h4 class="font-semibold text-secondary">Dynamic Tiling (InternVL)</h4>
+                            <p class="text-sm text-text-secondary">将大图切成多个tile分别处理，优点是内存效率高，缺点是可能丢失全局信息。</p>
+                        </div>
+                        <div class="border-l-4 border-green-500 pl-4">
+                            <h4 class="font-semibold text-secondary">AnyRes (LLaVA-NeXT)</h4>
+                            <p class="text-sm text-text-secondary">根据内容重要性自适应调整处理粒度，平衡了效果和效率。</p>
+                        </div>
+                        <div class="border-l-4 border-purple-500 pl-4">
+                            <h4 class="font-semibold text-secondary">Native Resolution (Qwen2-VL)</h4>
+                            <p class="text-sm text-text-secondary">通过像素重排降低token数，原生支持任意分辨率，但对位置编码有特殊要求。</p>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold text-primary mb-4">5. 幻觉（Hallucination）问题是什么？如何缓解？</h3>
+                    <p class="text-text-secondary mb-4">
+                        幻觉指的是MLLM生成的内容与输入的视觉信息不一致的情况，比如描述一张猫的图片却说成狗的特征。这是当前MLLM面临的主要挑战之一。
+                    </p>
+                    <p class="text-text-secondary mb-4">
+                        缓解策略包括：
+                    </p>
+                    <ul class="space-y-2 text-text-secondary">
+                        <li>• 提高训练数据质量：确保图文对的高度相关性</li>
+                        <li>• 强化对齐训练：在训练中加入更多一致性约束</li>
+                        <li>• 后处理方法：基于置信度过滤不合理输出</li>
+                        <li>• RLHF/DPO：使用人类偏好数据进行微调</li>
+                        <li>• 多模型集成：结合多个模型的判断</li>
+                    </ul>
+                </div>
+
+                <div class="bg-white rounded-lg shadow-lg p-8">
+                    <h3 class="text-xl font-bold text-primary mb-4">6. 如果你要设计一个新的MLLM，你会怎么选择各个组件？</h3>
+                    <p class="text-text-secondary mb-4">
+                        我会根据具体应用场景权衡性能和效率。对于资源受限的场景，会选择CLIP作为视觉编码器，采用线性投影适配器，配合开源LLM骨干，这样成本低且效果不错。
+                    </p>
+                    <p class="text-text-secondary mb-4">
+                        对于追求SOTA性能的场景，会考虑使用最新的视觉编码器（如SigLIP），配合Q-Former或Perceiver等更复杂的适配器，以及最新的LLM骨干。同时会设计多阶段训练策略，充分挖掘模型潜力。
+                    </p>
+                    <p class="text-text-secondary">
+                        无论哪种情况，都会重视数据质量和训练策略，因为好的数据和训练方法往往能弥补架构上的不足。还会考虑模型的泛化能力和鲁棒性，而不仅仅是benchmark上的分数。
+                    </p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="text-white py-12" style="background-color:#1E3A5F">
+        <div class="max-w-6xl mx-auto px-6 text-center">
+            <h3 class="text-2xl font-bold mb-4">多模态大语言模型技术发展报告</h3>
+            <p class="text-white/80 mb-6">本报告涵盖了MLLM的核心技术、代表模型和前沿方向</p>
+            <div class="flex flex-wrap justify-center gap-4 text-sm">
+                <span class="tech-tag bg-white/20">视觉编码器</span>
+                <span class="tech-tag bg-white/20">模态适配器</span>
+                <span class="tech-tag bg-white/20">训练策略</span>
+                <span class="tech-tag bg-white/20">评估基准</span>
+                <span class="tech-tag bg-white/20">未来展望</span>
+            </div>
+            <div class="mt-6 text-sm text-white/50">
+                由 🤖 小黄 bot 自动生成 · 2026-03-24
+            </div>
+        </div>
+    </footer>
+
+    <!-- TOC Sidebar -->
+    <div id="toc-sidebar">
+        <div id="toc-toggle" onclick="document.getElementById('toc-sidebar').classList.toggle('collapsed')">☰</div>
+        <div class="toc-content">
+            <div style="font-weight:700; margin-bottom:12px; color:#1E3A5F;">目录</div>
+            <a href="#ch1" class="toc-link chapter">一、MLLM概述</a>
+            <a href="#ch2" class="toc-link chapter">二、视觉基础模型</a>
+            <a href="#ch2-1" class="toc-link section">ViT</a>
+            <a href="#ch2-2" class="toc-link section">CLIP</a>
+            <a href="#ch2-3" class="toc-link section">SigLIP</a>
+            <a href="#ch3" class="toc-link chapter">三、模态适配器</a>
+            <a href="#ch3-1" class="toc-link section">线性投影</a>
+            <a href="#ch3-2" class="toc-link section">MLP</a>
+            <a href="#ch3-3" class="toc-link section">Q-Former</a>
+            <a href="#ch3-4" class="toc-link section">Perceiver</a>
+            <a href="#ch3-5" class="toc-link section">动态切片</a>
+            <a href="#ch3-6" class="toc-link section">像素重排</a>
+            <a href="#ch3-7" class="toc-link section">跨注意力融合</a>
+            <a href="#ch3b" class="toc-link chapter">三(续).核心技术</a>
+            <a href="#ch4" class="toc-link chapter">四、LLM骨干</a>
+            <a href="#ch5" class="toc-link chapter">五、代表模型</a>
+            <a href="#ch6" class="toc-link chapter">六、训练策略</a>
+            <a href="#ch7" class="toc-link chapter">七、评估基准</a>
+            <a href="#ch8" class="toc-link chapter">八、前沿方向</a>
+            <a href="#ch9" class="toc-link chapter">九、面试问题</a>
+        </div>
+    </div>
+
+    <script>
+        // Initialize progress bar
+        window.addEventListener('scroll', () => {
+            const scrolled = document.documentElement.scrollTop;
+            const height = document.documentElement.scrollHeight - document.documentElement.clientHeight;
+            const scrollPercent = (scrolled / height) * 100;
+            document.getElementById('progressBar').style.width = scrollPercent + '%';
+        });
+
+        // GSAP animations
+        gsap.registerPlugin(ScrollTrigger);
+
+        // Fade in animations
+        gsap.utils.toArray('.card, section > div').forEach((element, index) => {
+            gsap.from(element, {
+                opacity: 0,
+                y: 50,
+                duration: 0.8,
+                delay: index * 0.1,
+                scrollTrigger: {
+                    trigger: element,
+                    start: 'top 80%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+
+        // Timeline animations
+        gsap.utils.toArray('.timeline-item').forEach((item, index) => {
+            gsap.from(item, {
+                opacity: 0,
+                x: -50,
+                duration: 0.6,
+                delay: index * 0.1,
+                scrollTrigger: {
+                    trigger: item,
+                    start: 'top 85%',
+                    toggleActions: 'play none none reverse'
+                }
+            });
+        });
+
+        // Image hover effects
+        gsap.utils.toArray('.image-container').forEach(container => {
+            container.addEventListener('mouseenter', () => {
+                gsap.to(container.querySelector('img'), {
+                    scale: 1.05,
+                    duration: 0.3
+                });
+            });
+            container.addEventListener('mouseleave', () => {
+                gsap.to(container.querySelector('img'), {
+                    scale: 1,
+                    duration: 0.3
+                });
+            });
+        });
+
+        // Chart placeholder functionality
+        document.querySelectorAll('[data-chart]').forEach(chartElement => {
+            const chartId = chartElement.dataset.chart;
+            const type = chartElement.dataset.type || 'bar';
+
+            const chartDom = document.createElement('div');
+            chartDom.id = chartId;
+            chartDom.style.height = '300px';
+            chartElement.appendChild(chartDom);
+
+            // Placeholder data - in real implementation, this would come from actual data
+            const option = {
+                tooltip: {
+                    trigger: 'axis',
+                    backgroundColor: 'rgba(0,0,0,0.8)',
+                    textStyle: { color: '#fff' }
+                },
+                grid: {
+                    left: '3%',
+                    right: '4%',
+                    bottom: '3%',
+                    containLabel: true
+                },
+                xAxis: { type: 'category', data: ['线性投影', 'MLP', 'Q-Former', 'Perceiver'] },
+                yAxis: { type: 'value' },
+                series: [{
+                    data: [45.2, 48.7, 52.1, 49.8],
+                    type: type,
+                    itemStyle: {
+                        color: '#2D6A4F'
+                    }
+                }]
+            };
+
+            const chart = echarts.init(chartDom);
+            chart.setOption(option);
+
+            // Handle window resize
+            window.addEventListener('resize', () => {
+                chart.resize();
+            });
+        });
+
+        // TOC active state
+        const tocLinks = document.querySelectorAll('.toc-link');
+        const sections = document.querySelectorAll('section[id]');
+        
+        window.addEventListener('scroll', () => {
+            let current = '';
+            sections.forEach(s => {
+                if (window.scrollY >= s.offsetTop - 200) current = s.id;
+            });
+            
+            tocLinks.forEach(l => {
+                l.classList.remove('active');
+                if (l.getAttribute('href') === '#' + current) l.classList.add('active');
+            });
+        });
+    </script>
+<div class="lightbox" id="lightbox">
+    <img src="" alt="放大查看">
+</div>
+<script>
+document.querySelectorAll(".image-container img").forEach(img => {
+    img.style.cursor = "zoom-in";
+    img.addEventListener("click", () => {
+        const lb = document.getElementById("lightbox");
+        lb.querySelector("img").src = img.src;
+        lb.classList.add("active");
+    });
+});
+document.getElementById("lightbox").addEventListener("click", function() {
+    this.classList.remove("active");
+});
+</script>
+</body>
+</html>

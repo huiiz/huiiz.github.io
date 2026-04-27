@@ -1,0 +1,84 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>YOLOv2(YOLO9000)笔记 | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="学习内容来源：同济子豪兄的个人空间 哔哩哔哩 bilibili 作者：Joseph Redmon, Ali Farhadi 9000：九千多个类 相比于v1，v2添加了anchor，batch normalization，多尺度训练等。 模型演进 YOLOv1缺点 准确度低 定位"><meta property="og:title" content="YOLOv2(YOLO9000)笔记 | HUII's Blog"><meta property="og:description" content="学习内容来源：同济子豪兄的个人空间 哔哩哔哩 bilibili 作者：Joseph Redmon, Ali Farhadi 9000：九千多个类 相比于v1，v2添加了anchor，batch normalization，多尺度训练等。 模型演进 YOLOv1缺点 准确度低 定位"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/posts/yolov2-yolo9000-%E7%AC%94%E8%AE%B0/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#4e8cff"><link rel="canonical" href="https://blog.huii.top/posts/yolov2-yolo9000-%E7%AC%94%E8%AE%B0/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.iMrdDItP.css"></head> <body> <div class="page" id="body-wrap"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>YOLOv2(YOLO9000)笔记</h1> <p>学习内容来源：同济子豪兄的个人空间 哔哩哔哩 bilibili 作者：Joseph Redmon, Ali Farhadi 9000：九千多个类 相比于v1，v2添加了anchor，batch normalization，多尺度训练等。 模型演进 YOLOv1缺点 准确度低 定位</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2023年3月9日</span> <span>阅读约 3 分钟</span> </div> <div class="reading-categories"> <a href="/categories/machinelearning/">MachineLearning</a> </div> <div class="reading-tags"> <a href="/tags/机器学习/">#机器学习</a><a href="/tags/深度学习/">#深度学习</a><a href="/tags/目标检测/">#目标检测</a><a href="/tags/cv/">#CV</a><a href="/tags/yolo/">#YOLO</a> </div> </header> <div class="post-content reading-content"><p>学习内容来源：<a href="https://space.bilibili.com/1900783" target="_blank" rel="noreferrer">同济子豪兄的个人空间_哔哩哔哩_bilibili</a></p><div class="embed-frame"><iframe src="https://your-user.github.io//player.bilibili.com/player.html?aid=761792345&amp;bvid=BV1Q64y1s74K&amp;cid=375800831&amp;page=1" loading="lazy" referrerpolicy="no-referrer-when-downgrade" allowfullscreen></iframe></div><p>作者：Joseph Redmon, Ali Farhadi
+9000：九千多个类</p><p>相比于v1，v2添加了anchor，batch normalization，多尺度训练等。</p><figure><img src="/notion/yolov2-yolo9000-笔记/image/img.jpg" alt="img" /><figcaption>img</figcaption></figure><p>模型演进</p><h2 id="yolov1缺点">YOLOv1缺点</h2><ul><li>准确度低</li><li>定位性能差</li><li>recall低（检测出全部目标能力）</li><li>检测小目标、密集目标差</li></ul><h2 id="batch-normalization批标准化">Batch Normalization批标准化</h2><p>强行将神经元的输出集中到0附近。</p><p>BatchNorm就是在深度神经网络训练过程中使得每一层神经网络的输入保持相同分布。</p><p>Batch normalization 的 batch 是批数据, 把数据分成小批小批进行随机梯度下降 ，而且在每批数据进行前向传递 的时候, 对每一层都进行 normalization的处理,。在全连接层和激励曾之间加入BN层。</p><p>在神经网络中, 数据分布对训练会产生影响. 比如某个神经元 x 的值为1, 某个 Weights 的初始值为 0.1, 这样后一层神经元计算结果就是 Wx = 0.1; 又或者 x = 20, 这样 Wx 的结果就为 2。现在还不能看出什么问题, 但是, 当我们加上一层激励函数, 激活这个 Wx 值的时候, 问题就来了. 如果使用 像 tanh 的激励函数, Wx 的激活值就变成了 ~0.1 和 ~1, 接近于 1 的部已经处在了 激励函数的饱和阶段, 也就是 x 无论再怎么扩大, tanh 激励函数输出值也还是接近1。</p><figure><img src="/notion/yolov2-yolo9000-笔记/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>批标准化</p><p>我们为了避免这种情况，就会对数据进行归一化，对于每个隐层神经元，把逐渐向非线性函数映射后向取值区间极限饱和区靠拢的输入分布强制拉回到均值为0方差为1的比较标准的正态分布，使得非线性变换函数的输入值落入对输入比较敏感的区域，以此避免梯度消失问题。<a href="https://blog.csdn.net/qq_43254330/article/details/124083210" target="_blank" rel="noreferrer">整理学习之Batch Normalization（批标准化）_笨笨犬牙的博客-CSDN博客</a></p><figure><img src="/notion/yolov2-yolo9000-笔记/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>BN效果</p><figure><img src="/notion/yolov2-yolo9000-笔记/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>理解</p><p>通过BN可以大大加快收敛，改善梯度，远离饱和区，起到正则化作用，代替dropout，BN层一般出现在线性层的后面，激活函数的前面。</p><h2 id="high-resolution-classifier高分辨率分类器">High Resolution Classifier高分辨率分类器</h2><p>可以直接使用大分辨率图片</p><h2 id="anchor-dimension-clusters-direct-location-prediction">Anchor，Dimension Clusters，Direct location prediction</h2><p>框有了区别。论文中分成13*13个grid cell，各包含5个anchor。grid cell的长宽为偶数个。</p><p>v1中每个gridcell就30个参数，而v2中则有(20+4+1)*5=125个数，每个anchor各自负责类别分类。</p><figure><img src="/notion/yolov2-yolo9000-笔记/image/img.png" alt="img" /><figcaption>img</figcaption></figure><figure><img src="/notion/yolov2-yolo9000-笔记/image/img.png" alt="img" /><figcaption>img</figcaption></figure><figure><img src="/notion/yolov2-yolo9000-笔记/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>使用聚类的方法，5个anchor就可以达到9个手工选择anchor的效果。</p><figure><img src="/notion/yolov2-yolo9000-笔记/image/img.png" alt="img" /><figcaption>img</figcaption></figure><h2 id="损失函数">损失函数</h2><p>论文中无明确指出。</p><figure><img src="/notion/yolov2-yolo9000-笔记/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>[ref]<a href="https://blog.csdn.net/just_sort/article/details/103232484" target="_blank" rel="noreferrer">目标检测算法之YOLOv2损失函数详解_just_sort的博客-CSDN博客</a>[/ref]</p><p>遍历所有的anchor</p><p>① 只看形状，不看位置</p><p>② 是否是模型训练早期（前12800迭代）</p><p>③ 预测框负责预测物体</p><h2 id="fine-grained-features细粒度特征">Fine-Grained Features细粒度特征</h2><figure><img src="/notion/yolov2-yolo9000-笔记/image/img.png" alt="img" /><figcaption>img</figcaption></figure><h2 id="multi-scale-training">Multi-Scale Training</h2><p>多尺度图片训练</p><h2 id="骨干网络">骨干网络</h2><p>Darknet19</p><h2 id="类别更多">类别更多</h2></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/posts/python小tips-持续更新/">Python小tips【持续更新】</a> </div> <div> <span>下一篇</span> <a href="/posts/操作系统-from-蒋炎岩nju2023/">操作系统 from 蒋炎岩nju2023</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关内容</h3> </div> <div class="related-post-list"> <a href="/posts/yolov3笔记/">YOLOv3笔记</a><a href="/posts/yolo-v1笔记/">YOLO v1笔记</a><a href="/posts/faster-r-cnn-rcnn系列算法ⅲ/">Faster R-CNN——RCNN系列算法Ⅲ</a><a href="/posts/fast-r-cnn-rcnn系列算法ⅱ/">Fast R-CNN——RCNN系列算法Ⅱ</a><a href="/posts/r-cnn-rcnn系列算法ⅰ/">R-CNN——RCNN系列算法Ⅰ</a><a href="/posts/图像目标检测基本概念与算法/">图像目标检测基本概念与算法</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-2" href="#yolov1缺点" data-toc-link="yolov1缺点"> YOLOv1缺点 </a><a class="toc-level-2" href="#batch-normalization批标准化" data-toc-link="batch-normalization批标准化"> Batch Normalization批标准化 </a><a class="toc-level-2" href="#high-resolution-classifier高分辨率分类器" data-toc-link="high-resolution-classifier高分辨率分类器"> High Resolution Classifier高分辨率分类器 </a><a class="toc-level-2" href="#anchor-dimension-clusters-direct-location-prediction" data-toc-link="anchor-dimension-clusters-direct-location-prediction"> Anchor，Dimension Clusters，Direct location prediction </a><a class="toc-level-2" href="#损失函数" data-toc-link="损失函数"> 损失函数 </a><a class="toc-level-2" href="#fine-grained-features细粒度特征" data-toc-link="fine-grained-features细粒度特征"> Fine-Grained Features细粒度特征 </a><a class="toc-level-2" href="#multi-scale-training" data-toc-link="multi-scale-training"> Multi-Scale Training </a><a class="toc-level-2" href="#骨干网络" data-toc-link="骨干网络"> 骨干网络 </a><a class="toc-level-2" href="#类别更多" data-toc-link="类别更多"> 类别更多 </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = [...document.querySelectorAll(".reading-content h2[id], .reading-content h3[id], .reading-content h4[id]")];
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

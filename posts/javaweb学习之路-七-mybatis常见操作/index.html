@@ -1,0 +1,236 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JavaWeb学习之路（七）——Mybatis常见操作 | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="CURD 命名空间namespace namespace的包名要和Dao/mapper接口的包名一致！ 查询语句Select 选择，查询语句 id：就是对应发namespace中的方法名 resultType:Sql语句执行的返回值 parameterType：参数类型 xml"><meta property="og:title" content="JavaWeb学习之路（七）——Mybatis常见操作 | HUII's Blog"><meta property="og:description" content="CURD 命名空间namespace namespace的包名要和Dao/mapper接口的包名一致！ 查询语句Select 选择，查询语句 id：就是对应发namespace中的方法名 resultType:Sql语句执行的返回值 parameterType：参数类型 xml"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/posts/javaweb%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF-%E4%B8%83-mybatis%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#4e8cff"><link rel="canonical" href="https://blog.huii.top/posts/javaweb%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF-%E4%B8%83-mybatis%E5%B8%B8%E8%A7%81%E6%93%8D%E4%BD%9C/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.iMrdDItP.css"></head> <body> <div class="page" id="body-wrap"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>JavaWeb学习之路（七）——Mybatis常见操作</h1> <p>CURD 命名空间namespace namespace的包名要和Dao/mapper接口的包名一致！ 查询语句Select 选择，查询语句 id：就是对应发namespace中的方法名 resultType:Sql语句执行的返回值 parameterType：参数类型 xml</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2021年5月3日</span> <span>阅读约 12 分钟</span> </div> <div class="reading-categories"> <a href="/categories/coding/">Coding</a> </div> <div class="reading-tags"> <a href="/tags/java/">#Java</a><a href="/tags/mysql/">#MySQL</a><a href="/tags/junit/">#Junit</a><a href="/tags/idea/">#IDEA</a><a href="/tags/maven/">#Maven</a><a href="/tags/jdbc/">#JDBC</a><a href="/tags/mybatis/">#Mybatis</a> </div> </header> <div class="post-content reading-content"><h3 id="curd">CURD</h3><h4 id="命名空间namespace">命名空间namespace</h4><p>namespace的包名要和Dao/mapper接口的包名一致！</p><h4 id="查询语句select">查询语句Select</h4><p>选择，查询语句</p><ul><li><p>id：就是对应发namespace中的方法名</p></li><li><p>resultType:Sql语句执行的返回值</p></li><li><p>parameterType：参数类型</p></li></ul><pre><code>&lt;select id=&quot;getUserById&quot; resultType=&quot;top.huii.pojo.User&quot; parameterType=&quot;int&quot;&gt;
+    select * from javaweb.user where id = #{id}
+&lt;/select&gt;</code></pre><p>结果：<code>User{id=1, name='张三', pwd='11111111'}</code></p><h4 id="新增insert">新增Insert</h4><pre><code>&lt;insert id=&quot;addUser&quot; parameterType=&quot;top.huii.pojo.User&quot;&gt;
+    insert into javaweb.user (id, name, pwd) values (#{id}, #{name}, #{pwd});
+&lt;/insert&gt;</code></pre><h4 id="修改update">修改Update</h4><pre><code>&lt;update id=&quot;updateUser&quot; parameterType=&quot;top.huii.pojo.User&quot;&gt;
+    update javaweb.user set name=#{name}, pwd=#{pwd} where id = #{id};
+&lt;/update&gt;</code></pre><h4 id="删除delete">删除Delete</h4><pre><code>&lt;delete id=&quot;deleteUser&quot; parameterType=&quot;int&quot;&gt;
+    delete from javaweb.user where id=#{id};
+&lt;/delete&gt;</code></pre><h4 id="代码展示">代码展示</h4><ul><li>工具类<code>MybatisUtils</code></li></ul><pre><code>package top.huii.utils;
+
+import org.apache.ibatis.io.Resources;
+import org.apache.ibatis.session.SqlSession;
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
+
+import java.io.IOException;
+import java.io.InputStream;
+
+//sqlSessionFactory
+public class MybatisUtils {
+    private static SqlSessionFactory sqlSessionFactory;
+    static {
+        try {
+//            获取sqlSessionFactory
+            String resource = &quot;mybatis-config.xml&quot;;
+            InputStream inputStream = Resources.getResourceAsStream(resource);
+            sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public static SqlSession getSqlSession(){
+        SqlSession sqlSession = sqlSessionFactory.openSession();
+        return sqlSession;
+    }
+}
+</code></pre><ul><li>定义接口<code>UserDao.java</code></li></ul><pre><code>package top.huii.dao;
+
+import top.huii.pojo.User;
+
+import java.util.List;
+
+public interface UserDao {
+    // 获取全部用户
+    List&lt;User&gt; getUserList();
+
+    // 根据id查询用户
+    User getUserById(int id);
+
+    // 插入一个用户
+    int addUser(User user);
+
+    // 修改用户
+    int updateUser(User User);
+
+    // 删除用户
+    int deleteUser(int id);
+}
+</code></pre><ul><li>sql语句<code>UserMapper.xml</code></li></ul><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot; ?&gt;
+&lt;!DOCTYPE mapper
+        PUBLIC &quot;-//mybatis.org//DTD Mapper 3.0//EN&quot;
+        &quot;http://mybatis.org/dtd/mybatis-3-mapper.dtd&quot;&gt;
+&lt;mapper namespace=&quot;top.huii.dao.UserDao&quot;&gt;
+    &lt;select id=&quot;getUserList&quot; resultType=&quot;top.huii.pojo.User&quot;&gt;
+        select * from javaweb.user;
+    &lt;/select&gt;
+    &lt;select id=&quot;getUserById&quot; resultType=&quot;top.huii.pojo.User&quot; parameterType=&quot;int&quot;&gt;
+        select * from javaweb.user where id = #{id};
+    &lt;/select&gt;
+    &lt;insert id=&quot;addUser&quot; parameterType=&quot;top.huii.pojo.User&quot;&gt;
+        insert into javaweb.user (id, name, pwd) values (#{id}, #{name}, #{pwd});
+    &lt;/insert&gt;
+    &lt;update id=&quot;updateUser&quot; parameterType=&quot;top.huii.pojo.User&quot;&gt;
+        update javaweb.user set name=#{name}, pwd=#{pwd} where id = #{id};
+    &lt;/update&gt;
+    &lt;delete id=&quot;deleteUser&quot; parameterType=&quot;int&quot;&gt;
+        delete from javaweb.user where id=#{id};
+    &lt;/delete&gt;
+&lt;/mapper&gt;</code></pre><ul><li>测试<code>UserDaoTest.java</code></li></ul><pre><code>package top.huii.dao;
+
+import org.apache.ibatis.session.SqlSession;
+import org.junit.Test;
+import top.huii.pojo.User;
+import top.huii.utils.MybatisUtils;
+
+import java.util.List;
+
+public class UserDaoTest {
+    @Test
+    public void Test() {
+//        获得sqlSession对象
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+//        方式1：getMapper 推荐
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+        List&lt;User&gt; userList = mapper.getUserList();
+
+//        方式2 不推荐
+//        List&lt;User&gt; userList = sqlSession.selectList(&quot;top.huii.dao.UserDao.getUserList&quot;);
+
+        for (User user :
+                userList) {
+            System.out.println(user);
+        }
+        sqlSession.close();
+
+    }
+
+    @Test
+    public void getUserById(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+
+        User user = mapper.getUserById(1);
+        System.out.println(user);
+
+        sqlSession.close();
+    }
+
+    @Test
+    public void addUser(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+
+        int i = mapper.addUser(new User(4, &quot;你好试试&quot;, &quot;11122333&quot;));
+        if (i &gt; 0){
+            System.out.println(&quot;成功&quot;);
+        }
+        // 提交事务
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void updateUser(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+        mapper.updateUser(new User(4, &quot;1111&quot;, &quot;12000&quot;));
+
+        sqlSession.commit();
+        sqlSession.close();
+    }
+
+    @Test
+    public void deleteUser(){
+        SqlSession sqlSession = MybatisUtils.getSqlSession();
+        UserDao mapper = sqlSession.getMapper(UserDao.class);
+        mapper.deleteUser(1);
+
+        sqlSession.commit();
+        sqlSession.close();
+    }
+}
+</code></pre><h4 id="万能map">万能Map</h4><p>实体类中表太多，可以用map</p><h3 id="配置解析">配置解析</h3><h4 id="核心配置文件">核心配置文件</h4><p>MyBatis 的配置文件包含了会深深影响 MyBatis 行为的设置和属性信息。 配置文档的顶层结构如下：</p><ul><li>configuration（配置）<ul> <li>properties（属性）</li> <li>settings（设置）</li> <li>typeAliases（类型别名）</li> <li>typeHandlers（类型处理器）</li> <li>objectFactory（对象工厂）</li> <li>plugins（插件）</li> <li>environments（环境配置）<ul> &lt;li environment（环境变量）<ul> &lt;li transactionManager（事务管理器）</li> <li>dataSource（数据源）</li> </ul> </li> </ul> </li> <li>databaseIdProvider（数据库厂商标识）</li> <li>mappers（映射器）</li> </ul></li><li>properties（属性）</li><li>settings（设置）</li><li>typeAliases（类型别名）</li><li>typeHandlers（类型处理器）</li><li>objectFactory（对象工厂）</li><li>plugins（插件）</li><li>environments（环境配置）<ul> <li>environment（环境变量）<ul> &lt;li transactionManager（事务管理器）</li> <li>dataSource（数据源）</li> </ul> </li> </ul></li><li>environment（环境变量）<ul> <li>transactionManager（事务管理器）</li> <li>dataSource（数据源）</li> </ul></li><li>transactionManager（事务管理器）</li><li>dataSource（数据源）</li><li>databaseIdProvider（数据库厂商标识）</li><li>mappers（映射器）</li></ul></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/posts/javaweb学习之路-六-mybatis入门/">JavaWeb学习之路（六）——Mybatis入门</a> </div> <div> <span>下一篇</span> <a href="/posts/javaweb学习之路-五-mvc-过滤器-监听器/">JavaWeb学习之路（五）——MVC、过滤器、监听器</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关内容</h3> </div> <div class="related-post-list"> <a href="/posts/javaweb学习之路-六-mybatis入门/">JavaWeb学习之路（六）——Mybatis入门</a><a href="/posts/javaweb学习之路-二-环境配置与项目创建/">JavaWeb学习之路（二）——环境配置与项目创建</a><a href="/posts/javaweb学习之路-五-mvc-过滤器-监听器/">JavaWeb学习之路（五）——MVC、过滤器、监听器</a><a href="/posts/javaweb学习之路-四-jsp/">JavaWeb学习之路（四）——JSP</a><a href="/posts/javaweb学习之路-三-基本请求处理/">JavaWeb学习之路（三）——基本请求处理</a><a href="/posts/springboot入门/">SpringBoot入门</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-3" href="#curd" data-toc-link="curd"> CURD </a><a class="toc-level-4" href="#命名空间namespace" data-toc-link="命名空间namespace"> 命名空间namespace </a><a class="toc-level-4" href="#查询语句select" data-toc-link="查询语句select"> 查询语句Select </a><a class="toc-level-4" href="#新增insert" data-toc-link="新增insert"> 新增Insert </a><a class="toc-level-4" href="#修改update" data-toc-link="修改update"> 修改Update </a><a class="toc-level-4" href="#删除delete" data-toc-link="删除delete"> 删除Delete </a><a class="toc-level-4" href="#代码展示" data-toc-link="代码展示"> 代码展示 </a><a class="toc-level-4" href="#万能map" data-toc-link="万能map"> 万能Map </a><a class="toc-level-3" href="#配置解析" data-toc-link="配置解析"> 配置解析 </a><a class="toc-level-4" href="#核心配置文件" data-toc-link="核心配置文件"> 核心配置文件 </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = [...document.querySelectorAll(".reading-content h2[id], .reading-content h3[id], .reading-content h4[id]")];
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>
