@@ -9,7 +9,7 @@
     p2.items.append(&quot;bow&quot;)
     p3.items.append(&quot;axe&quot;)
 
-    print(p3.items)</code></pre><p>输出结果为<code>['bow', 'axe']</code>。</p><p>很明显，这不应该是我们想要的结果，我们期望输出应该是<code>['axe']</code>。</p><p>Python的Document里有这么一段话<a href="https://docs.python.org/zh-cn/3/reference/compound_stmts.html" target="_blank" rel="noreferrer">8. 复合语句 — Python 3.11.2 文档</a></p><blockquote>&lt;p <strong>默认形参值会在执行函数定义时按从左至右的顺序被求值。</strong> 这意味着当函数被定义时将对表达式求值一次，相同的“预计算”值将在每次调用时被使用。 这一点在默认形参为可变对象，例如列表或字典的时候尤其需要重点理解：如果函数修改了该对象（例如向列表添加了一项），则实际上默认值也会被修改。 这通常不是人们所想要的。</p></blockquote><p>简而言之，对于这种可变对象，如果使用<strong>默认参数，他们会指向同一个对象</strong>。</p><p>Document中也提到了解决方法</p><blockquote><p>使用 <code>None</code> 作为默认值</p></blockquote><p>因此，我们将类定义修改为如下，即可解决这一问题。</p><pre><code>class Player:
+    print(p3.items)</code></pre><p>输出结果为<code>['bow', 'axe']</code>。</p><p>很明显，这不应该是我们想要的结果，我们期望输出应该是<code>['axe']</code>。</p><p>Python的Document里有这么一段话<a href="https://docs.python.org/zh-cn/3/reference/compound_stmts.html" target="_blank" rel="noreferrer">8. 复合语句 — Python 3.11.2 文档</a></p><blockquote><p><strong>默认形参值会在执行函数定义时按从左至右的顺序被求值。</strong> 这意味着当函数被定义时将对表达式求值一次，相同的“预计算”值将在每次调用时被使用。 这一点在默认形参为可变对象，例如列表或字典的时候尤其需要重点理解：如果函数修改了该对象（例如向列表添加了一项），则实际上默认值也会被修改。 这通常不是人们所想要的。</p></blockquote><p>简而言之，对于这种可变对象，如果使用<strong>默认参数，他们会指向同一个对象</strong>。</p><p>Document中也提到了解决方法</p><blockquote><p>使用 <code>None</code> 作为默认值</p></blockquote><p>因此，我们将类定义修改为如下，即可解决这一问题。</p><pre><code>class Player:
     def __init__(self, name, items=None):
         if items is None:
             items = []
