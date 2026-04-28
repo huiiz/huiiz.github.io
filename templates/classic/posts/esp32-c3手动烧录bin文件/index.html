@@ -1,0 +1,94 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>ESP32-C3手动烧录bin文件 · Classic | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="一、应用程序的启动流程 宏观上，该启动流程可以分为如下 3 个步骤： 1. 一级引导程序 被固化在了 ESP32 C3 内部的 ROM 中，它会从 flash 的 0x0 偏移地址处加载二级引导程序至 RAM (IRAM &#38; DRAM) 中。 2. 二级引导程序 从 flash"><meta property="og:title" content="ESP32-C3手动烧录bin文件 · Classic | HUII's Blog"><meta property="og:description" content="一、应用程序的启动流程 宏观上，该启动流程可以分为如下 3 个步骤： 1. 一级引导程序 被固化在了 ESP32 C3 内部的 ROM 中，它会从 flash 的 0x0 偏移地址处加载二级引导程序至 RAM (IRAM &#38; DRAM) 中。 2. 二级引导程序 从 flash"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/templates/classic/posts/esp32-c3%E6%89%8B%E5%8A%A8%E7%83%A7%E5%BD%95bin%E6%96%87%E4%BB%B6/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#4d81ef"><link rel="canonical" href="https://blog.huii.top/templates/classic/posts/esp32-c3%E6%89%8B%E5%8A%A8%E7%83%A7%E5%BD%95bin%E6%96%87%E4%BB%B6/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.PS7qN8BI.css">
+<style>.pagination[data-astro-cid-d776pwuy]{display:flex;align-items:center;justify-content:center;gap:.9rem;margin-top:2.4rem;flex-wrap:wrap}.pagination-summary[data-astro-cid-d776pwuy]{display:inline-flex;align-items:baseline;gap:.22rem;padding:0 .15rem;color:var(--theme-muted);letter-spacing:.04em}.pagination-summary[data-astro-cid-d776pwuy] strong[data-astro-cid-d776pwuy]{color:var(--theme-text);font-size:1.15rem}.pagination-pages[data-astro-cid-d776pwuy]{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.pagination-arrow[data-astro-cid-d776pwuy],.pagination-page[data-astro-cid-d776pwuy]{display:inline-flex;align-items:center;justify-content:center;min-width:2.8rem;min-height:2.8rem;padding:0 .95rem;border:1px solid var(--theme-line);border-radius:999px;background:var(--theme-panel);color:var(--theme-text);box-shadow:var(--theme-shadow);transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}.pagination-arrow[data-astro-cid-d776pwuy]:hover,.pagination-page[data-astro-cid-d776pwuy]:hover{transform:translateY(-2px);border-color:var(--theme-soft-fill-strong)}.pagination-page[data-astro-cid-d776pwuy].is-active{background:var(--theme-color);color:#fff;border-color:transparent}.pagination-arrow[data-astro-cid-d776pwuy].is-disabled{opacity:.45;box-shadow:none}.pagination-gap[data-astro-cid-d776pwuy]{color:var(--theme-muted);padding:0 .1rem}@media(max-width:760px){.pagination[data-astro-cid-d776pwuy]{justify-content:center;gap:.7rem}.pagination-summary[data-astro-cid-d776pwuy]{width:100%;justify-content:center;order:-1}.pagination-pages[data-astro-cid-d776pwuy]{justify-content:center;width:100%}.pagination-arrow[data-astro-cid-d776pwuy]{min-width:calc(50% - .5rem);padding:0 .75rem}}
+</style>
+<link rel="stylesheet" href="/_astro/index.R3ImXAFw.css"></head> <body> <div class="page" id="body-wrap" data-theme-preset="classic" data-home-template="showcase" data-card-style="magazine" data-sidebar-style="stacked" style="--theme-color:#4d81ef;--theme-color-deep:#274f99;--theme-accent:#12243a;--theme-text:#1b2736;--theme-muted:#607286;--theme-line:rgba(89, 113, 145, 0.16);--theme-bg:#eff4fb;--theme-panel:rgba(255, 255, 255, 0.92);--theme-panel-solid:#ffffff;--theme-panel-soft:rgba(255, 255, 255, 0.76);--theme-shadow:0 22px 55px rgba(24, 44, 78, 0.08);--theme-shadow-strong:0 26px 68px rgba(24, 44, 78, 0.14);--theme-bg-image:radial-gradient(circle at top right, rgba(77, 129, 239, 0.16), transparent 19%), radial-gradient(circle at left 10%, rgba(18, 36, 58, 0.08), transparent 28%), linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);--theme-nav-bg:rgba(248, 251, 255, 0.78);--theme-nav-border:rgba(77, 129, 239, 0.08);--theme-hero-mask:linear-gradient(135deg, rgba(16, 37, 66, 0.24), rgba(16, 37, 66, 0.58)), linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.16));--theme-hero-panel-bg:rgba(9, 25, 48, 0.28);--theme-hero-panel-border:rgba(255, 255, 255, 0.16);--theme-hero-panel-shadow:0 24px 60px rgba(8, 24, 46, 0.2);--theme-soft-fill:rgba(77, 129, 239, 0.06);--theme-soft-fill-strong:rgba(77, 129, 239, 0.1);--theme-code-bg:#13263b;--theme-code-text:#edf4ff;--theme-reading-text:#334155;--radius-lg:30px;--radius-md:22px;--radius-sm:18px;--nav-width:1500px;--content-width:1520px;--page-width:1240px;--reading-width:1500px;--font-sans:&#34;Avenir Next&#34;, &#34;Helvetica Neue&#34;, &#34;PingFang SC&#34;, &#34;Microsoft YaHei&#34;, sans-serif;--font-display:&#34;Iowan Old Style&#34;, &#34;Palatino Linotype&#34;, &#34;Noto Serif SC&#34;, &#34;Source Han Serif SC&#34;, serif"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>ESP32-C3手动烧录bin文件</h1> <p>一、应用程序的启动流程 宏观上，该启动流程可以分为如下 3 个步骤： 1. 一级引导程序 被固化在了 ESP32 C3 内部的 ROM 中，它会从 flash 的 0x0 偏移地址处加载二级引导程序至 RAM (IRAM &amp; DRAM) 中。 2. 二级引导程序 从 flash</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2022年1月18日</span> <span>阅读约 3 分钟</span> </div> <div class="reading-categories"> <a href="/categories/mcu/">MCU</a> </div> <div class="reading-tags"> <a href="/tags/esp32-c3/">#ESP32-C3</a><a href="/tags/mcu/">#MCU</a> </div> </header> <div class="post-content reading-content"><h2 id="一-应用程序的启动流程">一、应用程序的启动流程</h2><p>宏观上，该启动流程可以分为如下 3 个步骤：</p><ol><li><p>一级引导程序 被固化在了 ESP32 C3 内部的 ROM 中，它会从 flash 的 0x0 偏移地址处加载二级引导程序至 RAM (IRAM &amp; DRAM) 中。</p></li><li><p>二级引导程序 从 flash 中加载分区表和主程序镜像至内存中，主程序中包含了 RAM 段和通过 flash 高速缓存映射的只读段。</p></li><li><p>应用程序启动阶段 运行，这时第二个 CPU 和 RTOS 的调度器启动。</p></li></ol><p>（摘自：<a href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/api-guides/startup.html#app-main-task" target="_blank" rel="noreferrer">应用程序的启动流程 - ESP32-C3 - — ESP-IDF 编程指南 latest 文档 (espressif.com)</a>）</p><h2 id="二-烧录内容">二、烧录内容</h2><p>共需要烧录三部分内容：</p><h4 id="1-bootloader-bin">1. bootloader.bin</h4><p>ESP-IDF 软件引导加载程序 (Bootloader) 主要执行以下任务：</p><ol><li>内部模块的最小化初始配置；</li><li>如果配置了 <a href="https://docs.espressif.com/projects/esp idf/zh CN/latest/esp32c3/security/flash encryption.html" target="_blank" rel="noreferrer">Flash 加密</a> 和/或 <a href="https://docs.espressif.com/projects/esp idf/zh CN/latest/esp32c3/security/secure boot v2.html" target="_blank" rel="noreferrer">Secure</a> ，则对其进行初始化。</li><li>根据分区表和 ota data（如果存在）选择需要引导的应用程序 (app) 分区；</li><li>将此应用程序镜像加载到 RAM（IRAM 和 DRAM）中，最后把控制权转交给此应用程序。</li></ol><p>引导加载程序位于 flash 的 0x0 偏移地址处。</p><p>（摘自：<a href="https://docs.espressif.com/projects/esp-idf/zh_CN/latest/esp32c3/api-guides/bootloader.html" target="_blank" rel="noreferrer">引导加载程序 (Bootloader) - ESP32-C3 - — ESP-IDF 编程指南 latest 文档 (espressif.com)</a>）</p><h3 id="2-partition-table-bin">2. partition-table.bin</h3><p>    分区表（partition table ）是 ESP-IDF 框架中实现的一种分配 flash 的方式 ，对 spi_flash_{read|write|erase} 等接口进行了封装，增加了越界检查，同时尽量避免了直接操作 flash 地址，所以更加简单安全，但分区表擦写操作本身不具备擦写均衡，如果希望使用分区表存储用户数据，只建议存储不会频繁更改的数据。</p><h3 id="3-应用程序-bin">3. 应用程序.bin</h3><p>应用程序对应bin文件。</p><h2 id="三-烧录对于地址与指令">三、烧录对于地址与指令</h2><pre><code>内容 | 起始地址
+bootloader.bin | 0x0000 0000
+partition table.bin | 0x0000 8000
+应用程序.bin | 0x0001 0000</code></pre><p>其中COM3为对应的COM口，要根据实际进行修改</p><pre><code>python -m esptool --chip esp32c3 --port COM3 --baud 460800 write_flash -z 0x0 bootloader.bin</code></pre><pre><code>python -m esptool --chip esp32c3 --port COM3 --baud 460800 write_flash -z 0x8000 partition-table.bin</code></pre><pre><code>python -m esptool --chip esp32c3 --port COM3 --baud 460800 write_flash -z 0x10000 应用程序.bin</code></pre><h2 id="四-总结">四、总结</h2><p>这样的烧录结果与调用<code>idf.py -p COM3 flash</code>的效果一致。</p><h2 id="五-附件">五、附件</h2><p> <a href="/data/esp32c3/bootloader.bin" target="_blank" rel="noreferrer">bootloader.bin</a> </p><p> <a href="/data/esp32c3/partition-table.bin" target="_blank" rel="noreferrer">partition-table.bin</a> </p></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/templates/classic/posts/c-c-from-于仕琪-南科大/">C&amp;C++ from 于仕琪 南科大</a> </div> <div> <span>下一篇</span> <a href="/templates/classic/posts/记录django-uwsgi-nginx配置/">记录Django+uwsgi+Nginx配置</a> </div> </nav>  </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-2" href="#一-应用程序的启动流程" data-toc-link="一-应用程序的启动流程"> 一、应用程序的启动流程 </a><a class="toc-level-2" href="#二-烧录内容" data-toc-link="二-烧录内容"> 二、烧录内容 </a><a class="toc-level-3" href="#2-partition-table-bin" data-toc-link="2-partition-table-bin"> 2. partition-table.bin </a><a class="toc-level-3" href="#3-应用程序-bin" data-toc-link="3-应用程序-bin"> 3. 应用程序.bin </a><a class="toc-level-2" href="#三-烧录对于地址与指令" data-toc-link="三-烧录对于地址与指令"> 三、烧录对于地址与指令 </a><a class="toc-level-2" href="#四-总结" data-toc-link="四-总结"> 四、总结 </a><a class="toc-level-2" href="#五-附件" data-toc-link="五-附件"> 五、附件 </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = tocLinks
+      .map((link) => {
+        const id = link.getAttribute("data-toc-link");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean);
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

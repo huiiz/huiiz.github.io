@@ -1,0 +1,952 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Spring入门 · Essay | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="Spring 简介 雏形： interface21 诞生： 2004年3月24日 理念：使现有的技术更加容易使用，本身是大杂烩，整合了现有的技术框架。 spring web mvc xml <! https://mvnrepository.com/artifact/org.spr"><meta property="og:title" content="Spring入门 · Essay | HUII's Blog"><meta property="og:description" content="Spring 简介 雏形： interface21 诞生： 2004年3月24日 理念：使现有的技术更加容易使用，本身是大杂烩，整合了现有的技术框架。 spring web mvc xml <! https://mvnrepository.com/artifact/org.spr"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/templates/essay/posts/spring%E5%85%A5%E9%97%A8/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#315c6d"><link rel="canonical" href="https://blog.huii.top/templates/essay/posts/spring%E5%85%A5%E9%97%A8/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.PS7qN8BI.css">
+<style>.pagination[data-astro-cid-d776pwuy]{display:flex;align-items:center;justify-content:center;gap:.9rem;margin-top:2.4rem;flex-wrap:wrap}.pagination-summary[data-astro-cid-d776pwuy]{display:inline-flex;align-items:baseline;gap:.22rem;padding:0 .15rem;color:var(--theme-muted);letter-spacing:.04em}.pagination-summary[data-astro-cid-d776pwuy] strong[data-astro-cid-d776pwuy]{color:var(--theme-text);font-size:1.15rem}.pagination-pages[data-astro-cid-d776pwuy]{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.pagination-arrow[data-astro-cid-d776pwuy],.pagination-page[data-astro-cid-d776pwuy]{display:inline-flex;align-items:center;justify-content:center;min-width:2.8rem;min-height:2.8rem;padding:0 .95rem;border:1px solid var(--theme-line);border-radius:999px;background:var(--theme-panel);color:var(--theme-text);box-shadow:var(--theme-shadow);transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}.pagination-arrow[data-astro-cid-d776pwuy]:hover,.pagination-page[data-astro-cid-d776pwuy]:hover{transform:translateY(-2px);border-color:var(--theme-soft-fill-strong)}.pagination-page[data-astro-cid-d776pwuy].is-active{background:var(--theme-color);color:#fff;border-color:transparent}.pagination-arrow[data-astro-cid-d776pwuy].is-disabled{opacity:.45;box-shadow:none}.pagination-gap[data-astro-cid-d776pwuy]{color:var(--theme-muted);padding:0 .1rem}@media(max-width:760px){.pagination[data-astro-cid-d776pwuy]{justify-content:center;gap:.7rem}.pagination-summary[data-astro-cid-d776pwuy]{width:100%;justify-content:center;order:-1}.pagination-pages[data-astro-cid-d776pwuy]{justify-content:center;width:100%}.pagination-arrow[data-astro-cid-d776pwuy]{min-width:calc(50% - .5rem);padding:0 .75rem}}
+</style>
+<link rel="stylesheet" href="/_astro/index.R3ImXAFw.css"></head> <body> <div class="page" id="body-wrap" data-theme-preset="essay" data-home-template="showcase" data-card-style="magazine" data-sidebar-style="stacked" style="--theme-color:#315c6d;--theme-color-deep:#173646;--theme-accent:#11212c;--theme-text:#18242c;--theme-muted:#5f6f79;--theme-line:rgba(49, 92, 109, 0.14);--theme-bg:#eef1f2;--theme-panel:rgba(255, 255, 255, 0.92);--theme-panel-solid:#ffffff;--theme-panel-soft:rgba(247, 249, 250, 0.9);--theme-shadow:0 12px 28px rgba(21, 38, 47, 0.05);--theme-shadow-strong:0 18px 40px rgba(21, 38, 47, 0.08);--theme-bg-image:radial-gradient(circle at top left, rgba(49, 92, 109, 0.09), transparent 24%), radial-gradient(circle at 82% 12%, rgba(23, 54, 70, 0.05), transparent 22%), linear-gradient(180deg, #fbfcfc 0%, #eef1f2 100%);--theme-nav-bg:rgba(251, 252, 251, 0.9);--theme-nav-border:rgba(49, 92, 109, 0.1);--theme-hero-mask:linear-gradient(135deg, rgba(17, 33, 44, 0.18), rgba(17, 33, 44, 0.26)), linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.1));--theme-hero-panel-bg:rgba(17, 33, 44, 0.16);--theme-hero-panel-border:rgba(255, 255, 255, 0.14);--theme-hero-panel-shadow:0 20px 44px rgba(20, 32, 38, 0.12);--theme-soft-fill:rgba(49, 92, 109, 0.06);--theme-soft-fill-strong:rgba(49, 92, 109, 0.12);--theme-code-bg:#16232d;--theme-code-text:#edf5f7;--theme-reading-text:#33424b;--radius-lg:12px;--radius-md:8px;--radius-sm:6px;--nav-width:1480px;--content-width:1500px;--page-width:1260px;--reading-width:1520px;--font-sans:&#34;IBM Plex Sans&#34;, &#34;Segoe UI&#34;, &#34;PingFang SC&#34;, &#34;Microsoft YaHei&#34;, sans-serif;--font-display:&#34;Georgia&#34;, &#34;Times New Roman&#34;, &#34;Noto Serif SC&#34;, &#34;Source Han Serif SC&#34;, serif"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>Spring入门</h1> <p>Spring 简介 雏形： interface21 诞生： 2004年3月24日 理念：使现有的技术更加容易使用，本身是大杂烩，整合了现有的技术框架。 spring web mvc xml &lt;! https://mvnrepository.com/artifact/org.spr</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2021年7月22日</span> <span>阅读约 61 分钟</span> </div> <div class="reading-categories"> <a href="/categories/coding/">Coding</a> </div> <div class="reading-tags"> <a href="/tags/java/">#Java</a><a href="/tags/spring/">#Spring</a> </div> </header> <div class="post-content reading-content"><h3 id="spring">Spring</h3><h4 id="简介">简介</h4><ul><li>&lt;p 雏形：<strong>interface21</strong> </p></li><li>&lt;p 诞生：<strong>2004年3月24日</strong> </p></li><li><p>理念：使现有的技术更加容易使用，本身是大杂烩，整合了现有的技术框架。</p></li><li><p>spring web mvc</p></li></ul><pre><code>&lt;!-- https://mvnrepository.com/artifact/org.springframework/spring-webmvc --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+    &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+    &lt;version&gt;5.3.9&lt;/version&gt;
+&lt;/dependency&gt;
+</code></pre><h4 id="优点">优点</h4><ul><li>开源免费框架</li><li>非入侵式，轻量级</li><li><strong>控制反转（IOC），面向切面编程（AOP）</strong></li><li>支持事务的处理，对框架整合的支持</li></ul><h4 id="组成">组成</h4><figure><img src="/notion/spring入门/image/image-20210722074628028.png" alt="image-20210722074628028" /><figcaption>image-20210722074628028</figcaption></figure><h4 id="拓展">拓展</h4><h4 id="spring-boot">Spring Boot</h4><ul><li>一个快速开发的脚手架</li><li>基于Spring Boot可以快速开发单个微服务</li><li>约定大于配置</li></ul><h4 id="springcloud">SpringCloud</h4><ul><li>Spring Cloud是基于Spring Boot实现的</li></ul><p>大部分公司都在使用Spring Boot开发，Spring和Spring MVC是学习的前提</p><h3 id="ioc">IOC</h3><h4 id="ioc原型-控制反转">ioc原型（控制反转）</h4><p>利用set实现动态值注入，发生了革命性变化</p><pre><code>//    利用set实现动态值注入
+    public void setUserDao(UserDao userDao){
+        this.userDao = userDao;
+    }
+}</code></pre><ul><li><p>之前程序是主动创建对象，控制权在程序员手上</p></li><li><p>使用set注入后，程序不再具有主动性，而是变成被动接受对象。</p></li></ul><p><strong>控制反转是一种通过描述（XML或注解）并通过第三方去生产或获取特定对象的方式。在Spring中实现控制反转的是IOC容器，其实现方法是依赖注入。</strong></p><h3 id="hello-spring">Hello Spring</h3><p><strong>结构如图</strong></p><figure><img src="/img/image-20210801210639422.png" alt="image-20210801210639422" /><figcaption>image-20210801210639422</figcaption></figure><h4 id="hello-java">Hello.java</h4><pre><code>package top.huii.pojo;
+
+public class Hello {
+    private String str;
+
+    public String getStr() {
+        return str;
+    }
+
+    public void setStr(String str) {
+        this.str = str;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;Hello{&quot; +
+                &quot;str=&#39;&quot; + str + &#39;\&#39;&#39; +
+                &#39;}&#39;;
+    }
+}
+</code></pre><h4 id="配置文件beans-xml-可使用idea生成模板">配置文件beans.xml(可使用IDEA生成模板)</h4><figure><img src="/img/image-20210801210814821.png" alt="image-20210801210814821" /><figcaption>image-20210801210814821</figcaption></figure><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+&lt;!--    
+bean = 对象 new Hello()
+property相当于给内容赋值
+--&gt;
+    &lt;bean id=&quot;Hello&quot; class=&quot;top.huii.pojo.Hello&quot;&gt;
+        &lt;property name=&quot;str&quot; value=&quot;Spring&quot;/&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</code></pre><h4 id="测试文件mytest-java">测试文件MyTest.java</h4><pre><code>import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import top.huii.pojo.Hello;
+
+public class MyTest{
+    public static void main(String[] args) {
+        // 获取spring的上下文对象
+        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;beans.xml&quot;);
+        Hello hello = (Hello) context.getBean(&quot;Hello&quot;);
+        System.out.println(hello.toString());
+    }
+}</code></pre><h3 id="ioc创建对象的方法">IOC创建对象的方法</h3><h4 id="1-使用无参构造创建对象-默认">1 使用无参构造创建对象。默认</h4><h4 id="2-有参构造">2 有参构造</h4><h4 id="①下标赋值">①下标赋值</h4><pre><code>&lt;bean id=&quot;exampleBean&quot; class=&quot;examples.ExampleBean&quot;&gt;
+    &lt;constructor-arg index=&quot;0&quot; value=&quot;7500000&quot;/&gt;
+    &lt;constructor-arg index=&quot;1&quot; value=&quot;42&quot;/&gt;
+&lt;/bean&gt;</code></pre><h4 id="②-参数类型匹配-不建议使用">② 参数类型匹配(不建议使用)</h4><pre><code>&lt;bean id=&quot;exampleBean&quot; class=&quot;examples.ExampleBean&quot;&gt;
+    &lt;constructor-arg type=&quot;int&quot; value=&quot;7500000&quot;/&gt;
+    &lt;constructor-arg type=&quot;java.lang.String&quot; value=&quot;42&quot;/&gt;
+&lt;/bean&gt;</code></pre><h4 id="③通过参数名设置">③通过参数名设置</h4><pre><code>&lt;bean id=&quot;exampleBean&quot; class=&quot;examples.ExampleBean&quot;&gt;
+    &lt;constructor-arg name=&quot;years&quot; value=&quot;7500000&quot;/&gt;
+    &lt;constructor-arg name=&quot;ultimateAnswer&quot; value=&quot;42&quot;/&gt;
+&lt;/bean&gt;</code></pre><h3 id="spring配置">Spring配置</h3><h4 id="别名">别名</h4><pre><code>&lt;alias name=&quot;fromName&quot; alias=&quot;toName&quot;/&gt;</code></pre><h4 id="bean配置">Bean配置</h4><pre><code>&lt;bean id=&quot;exampleBean&quot; class=&quot;examples.ExampleBean&quot; name=&quot;user user2,user3;user4&quot;&gt;
+    &lt;property name=&quot;integerProperty&quot; value=&quot;1&quot;/&gt;
+&lt;/bean&gt;</code></pre><h4 id="import">import</h4><p> ApplicationContext.xml</p><pre><code>&lt;beans&gt;
+    &lt;import resource=&quot;services.xml&quot;/&gt;
+    &lt;import resource=&quot;resources/messageSource.xml&quot;/&gt;
+    &lt;import resource=&quot;/resources/themeSource.xml&quot;/&gt;
+
+    &lt;bean id=&quot;bean1&quot; class=&quot;...&quot;/&gt;
+    &lt;bean id=&quot;bean2&quot; class=&quot;...&quot;/&gt;
+&lt;/beans&gt;</code></pre><h3 id="依赖注入">依赖注入</h3><h4 id="构造器注入">构造器注入</h4><p>上面已经说过</p><h4 id="set方式注入">set方式注入（*）</h4><h4 id="依赖">依赖</h4><p>bean的创建依赖于容器</p><h4 id="注入">注入</h4><p>bean对象中的所有属性，由容器来注入</p><h4 id="代码">代码</h4><p><strong>Address.java</strong></p><pre><code>package top.huii.pojo;
+
+public class Address {
+    private String address;
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;Address{&quot; +
+                &quot;address=&#39;&quot; + address + &#39;\&#39;&#39; +
+                &#39;}&#39;;
+    }
+}</code></pre><p><strong>Student.java</strong></p><pre><code>package top.huii.pojo;
+
+import java.util.*;
+
+public class Student {
+    private String name;
+    private Address address;
+    private String[] books;
+    private List&lt;String&gt; hobbies;
+    private Map&lt;String, String&gt; card;
+    private Set&lt;String&gt; games;
+    private String wife;
+    private Properties info;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public Address getAddress() {
+        return address;
+    }
+
+    public void setAddress(Address address) {
+        this.address = address;
+    }
+
+    public String[] getBooks() {
+        return books;
+    }
+
+    public void setBooks(String[] books) {
+        this.books = books;
+    }
+
+    public List&lt;String&gt; getHobbies() {
+        return hobbies;
+    }
+
+    public void setHobbies(List&lt;String&gt; hobbies) {
+        this.hobbies = hobbies;
+    }
+
+    public Map&lt;String, String&gt; getCard() {
+        return card;
+    }
+
+    public void setCard(Map&lt;String, String&gt; card) {
+        this.card = card;
+    }
+
+    public Set&lt;String&gt; getGames() {
+        return games;
+    }
+
+    public void setGames(Set&lt;String&gt; games) {
+        this.games = games;
+    }
+
+    public String getWife() {
+        return wife;
+    }
+
+    public void setWife(String wife) {
+        this.wife = wife;
+    }
+
+    public Properties getInfo() {
+        return info;
+    }
+
+    public void setInfo(Properties info) {
+        this.info = info;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;Student{&quot; +
+                &quot;name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &quot;, address=&quot; + address.toString() +
+                &quot;, books=&quot; + Arrays.toString(books) +
+                &quot;, hobbies=&quot; + hobbies +
+                &quot;, card=&quot; + card +
+                &quot;, games=&quot; + games +
+                &quot;, wife=&#39;&quot; + wife + &#39;\&#39;&#39; +
+                &quot;, info=&quot; + info +
+                &#39;}&#39;;
+    }
+
+}
+</code></pre><p><strong>beans.xml</strong></p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;bean id=&quot;address&quot; class=&quot;top.huii.pojo.Address&quot;&gt;
+        &lt;property name=&quot;address&quot; value=&quot;合肥&quot;/&gt;
+    &lt;/bean&gt;
+    &lt;bean id=&quot;student&quot; class=&quot;top.huii.pojo.Student&quot;&gt;
+        &lt;!--普通类，value--&gt;
+        &lt;property name=&quot;name&quot; value=&quot;HUII&quot;/&gt;
+        &lt;!--Bean注入--&gt;
+        &lt;property name=&quot;address&quot; ref=&quot;address&quot;/&gt;
+        &lt;!--数组注入--&gt;
+        &lt;property name=&quot;books&quot;&gt;
+            &lt;array&gt;
+                &lt;value&gt;红楼梦&lt;/value&gt;
+                &lt;value&gt;西游记&lt;/value&gt;
+                &lt;value&gt;水浒传&lt;/value&gt;
+                &lt;value&gt;三国演义&lt;/value&gt;
+            &lt;/array&gt;
+        &lt;/property&gt;
+        &lt;!--list--&gt;
+        &lt;property name=&quot;hobbies&quot;&gt;
+            &lt;list&gt;
+                &lt;value&gt;听歌&lt;/value&gt;
+                &lt;value&gt;代码&lt;/value&gt;
+            &lt;/list&gt;
+        &lt;/property&gt;
+        &lt;!--map--&gt;
+        &lt;property name=&quot;card&quot;&gt;
+            &lt;map&gt;
+                &lt;entry key=&quot;身份证&quot; value=&quot;11111111111111111111111&quot;/&gt;
+            &lt;/map&gt;
+        &lt;/property&gt;
+        &lt;!--set--&gt;
+        &lt;property name=&quot;games&quot;&gt;
+            &lt;set&gt;
+                &lt;value&gt;LOL&lt;/value&gt;
+                &lt;value&gt;qqfc&lt;/value&gt;
+            &lt;/set&gt;
+        &lt;/property&gt;
+        &lt;!--null--&gt;
+        &lt;property name=&quot;wife&quot;&gt;
+            &lt;null/&gt;
+        &lt;/property&gt;
+        &lt;!--properties--&gt;
+        &lt;property name=&quot;info&quot;&gt;
+            &lt;props&gt;
+                &lt;prop key=&quot;学号&quot;&gt;2019210001&lt;/prop&gt;
+                &lt;prop key=&quot;国籍&quot;&gt;中国&lt;/prop&gt;
+            &lt;/props&gt;
+        &lt;/property&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</code></pre><p><strong>MyTest.java</strong></p><pre><code>import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import top.huii.pojo.Student;
+
+public class MyTest {
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;beans.xml&quot;);
+        Student student = (Student) context.getBean(&quot;student&quot;);
+//        System.out.println(student.getName());
+        System.out.println(student.toString());
+    }
+}</code></pre><h4 id="扩展方式">扩展方式</h4><h4 id="p命名空间">p命名空间</h4><p>user.java</p><pre><code>package top.huii.pojo;
+
+public class User {
+    private String name;
+    private int age;
+
+    public User() {
+    }
+
+    public User(String name, int age) {
+        this.name = name;
+        this.age = age;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public int getAge() {
+        return age;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;User{&quot; +
+                &quot;name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &quot;, age=&quot; + age +
+                &#39;}&#39;;
+    }
+}</code></pre><p><strong>userbeans.xml</strong></p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:p=&quot;http://www.springframework.org/schema/p&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;!--p命名空间可以直接注入属性--&gt;
+    &lt;bean id=&quot;user&quot; class=&quot;top.huii.pojo.User&quot; p:age=&quot;18&quot; p:name=&quot;HUII&quot;/&gt;
+&lt;/beans&gt;</code></pre><p><strong>测试</strong></p><pre><code>public class MyTest {
+    @Test
+    public void test2(){
+        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;userbeans.xml&quot;);
+        User user = (User) context.getBean(&quot;user&quot;);
+        System.out.println(user);
+    }
+}</code></pre><h4 id="c命名空间">c命名空间</h4><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:c=&quot;http://www.springframework.org/schema/c&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;!--c命名空间,通过构造器注入--&gt;
+    &lt;bean id=&quot;user2&quot; class=&quot;top.huii.pojo.User&quot; c:age=&quot;19&quot; c:name=&quot;huii&quot;/&gt;
+&lt;/beans&gt;</code></pre><h3 id="bean的作用域">bean的作用域</h3><h4 id="单例模式-默认">单例模式（默认）</h4><p>只有一个对象</p><figure><img src="/img/singleton.png" alt="singleton" /><figcaption>singleton</figcaption></figure><pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.foo.DefaultAccountService&quot;/&gt;
+
+&lt;!-- the following is equivalent, though redundant (singleton scope is the default) --&gt;
+&lt;bean id=&quot;accountService&quot; class=&quot;com.foo.DefaultAccountService&quot; scope=&quot;singleton&quot;/&gt;</code></pre><h4 id="原型模式">原型模式</h4><p>每次从容器中get的时候，都会产生一个新对象</p><figure><img src="/img/prototype.png" alt="prototype" /><figcaption>prototype</figcaption></figure><pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.foo.DefaultAccountService&quot; scope=&quot;prototype&quot;/&gt;</code></pre><h4 id="其他">其他</h4><p>request，session，application只能在web开发中使用</p><h3 id="bean的自动装配">Bean的自动装配</h3><p><strong>自动寻找并装配属性</strong></p><p>配置的三种方式</p><ul><li>xml中显式配置</li><li>java中显式配置</li><li>隐式自动装配bean（ ）</li></ul><h4 id="准备代码">准备代码</h4><p><strong>cat.java</strong></p><pre><code>package top.huii.pojo;
+
+public class Cat {
+    public void shout(){
+        System.out.println(&quot;miao&quot;);
+    }
+}</code></pre><p><strong>dog.java</strong></p><pre><code>package top.huii.pojo;
+
+public class Dog {
+    public void shout(){
+        System.out.println(&quot;wang&quot;);
+    }
+}</code></pre><p><strong>people.java</strong></p><pre><code>package top.huii.pojo;
+
+public class People {
+    private Cat cat;
+    private Dog dog;
+    private String name;
+
+    public Cat getCat() {
+        return cat;
+    }
+
+    public void setCat(Cat cat) {
+        this.cat = cat;
+    }
+
+    public Dog getDog() {
+        return dog;
+    }
+
+    public void setDog(Dog dog) {
+        this.dog = dog;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;People{&quot; +
+                &quot;cat=&quot; + cat +
+                &quot;, dog=&quot; + dog +
+                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &#39;}&#39;;
+    }
+}</code></pre><p><strong>测试</strong></p><pre><code>import org.junit.Test;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import top.huii.pojo.People;
+
+public class MyTest {
+    @Test
+    public void test1(){
+        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;beans.xml&quot;);
+        People people = context.getBean(&quot;people&quot;, People.class);
+        people.getCat().shout();
+        people.getDog().shout();
+    }
+}</code></pre><h4 id="byname自动装配">byName自动装配</h4><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;bean id=&quot;cat&quot; class=&quot;top.huii.pojo.Cat&quot;/&gt;
+    &lt;bean id=&quot;dog&quot; class=&quot;top.huii.pojo.Dog&quot;/&gt;
+    &lt;!--byName会自动在容器上下文中查找和自己对象set方法后面的值对应的beanid--&gt;
+    &lt;bean id=&quot;people&quot; class=&quot;top.huii.pojo.People&quot; autowire=&quot;byName&quot;&gt;
+        &lt;property name=&quot;name&quot; value=&quot;HUII&quot;/&gt;
+&lt;!--        &lt;property name=&quot;cat&quot; ref=&quot;cat&quot;/&gt;--&gt;
+&lt;!--        &lt;property name=&quot;dog&quot; ref=&quot;dog&quot;/&gt;--&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</code></pre><p>需要保证所有的bean的id唯一，且这个bean需要和自动注入的属性的set方法的值一致。</p><h4 id="bytype自动装配">byType自动装配</h4><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;bean id=&quot;cat&quot; class=&quot;top.huii.pojo.Cat&quot;/&gt;
+    &lt;bean id=&quot;dog&quot; class=&quot;top.huii.pojo.Dog&quot;/&gt;
+    &lt;!--byType会自动在容器上下文中查找和自己对象相同类型的bean--&gt;
+    &lt;bean id=&quot;people&quot; class=&quot;top.huii.pojo.People&quot; autowire=&quot;byType&quot;&gt;
+        &lt;property name=&quot;name&quot; value=&quot;HUII&quot;/&gt;
+&lt;!--        &lt;property name=&quot;cat&quot; ref=&quot;cat&quot;/&gt;--&gt;
+&lt;!--        &lt;property name=&quot;dog&quot; ref=&quot;dog&quot;/&gt;--&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</code></pre><p><strong>byType甚至可以省略id</strong></p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;bean class=&quot;top.huii.pojo.Cat&quot;/&gt;
+    &lt;bean class=&quot;top.huii.pojo.Dog&quot;/&gt;
+    &lt;!--byName会自动在容器上下文中查找和自己对象set方法后面的值对应的beanid--&gt;
+    &lt;!--byType会自动在容器上下文中查找和自己对象相同类型的bean--&gt;
+    &lt;bean id=&quot;people&quot; class=&quot;top.huii.pojo.People&quot; autowire=&quot;byType&quot;&gt;
+        &lt;property name=&quot;name&quot; value=&quot;HUII&quot;/&gt;
+&lt;!--        &lt;property name=&quot;cat&quot; ref=&quot;cat&quot;/&gt;--&gt;
+&lt;!--        &lt;property name=&quot;dog&quot; ref=&quot;dog&quot;/&gt;--&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</code></pre><p>需要保证所有的bean的class唯一，且这个bean需要和自动注入的属性的类型一致。</p><h4 id="使用注解实现自动装配">使用注解实现自动装配</h4><ul><li>导入约束 content约束</li><li>配置注解的支持</li></ul><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+    &lt;context:annotation-config/&gt;
+    &lt;bean class=&quot;top.huii.pojo.Cat&quot;/&gt;
+    &lt;bean class=&quot;top.huii.pojo.Dog&quot;/&gt;
+    &lt;bean id=&quot;people&quot; class=&quot;top.huii.pojo.People&quot;/&gt;
+&lt;/beans&gt;</code></pre><p>可以省去很多配置，甚至set可以省去</p><p>People.java</p><pre><code>package top.huii.pojo;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class People {
+    @Autowired
+    private Cat cat;
+    @Autowired
+    private Dog dog;
+    private String name;
+
+    public Cat getCat() {
+        return cat;
+    }
+
+    public Dog getDog() {
+        return dog;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;People{&quot; +
+                &quot;cat=&quot; + cat +
+                &quot;, dog=&quot; + dog +
+                &quot;, name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &#39;}&#39;;
+    }
+}</code></pre><p><code>@Autowired</code>直接在属性上使用即可。也可以在set方式上使用。可不写set。</p><p><code>@Nullable</code>表明字段可为空</p><pre><code>public class SimpleMovieLister {
+
+    @Inject
+    public void setMovieFinder(@Nullable MovieFinder movieFinder) {
+        ...
+    }
+}</code></pre><p><code>@Autowired</code>较为复杂时，可以使用<code>@Qualifier</code>指定唯一bean对象注入</p><p><code>@Resource</code></p><pre><code>public class SimpleMovieLister {
+
+    private MovieFinder movieFinder;
+
+    @Resource(name=&quot;myMovieFinder&quot;)
+    public void setMovieFinder(MovieFinder movieFinder) {
+        this.movieFinder = movieFinder;
+    }
+}</code></pre><h3 id="使用注解开发">使用注解开发</h3><p>使用注解需要导入context约束，增加注解的支持</p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+
+    &lt;context:annotation-config/&gt;
+
+&lt;/beans&gt;</code></pre><h4 id="使用-component">使用@Component</h4><p><strong>配置文件</strong></p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+
+    &lt;context:component-scan base-package=&quot;top.huii.dao&quot;/&gt;
+    &lt;context:annotation-config/&gt;
+
+&lt;/beans&gt;</code></pre><p><strong>User.java</strong></p><pre><code>package top.huii.dao;
+
+import org.springframework.stereotype.Component;
+
+//等价于在配置文件中进行配置
+@Component
+public class User {
+    public String name = &quot;HUII&quot;;
+}</code></pre><h4 id="value属性注入">@Value属性注入</h4><pre><code>@Component
+public class User {
+    @Value(&quot;HUII&quot;)
+    public String name = &quot;HUII&quot;;
+}
+</code></pre><h4 id="衍生注解">衍生注解</h4><p>@Component有几个衍生注释</p><figure><img src="/img/image-20210802141731740.png" alt="image-20210802141731740" /><figcaption>image-20210802141731740</figcaption></figure><p><strong>UserDao.java</strong></p><pre><code>package top.huii.dao;
+
+import org.springframework.stereotype.Repository;
+
+@Repository
+public class UserDao {
+}</code></pre><p><strong>UserService</strong></p><pre><code>package top.huii.service;
+
+import org.springframework.stereotype.Service;
+
+@Service
+public class UserService {
+}</code></pre><p><strong>UserControl.java</strong></p><pre><code>package top.huii.controller;
+
+import org.springframework.stereotype.Controller;
+
+@Controller
+public class UserControl {
+}</code></pre><p><strong>配置文件</strong></p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd&quot;&gt;
+
+    &lt;context:component-scan base-package=&quot;top.huii&quot;/&gt;
+    &lt;context:annotation-config/&gt;
+
+&lt;/beans&gt;</code></pre><p>几个功能都表示将某个类注册到Spring中</p><h4 id="作用域-scope">作用域@Scope</h4><pre><code>@Component
+public class FactoryMethodComponent {
+
+    @Bean @Scope(&quot;prototype&quot;)
+    public TestBean prototypeInstance(InjectionPoint injectionPoint) {
+        return new TestBean(&quot;prototypeInstance for &quot; + injectionPoint.getMember());
+    }
+}</code></pre><h4 id="小结">小结</h4><ul><li>xml更万能，适合任何场合，维护方便</li><li>注解不是自己类使用不了，维护复杂</li></ul><h3 id="使用java的方式配置spring">使用Java的方式配置spring</h3><h4 id="javaconfig">JavaConfig</h4><figure><img src="/img/image-20210802144851313.png" alt="image-20210802144851313" /><figcaption>image-20210802144851313</figcaption></figure><p><strong>User.java</strong></p><pre><code>package top.huii.pojo;
+
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Component
+public class User {
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    @Value(&quot;HUII&quot;)
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    @Override
+    public String toString() {
+        return &quot;User{&quot; +
+                &quot;name=&#39;&quot; + name + &#39;\&#39;&#39; +
+                &#39;}&#39;;
+    }
+}</code></pre><p><strong>配置文件MyConfig.java</strong></p><pre><code>package top.huii.config;
+
+import org.springframework.context.annotation.Bean;
+import org.springframework.context.annotation.Configuration;
+import top.huii.pojo.User;
+
+@Configuration
+public class MyConfig {
+    // 注册一个bean相当于bean标签
+    // 方法名字相当于id，返回值相当于class
+    @Bean
+    public User getUser(){
+        return new User();
+    }
+}</code></pre><p><strong>MyTest.java</strong></p><pre><code>import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import top.huii.config.MyConfig;
+import top.huii.pojo.User;
+
+public class MyTest {
+    public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(MyConfig.class);
+        User getUser = (User) context.getBean(&quot;getUser&quot;);
+        System.out.println(getUser.getName());
+    }
+}</code></pre><p>这种纯java配置的方法在SpringBoot中随处可见</p><h3 id="代理模式">代理模式</h3><h4 id="静态代理">静态代理</h4><p>Rent.java</p><pre><code>package top.huii.demo1;
+
+public interface Rent {
+    public void rent();
+}</code></pre><p>Host.java</p><pre><code>package top.huii.demo1;
+
+public class Host  implements Rent{
+    public void rent() {
+        System.out.println(&quot;房东要出租房子&quot;);
+    }
+}</code></pre><p>Proxy.java</p><pre><code>package top.huii.demo1;
+
+public class Proxy implements Rent{
+    private Host host;
+    public Proxy(){
+
+    }
+    public Proxy(Host host){
+        this.host = host;
+    }
+
+    public void rent() {
+        seeHouse();
+        host.rent();
+        heTong();
+    }
+
+    public void seeHouse(){
+        System.out.println(&quot;看房&quot;);
+    }
+
+    public void heTong(){
+        System.out.println(&quot;签合同&quot;);
+    }
+}</code></pre><p>Client.java</p><pre><code>package top.huii.demo1;
+
+public class Client {
+    public static void main(String[] args) {
+        Host host = new Host();
+        Proxy proxy = new Proxy(host);
+        proxy.rent();
+    }
+}</code></pre><p><strong>优点</strong></p><ul><li>使真实角色的操作更纯粹，不用去关心一些公共事务</li><li>公共事务交给代理角色，实现了业务的分工</li><li>公共业务发生拓展是方便集中管理</li></ul><p><strong>缺点</strong></p><ul><li>一个真实角色就会产生一个代理角色，代码量翻倍，开发效率降低</li></ul><h4 id="动态代理">动态代理</h4><ul><li>动态代理与静态代理角色一样</li><li>动态代理的代理类是动态生成的，不是我们直接写好的</li><li>动态代理分为两大类：①基于接口——基于JDK ②基于类cglib</li></ul><p>需要理解两个类：Proxy和InvocationHandler</p><p><strong>ProxyInvocationHandler.java</strong></p><pre><code>package top.huii.demo2;
+
+import java.lang.reflect.InvocationHandler;
+import java.lang.reflect.Method;
+import java.lang.reflect.Proxy;
+
+// 自动生成代理类
+public class ProxyInvocationHandler implements InvocationHandler{
+
+    // 被代理的接口
+    private Object target;
+
+    public void setTarget(Object target) {
+        this.target = target;
+    }
+
+    // 生成得到代理类
+    public Object getProxy(){
+        return Proxy.newProxyInstance(this.getClass().getClassLoader(), target.getClass().getInterfaces(), this);
+    }
+
+    // 处理代理实例，并返回结果
+    public Object invoke(Object proxy, Method method, Object[] args) throws Throwable{
+
+        // 本质使用代理
+        Object result = method.invoke(target, args);
+
+        return result;
+    }
+}</code></pre><p>优点：一个动态代理类可代理同一类业务</p><h3 id="aop">AOP</h3><p>面向切面编程</p><p>依赖包</p><pre><code>&lt;!-- https://mvnrepository.com/artifact/org.aspectj/aspectjweaver --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;org.aspectj&lt;/groupId&gt;
+    &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;
+    &lt;version&gt;1.9.7&lt;/version&gt;
+    &lt;scope&gt;runtime&lt;/scope&gt;
+&lt;/dependency&gt;</code></pre><h4 id="使用原生spring-api实现">使用原生Spring API实现</h4><figure><img src="/img/image-20210802183316830.png" alt="image-20210802183316830" /><figcaption>image-20210802183316830</figcaption></figure><p><strong>UserService.java</strong></p><pre><code>package top.huii.service;
+
+public interface UserService {
+    public void add();
+    public void delete();
+    public void update();
+    public void select();
+}</code></pre><p><strong>UserServiceImpl.java</strong></p><pre><code>package top.huii.service;
+
+public class UserServiceImpl implements UserService{
+    public void add() {
+        System.out.println(&quot;增加一个用户&quot;);
+    }
+
+    public void delete() {
+        System.out.println(&quot;删除一个用户&quot;);
+    }
+
+    public void update() {
+        System.out.println(&quot;修改一个用户&quot;);
+    }
+
+    public void select() {
+        System.out.println(&quot;查询一个用户&quot;);
+    }
+}</code></pre><p><strong>Log.java</strong></p><pre><code>package top.huii.log;
+
+import org.springframework.aop.MethodBeforeAdvice;
+
+import java.lang.reflect.Method;
+
+public class Log implements MethodBeforeAdvice {
+    // method:要执行的目标对象方法
+    // args: 参数
+    public void before(Method method, Object[] objects, Object o) throws Throwable {
+        System.out.println(o.getClass().getName()+&quot;的&quot;+method.getName()+&quot;被执行了&quot;);
+    }
+}</code></pre><p><strong>AfterLog.java</strong></p><pre><code>package top.huii.log;
+
+import org.springframework.aop.AfterReturningAdvice;
+
+import java.lang.reflect.Method;
+
+public class AfterLog implements AfterReturningAdvice {
+    public void afterReturning(Object o, Method method, Object[] objects, Object o1) throws Throwable {
+        System.out.println(&quot;执行了&quot;+method.getName()+&quot;返回结果为&quot;+o);
+    }
+}</code></pre><p><strong>配置文件</strong></p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd&quot;&gt;
+
+    &lt;bean id=&quot;userService&quot; class=&quot;top.huii.service.UserServiceImpl&quot;/&gt;
+    &lt;bean id=&quot;log&quot; class=&quot;top.huii.log.Log&quot;/&gt;
+    &lt;bean id=&quot;afterLog&quot; class=&quot;top.huii.log.AfterLog&quot;/&gt;
+
+&lt;!--    配置aop--&gt;
+    &lt;aop:config&gt;
+        &lt;!--切入点--&gt;
+        &lt;aop:pointcut id=&quot;pointcut&quot; expression=&quot;execution(* top.huii.service.UserServiceImpl.*(..))&quot;/&gt;
+        &lt;aop:advisor advice-ref=&quot;log&quot; pointcut-ref=&quot;pointcut&quot;/&gt;
+        &lt;aop:advisor advice-ref=&quot;afterLog&quot; pointcut-ref=&quot;pointcut&quot;/&gt;
+
+
+    &lt;/aop:config&gt;
+&lt;/beans&gt;</code></pre><p><strong>测试文件</strong></p><pre><code>import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import top.huii.service.UserService;
+
+public class MyTest {
+    public static void main(String[] args) {
+        ApplicationContext context = new ClassPathXmlApplicationContext(&quot;applicationContext.xml&quot;);
+        UserService userService = context.getBean(&quot;userService&quot;, UserService.class);
+        userService.add();
+    }
+}</code></pre><h4 id="自定义类">自定义类</h4><p><strong>DiyPointCut.java</strong></p><pre><code>package top.huii.diy;
+
+public class DiyPointCut {
+    public void before() {
+        System.out.println(&quot;=====方法执行前=====&quot;);
+    }
+
+    public void after() {
+        System.out.println(&quot;=====方法执行后=====&quot;);
+    }
+}</code></pre><p>配置文件</p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd&quot;&gt;
+
+    &lt;bean id=&quot;userService&quot; class=&quot;top.huii.service.UserServiceImpl&quot;/&gt;
+    &lt;bean id=&quot;log&quot; class=&quot;top.huii.log.Log&quot;/&gt;
+    &lt;bean id=&quot;afterLog&quot; class=&quot;top.huii.log.AfterLog&quot;/&gt;
+    &lt;!--方式二：自定义类--&gt;
+    &lt;bean id=&quot;diy&quot; class=&quot;top.huii.diy.DiyPointCut&quot;/&gt;
+    &lt;aop:config&gt;
+        &lt;aop:aspect ref=&quot;diy&quot;&gt;
+            &lt;!--切入点--&gt;
+            &lt;aop:pointcut id=&quot;point&quot; expression=&quot;execution(* top.huii.service.UserServiceImpl.*(..))&quot;/&gt;
+            &lt;aop:before method=&quot;before&quot; pointcut-ref=&quot;point&quot;/&gt;
+            &lt;aop:after method=&quot;after&quot; pointcut-ref=&quot;point&quot;/&gt;
+        &lt;/aop:aspect&gt;
+    &lt;/aop:config&gt;
+&lt;/beans&gt;</code></pre><h4 id="注解实现">注解实现</h4><p>AnnotationPointCut.java</p><pre><code>package top.huii.diy;
+
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+
+@Aspect
+public class AnnotationPointCut {
+    @Before(&quot;execution(* top.huii.service.UserServiceImpl.*(..))&quot;)
+    public void before(){
+        System.out.println(&quot;=====方法执行前=====&quot;);
+    }
+}</code></pre><p>配置文件</p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:aop=&quot;http://www.springframework.org/schema/aop&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd&quot;&gt;
+
+    &lt;bean id=&quot;userService&quot; class=&quot;top.huii.service.UserServiceImpl&quot;/&gt;
+    &lt;bean id=&quot;log&quot; class=&quot;top.huii.log.Log&quot;/&gt;
+    &lt;bean id=&quot;afterLog&quot; class=&quot;top.huii.log.AfterLog&quot;/&gt;
+    &lt;!--方式三：注解--&gt;
+    &lt;bean id=&quot;annotationPointCut&quot; class=&quot;top.huii.diy.AnnotationPointCut&quot;/&gt;
+    &lt;aop:aspectj-autoproxy/&gt;
+&lt;/beans&gt;</code></pre><h3 id="整合mybatis">整合Mybatis</h3><h4 id="基本环境搭建">基本环境搭建</h4><p>pom.xml</p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;project xmlns=&quot;http://maven.apache.org/POM/4.0.0&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd&quot;&gt;
+    &lt;parent&gt;
+        &lt;artifactId&gt;learn_spring1&lt;/artifactId&gt;
+        &lt;groupId&gt;top.huii&lt;/groupId&gt;
+        &lt;version&gt;1.0-SNAPSHOT&lt;/version&gt;
+    &lt;/parent&gt;
+    &lt;modelVersion&gt;4.0.0&lt;/modelVersion&gt;
+
+    &lt;artifactId&gt;Mybatis-spr&lt;/artifactId&gt;
+
+    &lt;properties&gt;
+        &lt;maven.compiler.source&gt;8&lt;/maven.compiler.source&gt;
+        &lt;maven.compiler.target&gt;8&lt;/maven.compiler.target&gt;
+    &lt;/properties&gt;
+    &lt;dependencies&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;junit&lt;/groupId&gt;
+            &lt;artifactId&gt;junit&lt;/artifactId&gt;
+            &lt;version&gt;4.13&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;mysql&lt;/groupId&gt;
+            &lt;artifactId&gt;mysql-connector-java&lt;/artifactId&gt;
+            &lt;version&gt;5.1.49&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis&lt;/artifactId&gt;
+            &lt;version&gt;3.5.2&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+            &lt;version&gt;5.3.9&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+            &lt;artifactId&gt;spring-jdbc&lt;/artifactId&gt;
+            &lt;version&gt;5.3.9&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.aspectj&lt;/groupId&gt;
+            &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;
+            &lt;version&gt;1.9.7&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.mybatis&lt;/groupId&gt;
+            &lt;artifactId&gt;mybatis-spring&lt;/artifactId&gt;
+            &lt;version&gt;2.0.6&lt;/version&gt;
+        &lt;/dependency&gt;
+        &lt;dependency&gt;
+            &lt;groupId&gt;org.projectlombok&lt;/groupId&gt;
+            &lt;artifactId&gt;lombok&lt;/artifactId&gt;
+            &lt;version&gt;1.18.20&lt;/version&gt;
+        &lt;/dependency&gt;
+    &lt;/dependencies&gt;
+
+&lt;/project&gt;</code></pre><h4 id="mybatis">Mybatis</h4><p>参考之前的</p><h4 id="mybatis-spring">MyBatis-Spring</h4><h4 id="方式一">方式一</h4><p>出问题了。。。</p><h3 id="声明式事务">声明式事务</h3><p><strong>确保完整性和一致性</strong></p><p>事务的ACID原则</p><ul><li>原子性</li><li>一致性</li><li>隔离性</li><li>持久性</li></ul><p>。。。</p><p>【完】</p></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/templates/essay/posts/springmvc入门/">SpringMVC入门</a> </div> <div> <span>下一篇</span> <a href="/templates/essay/posts/git/">Git</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关文章</h3> </div> <div class="related-post-list"> <a href="/templates/essay/posts/springboot入门/">SpringBoot入门</a><a href="/templates/essay/posts/springmvc入门/">SpringMVC入门</a><a href="/templates/essay/posts/javaweb学习之路-六-mybatis入门/">JavaWeb学习之路（六）——Mybatis入门</a><a href="/templates/essay/posts/javaweb学习之路-七-mybatis常见操作/">JavaWeb学习之路（七）——Mybatis常见操作</a><a href="/templates/essay/posts/javaweb学习之路-五-mvc-过滤器-监听器/">JavaWeb学习之路（五）——MVC、过滤器、监听器</a><a href="/templates/essay/posts/javaweb学习之路-四-jsp/">JavaWeb学习之路（四）——JSP</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-3" href="#spring" data-toc-link="spring"> Spring </a><a class="toc-level-3" href="#ioc" data-toc-link="ioc"> IOC </a><a class="toc-level-3" href="#hello-spring" data-toc-link="hello-spring"> Hello Spring </a><a class="toc-level-3" href="#ioc创建对象的方法" data-toc-link="ioc创建对象的方法"> IOC创建对象的方法 </a><a class="toc-level-3" href="#spring配置" data-toc-link="spring配置"> Spring配置 </a><a class="toc-level-3" href="#依赖注入" data-toc-link="依赖注入"> 依赖注入 </a><a class="toc-level-3" href="#bean的作用域" data-toc-link="bean的作用域"> bean的作用域 </a><a class="toc-level-3" href="#bean的自动装配" data-toc-link="bean的自动装配"> Bean的自动装配 </a><a class="toc-level-3" href="#使用注解开发" data-toc-link="使用注解开发"> 使用注解开发 </a><a class="toc-level-3" href="#使用java的方式配置spring" data-toc-link="使用java的方式配置spring"> 使用Java的方式配置spring </a><a class="toc-level-3" href="#代理模式" data-toc-link="代理模式"> 代理模式 </a><a class="toc-level-3" href="#aop" data-toc-link="aop"> AOP </a><a class="toc-level-3" href="#整合mybatis" data-toc-link="整合mybatis"> 整合Mybatis </a><a class="toc-level-3" href="#声明式事务" data-toc-link="声明式事务"> 声明式事务 </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = tocLinks
+      .map((link) => {
+        const id = link.getAttribute("data-toc-link");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean);
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

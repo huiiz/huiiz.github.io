@@ -1,0 +1,2229 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>C&amp;C++ from 于仕琪 南科大 · Clover | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="课程地址：快速学习C和C++，基础语法和优化策略，学了不再怕指针(南科大计算机系原版) 哔哩哔哩 bilibili github地址：ShiqiYu/CPP: Lecture notes, projects and other materials for Course 'CS20"><meta property="og:title" content="C&#38;C++ from 于仕琪 南科大 · Clover | HUII's Blog"><meta property="og:description" content="课程地址：快速学习C和C++，基础语法和优化策略，学了不再怕指针(南科大计算机系原版) 哔哩哔哩 bilibili github地址：ShiqiYu/CPP: Lecture notes, projects and other materials for Course 'CS20"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/templates/clover/posts/c-c-from-%E4%BA%8E%E4%BB%95%E7%90%AA-%E5%8D%97%E7%A7%91%E5%A4%A7/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#2f7b64"><link rel="canonical" href="https://blog.huii.top/templates/clover/posts/c-c-from-%E4%BA%8E%E4%BB%95%E7%90%AA-%E5%8D%97%E7%A7%91%E5%A4%A7/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.PS7qN8BI.css">
+<style>.pagination[data-astro-cid-d776pwuy]{display:flex;align-items:center;justify-content:center;gap:.9rem;margin-top:2.4rem;flex-wrap:wrap}.pagination-summary[data-astro-cid-d776pwuy]{display:inline-flex;align-items:baseline;gap:.22rem;padding:0 .15rem;color:var(--theme-muted);letter-spacing:.04em}.pagination-summary[data-astro-cid-d776pwuy] strong[data-astro-cid-d776pwuy]{color:var(--theme-text);font-size:1.15rem}.pagination-pages[data-astro-cid-d776pwuy]{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.pagination-arrow[data-astro-cid-d776pwuy],.pagination-page[data-astro-cid-d776pwuy]{display:inline-flex;align-items:center;justify-content:center;min-width:2.8rem;min-height:2.8rem;padding:0 .95rem;border:1px solid var(--theme-line);border-radius:999px;background:var(--theme-panel);color:var(--theme-text);box-shadow:var(--theme-shadow);transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}.pagination-arrow[data-astro-cid-d776pwuy]:hover,.pagination-page[data-astro-cid-d776pwuy]:hover{transform:translateY(-2px);border-color:var(--theme-soft-fill-strong)}.pagination-page[data-astro-cid-d776pwuy].is-active{background:var(--theme-color);color:#fff;border-color:transparent}.pagination-arrow[data-astro-cid-d776pwuy].is-disabled{opacity:.45;box-shadow:none}.pagination-gap[data-astro-cid-d776pwuy]{color:var(--theme-muted);padding:0 .1rem}@media(max-width:760px){.pagination[data-astro-cid-d776pwuy]{justify-content:center;gap:.7rem}.pagination-summary[data-astro-cid-d776pwuy]{width:100%;justify-content:center;order:-1}.pagination-pages[data-astro-cid-d776pwuy]{justify-content:center;width:100%}.pagination-arrow[data-astro-cid-d776pwuy]{min-width:calc(50% - .5rem);padding:0 .75rem}}
+</style>
+<link rel="stylesheet" href="/_astro/index.R3ImXAFw.css"></head> <body> <div class="page" id="body-wrap" data-theme-preset="clover" data-home-template="showcase" data-card-style="magazine" data-sidebar-style="stacked" style="--theme-color:#2f7b64;--theme-color-deep:#174b3d;--theme-accent:#18322d;--theme-text:#17312d;--theme-muted:#5d736d;--theme-line:rgba(61, 104, 89, 0.14);--theme-bg:#eef6f0;--theme-panel:rgba(255, 255, 255, 0.94);--theme-panel-solid:#ffffff;--theme-panel-soft:rgba(246, 251, 247, 0.84);--theme-shadow:0 18px 44px rgba(22, 57, 47, 0.08);--theme-shadow-strong:0 24px 60px rgba(22, 57, 47, 0.13);--theme-bg-image:radial-gradient(circle at top left, rgba(47, 123, 100, 0.14), transparent 24%), radial-gradient(circle at 86% 12%, rgba(23, 76, 61, 0.08), transparent 20%), linear-gradient(180deg, #f9fcf9 0%, #edf5ef 100%);--theme-nav-bg:rgba(248, 252, 248, 0.82);--theme-nav-border:rgba(47, 122, 99, 0.08);--theme-hero-mask:linear-gradient(135deg, rgba(19, 49, 45, 0.2), rgba(19, 49, 45, 0.36)), linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.14));--theme-hero-panel-bg:rgba(20, 48, 43, 0.2);--theme-hero-panel-border:rgba(255, 255, 255, 0.16);--theme-hero-panel-shadow:0 22px 56px rgba(16, 42, 38, 0.18);--theme-soft-fill:rgba(47, 122, 99, 0.07);--theme-soft-fill-strong:rgba(47, 122, 99, 0.12);--theme-code-bg:#14302a;--theme-code-text:#edf7f1;--theme-reading-text:#334440;--radius-lg:28px;--radius-md:20px;--radius-sm:14px;--nav-width:1480px;--content-width:1500px;--page-width:1260px;--reading-width:1480px;--font-sans:&#34;Avenir Next&#34;, &#34;Helvetica Neue&#34;, &#34;PingFang SC&#34;, &#34;Microsoft YaHei&#34;, sans-serif;--font-display:&#34;Palatino Linotype&#34;, &#34;Book Antiqua&#34;, &#34;Noto Serif SC&#34;, &#34;Source Han Serif SC&#34;, serif"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>C&amp;C++ from 于仕琪 南科大</h1> <p>课程地址：快速学习C和C++，基础语法和优化策略，学了不再怕指针(南科大计算机系原版) 哔哩哔哩 bilibili github地址：ShiqiYu/CPP: Lecture notes, projects and other materials for Course &#39;CS20</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2022年2月17日</span> <span>阅读约 139 分钟</span> </div> <div class="reading-categories"> <a href="/categories/note/">Note</a> </div> <div class="reading-tags"> <a href="/tags/机器学习/">#机器学习</a><a href="/tags/深度学习/">#深度学习</a><a href="/tags/rnn/">#RNN</a> </div> </header> <div class="post-content reading-content"><p>课程地址：<a href="https://www.bilibili.com/video/BV1Vf4y1P7pq/" target="_blank" rel="noreferrer">快速学习C和C++，基础语法和优化策略，学了不再怕指针(南科大计算机系原版)_哔哩哔哩_bilibili</a></p><p>github地址：<a href="https://github.com/ShiqiYu/CPP" target="_blank" rel="noreferrer">ShiqiYu/CPP: Lecture notes, projects and other materials for Course 'CS205 C/C++ Program Design' at Southern University of Science and Technology. (github.com)</a></p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.jpg" alt="img" /><figcaption>img</figcaption></figure><p>课程</p><p>由于之前已经学过C语言，部分内容将跳过。</p><h2 id="week1">Week1</h2><h3 id="the-first-example">the first example</h3><pre><code>//C++ example in C++11
+#include &lt;iostream&gt;
+#include &lt;vector&gt;
+#include &lt;string&gt;
+
+using namespace std;
+
+int main()
+{
+    vector&lt;string&gt; msg {&quot;Hello&quot;, &quot;C++&quot;, &quot;World&quot;, &quot;!&quot;};
+    
+    for (const string&amp; word : msg)
+    {
+        cout &lt;&lt; word &lt;&lt; &quot; &quot;;
+    }
+    cout &lt;&lt; endl;
+}</code></pre><p>使用g++进行编译</p><p>•Compile hello.cpp</p><pre><code> g++ hello.cpp</code></pre><p> •Initialization of msg is a C++11 extension. We need</p><pre><code>g++ hello.cpp --std=c++11</code></pre><p>  •Executable file can be generated as a.out. Change the output filename by -o option</p><pre><code>g++ hello.cpp --std=c++11 -o hello</code></pre><p>•Execute</p><pre><code>./hello</code></pre><p>经过测试，windows版本上默认C++选项为c++17，linux上默认为c++14。</p><h3 id="编译链接">编译链接</h3><p>当存在3个文件时，先编译，后链接。</p><ul><li>main.cpp</li></ul><pre><code>#include &lt;iostream&gt;
+#include &quot;mul.hpp&quot;
+
+using namespace std;
+int main()
+{
+    int a, b;
+    int result;
+
+    cout &lt;&lt; &quot;Pick two integers:&quot;;
+    cin &gt;&gt; a;
+    cin &gt;&gt; b;
+
+    result = mul(a, b);
+
+    cout &lt;&lt; &quot;The result is &quot; &lt;&lt; result &lt;&lt; endl;
+    return 0;
+}</code></pre><ul><li>mul.cpp</li></ul><pre><code>#include &quot;mul.hpp&quot;
+
+int mul(int a, int b)
+{
+    return a * b;
+}</code></pre><ul><li>mul.hpp</li></ul><pre><code>#pragma once
+int mul(int a, int b);</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>编译链接</p><p>也可以一起编译</p><pre><code>g++ .\main.cpp .\mul.cpp -o mul</code></pre><h3 id="预处理和宏">预处理和宏</h3><p>•The preprocessor is executed before the compilation.</p><p>•Preprocessing directives begin with a # character</p><p>•Each directive occupies one line</p><p>•preprocessing instruction (define, undef, include, if, ifdef, ifndef, else, elif, endif, line, error, pragma)</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>预处理</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>宏</p><h3 id="输入输出">输入输出</h3><pre><code>int main() 
+{
+    /* ... */
+}
+
+int main(int argc, char *argv[])
+{
+    ...
+}
+
+int main(int argc, char **argv)
+{
+    ...
+}</code></pre><p>可以接收参数数组</p><ul><li>argument.cpp</li></ul><pre><code>#include &lt;iostream&gt;
+
+using namespace std;
+int main(int argc, char * argv[])
+{
+    for (int i = 0; i &lt; argc; i++)
+        cout &lt;&lt; i &lt;&lt; &quot;: &quot; &lt;&lt; argv[i] &lt;&lt; endl;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>输入运行结果</p><h2 id="week2">Week2</h2><h3 id="interger">interger</h3><p>初始化方式</p><pre><code>int num;
+num = 10;//do not forget this line
+
+int num = 10;
+
+int num (10);
+
+int num {10};</code></pre><p>还可以使用圆括号或花括号进行初始化。</p><h3 id="more-interger-types">more interger types</h3><h4 id="char">char</h4><p>•char: type for character, 8-bit integer indeed!</p><p>•signed char: signed 8-bit integer</p><p>•unsinged char: unsigned 8-bit integer</p><p>•char: either signed char or unsinged char</p><p>char.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main()
+{
+    char c1 = &#39;C&#39;;
+    char c2 = 80;
+    char c3 = 0x50;
+    char16_t c4 = u&#39;于&#39;;
+    char32_t c5 = U&#39;于&#39;;
+    cout &lt;&lt; c1 &lt;&lt; &quot;:&quot; &lt;&lt; c2 &lt;&lt; &quot;:&quot;&lt;&lt; c3 &lt;&lt; endl;
+    cout &lt;&lt; +c1 &lt;&lt; &quot;:&quot; &lt;&lt; +c2 &lt;&lt; &quot;:&quot; &lt;&lt; +c3 &lt;&lt; endl;
+    cout &lt;&lt; c4 &lt;&lt; endl;
+    cout &lt;&lt; c5 &lt;&lt; endl;
+    
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>输出结果</p><h4 id="bool">bool</h4><p>•A C++ keyword, but not a C keyword</p><p>•bool width: 1 byte (8 bits), NOT 1 bit!</p><p>•Value: true (1) or false (0)</p><p>长度为1个字节，而不是1位。</p><p><strong>bool.cpp</strong></p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main()
+{
+    bool b1 = true;
+    int i = b1;
+    bool b2 = -256;
+    cout &lt;&lt; &quot;i=&quot; &lt;&lt; i &lt;&lt; endl;
+    cout &lt;&lt; &quot;b1=&quot; &lt;&lt; b1 &lt;&lt; endl;
+    cout &lt;&lt; &quot;b2=&quot; &lt;&lt; b2 &lt;&lt; endl;
+    cout &lt;&lt; true &lt;&lt; endl;
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结果</p><p>bool非0即1。</p><p>在c语言中，c99中，引入stdbool.h头文件即可。</p><h4 id="fixed-width-integer-types">Fixed width integer types</h4><p>since C++11</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>cstdint</p><p><strong>intmax.cpp</strong></p><pre><code>#include &lt;iostream&gt;
+#include &lt;cstdint&gt;
+using namespace std;
+int main()
+{
+    cout &lt;&lt; &quot;INT8_MAX=&quot; &lt;&lt; INT8_MAX &lt;&lt; endl;
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>INT8_MAX结果</p><h3 id="floating-point-numbers">Floating-point Numbers</h3><p><strong>float.cpp</strong></p><pre><code>#include &lt;iostream&gt;
+#include &lt;iomanip&gt;
+using namespace std;
+int main()
+{
+    float f1 = 1.2f;
+    float f2 =  f1 * 1000000000000000;
+    cout &lt;&lt; std::fixed &lt;&lt; std::setprecision(15) &lt;&lt; f1 &lt;&lt; endl;
+    cout &lt;&lt; std::fixed &lt;&lt; std::setprecision(15) &lt;&lt; f2 &lt;&lt; endl;
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>float结果</p><p>关于fixed、setprecision等的用法，参见<a href="https://blog.csdn.net/xian__xian/article/details/114017770" target="_blank" rel="noreferrer">详解C++中fixed，setprecision(),setw()的用法_羡君的博客-CSDN博客_c++ fixed</a></p><p>==&gt;浮点数默认保留6位有效数字，但结尾是小数0，则会舍去，使用fixed能取消科学计数法（默认6位小数），使用**setprecision(n)**则可以控制小数保留n位。</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>浮点数对比</p><h4 id="inf-and-nan">inf and nan</h4><p><strong>nan.cpp</strong></p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main()
+{
+    float f1 = 2.0f / 0.0f;
+    float f2 = 0.0f / 0.0f;
+    cout &lt;&lt; f1 &lt;&lt; endl;
+    cout &lt;&lt; f2 &lt;&lt; endl;
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>inf和nan结果</p><h3 id="arithmetic-operators">Arithmetic Operators</h3><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>类型</p><h4 id="auto">auto</h4><p>since C++11</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>注意</p><p>类型初始化时就确定，不会再改变。</p><h4 id="divisions">Divisions</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>除法</p><h2 id="week3">Week3</h2><h3 id="goto-statement">goto Statement</h3><ul><li><p>Jump to the desired location </p></li><li><p>An unrecommended statement</p></li></ul><p>goto.cpp</p><pre><code>float mysquare(float value)
+{
+    float result = 0.0f;
+    if(value &gt;= 1.0f || value &lt;= 0)
+    {
+        cerr &lt;&lt; &quot;The input is out of range.&quot; &lt;&lt; endl;
+        goto EXIT_ERROR;
+    }
+    result = value * value;
+    return result;
+  EXIT_ERROR:
+    //do sth such as closing files here
+    return 0.0f;
+}</code></pre><h2 id="week4">Week4</h2><h3 id="arrays">Arrays</h3><p>没有初始化的话，值不确定。</p><p>array.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main()
+{
+    int num_array1[5]; //uninitialized array, random values 
+    int num_array2[5] = {0, 1, 2, 3, 4}; //initialization
+
+    for(int idx = 0; idx &lt; 5; idx++)
+        cout &lt;&lt; num_array1[idx] &lt;&lt; &quot; &quot;;
+    cout &lt;&lt; endl;
+
+    for(int idx = 0; idx &lt; 5; idx++)
+        cout &lt;&lt; num_array2[idx] &lt;&lt; &quot; &quot;;
+    cout &lt;&lt; endl;
+
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>array</p><h4 id="variable-length-arrays">Variable-length arrays</h4><p>数组长度在运行时确定。</p><p>variable-array.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main()
+{
+    int num_array1[5] = {0,1}; // fixed length array, initialized to {0,1,0,0,0}  
+    cout &lt;&lt; &quot;sizeof(num_array1) = &quot; &lt;&lt; sizeof(num_array1) &lt;&lt; endl;
+
+    int len = 0;
+    while ( len &lt; 10 )
+    {
+        int num_array2[len]; //variable-length array
+        cout &lt;&lt; &quot;len = &quot; &lt;&lt; len;
+        cout &lt;&lt; &quot;, sizeof(num_array2)) = &quot; &lt;&lt; sizeof(num_array2) &lt;&lt; endl;
+        len ++;
+    }
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>变长数组</p><p>注意：变长数组不要初始化</p><h4 id="arrays-of-unknown-size">Arrays of unknown size</h4><p>未知长度数组</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>未知长度数组</p><h4 id="element-accessing">Element accessing</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>数组读写</p><p>注意，c/cpp中不会进行越界检查。</p><p>index-bound.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+int main()
+{
+    int num_array[5]; 
+
+    for(int idx = -1; idx &lt;= 5; idx++) //out of bounds
+        num_array[idx] = idx * idx;
+
+    for(int idx = -1; idx &lt;= 5; idx++) //out of bounds
+        cout &lt;&lt; &quot;num_array[&quot; &lt;&lt; idx &lt;&lt; &quot;] = &quot; &lt;&lt; num_array[idx] &lt;&lt; endl;
+
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>数组越界</p><h4 id="multidimensional-arrays">Multidimensional arrays</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>多维数组</p><h4 id="const-arrays">const Arrays</h4><p>const-array.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+//float array_sum(const float *values, size_t length)
+//float array_sum(const float values[4], size_t length)
+float array_sum(const float values[], size_t length)
+{
+    float sum = 0.0f;
+    for (int i = 0; i &lt; length; i++)
+    {
+        sum += values[i];
+        //values[i] = 0; //error
+    }
+    return sum;
+}
+
+int main()
+{
+    // const float PI = 3.1415926f;
+    // PI += 1.f; // error
+    // const float values[4] = {1.1f, 2.2f, 3.3f, 4.4f};
+    // values[0] = 1.0f; // error
+
+    float values[4] = {1.1f, 2.2f, 3.3f, 4.4f};
+    float sum = array_sum(values, 4);
+
+    cout &lt;&lt; &quot;sum = &quot; &lt;&lt; sum &lt;&lt; endl;
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>const array</p><p>可以防止对元素进行误操作。</p><h3 id="strings">Strings</h3><h4 id="array-style-strings">Array-style strings</h4><p>•An array-style string (null-terminated strings/arrays of characters) is a series of characters stored in bytes in memory.</p><p>•This kind of strings can be declared as follows</p><pre><code>char rabbit[16] = {&#39;P&#39;, &#39;e&#39;, &#39;t&#39;, &#39;e&#39;, &#39;r&#39;};</code></pre><p>initchar.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()
+{
+    char rabbit[16] = {&#39;P&#39;, &#39;e&#39;, &#39;t&#39;, &#39;e&#39;, &#39;r&#39;};
+    cout &lt;&lt; &quot;String length is &quot; &lt;&lt; strlen(rabbit) &lt;&lt; endl;
+    for(int i = 0; i &lt; 16; i++)
+        cout &lt;&lt; i &lt;&lt; &quot;:&quot; &lt;&lt; +rabbit[i] &lt;&lt; &quot;(&quot; &lt;&lt; rabbit[i] &lt;&lt; &quot;)&quot; &lt;&lt; endl;
+
+    char bad_pig[9] = {&#39;P&#39;, &#39;e&#39;, &#39;p&#39;, &#39;p&#39;, &#39;a&#39;, &#39; &#39;, &#39;P&#39;, &#39;i&#39;, &#39;g&#39;};
+    char good_pig[10] = {&#39;P&#39;, &#39;e&#39;, &#39;p&#39;, &#39;p&#39;, &#39;a&#39;, &#39; &#39;, &#39;P&#39;, &#39;i&#39;, &#39;g&#39;, &#39;\0&#39;};
+
+    cout &lt;&lt; &quot;Rabbit is (&quot; &lt;&lt; rabbit &lt;&lt; &quot;)&quot; &lt;&lt; endl;
+    cout &lt;&lt; &quot;Pig&#39;s bad name is (&quot; &lt;&lt; bad_pig &lt;&lt; &quot;)&quot; &lt;&lt; endl; 
+    cout &lt;&lt; &quot;Pig&#39;s good name is (&quot; &lt;&lt; good_pig &lt;&lt; &quot;)&quot; &lt;&lt; endl; 
+
+    char name[10] = {&#39;Y&#39;, &#39;u&#39;, &#39;\0&#39;, &#39;S&#39;, &#39;.&#39;, &#39;0&#39;};
+    cout &lt;&lt; strlen(name) &lt;&lt; endl;
+
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>出现多出来的内容</p><h4 id="string-literals">String literals</h4><p>•It isn’t convenient to initial a string character by character.</p><p>•String literals can help.</p><pre><code>char name1[] = &quot;Southern University of Science and Technology&quot;;</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>定义字符串</p><p>字符串操作</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>字符串操作</p><p>strncpy：拷贝count个，防止越界。</p><p>stringop.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+using namespace std;
+
+int main()
+{
+    char str1[] = &quot;Hello, \0CPP&quot;;
+    char str2[] = &quot;SUSTech&quot;;
+    char result[128];
+
+    for(int i = 0; i &lt; 16; i++)
+        cout &lt;&lt; i &lt;&lt; &quot;:&quot; &lt;&lt; +str1[i] &lt;&lt; &quot;(&quot; &lt;&lt; str1[i] &lt;&lt; &quot;)&quot; &lt;&lt; endl;
+
+    strcpy(result, str1);
+    cout &lt;&lt; &quot;Result = &quot; &lt;&lt;  result &lt;&lt; endl;
+    strcat(result, str2);
+    cout &lt;&lt; &quot;Result = &quot; &lt;&lt;  result &lt;&lt; endl;
+
+    cout &lt;&lt; &quot;strcmp() = &quot; &lt;&lt; strcmp(str1, str2) &lt;&lt; endl;
+
+    //strcat(str1, str2); //danger operation!
+    //cout &lt;&lt; &quot;str1 = &quot; &lt;&lt; str1 &lt;&lt; endl;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>字符串操作</p><h4 id="string-class">string class</h4><p>•Null-terminated strings are easy to be out of bound, and to cause problems.</p><p>•string class provides functions to manipulate and examinate strings.</p><p>stdstring.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+
+using namespace std;
+int main()
+{
+    std::string str1 = &quot;Hello&quot;;
+    std::string str2 = &quot;SUSTech&quot;;
+    std::string result = str1 + &quot;, &quot; + str2;
+
+    cout &lt;&lt; &quot;result = &quot; + result &lt;&lt; endl;
+
+    cout &lt;&lt; &quot;The length is &quot; &lt;&lt; result.length() &lt;&lt; endl;
+
+    cout &lt;&lt; &quot;str1 &lt; str2 is &quot; &lt;&lt; (str1 &lt; str2) &lt;&lt; endl;
+
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>string类字符串</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>不同的string类</p><h3 id="structures-unions-and-enumerations">Structures, Unions and Enumerations</h3><h4 id="struct">struct</h4><p>struct.c</p><pre><code>#include &lt;stdio.h&gt;
+#include &lt;string.h&gt;
+#include &lt;stdbool.h&gt;
+
+// typedef 
+// struct _Student{
+//     char name[4];
+//     int born;
+//     bool male; 
+// } Student;
+
+struct Student{
+    char name[4];
+    int born;
+    bool male; 
+};
+int main()
+{
+    struct Student stu = {&quot;Yu&quot;, 2000, true}; //initialization
+    // strcpy(stu.name, &quot;Yu&quot;);
+    // stu.born = 2000;
+    // stu.male = true;
+
+    printf(&quot;Student %s, born in %d, gender %s\n&quot;, 
+        stu.name, 
+        stu.born, 
+        stu.male ? &quot;male&quot; : &quot;female&quot;);
+
+    struct Student students[100];
+    students[50].born = 2002; 
+
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结构体结果输出</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结构体内存</p><p>注意：在c语言下，初始化Student要给struct Student，如果要去除struct，则要typeof</p><pre><code>typedef 
+struct _Student{
+    char name[4];
+    int born;
+    bool male; 
+} Student;</code></pre><h4 id="structure-padding">Structure padding</h4><p>•In order to align the data in memory, some empty bytes will be padded</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>补齐问题</p><p>存储会内存对齐，因此数据顺序不一样，导致占用大小不同，第一个用12字节，第二个用16个字节。</p><h4 id="struct-in-c-and-c">struct in C and C++</h4><p>•struct and class in C++ are identical except for several features.</p><pre><code>struct Student1{
+    int id;
+    bool male;
+    char label;
+    float height;
+};
+Student1 stu;
+stu.id = 123;</code></pre><p><strong>No typedef needed in C++!</strong></p><h4 id="union">union</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结构体</p><p>结构体所有成员共享同一内存，大小以最大的为准。一个地址多个名字。</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+union ipv4address{
+    std::uint32_t address32;
+    std::uint8_t address8[4];
+};
+
+int main()
+{
+    union ipv4address ip;
+
+    cout &lt;&lt; &quot;sizeof(ip) = &quot; &lt;&lt; sizeof(ip) &lt;&lt; endl;
+
+    ip.address8[3] = 127;
+    ip.address8[2] = 0;
+    ip.address8[1] = 0;
+    ip.address8[0] = 1;
+
+    cout &lt;&lt; &quot;The address is &quot; ;
+    cout &lt;&lt; +ip.address8[3] &lt;&lt; &quot;.&quot;;
+    cout &lt;&lt; +ip.address8[2] &lt;&lt; &quot;.&quot;;
+    cout &lt;&lt; +ip.address8[1] &lt;&lt; &quot;.&quot;;
+    cout &lt;&lt; +ip.address8[0] &lt;&lt; endl;
+
+    cout &lt;&lt; std::hex;
+    cout &lt;&lt; &quot;in hex &quot; &lt;&lt; ip.address32 &lt;&lt; endl;
+
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>union</p><h4 id="enum">enum</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>枚举</p><p>enum.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+enum color {WHITE, BLACK, RED, GREEN, BLUE, YELLOW, NUM_COLORS};
+enum datatype {TYPE_INT8=1, TYPE_INT16=2, TYPE_INT32=4, TYPE_INT64=8};
+
+struct Point{
+    enum datatype type;
+    union {
+        std::int8_t data8[3];
+        std::int16_t data16[3];
+        std::int32_t data32[3];
+        std::int64_t data64[3];
+    };
+};
+
+size_t datawidth(struct Point pt)
+{
+    return size_t(pt.type) * 3;
+}
+
+int64_t l1norm(struct Point pt)
+{
+    int64_t result = 0;
+    switch(pt.type)
+    {
+        case (TYPE_INT8): 
+            result = abs(pt.data8[0]) + abs(pt.data8[1]) + abs(pt.data8[2]);
+            break;
+        case (TYPE_INT16): 
+            result = abs(pt.data16[0]) + abs(pt.data16[1]) + abs(pt.data16[2]);
+            break;
+        case (TYPE_INT32): 
+            result = abs(pt.data32[0]) + abs(pt.data32[1]) + abs(pt.data32[2]);
+            break;
+        case (TYPE_INT64): 
+            result = abs(pt.data64[0]) + abs(pt.data64[1]) + abs(pt.data64[2]);
+            break;
+    }
+    return result;
+}
+
+int main()
+{
+    enum color pen_color = RED;
+    pen_color = color(3); //convert int to enum
+    cout &lt;&lt; &quot;We have &quot; &lt;&lt; NUM_COLORS &lt;&lt; &quot; pens.&quot; &lt;&lt; endl;
+    //pen_color += 1; //error!
+    int color_index = pen_color;
+    color_index += 1;
+    cout &lt;&lt; &quot;color_index = &quot; &lt;&lt; color_index &lt;&lt; endl;
+
+    //declaration and initialization
+    struct Point point1 = {.type=TYPE_INT8, .data8={-2,3,4}};
+    struct Point point2 = {.type=TYPE_INT32, .data32={1,-2,3}};
+    
+    cout &lt;&lt; &quot;Data width = &quot; &lt;&lt; datawidth(point1) &lt;&lt; endl;
+    cout &lt;&lt; &quot;Data width = &quot; &lt;&lt; datawidth(point2) &lt;&lt; endl;
+
+    cout &lt;&lt; &quot;L1 norm = &quot; &lt;&lt; l1norm(point1) &lt;&lt; endl;
+    cout &lt;&lt; &quot;L1 norm = &quot; &lt;&lt; l1norm(point2) &lt;&lt; endl;
+
+
+    return 0;
+}</code></pre><h3 id="typedef">typedef</h3><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+typedef int myint;
+typedef unsigned char vec3b[3];
+typedef struct _rgb_struct{ // name _rgb_struct can be omit
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
+}  rgb_struct;
+
+int main()
+{
+    myint num = 32;
+
+    // the following two lines are identical
+    //unsigned char color[3] = {255, 0, 255};
+    vec3b color = {255, 0, 255}; 
+    cout &lt;&lt; hex;
+    cout &lt;&lt; &quot;R=&quot; &lt;&lt; +color[0] &lt;&lt; &quot;, &quot;;
+    cout &lt;&lt; &quot;G=&quot; &lt;&lt; +color[1] &lt;&lt; &quot;, &quot;;
+    cout &lt;&lt; &quot;B=&quot; &lt;&lt; +color[2] &lt;&lt; endl;
+
+    rgb_struct rgb = {0, 255, 128};
+    cout &lt;&lt; &quot;R=&quot; &lt;&lt; +rgb.r &lt;&lt; &quot;, &quot;;
+    cout &lt;&lt; &quot;G=&quot; &lt;&lt; +rgb.g &lt;&lt; &quot;, &quot;;
+    cout &lt;&lt; &quot;B=&quot; &lt;&lt; +rgb.b &lt;&lt; endl;
+
+    cout &lt;&lt; sizeof(rgb.r) &lt;&lt; endl;
+    cout &lt;&lt; sizeof(+rgb.r) &lt;&lt; endl; //why 4?
+
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>代码解释</p><h2 id="week5">Week5</h2><h3 id="pointers">Pointers</h3><p>•A pointer is declared like a variable, but with * after the type.</p><p>•What stored in a pointer variable is an address.</p><p>•Operator & can take the address of an object or a variable of fundamental types. Operator * can take the content that the pointer points to</p><p>&取地址，*取内容</p><h4 id="differences-between-a-pointer-and-an-array">Differences between a pointer and an array</h4><p>•Array is a constant pointer.</p><p>•The total size of all elements in an array can be got by operator sizeof</p><p>•sizeof operator to a pointer will return the size of the address (4 or 8)</p><pre><code>int numbers[4] = {0, 1, 2, 3};
+int * p = numbers;
+cout &lt;&lt; sizeof(numbers) &lt;&lt; endl; //4*sizeof(int)
+cout &lt;&lt; sizeof(p) &lt;&lt; endl; // 4 or 8
+cout &lt;&lt; sizeof(double *) &lt;&lt; endl; // 4 or 8</code></pre><h3 id="allocate-memory-c-style">Allocate memory: C style</h3><p>动态内存管理</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>程序内存</p><p>临时局部变量，如<code>int i</code>存放在stack中，而动态申请内存则存放heap中。stack的地址越申请越小，heap的越申请越大。</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>windows下运行结果</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>在Linux下（x86）似乎不符合？</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>在arm的linux（小米平板5pro）运行结果</p><h4 id="memory-allocation">Memory allocation</h4><p>•Allocate size bytes of uninitialized storage. <code>void* malloc( size_t size )</code></p><p>•Allocate 4 bytes and convert the pointer to (int *) explicitly. <code>int * p1 = (int*) malloc (4);</code></p><p>•对于<code>int * p1 = (int*) malloc (3);</code>申请了3个字节，但可以使用第4个字节，无严重后果。</p><h4 id="memory-deallocation">Memory deallocation</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>哪里申请，哪里释放。</p><p>memoryleak.c</p><pre><code>#include &lt;stdio.h&gt;
+#include &lt;stdlib.h&gt;
+
+void foo()
+{
+    int* p = (int *) malloc( sizeof(int));
+    return;
+} //memory leak
+
+int main()
+{
+    int * p = NULL;
+    
+    p = (int *) malloc(4 * sizeof(int));
+    // some statements
+    p = (int *) malloc(8 * sizeof(int));
+    // some statements
+    free (p);
+    // the first memory will not be freed
+
+    for(int i = 0; i &lt; 1024; i++)
+    {
+        p = (int *) malloc(1024 * 1024 * 1024);
+    }
+    printf(&quot;End\n&quot;);
+
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行结果</p><p>申请了1T内存，由于操作系统保护机制，程序没有崩掉。</p><h3 id="allocate-memory-c-style-2">Allocate memory: C++ style</h3><h4 id="operator-new-and-new">Operator new and new[]</h4><p>•Operator new is similar with malloc() but with more features.</p><pre><code>//allocate an int, default initializer (do nothing)
+int * p1 = new int; 
+//allocate an int, initialized to 0
+int * p2 = new int();
+//allocate an int, initialized to 5
+int * p3 = new int(5); 
+//allocate an int, initialized to 0
+int * p4 = new int{};//C++11 
+//allocate an int, initialized to 5
+int * p5 = new int {5};//C++11
+//allocate a Student object, default initializer
+Student * ps1 = new Student;
+//allocate a Student object, initialize the members
+Student * ps2 = new Student {&quot;Yu&quot;, 2020, 1}; //C++11
+//allocate 16 int, default initializer (do nothing) 
+int * pa1 = new int[16];
+//allocate 16 int, zero initialized 
+int * pa2 = new int[16]();
+//allocate 16 int, zero initialized 
+int * pa3 = new int[16]{}; //C++11
+//allocate 16 int, the first 3 element are initialized to 1,2,3, the rest 0
+int * pa4 = new int[16]{1,2,3}; //C++11
+//allocate memory for 16 Student objects, default initializer
+Student * psa1 = new Student[16];
+//allocate memory for 16 Student objects, the first two are explicitly initialized
+Student * psa2 = new Student[16]{{&quot;Li&quot;, 2000,1}, {&quot;Yu&quot;, 2001,1}}; //C++11</code></pre><h4 id="operator-delete-and-delete">Operator delete and delete[]</h4><p>•Destroys object/objects allocated by new and free memory</p><pre><code>//deallocate memory
+delete p1;
+//deallocate memory
+delete ps1;
+//deallocate the memory of the array
+delete pa1;
+//deallocate the memory of the array
+delete []pa2;
+//deallocate the memory of the array, and call the destructor of the first element
+delete psa1;
+//deallocate the memory of the array, and call the destructors of all the elements
+delete []psa2;</code></pre><p>注意，如果数组里是结构体或者对象，<code>delete psa1;</code>只会删除第一个，因此建议写成<code>delete []psa2;</code>。</p><h2 id="week6">Week6</h2><h3 id="functions">Functions</h3><h4 id="how-are-functions-called">How are functions called?</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>函数调用</p><h3 id="function-parameters">Function Parameters</h3><p>•The symbolic name for "data" that passes into a function.</p><p><strong>Two ways to pass into a function:</strong></p><p>•<strong>Pass by value</strong></p><p>•<strong>Pass by reference</strong></p><h4 id="pass-by-value-fundamental-type">Pass by value: fundamental type</h4><p>•The parameter is a copy of the original variable</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>传递拷贝</p><h4 id="pass-by-value-pointer">Pass by value: pointer</h4><p>传递的是地址的拷贝，函数内部指针地址的修改不会影响到外部指针的地址。</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>传地址</p><h4 id="pass-by-value-structure">Pass by value: structure</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>传递结构体</p><p>结构体内容会被拷贝，但是由于pData是指针，修改指向的内容，则原始的也会被修改。</p><h3 id="references">References</h3><p>•References are in C++, not in C.</p><p>•A reference is an alias to an already-existing variable/object.</p><p>相当于别名</p><pre><code>int num = 0;
+int &amp; num_ref = num;
+num_ref = 10;</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>引用</p><p>•A reference to an object</p><pre><code>Matrix matA = {3,4};
+matA.pData = new float[matA.rows * matA.cols]{};
+
+Matrix &amp; matA_ref = matA;
+
+Matrix * pMatA = &amp;matA;</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>指针与引用</p><p>•A reference must be initialized after its declaration.</p><pre><code>int &amp; num_ref; // error 
+Matrix &amp; mat_ref; // error </code></pre><p>• Reference VS Pointer: References are much safer</p><p>java中使用引用代替了指针，更加安全。</p><h4 id="references-as-function-parameters">References as function parameters</h4><p>•No data copying in the reference version; Better efficiency The modification to a reference will affect the original object</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>引用做函数参数</p><h3 id="inline-functions">Inline functions</h3><p>•Stack operations and jumps are needed for a function call.</p><p>•It is a heavy cost for some frequently called tiny functions.</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>需要不断跳转</p><p>•The generated instructions by a compiler can be as follows to improve efficiency</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>可能指令结果</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>建议编译器</p><h4 id="why-not-use-a-macros">Why not use a macros?</h4><p>为啥不用宏？<code>#define MAX_MACRO(a, b) (a)&gt;(b) ? (a) : (b)</code></p><p>•The source code will be replaced by a preprocessor.</p><p>•Surely no cost of a function call,</p><p>•And a, b can be any types which can compare.</p><p>宏很危险。</p><h2 id="week7">Week7</h2><p>argument与parameter区别：对<code>float norm(float x, float y, float z = 0);</code>0是<strong>argument</strong>，z则是<strong>parameter</strong>。</p><h3 id="default-arguments">Default Arguments</h3><p>•A feature in C++ (not C).</p><p>•To call a function without providing one or more trailing arguments.</p><p>默认参数应该在尾部</p><p>default-argument.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;cmath&gt;
+using namespace std;
+
+float norm(float x, float y, float z);
+float norm(float x, float y, float z = 0);
+float norm(float x, float y = 0, float z);
+
+int main()
+{
+    cout &lt;&lt; norm(3.0f) &lt;&lt; endl;
+    cout &lt;&lt; norm(3.0f, 4.0f) &lt;&lt; endl;
+    cout &lt;&lt; norm(3.0f, 4.0f, 5.0f) &lt;&lt; endl;
+    return 0;
+}
+
+float norm(float x, float y, float z)
+{
+    return sqrt(x * x + y * y + z * z);
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行结果</p><p>对于<code>float norm(float x, float y = 0, float z);</code>，虽然默认参数不在尾部，但是前面有了个<code>float norm(float x, float y, float z = 0);</code>此时z的默认参数是0。若将这两行对换，或将**<code>float norm(float x, float y = 0, float z);</code>**中的z再设一个值会报错。</p><h3 id="function-overloading">Function Overloading</h3><p>c++特性</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>函数重载</p><p>•Which function to choose? The compiler will perform name lookup.</p><p>•Argument-dependent lookup, also known as ADL. </p><p>The return type will not be considered in name lookup.</p><pre><code>int sum(int x, int y)
+{
+    cout &lt;&lt; &quot;sum(int, int) is called&quot; &lt;&lt; endl;
+    return x + y;
+}
+float sum(float x, float y)
+{
+    cout &lt;&lt; &quot;sum(float, float) is called&quot; &lt;&lt; endl;
+    return x + y;
+}
+double sum(double x, double y)
+{
+    cout &lt;&lt; &quot;sum(double, double) is called&quot; &lt;&lt; endl;
+    return x + y;
+}</code></pre><h3 id="function-templates">Function Templates</h3><p>•A function template is not a type, or a function, or any other entity. </p><p>•No code is generated from a source file that contains only template definitions.</p><p>•The template arguments must be determined, then the compiler can generate an actual function</p><pre><code>template&lt;typename T&gt;
+T sum(T x, T y)
+{
+    cout &lt;&lt; &quot;The input type is &quot; &lt;&lt; typeid(T).name() &lt;&lt; endl;
+    return x + y;
+}
+// instantiates sum&lt;double&gt;(double, double)
+template double sum&lt;double&gt;(double, double);
+
+// instantiates sum&lt;char&gt;(char, char), template argument deduced
+template char sum&lt;&gt;(char, char); 
+
+// instantiates sum&lt;int&gt;(int, int), template argument deduced
+template int sum(int, int); </code></pre><p>template也会隐式实例化。</p><p>template2.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;typeinfo&gt;
+using namespace std;
+
+template&lt;typename T&gt;
+T sum(T x, T y)
+{
+    cout &lt;&lt; &quot;The input type is &quot; &lt;&lt; typeid(T).name() &lt;&lt; endl;
+    return x +
+     y;
+}
+// Explicitly instantiate
+template double sum&lt;double&gt;(double, double);
+
+int main()
+{
+    auto val = sum(4.1, 5.2);
+    cout &lt;&lt; val &lt;&lt; endl;
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>template</p><h4 id="function-template-specialization">Function template specialization</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结构体模板加法操作</p><p>需要针对特例专门定义函数。</p><p>specialization.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;typeinfo&gt;
+using namespace std;
+
+template&lt;typename T&gt;
+T sum(T x, T y)
+{
+    cout &lt;&lt; &quot;The input type is &quot; &lt;&lt; typeid(T).name() &lt;&lt; endl;
+    return x + y;
+}
+
+struct Point
+{
+    int x;
+    int y;
+};
+
+// Specialization for Point + Point operation
+template&lt;&gt;
+Point sum&lt;Point&gt;(Point pt1, Point pt2)
+{
+    cout &lt;&lt; &quot;The input type is &quot; &lt;&lt; typeid(pt1).name() &lt;&lt; endl;
+    Point pt;
+    pt.x = pt1.x + pt2.x;
+    pt.y = pt1.y + pt2.y;
+    return pt;
+}
+
+
+int main()
+{
+    //Explicit instantiated functions
+    cout &lt;&lt; &quot;sum = &quot; &lt;&lt; sum(1, 2) &lt;&lt; endl;
+    cout &lt;&lt; &quot;sum = &quot; &lt;&lt; sum(1.1, 2.2) &lt;&lt; endl;
+
+    Point pt1 {1, 2};
+    Point pt2 {2, 3};
+    Point pt = sum(pt1, pt2);
+    cout &lt;&lt; &quot;pt = (&quot; &lt;&lt; pt.x &lt;&lt; &quot;, &quot; &lt;&lt; pt.y &lt;&lt; &quot;)&quot; &lt;&lt; endl;
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结果</p><p>特例化需要template&lt;&gt;，实例化则不需要&lt;&gt;和函数体。</p><h3 id="function-pointers-and-references">Function Pointers and References</h3><p>函数指针与函数引用</p><h4 id="function-pointers">Function pointers</h4><p>•norm_ptr is a pointer, a function pointer.</p><p>•The function should have two float parameters, and returns float.</p><pre><code>float norm_l1(float x, float y);
+
+float norm_l2(float x, float y); 
+float (*norm_ptr)(float x, float y); 
+
+norm_ptr = norm_l1; //Pointer norm_ptr is pointing to norm_l1
+norm_ptr = &amp;norm_l2; //Pointer norm_ptr is pointing to norm_l2
+float len1 = norm_ptr(-3.0f, 4.0f); //function invoked 
+float len2 = (*norm_ptr)(-3.0f, 4.0f); //function invoked</code></pre><p>•A function pointer can be an argument and pass to a function.</p><p>将函数传入另一个函数中，作为回调函数。</p><pre><code>&lt;stdlib.h&gt;
+
+void qsort( void *ptr, size_t count, size_t size, 
+           int (*comp)(const void *, const void *) );</code></pre><h4 id="function-references">Function references</h4><pre><code>float norm_l1(float x, float y); //declaration
+float norm_l2(float x, float y); //declaration
+float (&amp;norm_ref)(float x, float y) = norm_l1; //norm_ref is a function reference</code></pre><h3 id="recursive-functions"><strong>Recursive Functions</strong></h3><p>递归</p><h2 id="week8">Week8</h2><h3 id="c-c-with-arm">C/C++ with ARM</h3><h3 id="speedup-your-program">Speedup Your Program</h3><h4 id="some-tips-on-optimization">Some Tips on Optimization</h4><p>•Choose an appropriate algorithm</p><p>•Clear and simple code for the compiler to optimize</p><p>•Optimize code for memory</p><p>•Do not copy large memory</p><p>•No printf()/cout in loops</p><p>•Table lookup (sin(), cos() ...)</p><p>•SIMD, OpenMP</p><h4 id="simd-single-instruction-multiple-data">SIMD: Single instruction, multiple data</h4><p>一个指令处理多组数组</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>SIMD</p><h3 id="an-example-with-simd-and-openmp">An Example with SIMD and OpenMP</h3><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>arm上运行测试</p><p>使用<code>cmake .. -DCMAKE_BUILD_TYPE=Release</code>可以产生release版本。</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>release版本</p><p>SIMD+OpenMP计算错误。</p><h3 id="avoid-memory-copy">Avoid Memory Copy</h3><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>数据存储</p><p>•How many bytes for a row of Matrix 4(row)x3(col)?</p><p>ØCan be 3, 4, 8, and any other values &gt;=3.</p><p>ØMemory alignment for SIMD</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>扣取一个小区域</p><h2 id="week9">Week9</h2><h3 id="classes-and-objects">Classes and Objects</h3><h4 id="structures">Structures</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>struct</p><h4 id="classes">Classes</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>class</p><p>firstclass.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+class Student
+{
+  public:
+    char name[4];
+    int born;
+    bool male; 
+    void setName(const char * s)
+    {
+        strncpy(name, s, sizeof(name));
+    }
+    void setBorn(int b)
+    {
+        born = b;
+    }
+    void setGender(bool isMale)
+    {
+        male = isMale;
+    }
+    void printInfo()
+    {
+        std::cout &lt;&lt; &quot;Name: &quot; &lt;&lt; name &lt;&lt; std::endl;
+        std::cout &lt;&lt; &quot;Born in &quot; &lt;&lt; born &lt;&lt; std::endl;
+        std::cout &lt;&lt; &quot;Gender: &quot; &lt;&lt; (male ? &quot;Male&quot; : &quot;Female&quot;) &lt;&lt; std::endl;
+    }
+};
+
+int main()
+{
+    Student yu;
+    yu.setName(&quot;Yu&quot;);
+    yu.setBorn(2000);
+    yu.setGender(true);
+    yu.born = 2001; // it can also be manipulated directly
+    yu.printInfo();
+    std::cout &lt;&lt; &quot;It&#39;s name is &quot; &lt;&lt; yu.name &lt;&lt; std::endl; 
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>第一个类</p><h4 id="access-specifiers">Access Specifiers</h4><p>•You can protect data members by access specifier private.</p><p>•Then data member can only be accessed by well designed member functions.</p><p>不写限定符，默认是private</p><p>access-attribute.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+class Student
+{
+  private:
+    char name[4];
+    int born;
+    bool male; 
+  public:
+    void setName(const char * s)
+    {
+        strncpy(name, s, sizeof(name));
+    }
+    void setBorn(int b)
+    {
+        born = b;
+    }
+    void setGender(bool isMale)
+    {
+        male = isMale;
+    }
+    void printInfo()
+    {
+        std::cout &lt;&lt; &quot;Name: &quot; &lt;&lt; name &lt;&lt; std::endl;
+        std::cout &lt;&lt; &quot;Born in &quot; &lt;&lt; born &lt;&lt; std::endl;
+        std::cout &lt;&lt; &quot;Gender: &quot; &lt;&lt; (male ? &quot;Male&quot; : &quot;Female&quot;) &lt;&lt; std::endl;
+    }
+};
+
+int main()
+{
+    Student yu;
+    yu.setName(&quot;Yu&quot;);
+    yu.setBorn(2000);
+    yu.setGender(true);
+    yu.born = 2001; // you cannot access a private member
+    yu.printInfo();
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>报错</p><h4 id="member-functions">Member Functions</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>成员函数</p><p>在类内定义的函数，默认是inline。</p><p>建议：<strong>简单的适合作为inline的函数可放在类内，其他放在类外。</strong></p><p>function.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+class Student
+{
+  private:
+    char name[4];
+    int born;
+    bool male; 
+  public:
+    void setName(const char * s)
+    {
+        strncpy(name, s, sizeof(name));
+    }
+    void setBorn(int b)
+    {
+        born = b;
+    }
+    // the declarations, the definitions are out of the class
+    void setGender(bool isMale);
+    void printInfo();
+};
+
+void Student::setGender(bool isMale)
+{
+    male = isMale;
+}
+void Student::printInfo()
+{
+    std::cout &lt;&lt; &quot;Name: &quot; &lt;&lt; name &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;Born in &quot; &lt;&lt; born &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;Gender: &quot; &lt;&lt; (male ? &quot;Male&quot; : &quot;Female&quot;) &lt;&lt; std::endl;
+}
+
+int main()
+{
+    Student yu;
+    yu.setName(&quot;Yu&quot;);
+    yu.setBorn(2000);
+    yu.setGender(true);
+    yu.printInfo();
+    return 0;
+}</code></pre><h4 id="file-structures">File Structures</h4><p>•The source code can be placed into multiple files</p><p>类定义可放在头文件中</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>类放在头文件中</p><p>main.cpp</p><pre><code>#include &quot;student.hpp&quot;
+
+int main()
+{
+    Student yu;
+    yu.setName(&quot;Yu&quot;);
+    yu.setBorn(2000);
+    yu.setGender(true);
+    yu.printInfo();
+    return 0;
+}</code></pre><p>student.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &quot;student.hpp&quot;
+
+void Student::setGender(bool isMale)
+{
+    male = isMale;
+}
+void Student::printInfo()
+{
+    std::cout &lt;&lt; &quot;Name: &quot; &lt;&lt; name &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;Born in &quot; &lt;&lt; born &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;Gender: &quot; &lt;&lt; (male ? &quot;Male&quot; : &quot;Female&quot;) &lt;&lt; std::endl;
+}</code></pre><p>student.hpp</p><pre><code>#pragma once
+
+#include &lt;cstring&gt;
+class Student
+{
+  private:
+    char name[4];
+    int born;
+    bool male; 
+  public:
+    void setName(const char * s)
+    {
+        strncpy(name, s, sizeof(name));
+    }
+    void setBorn(int b)
+    {
+        born = b;
+    }
+    // the declarations, the definitions are out of the class
+    void setGender(bool isMale);
+    void printInfo();
+};</code></pre><p>CMakeLists.txt</p><pre><code>cmake_minimum_required(VERSION 3.12)
+
+project(persondemo)
+
+ADD_EXECUTABLE(persondemo main.cpp student.cpp)</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行结果</p><h3 id="constructors-and-destructors">Constructors and Destructors</h3><h4 id="constructors">Constructors</h4><ul><li><p>Different from struct in C, a constructor will be invoked when creating an object of a class.</p> <ul> <li>struct in C: allocate memory</li> <li>class in C++: allocate memory &amp; invoke a constructor</li> </ul></li><li>struct in C: allocate memory</li><li>class in C++: allocate memory &amp; invoke a constructor</li><li><p>But ... No constructor is defined explicitly in previous examples.</p> <ul> <li>The compiler will generate one with empty body</li> </ul></li><li>The compiler will generate one with empty body</li></ul><p>1、申请内存</p><p>2、构造函数</p><p>编译器会自动生成空的构造函数</p><p>构造函数：</p><p><strong>•The same name with the class.</strong></p><p><strong>•Have no return value</strong></p><p><strong>三种构造函数：</strong></p><p>1.无参</p><pre><code>Student()
+{
+    name[0] = 0;
+    born = 0;
+    male = false;
+}</code></pre><p>2.有参</p><pre><code>Student(const char * initName): born(0), male(true)
+{
+    setName(initName);
+}</code></pre><p>3.跟在后面初始化</p><pre><code>Student(const char * initName): born(0), male(true)
+{
+    setName(initName);
+}</code></pre><p>四种初始化</p><ol></ol><pre><code>Student yu;
+yu.printInfo();
+yu.setName(&quot;Yu&quot;);
+yu.setBorn(2000);
+yu.setGender(true);
+yu.printInfo();</code></pre><ol></ol><pre><code>Student li(&quot;li&quot;);
+li.printInfo();</code></pre><ol></ol><pre><code>Student xue = Student(&quot;XueQikun&quot;, 1962, true);
+//a question: what will happen since &quot;XueQikun&quot; has 4+ characters?
+xue.printInfo();</code></pre><ol></ol><pre><code>Student * zhou =  new Student(&quot;Zhou&quot;, 1991, false);
+zhou-&gt;printInfo();
+delete zhou;</code></pre><p>其中前三种是在栈上申请，第四种在堆上申请。</p><h4 id="destructors">Destructors</h4><p>•The destructor will be invoked when the object is destroyed.</p><p>•Be formed from the class name preceded by a tilde (~)</p><p>•Have no return value, no parameters</p><pre><code>class Student
+{
+    // ... 
+  public:
+    Student()
+    {
+        name = new char[1024]{0};
+        born = 0;
+        male = false;
+        cout &lt;&lt; &quot;Constructor: Person()&quot; &lt;&lt; endl;
+    }
+    ~Student()
+    {
+        delete [] name;
+    }
+};</code></pre><p>析构函数在该对象的作用域结束时就被销毁了，但是对于动态申请（new）的，需要在delete后才会执行析构函数。</p><p>对于数组数据</p><pre><code>Student * class1 = new Student[3]{
+        {&quot;Tom&quot;, 2000, true},
+        {&quot;Bob&quot;, 2001, true},
+        {&quot;Amy&quot;, 2002, false},
+    };</code></pre><p>如果使用<code>delete class1</code>，只会调用第一个析构函数，而<code>delete []class1</code>则会调用三个析构。</p><h3 id="this-pointer">this Pointer</h3><p>•All methods in a function have a this pointer.</p><p>•It is set to the address of the object that invokes the method.</p><p>this.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+using namespace std;
+
+class Student
+{
+  private:
+    char * name;
+    int born;
+    bool male; 
+  public:
+    Student()
+    {
+        name = new char[1024]{0};
+        born = 0;
+        male = false;
+        cout &lt;&lt; &quot;Constructor: Person()&quot; &lt;&lt; endl;
+    }
+    Student(const char * name, int born, bool male)
+    {
+        this-&gt;name =  new char[1024];
+        this-&gt;setName(name);
+        this-&gt;born = born;
+        this-&gt;male = male;
+        cout &lt;&lt; &quot;Constructor: Person(const char, int , bool)&quot; &lt;&lt; endl;
+    }
+    ~Student()
+    {
+        cout &lt;&lt; &quot;To destroy object: &quot; &lt;&lt; name &lt;&lt; endl;
+        delete [] name;
+    }
+
+    void setName(const char * name)
+    {
+        strncpy(this-&gt;name, name, 1024);
+    }
+    void setBorn(int born)
+    {
+        this-&gt;born = born;
+    }
+    // the declarations, the definitions are out of the class
+    void setGender(bool isMale);
+    void printInfo();
+};
+
+void Student::setGender(bool isMale)
+{
+    male = isMale;
+}
+void Student::printInfo()
+{
+    std::cout &lt;&lt; &quot;Name: &quot; &lt;&lt; name &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;Born in &quot; &lt;&lt; born &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;Gender: &quot; &lt;&lt; (male ? &quot;Male&quot; : &quot;Female&quot;) &lt;&lt; std::endl;
+}
+
+int main()
+{
+    Student * class1 = new Student[3]{
+        {&quot;Tom&quot;, 2000, true},
+        {&quot;Bob&quot;, 2001, true},
+        {&quot;Amy&quot;, 2002, false},
+    };
+
+    class1[1].printInfo();
+    delete []class1;
+
+
+    return 0;
+}</code></pre><h4 id="const-and-static-members">const and static Members</h4><h4 id="const-variables">const Variables</h4><pre><code>#define VALUE 100      // 宏
+
+const int value = 100; // 值不能再修改
+const int * p_int;     // 指针指向的内容不能透过这个指针修改，但是指针地址可以修改
+int const * p_int;     // 同上
+
+int * const p_int;     // 指针地址不能修改，但是可以修改指针指向的内容
+
+void func(const int *);// 指针
+void func(const int &amp;);// 引用</code></pre><p>C++中不推荐使用宏。</p><h4 id="const-members">const Members</h4><p>•const member variables behavior similar with normal const variables</p><p>•const member functions promise not to modify member variables.</p><pre><code>class Student
+{
+  private:
+    const int BMI = 24;// const变量
+    // ...
+  public:
+    Student()
+    {
+        BMI = 25;//can it be modified?
+        // ...
+    }
+    int getBorn() const // const函数，不可以去修改成员变量
+    {
+        born++; //Can it be modified?不可以
+        return born;
+    }
+};</code></pre><h4 id="static-members">static members</h4><p>•static members are not bound to class instances.</p><p>静态成员不绑定到某个实例上。</p><pre><code>class Student
+{
+  private:
+    static size_t student_total; // declaration only
+  public:
+    Student()
+    {
+        student_total++;
+    }
+    ~Student()
+    {
+        student_total--;
+    }
+    static size_t getTotal() {return student_total;}
+};
+// definition it here size_t Student::student_total = 0; </code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>静态成员示意图</p><p>静态函数不能修改非静态数据。</p><h2 id="week10">Week10</h2><h3 id="运算符重载operator-overloading">运算符重载Operator overloading</h3><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>函数重载</p><p>•Implementation of operator+() and operator+=()</p><p>time.hpp</p><pre><code>#pragma once
+#include &lt;iostream&gt;
+
+class MyTime
+{
+    int hours;
+    int minutes;
+  public:
+    MyTime(): hours(0), minutes(0){}
+    MyTime(int h, int m): hours(h), minutes(m){}
+
+    MyTime operator+(const MyTime &amp; t) const
+    {
+        MyTime sum;
+        sum.minutes = this-&gt;minutes + t.minutes;
+        sum.hours = this-&gt;hours + t.hours;
+
+        sum.hours +=  sum.minutes / 60;
+        sum.minutes %= 60;
+        
+        return sum;
+    }
+    MyTime &amp; operator+=(const MyTime &amp; t) 
+    {
+        this-&gt;minutes += t.minutes;
+        this-&gt;hours += t.hours;
+
+        this-&gt;hours +=  this-&gt;minutes / 60;
+        this-&gt;minutes %= 60;
+        
+        return *this;
+    }
+    std::string getTime() const
+    {
+        return std::to_string(this-&gt;hours) + &quot; hours and &quot; 
+                + std::to_string(this-&gt;minutes) + &quot; minutes.&quot;;
+    }
+};</code></pre><p>main.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &quot;time.hpp&quot;
+
+using namespace std;
+
+int main()
+{
+    MyTime t1(2, 40);
+    MyTime t2(1, 20);
+    std::cout &lt;&lt; (t1 + t2).getTime() &lt;&lt; std::endl;
+
+    t1 += t2; //operator
+    t1.operator+=(t2); //function
+
+    std::cout &lt;&lt; t1.getTime() &lt;&lt; endl;
+
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结果</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>20+t1?</p><h3 id="friend-functions友元函数">friend Functions友元函数</h3><p>•If we want that operator + can support (int + MyTime)</p><pre><code>MyTime t1(2, 40);
+20 + t1;</code></pre><p>•Let a friend function to help</p><p>•Friend functions</p><p> Declare in a class body</p><p> Granted class access to members (including private members)</p><p> But not members</p><p>•Again, friend functions are not members! They just declared in the class body.</p><pre><code>class MyTime
+{
+  // ...
+  public:
+    friend MyTime operator+(int m, const MyTime &amp; t)
+    {
+        return t + m;
+    }
+};</code></pre><p>t+m调用了另外一个重载。</p><p>•A friend function is defined out of the class.</p><p>•No MyTime:: before its function name</p><pre><code>class MyTime
+{
+  // ...
+  public:
+    friend MyTime operator+(int m, const MyTime &amp; t);
+};
+
+MyTime operator+(int m, const MyTime &amp; t)
+{
+    return t + m;
+}
+j</code></pre><p>•Operator &lt;&lt; can also be overloaded.</p><p>•But in (cout &lt;&lt; t1; ) , the first operand is std::ostream, not MyTime.</p><p>•To modify the definition of std::ostream? No!</p><p>•Use a friend function</p><pre><code>friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp; os, const MyTime &amp; t)
+{
+    std::string str = std::to_string(t.hours) + &quot; hours and &quot; 
+             + std::to_string(t.minutes) + &quot; minutes.&quot;;
+    os &lt;&lt; str;
+    return os;
+}</code></pre><p>main.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &quot;time.hpp&quot;
+
+using namespace std;
+
+int main()
+{
+    MyTime t1(2, 40);
+    std::cout &lt;&lt; (30 + t1).getTime() &lt;&lt; std::endl;
+
+    std::cout &lt;&lt; t1 &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;Please input two integers:&quot; &lt;&lt; std::endl;
+    std::cin &gt;&gt; t1;
+    std::cout &lt;&lt; t1 &lt;&lt; std::endl;
+
+    return 0;
+}</code></pre><p>time.cpp</p><pre><code>#pragma once
+#include &lt;iostream&gt;
+
+class MyTime
+{
+    int hours;
+    int minutes;
+  public:
+    MyTime(): hours(0), minutes(0){}
+    MyTime(int h, int m): hours(h), minutes(m){}
+
+    MyTime operator+(const MyTime &amp; t) const
+    {
+        MyTime sum;
+        sum.minutes = this-&gt;minutes + t.minutes;
+        sum.hours = this-&gt;hours + t.hours;
+
+        sum.hours +=  sum.minutes / 60;
+        sum.minutes %= 60;
+        
+        return sum;
+    }
+    MyTime &amp; operator+=(const MyTime &amp; t) 
+    {
+        this-&gt;minutes += t.minutes;
+        this-&gt;hours += t.hours;
+
+        this-&gt;hours +=  this-&gt;minutes / 60;
+        this-&gt;minutes %= 60;
+        
+        return *this;
+    }
+
+    MyTime operator+(int m) const
+    {
+        MyTime sum;
+        sum.minutes = this-&gt;minutes + m;
+        sum.hours = this-&gt;hours;
+        sum.hours +=  sum.minutes / 60;
+        sum.minutes %= 60;
+        return sum;
+    }
+
+    friend MyTime operator+(int m, const MyTime &amp; t)
+    {
+        return t + m;
+    }
+
+    std::string getTime() const
+    {
+        return std::to_string(this-&gt;hours) + &quot; hours and &quot; 
+                + std::to_string(this-&gt;minutes) + &quot; minutes.&quot;;
+    }
+
+    friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp; os, const MyTime &amp; t)
+    {
+        std::string str = std::to_string(t.hours) + &quot; hours and &quot; 
+                        + std::to_string(t.minutes) + &quot; minutes.&quot;;
+        os &lt;&lt; str;
+        return os;
+    }
+    friend std::istream &amp; operator&gt;&gt;(std::istream &amp; is, MyTime &amp; t)
+    {
+        is &gt;&gt; t.hours &gt;&gt; t.minutes;
+        t.hours +=  t.minutes / 60;
+        t.minutes %= 60;
+        return is;
+    }
+};</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结果</p><p>一些理解：</p><p>os是输出流，<code>os **&lt;&lt;** str;</code>要将str的内容送入输出流；</p><p>is是输入流，<code>is **&gt;&gt;** t.hours **&gt;&gt;** t.minutes;</code>则是要分别将输入流内容放入hours和minutes中。</p><h3 id="user-defined-type-conversion">User-defined Type Conversion</h3><h4 id="operator-type">operator type()</h4><p>•Overloaded type conversion: convert the current type to another</p><pre><code>//implicit conversion
+operator int() const
+{
+    return this-&gt;hours * 60 + this-&gt;minutes;
+}
+//explicit conversion
+explicit operator float() const
+{
+    return float(this-&gt;hours * 60 + this-&gt;minutes);
+}</code></pre><p><strong>explicit</strong> 表示必须进行显式的类型转换。</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>隐式与显式类型转换</p><h4 id="converting-constructor">Converting constructor</h4><p>构造函数</p><p>•Convert another type to the current</p><pre><code>MyTime(int m): hours(0), minutes(m)
+{
+    this-&gt;hours += this-&gt;minutes / 60;
+    this-&gt;minutes %= 60;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结果</p><h4 id="assignment-operator-overloading">Assignment operator overloading</h4><p>对等号进行了重载</p><pre><code>MyTime &amp; operator=(int m)
+{
+    this-&gt;hours = 0;
+    this-&gt;minutes = m;
+    this-&gt;hours = this-&gt;minutes / 60;
+    this-&gt;minutes %= 60;
+    return *this;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结果</p><p>上面这两个，一个是初始化，一个是赋值。</p><h3 id="increment-and-decrement-operators">Increment and decrement operators</h3><p>分别是前置操作与后置操作。</p><pre><code>// prefix increment
+MyTime&amp; operator++()
+{
+    this-&gt;minutes++;
+    this-&gt;hours += this-&gt;minutes / 60;
+    this-&gt;minutes = this-&gt;minutes % 60;
+    return *this; 
+}
+// postfix increment
+MyTime operator++(int)
+{
+    MyTime old = *this; // keep the old value
+    operator++(); // prefix increment
+    return old; 
+}</code></pre><p>可重载符号</p><pre><code>+ | % | ~ |  | /= | &lt;&lt; | == | &lt;= |  | ()
+ | ^ | ! | += | %= |  | != | &amp;&amp; | , | []
+ | &amp; | = | = | &amp;= | &lt;&lt;= | &lt;= | || |  | 
+/ | | | &lt; | = | |= | = | = | ++ |  | </code></pre><p>可重载</p><h2 id="week11">Week11</h2><h3 id="some-default-operations">Some Default Operations</h3><h4 id="default-constructors">Default Constructors</h4><p>Default constructor: a constructor which can be called without arguments
+If you define no constructors, the compiler automatically provide one</p><p>如果没有构造任何一个构造函数，则会自动生成，否则不会生成。</p><p>默认构造函数是无参数的。</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>构造函数</p><h4 id="implicitly-defined-destructor">Implicitly-defined Destructor</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>析构函数</p><h4 id="default-copy-constructors">Default Copy Constructors</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>默认拷贝构造函数</p><p>Default copy constructor:</p><ul><li>If no user defined copy constructors, the compiler will generate one.</li><li>Copy all non static data members.</li></ul><p>自动会把非静态成员拷贝一遍。</p><h4 id="default-copy-assignment">Default Copy Assignment</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>拷贝赋值</p><h3 id="an-example-with-dynamic-memory">An Example with Dynamic Memory</h3><ul><li>mystring.hpp</li></ul><pre><code>#pragma once
+
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+class MyString
+{
+  private:
+    int buf_len;
+    char * characters;
+  public:
+    MyString(int buf_len = 64, const char * data = NULL)
+    {
+        std::cout &lt;&lt; &quot;Constructor(int, char*)&quot; &lt;&lt; std::endl;
+        this-&gt;buf_len = 0;
+        this-&gt;characters = NULL;
+        create(buf_len, data);
+    }
+    ~MyString()
+    {
+        delete []this-&gt;characters;
+    }
+    bool create(int buf_len,  const char * data)
+    {
+        this-&gt;buf_len = buf_len;
+
+        if( this-&gt;buf_len != 0)
+        {
+            this-&gt;characters = new char[this-&gt;buf_len]{};
+            if(data)
+                strncpy(this-&gt;characters, data, this-&gt;buf_len);
+        }
+    
+        return true;
+    }
+    friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp; os, const MyString &amp; ms)
+    {
+        os &lt;&lt; &quot;buf_len = &quot; &lt;&lt; ms.buf_len;
+        os &lt;&lt; &quot;, characters = &quot; &lt;&lt; static_cast&lt;void*&gt;(ms.characters);
+        os &lt;&lt; &quot; [&quot; &lt;&lt; ms.characters &lt;&lt; &quot;]&quot;;
+        return os;
+    }
+};</code></pre><ul><li>main.cpp</li></ul><pre><code>#include &lt;iostream&gt;
+#include &quot;mystring.hpp&quot;
+
+using namespace std;
+
+// Why memory leak and memory double free?
+int main()
+{
+    MyString str1(10, &quot;Shenzhen&quot;);
+    cout &lt;&lt; &quot;str1: &quot; &lt;&lt; str1 &lt;&lt; endl;
+
+    MyString str2 = str1; 
+    cout &lt;&lt; &quot;str2: &quot; &lt;&lt; str2 &lt;&lt; endl;
+
+    MyString str3;
+    cout &lt;&lt; &quot;str3: &quot; &lt;&lt; str3 &lt;&lt; endl;
+    str3 = str1;
+    cout &lt;&lt; &quot;str3: &quot; &lt;&lt; str3 &lt;&lt; endl;
+
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>出现错误提示</p><p>问题：</p><ol><li>str3原来申请的内存没有被释放</li><li>str2和str3的析构函数对已释放的内存又进行释放</li></ol><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结构</p><h3 id="solution-1-hard-copy">Solution 1: Hard Copy</h3><p>实现自定义的拷贝函数，不再共享内存。</p><ul><li>mystring.hpp</li></ul><pre><code>#pragma once
+
+#include &lt;iostream&gt;
+#include &lt;cstring&gt;
+
+class MyString
+{
+  private:
+    int buf_len;
+    char * characters;
+  public:
+    MyString(int buf_len = 64, const char * data = NULL)
+    {
+        std::cout &lt;&lt; &quot;Constructor(int, char*)&quot; &lt;&lt; std::endl;
+        this-&gt;buf_len = 0;
+        this-&gt;characters = NULL;
+        create(buf_len, data);
+    }
+    ~MyString()
+    {
+        delete []this-&gt;characters;
+    }
+    bool create(int buf_len,  const char * data)
+    {
+        this-&gt;buf_len = buf_len;
+
+        if( this-&gt;buf_len != 0)
+        {
+            this-&gt;characters = new char[this-&gt;buf_len]{};
+            if(data)
+                strncpy(this-&gt;characters, data, this-&gt;buf_len);
+        }
+    
+        return true;
+    }
+    friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp; os, const MyString &amp; ms)
+    {
+        os &lt;&lt; &quot;buf_len = &quot; &lt;&lt; ms.buf_len;
+        os &lt;&lt; &quot;, characters = &quot; &lt;&lt; static_cast&lt;void*&gt;(ms.characters);
+        os &lt;&lt; &quot; [&quot; &lt;&lt; ms.characters &lt;&lt; &quot;]&quot;;
+        return os;
+    }
+};</code></pre><h3 id="solution-2-soft-copy">Solution 2: Soft Copy</h3><p>Problem of Hard Copy</p><p>•Frequently allocate and free memory.</p><p>•Time consuming when the memory is big.</p><p>But...</p><p>•If several objects share the same memory, who should release it?</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>opencv</p><h3 id="smart-pointers">Smart Pointers</h3><h4 id="std-shared-ptr">std::shared_ptr</h4><p>允许一个地址被多个指针指向</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>std::shared_ptr</p><h4 id="std-unique-ptr">std::unique_ptr</h4><p>只允许一个指针指向</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>std::unique_ptr</p><ul><li>unique ptr.cpp</li></ul><pre><code>#include &lt;iostream&gt;
+#include &lt;memory&gt;
+
+class MyTime
+{
+    int hours;
+    int minutes;
+  public:
+    MyTime(): hours(0), minutes(0)
+    {
+        std::cout &lt;&lt; &quot;Constructor MyTime()&quot; &lt;&lt; std::endl;
+    }
+    MyTime(int m): hours(0), minutes(m)
+    {
+        std::cout &lt;&lt; &quot;Constructor MyTime(int)&quot; &lt;&lt; std::endl;
+        this-&gt;hours +=  this-&gt;minutes / 60;
+        this-&gt;minutes %= 60;
+    }
+    MyTime(int h, int m): hours(h), minutes(m)
+    {
+        std::cout &lt;&lt; &quot;Constructor MyTime(int,int)&quot; &lt;&lt; std::endl;
+        this-&gt;hours +=  this-&gt;minutes / 60;
+        this-&gt;minutes %= 60;
+    }
+    ~MyTime()
+    {
+        std::cout &lt;&lt; &quot;Destructor MyTime(). Bye!&quot; &lt;&lt; std::endl;
+    }
+    MyTime operator+(int m) const
+    {
+        MyTime sum;
+        sum.minutes = this-&gt;minutes + m;
+        sum.hours = this-&gt;hours;
+        sum.hours +=  sum.minutes / 60;
+        sum.minutes %= 60;
+        return sum;
+    }
+    friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp; os, const MyTime &amp; t)
+    {
+        std::string str = std::to_string(t.hours) + &quot; hours and &quot; 
+                        + std::to_string(t.minutes) + &quot; minutes.&quot;;
+        os &lt;&lt; str;
+        return os;
+    }
+};
+
+
+int main()
+{
+    std::unique_ptr&lt;MyTime&gt; mt1(new MyTime(10));
+    std::unique_ptr&lt;MyTime&gt; mt2 = std::make_unique&lt;MyTime&gt;(80); //c++17
+
+    std::cout &lt;&lt; &quot;mt1: &quot; &lt;&lt;*mt1 &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;mt2: &quot; &lt;&lt;*mt2 &lt;&lt; std::endl;
+
+    // std::unique_ptr&lt;MyTime&gt; mt3 = mt1; // error
+    std::unique_ptr&lt;MyTime&gt; mt3 = std::move(mt1); 
+    // std::shared_ptr&lt;MyTime&gt; mt3 = std::move(mt1);//okay
+    
+    // std::cout &lt;&lt; &quot;mt1: &quot; &lt;&lt;*mt1 &lt;&lt; std::endl;
+    std::cout &lt;&lt; &quot;mt3: &quot; &lt;&lt;*mt3 &lt;&lt; std::endl;
+
+    return 0;
+}</code></pre><h4 id="how-to-understand-smart-pointers">How to Understand Smart Pointers</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>smart pointer</p><h2 id="week12">Week12</h2><h3 id="improve-your-source-code">Improve Your Source Code</h3><p>•Use size_t for mat.cols and mat.rows</p><p>•Use memcpy() to copy data. Element assignment has a lower efficiency.</p><p>•Use 1D array (float*) nor 2D array (float**) for matrix data.</p><p>•Redundant computation in loops</p><p>•Do parameter checking in functions: null pointers, dimension matching in matrix operations, etc</p><p>•Do not bind the create matrix function with file I/O.</p><p>•File name: head.h, source1.c, source2.c, source3.c</p><p>•Good implementation VS good homework. </p><h3 id="derived-classes派生类">Derived Classes派生类</h3><h4 id="inheritance">Inheritance</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>继承</p><h4 id="constructors-2">Constructors</h4><p>•To instantiate a derived class object</p><ul><li><p>Allocate memory</p></li><li><p>Derived constructor is invoked</p> <ul> <li>Base object is constructed by a base constructor</li> <li>Member initializer list initializes members </li> <li>To execute the body of the derived constructor</li> </ul></li><li>Base object is constructed by a base constructor</li><li>Member initializer list initializes members</li><li>To execute the body of the derived constructor</li></ul><pre><code>class Derived: public Base
+{
+  public:
+    int c;
+    Derived(int c): Base(c - 2, c - 1), c(c)
+    {
+        ...
+    }
+};</code></pre><p>先执行父类的构造函数，再执行子类的构造函数。</p><h4 id="destructors-2">Destructors</h4><p>•The destructor of the derived class is invoked first,</p><p>•Then the destructor of the base class.</p><p>derive.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Base
+{
+  public:
+    int a;
+    int b;
+    Base(int a = 0, int b = 0)
+    {
+        this-&gt;a = a;
+        this-&gt;b = b;
+        cout &lt;&lt; &quot;Constructor Base::Base(&quot; &lt;&lt; a &lt;&lt; &quot;, &quot; &lt;&lt; b &lt;&lt; &quot;)&quot; &lt;&lt; endl;
+    }
+    ~Base()
+    {
+        cout &lt;&lt; &quot;Destructor Base::~Base()&quot; &lt;&lt; endl;
+    }
+    int product()
+    {
+        return a * b;
+    }
+    friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp; os, const Base &amp; obj)
+    {
+        os &lt;&lt; &quot;Base: a = &quot; &lt;&lt; obj.a &lt;&lt; &quot;, b = &quot; &lt;&lt; obj.b;
+        return os;
+    }
+};
+
+class Derived: public Base
+{
+  public:
+    int c;
+    Derived(int c): Base(c - 2, c - 1), c(c)
+    {
+        this-&gt;a += 3; //it can be changed after initialization
+        cout &lt;&lt; &quot;Constructor Derived::Derived(&quot; &lt;&lt; c &lt;&lt; &quot;)&quot; &lt;&lt; endl;
+    }
+    ~Derived()
+    {
+        cout &lt;&lt; &quot;Destructor Derived::~Derived()&quot; &lt;&lt; endl;
+    }
+    int product()
+    {
+        return Base::product() * c;
+    }
+    friend std::ostream &amp; operator&lt;&lt;(std::ostream &amp; os, const Derived &amp; obj)
+    {
+        // call the friend function in Base class
+        os &lt;&lt; static_cast&lt;const Base&amp;&gt;(obj) &lt;&lt; endl;
+
+        os &lt;&lt; &quot;Derived: c = &quot; &lt;&lt; obj.c;
+        return os;
+    }
+};
+
+int main()
+{
+    {
+        Base base(1, 2);
+        cout &lt;&lt; base &lt;&lt; endl;
+    }
+    cout &lt;&lt; &quot;----------------------&quot; &lt;&lt; endl;
+    {
+        Derived derived(5);
+        cout &lt;&lt; derived &lt;&lt; endl;
+        cout &lt;&lt; &quot;Product = &quot; &lt;&lt; derived.product() &lt;&lt; endl; 
+    }
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行结果</p><h3 id="access-control"><strong>Access Control</strong></h3><ul><li><p>Public members</p> <ul> <li>Accessible anywhere</li> </ul></li><li>Accessible anywhere</li><li><p>Private members只有类内可以调用</p> <ul> <li>Only accessible to the members and friends of that class</li> </ul></li><li>Only accessible to the members and friends of that class</li><li><p>Protected members权限位于两者之间，自己的成员，友元以及子类可以调用</p> <ul> <li>Accessible to the members and friends of that class </li> <li>Accessible to the members and friends of the derived class</li> </ul></li><li>Accessible to the members and friends of that class</li><li>Accessible to the members and friends of the derived class</li></ul><p>不写默认是private</p><pre><code>class Person {
+  private:
+    int n; // private member
+  public:
+    // this-&gt;n is accessible 
+    Person() : n(10) {}
+    // other.n is accessible
+    Person(const Person&amp; other) : n(other.n) {}
+    // this-&gt;n is accessible
+    void set(int n) {this-&gt;n = n;}
+    // this-&gt;n and other.n are accessible
+    void set(const Person&amp; other) {this-&gt;n = other.n;}
+};</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>protected</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>protected</p><h4 id="public-inheritance">Public Inheritance</h4><ul><li>Public members of the base class<ul> <li>Still be public in the derived class</li> <li>Accessible anywhere</li> </ul></li><li>Still be public in the derived class</li><li>Accessible anywhere</li><li>Protected members of the base class<ul> <li>Still be protected in the derived class</li> <li>Accessible in the derived class only</li> </ul></li><li>Still be protected in the derived class</li><li>Accessible in the derived class only</li><li>Private members of the base class<ul> <li>Not accessible in the derived class私有变量可以通过公有函数访问</li> </ul></li><li>Not accessible in the derived class私有变量可以通过公有函数访问</li></ul><h4 id="protected-inheritance">Protected Inheritance</h4><ul><li><p>Public</p> <p>members and </p> <p>protected</p> <p>members of the base class</p> <ul> &lt;li Be <strong>protected</strong> in the derived class</li> <li>Accessible in the derived class only</li> </ul></li><li>Be <strong>protected</strong> in the derived class</li><li>Accessible in the derived class only</li><li><p>Private members of the base class</p> <ul> <li>Not accessible in the derived class</li> </ul></li><li>Not accessible in the derived class</li></ul><h4 id="private-inheritance">Private Inheritance</h4><ul><li><p>Public</p> <p>members and </p> <p>protected</p> <p>members of the base class</p> <ul> &lt;li Be <strong>private</strong> in the derived class</li> <li>Accessible in the derived class only</li> </ul></li><li>Be <strong>private</strong> in the derived class</li><li>Accessible in the derived class only</li><li><p>Private members of the base class</p> <ul> <li>Not accessible in the derived class</li> </ul></li><li>Not accessible in the derived class</li></ul><h3 id="virtual-functions">Virtual Functions</h3><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>虚函数</p><p>virtual.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;string&gt;
+using namespace std;
+
+class Person
+{
+  public:
+    string name;
+    Person(string n): name(n){}
+    virtual void print()
+    {
+        cout &lt;&lt; &quot;Name: &quot; &lt;&lt; name &lt;&lt; endl;
+    }
+};
+
+class Person2
+{
+  public:
+    string name;
+    Person2(string n): name(n){}
+    virtual void print() = 0; 
+};
+
+class Student: public Person
+{
+  public:
+    string id;
+    Student(string n, string i): Person(n), id(i){}
+    void print() 
+    {
+        cout &lt;&lt; &quot;Name: &quot; &lt;&lt; name;
+        cout &lt;&lt; &quot;. ID: &quot; &lt;&lt; id &lt;&lt; endl;
+    }
+};
+
+void printObjectInfo(Person &amp; p)
+{
+    p.print();
+}
+
+int main()
+{
+    {
+        Student stu(&quot;yu&quot;, &quot;2019&quot;);
+        printObjectInfo(stu);  
+    }
+
+    {
+        Person * p = new Student(&quot;xue&quot;, &quot;2020&quot;);
+        p-&gt;print(); //if print() is not a virtual function, different output
+        delete p; //if its destructor is not virtual
+    }
+
+    // { //if you want to call a function in the base class
+    //     Student stu(&quot;li&quot;, &quot;2021&quot;);
+    //     stu.Person::print();
+
+    //     Person * p = new Student(&quot;xue&quot;, &quot;2020&quot;);
+    //     p-&gt;Person::print(); 
+    //     delete p; 
+    // }
+
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>结果</p><p>如果不使用virtual function，调用子类函数将会调用父类对象的函数。</p><p>关键词：<code>virtual</code></p><p>•But if we define print() function as a virtual function, the output will be different.</p><p>•<strong>Static</strong> binding: the compiler decides which function to call</p><p>•<strong>Dynamic</strong> binding: the called function is decided at runtime.</p><p>•</p><p>•Keyword virtual makes the function virtual for the base and all derived classes.</p><p>虚函数的绑定不同。一般函数是静态绑定，virtual function是动态绑定，运行时传入的参数进行确定。</p><p>子类也会自动变成虚函数。</p><p>纯虚函数则没有定义，这个类不能创建对象。<code>virtual void print() = 0;</code></p><h4 id="virtual-destructors">Virtual Destructors</h4><p>析构函数一定是虚函数。</p><h3 id="inheritance-and-dynamic-memory-allocation">Inheritance and Dynamic Memory Allocation</h3><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>question</p><pre><code>class MyMap: pubic MyString
+{
+    char * keyname;
+  public:
+    MyMap(const char * key, const char * value)
+    {
+    ...
+    }
+    MyMap(const MyMap &amp; mm): MyString(mm.buf_len, mm.characters)
+    {
+    //allocate memory for keyname
+    //and hard copy from mm to *this
+    }
+    MyMap &amp; operator=(const MyMap &amp;mm)
+    {
+       MyString::operator=(mm);
+       //allocate memory for keyname
+       //and hard copy from mm to *this
+       return *this;
+    }
+};</code></pre><h2 id="week13">Week13</h2><h3 id="class-templates">Class Templates</h3><h4 id="review-function-templates">Review: Function Templates</h4><p>•A function template is not a type, or a function, or any other entity. </p><p>•No code is generated from a source file that contains only template definitions.</p><p>•The template arguments must be determined, then the compiler can generate an actual function</p><p>•"<strong>Function templates</strong>" vs "<strong>template functions</strong>".</p><ul><li>函数模板：只是模板的空壳子，不是具体的函数</li></ul><pre><code>template&lt;typename T&gt;
+T sum(T x, T y)
+{
+    cout &lt;&lt; &quot;The input type is &quot; &lt;&lt; typeid(T).name() &lt;&lt; endl;
+    return x + y;
+}</code></pre><ul><li>模板函数：函数被实例化后生成的代码</li></ul><pre><code>// instantiates sum&lt;double&gt;(double, double)
+template double sum&lt;double&gt;(double, double);
+// instantiates sum&lt;char&gt;(char, char), template argument deduced
+template char sum&lt;&gt;(char, char); 
+// instantiates sum&lt;int&gt;(int, int), template argument deduced
+template int sum(int, int); </code></pre><p>隐式实例化</p><pre><code>template&lt;typename T&gt;
+T product(T x, T y)
+{
+    cout &lt;&lt; &quot;The input type is &quot; &lt;&lt; typeid(T).name() &lt;&lt; endl;
+    return x * y;
+}
+
+// Implicitly instantiates product&lt;int&gt;(int, int)
+cout &lt;&lt; &quot;product = &quot; &lt;&lt; product&lt;int&gt;(2.2f, 3.0f) &lt;&lt; endl;
+// Implicitly instantiates product&lt;float&gt;(float, float)
+cout &lt;&lt; &quot;product = &quot; &lt;&lt; product(2.2f, 3.0f) &lt;&lt; endl;</code></pre><h4 id="different-classes-for-different-type-matrices">Different Classes for Different Type Matrices</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>类模板</p><p>matclass.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+// Class IntMat
+class IntMat
+{
+    size_t rows;
+    size_t cols;
+    int * data;
+  public:
+    IntMat(size_t rows, size_t cols): 
+                    rows(rows), cols(cols)
+    {
+        data = new int[rows * cols * sizeof(int)]{};
+    }
+    ~IntMat()
+    {
+        delete [] data;
+    }
+    IntMat(const IntMat&amp;) = delete;
+    IntMat&amp; operator=(const IntMat&amp;) = delete;
+    int getElement(size_t r, size_t c);
+    bool setElement(size_t r, size_t c, int value);
+};
+int IntMat::getElement(size_t r, size_t c)
+{
+    if ( r &gt;= this-&gt;rows || c &gt;= this-&gt;cols)
+    {
+        cerr &lt;&lt; &quot;Indices are out of range&quot; &lt;&lt; endl;
+        return 0;
+    }
+    return data[ this-&gt;cols * r + c];
+}
+bool IntMat::setElement(size_t r, size_t c, int value)
+{
+    if ( r &gt;= this-&gt;rows || c &gt;= this-&gt;cols)
+        return false;
+
+    data[ this-&gt;cols * r + c] = value;
+    return true;
+}
+
+// Class FloatMat
+class FloatMat
+{
+    size_t rows;
+    size_t cols;
+    float * data;
+  public:
+    FloatMat(size_t rows, size_t cols): 
+                    rows(rows), cols(cols)
+    {
+        data = new float[rows * cols * sizeof(float)]{};
+    }
+    ~FloatMat()
+    {
+        delete [] data;
+    }
+    FloatMat(const FloatMat&amp;) = delete;
+    FloatMat&amp; operator=(const FloatMat&amp;) = delete;
+    float getElement(size_t r, size_t c);
+    bool setElement(size_t r, size_t c, float value);
+};
+float FloatMat::getElement(size_t r, size_t c)
+{
+    if ( r &gt;= this-&gt;rows || c &gt;= this-&gt;cols)
+    {
+        cerr &lt;&lt; &quot;getElement(): Indices are out of range&quot; &lt;&lt; endl;
+        return 0.f;
+    }
+    return data[ this-&gt;cols * r + c];
+}
+bool FloatMat::setElement(size_t r, size_t c, float value)
+{
+    if ( r &gt;= this-&gt;rows || c &gt;= this-&gt;cols)
+    {
+        cerr &lt;&lt; &quot;setElement(): Indices are out of range&quot; &lt;&lt; endl;
+        return false;
+    }
+    data[ this-&gt;cols * r + c] = value;
+    return true;
+}
+
+int main()
+{
+    IntMat imat(3,4);
+    imat.setElement(1, 2, 256);
+    FloatMat fmat(2,3);
+    fmat.setElement(1, 2, 3.14159f);
+
+    // FloatMat fmat2(fmat); //error
+
+    // FloatMat fmat3(2,3); 
+    // fmat3 = fmat; //error
+
+    cout &lt;&lt; imat.getElement(1,2) &lt;&lt; endl;
+    cout &lt;&lt; fmat.getElement(1,2) &lt;&lt; endl;
+    
+    return 0;
+}</code></pre><p>其中的<code>= delete</code>,实现删除默认函数，表示 <strong>防止某个函数被调用</strong>。更进一步来说，可能是为了：
+（1）防止隐式转换
+（2）希望类不能被拷贝[ref]<a href="https://blog.csdn.net/lqw198421/article/details/112906443" target="_blank" rel="noreferrer">C++ =delete的使用_lqw198421的博客-CSDN博客</a>[/ref]</p><h4 id="class-templates-2">Class Templates</h4><p>•A class template defines a family of classes.</p><p>•Class template instantiation.</p><p>类模板</p><pre><code>template&lt;typename T&gt;
+class Mat
+{
+    size_t rows;
+    size_t cols;
+    T * data;
+  public:
+    Mat(size_t rows, size_t cols): rows(rows), cols(cols)
+    {
+        data = new T[rows * cols * sizeof(T)]{};
+    }
+    ~Mat()
+    {
+        delete [] data;
+    }
+    T getElement(size_t r, size_t c);
+    bool setElement(size_t r, size_t c, T value);
+};</code></pre><p>实例化</p><pre><code>// Explicitly instantiate 
+template class Mat&lt;int&gt;; </code></pre><p>mattemplate.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+// Class Template
+template&lt;typename T&gt;
+class Mat
+{
+    size_t rows;
+    size_t cols;
+    T * data;
+  public:
+    Mat(size_t rows, size_t cols): rows(rows), cols(cols)
+    {
+        data = new T[rows * cols * sizeof(T)]{};
+    }
+    ~Mat()
+    {
+        delete [] data;
+    }
+    Mat(const Mat&amp;) = delete;
+    Mat&amp; operator=(const Mat&amp;) = delete;
+    T getElement(size_t r, size_t c);
+    bool setElement(size_t r, size_t c, T value);
+};
+template &lt;typename T&gt;
+T Mat&lt;T&gt;::getElement(size_t r, size_t c)
+{
+    if ( r &gt;= this-&gt;rows || c &gt;= this-&gt;cols)
+    {
+        cerr &lt;&lt; &quot;getElement(): Indices are out of range&quot; &lt;&lt; endl;
+        return 0;
+    }
+    return data[ this-&gt;cols * r + c];
+}
+template &lt;typename T&gt;
+bool Mat&lt;T&gt;::setElement(size_t r, size_t c, T value)
+{
+    if ( r &gt;= this-&gt;rows || c &gt;= this-&gt;cols)
+    {
+        cerr &lt;&lt; &quot;setElement(): Indices are out of range&quot; &lt;&lt; endl;
+        return false;
+    }
+
+    data[ this-&gt;cols * r + c] = value;
+    return true;
+}
+
+template class Mat&lt;int&gt;; // Explicitly instantiate template Mat&lt;int&gt;
+//template Mat&lt;float&gt; and Mat&lt;double&gt; will be instantiate implicitly
+int main()
+{
+    Mat&lt;int&gt; imat(3,4);
+    imat.setElement(1, 2, 256);
+    Mat&lt;float&gt; fmat(2,3);
+    fmat.setElement(1, 2, 3.14159f);
+    Mat&lt;double&gt; dmat(2,3);
+    dmat.setElement(1, 2, 2.718281828);
+
+    // Mat&lt;float&gt; fmat2(fmat); //error
+
+    // Mat&lt;float&gt; fmat3(2,3);
+    // fmat3 = fmat; //error
+
+    cout &lt;&lt; imat.getElement(1,2) &lt;&lt; endl;
+    cout &lt;&lt; fmat.getElement(1,2) &lt;&lt; endl;
+    cout &lt;&lt; dmat.getElement(1,2) &lt;&lt; endl;
+    
+    return 0;
+}</code></pre><p>也会隐式实例化。</p><h3 id="template-non-type-parameters">Template Non-Type Parameters</h3><p>非类型参数</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>非类型参数</p><p>即不是某种类型（如int等），而是一个值（如16）。</p><p>•If we want to create a static matrix (no dynamic memory allocation inside)</p><pre><code>template&lt;typename T, size_t rows, size_t cols&gt;
+class Mat
+{
+    T data[rows][cols];
+  public:
+    Mat(){}
+    T getElement(size_t r, size_t c);
+    bool setElement(size_t r, size_t c, T value);
+};
+Mat&lt;int&gt; vec1(3, 3);
+Mat&lt;int, 3, 3&gt; vec2;</code></pre><p>在编译时就把col和row确定了。</p><p>nontypeparam.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+// Class Template
+template&lt;typename T, size_t rows, size_t cols&gt;
+class Mat
+{
+    T data[rows][cols];
+  public:
+    Mat(){}
+    //// the default copy constructor will copy each element of a static array member
+    //// so we do not &#39;delete&#39; the copy constructor
+    //// the same with the assignment operator
+    // Mat(const Mat&amp;) = delete;
+    // Mat&amp; operator=(const Mat&amp;) = delete;
+    T getElement(size_t r, size_t c);
+    bool setElement(size_t r, size_t c, T value);
+};
+template&lt;typename T, size_t rows, size_t cols&gt;
+T Mat&lt;T, rows, cols&gt;::getElement(size_t r, size_t c)
+{
+    if ( r &gt;= rows || c &gt;= cols)
+    {
+        cerr &lt;&lt; &quot;getElement(): indices are out of range&quot; &lt;&lt; endl;
+        return 0;
+    }
+    return data[r][c];
+}
+template&lt;typename T, size_t rows, size_t cols&gt;
+bool Mat&lt;T, rows, cols&gt;::setElement(size_t r, size_t c, T value)
+{
+    if ( r &gt;= rows || c &gt;= cols)
+    {
+        cerr &lt;&lt; &quot;setElement(): Indices are out of range&quot; &lt;&lt; endl;
+        return false;
+    }
+
+    data[r][c] = value;
+    return true;
+}
+
+template class Mat&lt;int, 2, 2&gt;; // Explicitly instantiate template Mat&lt;int, 2, 2&gt;
+typedef Mat&lt;int, 2, 2&gt; Mat22i;
+
+//template Mat&lt;float, 3, 1&gt; will be instantiate implicitly
+
+int main()
+{
+    Mat22i mat;
+
+    mat.setElement(2, 3, 256);
+    cout &lt;&lt; mat.getElement(2, 3) &lt;&lt; endl;
+
+    mat.setElement(1, 1, 256);
+    cout &lt;&lt; mat.getElement(1, 1) &lt;&lt; endl;
+
+    Mat&lt;float, 3, 1&gt; vec;
+    vec.setElement(2, 0, 3.14159f);
+    cout &lt;&lt; vec.getElement(2, 0) &lt;&lt; endl;
+
+    Mat&lt;float, 3, 1&gt; vec2(vec);
+    cout &lt;&lt; vec2.getElement(2, 0) &lt;&lt; endl;
+
+    // vec2 = mat; //error
+
+    return 0;
+}</code></pre><p><strong>对象赋值操作，内部的静态数组会直接进行拷贝</strong>。</p><h3 id="class-template-specialization">Class Template Specialization</h3><p>•The class template can be for most types</p><p>•But we want to save memory for type bool (1 byte or 1 bit).</p><pre><code>template&lt;typename T&gt;
+class MyVector
+{
+    size_t length;
+    T * data;
+  public:
+    MyVector(size_t length): length(length)
+    { data = new T[length * sizeof(T)]{}; }
+    ~MyVector()
+    { delete [] data; }
+    MyVector(const MyVector&amp;) = delete;
+    MyVector&amp; operator=(const MyVector&amp;) = delete;
+    T getElement(size_t index);
+    bool setElement(size_t index, T value);
+};</code></pre><p>•Specialize MyVector for bool</p><pre><code>template&lt;&gt;
+class MyVector&lt;bool&gt;
+{
+    size_t length;
+    unsigned char * data;
+  public:
+    MyVector(size_t length): length(length)
+    {
+        int num_bytes = (length - 1) / 8 + 1;
+        data = new unsigned char[num_bytes]{};
+    }
+    ~MyVector()
+    {
+        delete [] data;
+    }
+    MyVector(const MyVector&amp;) = delete;
+    MyVector&amp; operator=(const MyVector&amp;) = delete;
+    bool getElement(size_t index);
+    bool setElement(size_t index, bool value);
+};</code></pre><h3 id="std-classes">std classes</h3><h4 id="std-basic-string">std::basic_string</h4><p>•Store and manipulate sequences of char-like objects.</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>string</p><h4 id="std-array">std::array</h4><p>•a container that encapsulates fixed size arrays.</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>array</p><h4 id="some-other-templates">Some other templates</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>other</p><h2 id="week14">Week14</h2><h3 id="standard-output-stream-and-standard-error-stream">Standard Output Stream and Standard Error Stream</h3><h4 id="stdin-stdout-stderr">stdin, stdout, stderr</h4><p>•In C, three text streams are predefined, and their type is (FILE *).</p><p>•stdin: standard input stream</p><p>•stdout: standard output stream, for conventional output</p><p>•stderr: standard error stream, for diagnostic output.</p><p>•Why do we need the "ugly" black command windows?</p><h4 id="output-stream-and-error-stream">Output Stream and Error Stream</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>Output Stream and Error Stream</p><p>stderr.c</p><pre><code>#include &lt;stdio.h&gt;
+
+void div2(int n)
+{
+    if( n % 2 != 0)
+    {
+        fprintf(stderr, &quot;Error: The input must be an even number. Here it&#39;s %d\n&quot;, n);
+    }
+    else
+    {
+        int result = n / 2;
+        fprintf(stdout, &quot;Info: The result is %d\n&quot;, result);
+    }
+    return;
+}
+
+int main()
+{
+    for(int n = -5; n &lt;= 5; n++)
+        div2(n);
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>c版本错误</p><p>stderr.cpp</p><pre><code>#include &lt;iostream&gt;
+
+void div2(int n)
+{
+    if( n % 2 != 0)
+    {
+        std::cerr &lt;&lt; &quot;Error: The input must be an even number. Here it&#39;s &quot; &lt;&lt; n &lt;&lt; &quot;.&quot; &lt;&lt; std::endl;
+    }
+    else
+    {
+        int result = n / 2;
+        std::cout &lt;&lt; &quot;Info: The result is &quot; &lt;&lt; result &lt;&lt; &quot;.&quot; &lt;&lt; std::endl;
+    }
+    return;
+}
+
+int main()
+{
+    for(int n = -5; n &lt;= 5; n++)
+        div2(n);
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>cpp版本错误</p><h4 id="redirection">Redirection</h4><p>•The output of a program is in a pipeline.</p><p>•The output can be redirected. You can redirect the output into a file for debugging especially when the program run a very long time.</p><p>前面程序的输出作为后面程序的输入。</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>管道</p><p>使用<code>./a.out | less</code>查看</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>显示标准输出内容</p><p>含义：</p><ul><li><code>&gt;</code> 表示销毁并重新创建文件，将标准输出流内容写入</li><li><code>1&gt;</code> 含义同&gt;</li><li><code>&gt;&gt;</code> 表示如果不存在则创建，否则将内容加在已有内容后面</li><li><code>&gt; /dev/null</code> 则是将其销毁</li><li><code>2&gt;</code> 处理标准错误流</li><li><code>&amp;&gt;</code> 输出所有</li><li><code>&gt; abc.log 2&gt;&amp;1</code> 等效于 <code>&gt;&amp; abc.log</code> 等效于 <code>&amp;&gt; abc.log</code> [ref]<a href="https://blog.csdn.net/HD243608836/article/details/121429020" target="_blank" rel="noreferrer">Linux shell中2＞&amp;1输出日志文件内容的含义解释 （全网最全，看完就懂） linux 输出log HD243608836的博客 CSDN博客</a> [/ref]</li><li><code>2&gt;&gt; </code> 实现错误流追加</li></ul><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>只有错误流输出，标准流被重定向到t.txt</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>t.txt内容</p><h3 id="assert">assert</h3><p>•assert is a function-like macro in &lt;assert.h&gt; and  .</p><pre><code>#ifdef NDEBUG
+# define assert(condition) ((void)0)
+#else
+# define assert(condition) /*implementation defined*/
+#endif</code></pre><p>Do nothing if the condition is true</p><p>Output diagnostic information and call abort() if the condition is false.</p><p>•If NDEBUG is defined, do nothing whatever the condition is.</p><p>•assert can be used only for debugging, be removed by a macro NDEBUG before releasing.</p><p>assert.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;cassert&gt;
+
+int main(int argc, char ** argv)
+{
+    assert( argc == 2);
+    std::cout &lt;&lt; &quot;This is an assert example.&quot; &lt;&lt; std::endl;
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>断言</p><p>在第二行加入宏定义<code>#define **NDEBUG**</code>，则断言取消。</p><p>或者也可以通过编译时或在cmake时定义。<code>g++ assert.cpp -DNDEBUG</code></p><h3 id="exceptions">Exceptions</h3><p>•Solution 1: Kill the program when error occurs</p><pre><code>float ratio(float a, float b)
+{
+    if (fabs(a + b) &lt; FLT_EPSILON)
+    {
+        std::cerr &lt;&lt; &quot;Error ...&quot; &lt;&lt; std::endl;
+        std::abort();
+    }
+    return (a - b) / (a + b);
+}</code></pre><p>•Solution 2: Tell the caller by the return value when error occurs</p><p>•We have to use the 3rd parameter to send the result.</p><pre><code>bool ratio(float a, float b, float &amp; c)
+{
+    if (fabs(a + b) &lt; FLT_EPSILON)
+    {
+        std::cerr &lt;&lt; &quot;Error ...&quot; &lt;&lt; std::endl;
+        return false;
+    }
+    c = (a - b) / (a + b);
+    return true;
+}</code></pre><p>•Solution 3: Throw exceptions (C++ feature)</p><pre><code>float ratio(float a, float b)
+{
+    if (fabs(a + b) &lt; FLT_EPSILON)
+        throw &quot;Error ...&quot;;
+    return (a - b) / (a + b);
+}
+try{
+    z = ratio(x,y);
+    std::cout &lt;&lt; z &lt;&lt; std::endl;
+}
+catch(const char * msg)
+{
+    std::cerr &lt;&lt; msg &lt;&lt; std::endl;
+}</code></pre><p>error3.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;cstdlib&gt;
+#include &lt;cfloat&gt;
+#include &lt;cmath&gt;
+
+float ratio(float a, float b)
+{
+    if (fabs(a + b) &lt; FLT_EPSILON)
+        throw &quot;The sum of the two arguments is close to zero.&quot;;
+
+    return (a - b) / (a + b);
+}
+
+int main()
+{
+    float x = 0.f;
+    float y = 0.f;
+    float z = 0.f;
+
+    std::cout &lt;&lt; &quot;Please input two numbers &lt;q to quit&gt;:&quot;;
+    while (std::cin &gt;&gt; x &gt;&gt; y)
+    {
+        { //try and catch
+            try{
+                z = ratio(x,y);
+                std::cout &lt;&lt; &quot;ratio(&quot; &lt;&lt; x &lt;&lt; &quot;, &quot; &lt;&lt; y&lt;&lt; &quot;) = &quot; &lt;&lt; z &lt;&lt; std::endl;
+            }
+            catch(const char * msg)
+            {
+                std::cerr &lt;&lt; &quot;Call ratio() failed: &quot; &lt;&lt; msg &lt;&lt; std::endl;
+                std::cerr &lt;&lt; &quot;I give you another chance.&quot; &lt;&lt; std::endl;
+            }
+        }
+
+        // { //if no try-catch
+        //     z = ratio(x,y);
+        //     std::cout &lt;&lt; &quot;ratio(&quot; &lt;&lt; x &lt;&lt; &quot;, &quot; &lt;&lt; y&lt;&lt; &quot;) = &quot; &lt;&lt; z &lt;&lt; std::endl;            
+        // }
+
+        std::cout &lt;&lt; &quot;Please input two numbers &lt;q to quit&gt;:&quot;;
+    }
+    std::cout &lt;&lt; &quot;Bye!&quot; &lt;&lt; std::endl;
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>运行结果</p><h3 id="more-about-exceptions">More About Exceptions</h3><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>A try block can be followed by multiple catch blocks.</p><h4 id="stack-unwinding">Stack Unwinding</h4><p>•If an exception is not handled in the function, throw it to the caller.</p><p>•If the caller does not handle, throw it to the caller of the caller, or until main()</p><p>异常如果没被处理，则会继续往外抛</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>Stack Unwinding</p><h4 id="std-exception">std::exception</h4><p>•std::exception is a class that can be a base class for any exception.</p><p>•Function std:exception::what() can be overridden to return a C-style string message.</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>std::exception</p><h4 id="exception-specifications-and-noexcept"><strong>Exception Specifications and noexcept</strong></h4><p>•The noexcept specifier defines a function which will not throw anything.</p><pre><code>void foo() noexcept; // this function is non-throwing</code></pre><h4 id="nothrow-new">nothrow new</h4><p>•std::nothrow is a constant to select a non-throwing allocation function</p><pre><code>int * p = NULL;
+
+try {// may throw an exception
+    p = new int[length];
+}
+catch (std::bad_alloc &amp; ba)
+{
+    cerr &lt;&lt; ba.what() &lt;&lt; endl;
+}
+
+// not throw an exception
+p = new(nothrow) int[length];
+if(p==NULL)
+{ ... }</code></pre><p>new 失败会抛异常。</p><p>nothrow.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;cstdlib&gt;
+using namespace std;
+
+int main()
+{
+    size_t length = 80000000000L;
+    int * p = NULL;
+    
+    try {
+        cout &lt;&lt; &quot;Trying to allocate a big block of memory&quot; &lt;&lt; endl;
+        p = new int[length];
+        //p = new(nothrow) int[length];
+        cout &lt;&lt; &quot;No exception.&quot; &lt;&lt; endl;
+    }
+    catch (std::bad_alloc &amp; ba)
+    {
+        cout &lt;&lt; &quot;bad_alloc exception!&quot; &lt;&lt; endl;
+        cout &lt;&lt; ba.what() &lt;&lt; endl;
+    }
+    
+    if(p)
+        cout &lt;&lt; &quot;Memory successfully allocated.&quot; &lt;&lt; endl;
+    else
+        cout &lt;&lt; &quot;So bad, null pointer.&quot; &lt;&lt; endl;
+
+    // for(size_t i = 0; i &lt; length; i++)
+    //     p[i] = i;
+    // size_t sum;
+    // for(size_t i = 0; i &lt; length; i++)
+    //     sum += p[i];
+    // cout &lt;&lt; &quot;Sum = &quot; &lt;&lt; sum &lt;&lt; endl;
+    if(p)
+        delete [] p;
+    return 0;
+}</code></pre><p>申请超过范围大小的内存。</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>报错</p><p>苹果等可能不会报错。</p><h2 id="week15">Week15</h2><h3 id="friend-classes">Friend Classes</h3><h4 id="friend-functions">friend Functions</h4><p>•A friend function is defined out of the class.</p><p>•No MyTime:: before its function name</p><p>注意：<strong>友元函数不是成员函数</strong>。</p><pre><code>class MyTime
+{
+  // ...
+  public:
+    friend MyTime operator+(int m, const MyTime &amp; t);
+};
+
+MyTime operator+(int m, const MyTime &amp; t)
+{
+    return t + m;
+}</code></pre><h4 id="friend-classes-2">friend Classes</h4><p>•A class is a friend of another class.</p><p>•The friend class can access all members even private members.</p><p>•A friend class can be public, protected and private.</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>友元类</p><p>设置友元类，该友元类可以获得自己的私有成员。</p><p>friend.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Sniper
+{
+private:
+    int bullets;
+public:
+    Sniper(int bullets = 0): bullets(bullets){}
+    friend class Supplier;
+};
+
+class Supplier
+{
+    int storage;
+public:
+    Supplier(int storage = 1000): storage(storage){}
+    bool provide(Sniper &amp; sniper)
+    {
+        // bullets is a private member
+        if (sniper.bullets &lt; 20) //no enough bullets
+        {
+            if (this-&gt;storage &gt; 100 )
+            {
+                sniper.bullets += 100;
+                this-&gt;storage -= 100;
+            }
+            else if(this-&gt;storage &gt; 0)
+            {
+                sniper.bullets += this-&gt;storage;
+                this-&gt;storage = 0;
+            }
+            else
+                return false;
+        }
+        cout &lt;&lt; &quot;sniper has &quot; &lt;&lt; sniper.bullets &lt;&lt; &quot; bullets now.&quot; &lt;&lt; endl;
+        return true;
+    }
+};
+
+int main()
+{
+    Sniper sniper(2);
+    Supplier supplier(2000);
+    supplier.provide(sniper);
+    return 0;
+}</code></pre><h4 id="friend-member-functions">friend <strong>Member</strong> Functions</h4><p>•A single member function of a class is a friend.</p><p>•Different from friend functions.</p><p>•But very similar to a normal friend function.</p><p>•But... declaration problem ...</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>友元成员函数</p><p>最小授权，很容易引起死锁，要将函数实现放在最外面。</p><h3 id="nested-types">Nested Types</h3><p>嵌套类型</p><h4 id="nested-enumerations-c-11">Nested Enumerations (C++11)</h4><p>•enum DataType is only used in class Mat, we can put it inside of Mat.</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>Nested Enumerations</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>放到内部</p><h4 id="nested-classes">Nested Classes</h4><p>•Nested classes: The declaration of a class/struct or union may appear inside another class.</p><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>内部类</p><h4 id="nested-types-scope">Nested Types: Scope</h4><p><strong>Private:</strong> </p><p>•Only visible to the containing class</p><p><strong>Protected:</strong></p><p>•Visible to the containing class and its derived class.</p><p><strong>Public:</strong></p><p>•Visible to the containing class, to its derived classes, and to the outside world.</p><h3 id="rtti-and-type-cast-operators">RTTI and Type Cast Operators</h3><p>RTTI：运行时类型鉴别</p><p>•Runtime type identification (RTTI)</p><p> C++ feature</p><p> The type of an object to be determined during runtime.</p><p>•<code>dynamic_cast</code> operator: conversion of polymorphic types.</p><p>•<code>typeid</code> operator: Identify the exact type of an object.</p><p>•<code>type_info</code> class. the type information returned by the <code>typeid</code> operator.</p><h4 id="typeid">typeid</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>typeid</p><p>typeid.cpp</p><pre><code>#include &lt;iostream&gt;
+#include &lt;typeinfo&gt;
+
+using namespace std;
+
+class Person
+{
+protected:
+    string name;
+public:
+    Person(string name=&quot;&quot;):name(name){};
+    virtual ~Person(){}
+    string getInfo(){return name;}
+};
+
+class Student: public Person
+{
+    string studentid;
+public:
+    Student(string name=&quot;&quot;, string sid=&quot;&quot;):Person(name),studentid(sid){};
+    string getInfo(){return name+&quot;:&quot;+studentid;}
+};
+
+int main()
+{
+    string s(&quot;hello&quot;);
+
+    cout &lt;&lt; &quot;typeid.name of s           is &quot; &lt;&lt; typeid(s).name() &lt;&lt; endl;
+    cout &lt;&lt; &quot;typeid.name of std::string is &quot; &lt;&lt; typeid(std::string).name() &lt;&lt; endl;
+    cout &lt;&lt; &quot;typeid.name of Student     is &quot; &lt;&lt; typeid(Student).name() &lt;&lt; endl;
+
+    if(typeid(std::string) == typeid(s))
+        cout &lt;&lt; &quot;s is a std::string object.&quot; &lt;&lt; endl;
+
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>typeid</p><h4 id="dynamic-cast">dynamic_cast</h4><p>•It can safely assign the address of an object to a pointer of a particular type.</p><p>•Invoke the correct version of a class method (remember virtual functions)</p><pre><code>Person person(&quot;Yu&quot;);
+Student student(&quot;Sam&quot;, &quot;20210212&quot;);
+Person* pp = NULL;
+Student * ps = NULL; 
+ps = dynamic_cast&lt;Student*&gt;(&amp;person); // NULL
+pp = dynamic_cast&lt;Person*&gt;(&amp;student);</code></pre><p>rtti.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+class Person
+{
+protected:
+    string name;
+public:
+    Person(string name=&quot;&quot;):name(name){};
+    virtual ~Person(){}
+    virtual string getInfo(){return name;}
+};
+
+class Student: public Person
+{
+    string studentid;
+public:
+    Student(string name=&quot;&quot;, string sid=&quot;&quot;):Person(name),studentid(sid){};
+    string getInfo(){return name+&quot;:&quot;+studentid;}
+};
+
+int main()
+{
+    Person person(&quot;Yu&quot;);
+    Student student(&quot;Sam&quot;, &quot;20210212&quot;);
+    Person* pp = &amp;student;
+    Person&amp; rp = student;
+    Student * ps = (Student*)&amp;person; // danger!
+    cout &lt;&lt; person.getInfo() &lt;&lt; endl;
+    cout &lt;&lt; ps-&gt;getInfo() &lt;&lt; endl; // danger if getInfo is not virtual
+
+    ps = dynamic_cast&lt;Student*&gt;(&amp;person);
+    printf(&quot;address = %p\n&quot;, ps);
+    pp = dynamic_cast&lt;Person*&gt;(&amp;student);
+    printf(&quot;address = %p\n&quot;, pp);
+    return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>转化失败</p><p>父类析构有了virtual才是多态。</p><p><em>上</em>行转换（子类转父类）*，*转换安全，成功返回类对象指针, 此时和static_<em>cast 作用一样。</em></p><p>下行转换（父类转子类）， 父类中要有虚函数，否则编译器报错。转换分几种情况：</p><p>a. 父类指针指向子类对象，转换安全， dynamic_cast返回类对象指针。</p><p>b.父类指针指向父类对象，转换不安全，dynamic_cast 返回nullptr。此时若使用static_cast, 返回非空指针，更不安全。[ref]<a href="https://zhuanlan.zhihu.com/p/459523323" target="_blank" rel="noreferrer">C++类型转换之dynamic_cast - 知乎 (zhihu.com)</a>[/ref]</p><h4 id="more-type-cast-operators">More Type Cast Operators</h4><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>More Type Cast Operators</p><p>const_cast.cpp</p><pre><code>#include &lt;iostream&gt;
+using namespace std;
+
+int main()
+{
+    int value1 = 100;
+    const int value2 = 200;
+    cout &lt;&lt; &quot;value1 = &quot; &lt;&lt; value1 &lt;&lt; endl;
+    cout &lt;&lt; &quot;value2 = &quot; &lt;&lt; value2 &lt;&lt; endl;
+
+    int * pv1 = const_cast&lt;int *&gt;(&amp;value1);
+    int * pv2 = const_cast&lt;int *&gt;(&amp;value2);
+
+    (*pv1)++;
+    (*pv2)++;
+
+    cout &lt;&lt; &quot;value1 = &quot; &lt;&lt; value1 &lt;&lt; endl;
+    cout &lt;&lt; &quot;value2 = &quot; &lt;&lt; value2 &lt;&lt; endl;
+    
+    int&amp; v2 = const_cast&lt;int&amp;&gt;(value2);
+    v2++;
+    cout &lt;&lt; &quot;value2 = &quot; &lt;&lt; value2 &lt;&lt; endl;
+
+    cout &lt;&lt; &quot;*pv2 = &quot; &lt;&lt; (*pv2) &lt;&lt; endl;
+    cout &lt;&lt; &quot;v2 = &quot; &lt;&lt; v2 &lt;&lt; endl;
+
+   return 0;
+}</code></pre><figure><img src="/notion/c-c-from-于仕琪-南科大/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>const_cast</p><p><a href="https://blog.csdn.net/m0_46210273/article/details/121147406" target="_blank" rel="noreferrer">C++ 四种cast 详解_c++ cast_帅B猪的博客-CSDN博客</a></p></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/templates/clover/posts/机器学习线性代数基础/">机器学习线性代数基础</a> </div> <div> <span>下一篇</span> <a href="/templates/clover/posts/esp32-c3手动烧录bin文件/">ESP32-C3手动烧录bin文件</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关文章</h3> </div> <div class="related-post-list"> <a href="/templates/clover/posts/rnn循环神经网络/">RNN循环神经网络</a><a href="/templates/clover/posts/pytorch中的一些函数/">PyTorch中的一些函数</a><a href="/templates/clover/posts/深度学习相关概念/">深度学习相关概念</a><a href="/templates/clover/posts/yolov3笔记/">YOLOv3笔记</a><a href="/templates/clover/posts/yolov2-yolo9000-笔记/">YOLOv2(YOLO9000)笔记</a><a href="/templates/clover/posts/yolo-v1笔记/">YOLO v1笔记</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-2" href="#week1" data-toc-link="week1"> Week1 </a><a class="toc-level-3" href="#the-first-example" data-toc-link="the-first-example"> the first example </a><a class="toc-level-3" href="#编译链接" data-toc-link="编译链接"> 编译链接 </a><a class="toc-level-3" href="#预处理和宏" data-toc-link="预处理和宏"> 预处理和宏 </a><a class="toc-level-3" href="#输入输出" data-toc-link="输入输出"> 输入输出 </a><a class="toc-level-2" href="#week2" data-toc-link="week2"> Week2 </a><a class="toc-level-3" href="#interger" data-toc-link="interger"> interger </a><a class="toc-level-3" href="#more-interger-types" data-toc-link="more-interger-types"> more interger types </a><a class="toc-level-3" href="#floating-point-numbers" data-toc-link="floating-point-numbers"> Floating-point Numbers </a><a class="toc-level-3" href="#arithmetic-operators" data-toc-link="arithmetic-operators"> Arithmetic Operators </a><a class="toc-level-2" href="#week3" data-toc-link="week3"> Week3 </a><a class="toc-level-3" href="#goto-statement" data-toc-link="goto-statement"> goto Statement </a><a class="toc-level-2" href="#week4" data-toc-link="week4"> Week4 </a><a class="toc-level-3" href="#arrays" data-toc-link="arrays"> Arrays </a><a class="toc-level-3" href="#strings" data-toc-link="strings"> Strings </a><a class="toc-level-3" href="#structures-unions-and-enumerations" data-toc-link="structures-unions-and-enumerations"> Structures, Unions and Enumerations </a><a class="toc-level-3" href="#typedef" data-toc-link="typedef"> typedef </a><a class="toc-level-2" href="#week5" data-toc-link="week5"> Week5 </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = tocLinks
+      .map((link) => {
+        const id = link.getAttribute("data-toc-link");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean);
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

@@ -1,0 +1,241 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>SpringMVC入门 · Ledger | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="MVC 模型 dao、service 视图 jsp/html 控制器 servlet Hello SpringMVC 需要依赖 xml <dependencies <dependency <groupId junit</groupId <artifactId junit</art"><meta property="og:title" content="SpringMVC入门 · Ledger | HUII's Blog"><meta property="og:description" content="MVC 模型 dao、service 视图 jsp/html 控制器 servlet Hello SpringMVC 需要依赖 xml <dependencies <dependency <groupId junit</groupId <artifactId junit</art"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/templates/ledger/posts/springmvc%E5%85%A5%E9%97%A8/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#8e5a48"><link rel="canonical" href="https://blog.huii.top/templates/ledger/posts/springmvc%E5%85%A5%E9%97%A8/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.PS7qN8BI.css">
+<style>.pagination[data-astro-cid-d776pwuy]{display:flex;align-items:center;justify-content:center;gap:.9rem;margin-top:2.4rem;flex-wrap:wrap}.pagination-summary[data-astro-cid-d776pwuy]{display:inline-flex;align-items:baseline;gap:.22rem;padding:0 .15rem;color:var(--theme-muted);letter-spacing:.04em}.pagination-summary[data-astro-cid-d776pwuy] strong[data-astro-cid-d776pwuy]{color:var(--theme-text);font-size:1.15rem}.pagination-pages[data-astro-cid-d776pwuy]{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.pagination-arrow[data-astro-cid-d776pwuy],.pagination-page[data-astro-cid-d776pwuy]{display:inline-flex;align-items:center;justify-content:center;min-width:2.8rem;min-height:2.8rem;padding:0 .95rem;border:1px solid var(--theme-line);border-radius:999px;background:var(--theme-panel);color:var(--theme-text);box-shadow:var(--theme-shadow);transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}.pagination-arrow[data-astro-cid-d776pwuy]:hover,.pagination-page[data-astro-cid-d776pwuy]:hover{transform:translateY(-2px);border-color:var(--theme-soft-fill-strong)}.pagination-page[data-astro-cid-d776pwuy].is-active{background:var(--theme-color);color:#fff;border-color:transparent}.pagination-arrow[data-astro-cid-d776pwuy].is-disabled{opacity:.45;box-shadow:none}.pagination-gap[data-astro-cid-d776pwuy]{color:var(--theme-muted);padding:0 .1rem}@media(max-width:760px){.pagination[data-astro-cid-d776pwuy]{justify-content:center;gap:.7rem}.pagination-summary[data-astro-cid-d776pwuy]{width:100%;justify-content:center;order:-1}.pagination-pages[data-astro-cid-d776pwuy]{justify-content:center;width:100%}.pagination-arrow[data-astro-cid-d776pwuy]{min-width:calc(50% - .5rem);padding:0 .75rem}}
+</style>
+<link rel="stylesheet" href="/_astro/index.R3ImXAFw.css"></head> <body> <div class="page" id="body-wrap" data-theme-preset="ledger" data-home-template="journal" data-card-style="outline" data-sidebar-style="minimal" style="--theme-color:#8e5a48;--theme-color-deep:#5b342a;--theme-accent:#281d19;--theme-text:#241b18;--theme-muted:#7c6d63;--theme-line:rgba(93, 67, 52, 0.18);--theme-bg:#f6f0e8;--theme-panel:rgba(255, 251, 246, 0.94);--theme-panel-solid:#fffaf4;--theme-panel-soft:rgba(255, 246, 238, 0.76);--theme-shadow:0 14px 36px rgba(72, 51, 41, 0.06);--theme-shadow-strong:0 18px 46px rgba(72, 51, 41, 0.11);--theme-bg-image:radial-gradient(circle at top right, rgba(142, 90, 72, 0.08), transparent 21%), radial-gradient(circle at left 18%, rgba(39, 29, 26, 0.05), transparent 24%), linear-gradient(180deg, #faf6ef 0%, #f3ece2 100%);--theme-nav-bg:rgba(250, 245, 238, 0.84);--theme-nav-border:rgba(93, 67, 52, 0.1);--theme-hero-mask:linear-gradient(135deg, rgba(30, 23, 20, 0.28), rgba(30, 23, 20, 0.46)), linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.1));--theme-hero-panel-bg:rgba(39, 29, 26, 0.22);--theme-hero-panel-border:rgba(255, 244, 233, 0.18);--theme-hero-panel-shadow:0 24px 54px rgba(35, 27, 23, 0.18);--theme-soft-fill:rgba(140, 79, 61, 0.07);--theme-soft-fill-strong:rgba(140, 79, 61, 0.12);--theme-code-bg:#241d1c;--theme-code-text:#f8f0e5;--theme-reading-text:#3b312b;--radius-lg:22px;--radius-md:16px;--radius-sm:10px;--nav-width:1360px;--content-width:1380px;--page-width:1180px;--reading-width:1360px;--font-sans:&#34;Libre Franklin&#34;, &#34;PingFang SC&#34;, &#34;Microsoft YaHei&#34;, sans-serif;--font-display:&#34;EB Garamond&#34;, &#34;Noto Serif SC&#34;, &#34;Source Han Serif SC&#34;, serif"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>SpringMVC入门</h1> <p>MVC 模型 dao、service 视图 jsp/html 控制器 servlet Hello SpringMVC 需要依赖 xml &lt;dependencies &lt;dependency &lt;groupId junit&lt;/groupId &lt;artifactId junit&lt;/art</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2021年8月2日</span> <span>阅读约 14 分钟</span> </div> <div class="reading-categories"> <a href="/categories/coding/">Coding</a> </div> <div class="reading-tags"> <a href="/tags/java/">#Java</a><a href="/tags/spring/">#Spring</a><a href="/tags/springmvc/">#SpringMVC</a> </div> </header> <div class="post-content reading-content"><h3 id="mvc">MVC</h3><ul><li><p>模型 dao、service</p></li><li><p>视图 jsp/html</p></li><li><p>控制器 servlet</p></li></ul><h3 id="hello-springmvc">Hello SpringMVC</h3><p>需要依赖</p><pre><code>&lt;dependencies&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;junit&lt;/groupId&gt;
+        &lt;artifactId&gt;junit&lt;/artifactId&gt;
+        &lt;version&gt;3.8.2&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;org.springframework&lt;/groupId&gt;
+        &lt;artifactId&gt;spring-webmvc&lt;/artifactId&gt;
+        &lt;version&gt;5.3.9&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+        &lt;artifactId&gt;servlet-api&lt;/artifactId&gt;
+        &lt;version&gt;2.5&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;javax.servlet.jsp&lt;/groupId&gt;
+        &lt;artifactId&gt;jsp-api&lt;/artifactId&gt;
+        &lt;version&gt;2.2.1-b03&lt;/version&gt;
+    &lt;/dependency&gt;
+    &lt;dependency&gt;
+        &lt;groupId&gt;javax.servlet&lt;/groupId&gt;
+        &lt;artifactId&gt;jstl&lt;/artifactId&gt;
+        &lt;version&gt;1.2&lt;/version&gt;
+    &lt;/dependency&gt;
+&lt;/dependencies&gt;</code></pre><figure><img src="/notion/springmvc入门/image/image-20210803084224849.png" alt="image-20210803084224849" /><figcaption>image-20210803084224849</figcaption></figure><p><strong>web.xml</strong></p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;web-app xmlns=&quot;http://xmlns.jcp.org/xml/ns/javaee&quot;
+         xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+         xsi:schemaLocation=&quot;http://xmlns.jcp.org/xml/ns/javaee http://xmlns.jcp.org/xml/ns/javaee/web-app_4_0.xsd&quot;
+         version=&quot;4.0&quot;&gt;
+    &lt;servlet&gt;
+        &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;
+        &lt;servlet-class&gt;org.springframework.web.servlet.DispatcherServlet&lt;/servlet-class&gt;
+        &lt;init-param&gt;
+            &lt;param-name&gt;contextConfigLocation&lt;/param-name&gt;
+            &lt;param-value&gt;classpath:springmvc-servlet.xml&lt;/param-value&gt;
+        &lt;/init-param&gt;
+        &lt;load-on-startup&gt;1&lt;/load-on-startup&gt;
+    &lt;/servlet&gt;
+    &lt;servlet-mapping&gt;
+        &lt;servlet-name&gt;springmvc&lt;/servlet-name&gt;
+        &lt;url-pattern&gt;/&lt;/url-pattern&gt;
+    &lt;/servlet-mapping&gt;
+&lt;/web-app&gt;</code></pre><p><strong>springmvc-servlet.xml</strong></p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
+    &lt;!--处理器映射器--&gt;
+    &lt;bean class=&quot;org.springframework.web.servlet.handler.BeanNameUrlHandlerMapping&quot;/&gt;
+    &lt;!--处理器适配器--&gt;
+    &lt;bean class=&quot;org.springframework.web.servlet.mvc.SimpleControllerHandlerAdapter&quot;/&gt;
+	&lt;!--视图解析器--&gt;
+    &lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot; id=&quot;InternalResourceViewResolver&quot;&gt;
+        &lt;!--前缀--&gt;
+        &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot;/&gt;
+        &lt;!--后缀--&gt;
+        &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;
+    &lt;/bean&gt;
+
+    &lt;bean id=&quot;/hello&quot; class=&quot;top.huii.controller.HelloController&quot;/&gt;
+
+&lt;/beans&gt;</code></pre><p><strong>HelloController.java</strong></p><pre><code>package top.huii.controller;
+
+import org.springframework.web.servlet.ModelAndView;
+import org.springframework.web.servlet.mvc.Controller;
+
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
+public class HelloController implements Controller {
+    public ModelAndView handleRequest(HttpServletRequest httpServletRequest, HttpServletResponse httpServletResponse) throws Exception {
+        ModelAndView modelAndView = new ModelAndView();
+        // 业务代码
+        modelAndView.addObject(&quot;msg&quot;, &quot;Hello SpringMVC&quot;);
+        // 视图跳转
+        modelAndView.setViewName(&quot;hello&quot;);
+        return modelAndView;
+    }
+}</code></pre><p><strong>hello.jsp</strong></p><pre><code>&lt;%@ page contentType=&quot;text/html;charset=UTF-8&quot; language=&quot;java&quot; %&gt;
+&lt;html&gt;
+&lt;head&gt;
+    &lt;title&gt;Title&lt;/title&gt;
+&lt;/head&gt;
+&lt;body&gt;
+${msg}
+&lt;/body&gt;
+&lt;/html&gt;</code></pre><p>注意一个坑，可能会导致404</p><figure><img src="/notion/springmvc入门/image/image-20210803084452033.png" alt="image-20210803084452033" /><figcaption>image-20210803084452033</figcaption></figure><figure><img src="/notion/springmvc入门/image/image-20210803084511495.png" alt="image-20210803084511495" /><figcaption>image-20210803084511495</figcaption></figure><figure><img src="/notion/springmvc入门/image/image-20210803084637532.png" alt="image-20210803084637532" /><figcaption>image-20210803084637532</figcaption></figure><h3 id="执行原理">执行原理</h3><figure><img src="/notion/springmvc入门/image/img.jpg" alt="img" /><figcaption>img</figcaption></figure><h3 id="使用注解实现">使用注解实现</h3><figure><img src="/notion/springmvc入门/image/image-20210803100153996.png" alt="image-20210803100153996" /><figcaption>image-20210803100153996</figcaption></figure><p><strong>web.xml不变</strong></p><p><strong>springmvc-servlet.xml</strong></p><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+&lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
+       xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
+       xmlns:context=&quot;http://www.springframework.org/schema/context&quot;
+       xmlns:mvc=&quot;http://www.springframework.org/schema/mvc&quot;
+       xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/mvc
+       http://www.springframework.org/schema/mvc/spring-mvc.xsd&quot;&gt;
+    &lt;!--自动扫描包,让指定包下的注解生效,由IOC容器统一管理--&gt;
+    &lt;context:component-scan base-package=&quot;top.huii.controller&quot;/&gt;
+    &lt;mvc:default-servlet-handler /&gt;
+    &lt;mvc:annotation-driven /&gt;
+
+    &lt;!--视图解析器--&gt;
+    &lt;bean class=&quot;org.springframework.web.servlet.view.InternalResourceViewResolver&quot; id=&quot;internalResourceViewResolver&quot;&gt;
+        &lt;property name=&quot;prefix&quot; value=&quot;/WEB-INF/jsp/&quot;/&gt;
+        &lt;property name=&quot;suffix&quot; value=&quot;.jsp&quot;/&gt;
+    &lt;/bean&gt;
+&lt;/beans&gt;</code></pre><p><strong>HelloController.java</strong></p><pre><code>package top.huii.controller;
+
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.RequestMapping;
+
+@Controller
+@RequestMapping(&quot;/hello&quot;)
+public class HelloController {
+    @RequestMapping(&quot;/h1&quot;)
+    public String hello(Model model){
+        // 封装数据
+        model.addAttribute(&quot;msg&quot;, &quot;Hello, SpringMvcAnnotation&quot;);
+        return &quot;hello&quot;; // 会被视图解析器处理
+    }
+}</code></pre><figure><img src="/notion/springmvc入门/image/image-20210803100650187.png" alt="image-20210803100650187" /><figcaption>image-20210803100650187</figcaption></figure><h3 id="controller">controller</h3><h3 id="乱码解决">乱码解决</h3><h3 id="json">Json</h3><p>jackson包</p><pre><code>&lt;!-- https://mvnrepository.com/artifact/com.fasterxml.jackson.core/jackson-databind --&gt;
+&lt;dependency&gt;
+    &lt;groupId&gt;com.fasterxml.jackson.core&lt;/groupId&gt;
+    &lt;artifactId&gt;jackson-databind&lt;/artifactId&gt;
+    &lt;version&gt;2.13.0-rc1&lt;/version&gt;
+&lt;/dependency&gt;</code></pre><pre><code>package top.huii.controller;
+
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import org.springframework.stereotype.Controller;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.RestController;
+import top.huii.pojo.User;
+
+//@Controller
+@RestController
+public class UserController {
+    @RequestMapping(&quot;/j1&quot;)
+//    @ResponseBody
+    public String json1() throws JsonProcessingException {
+        ObjectMapper mapper = new ObjectMapper();
+        User user = new User(&quot;HUII&quot;, 18, &quot;male&quot;);
+
+        String s = mapper.writeValueAsString(user);
+        return s;
+    }
+}</code></pre></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/templates/ledger/posts/springboot入门/">SpringBoot入门</a> </div> <div> <span>下一篇</span> <a href="/templates/ledger/posts/spring入门/">Spring入门</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关文章</h3> </div> <div class="related-post-list"> <a href="/templates/ledger/posts/springboot入门/">SpringBoot入门</a><a href="/templates/ledger/posts/spring入门/">Spring入门</a><a href="/templates/ledger/posts/javaweb学习之路-六-mybatis入门/">JavaWeb学习之路（六）——Mybatis入门</a><a href="/templates/ledger/posts/javaweb学习之路-七-mybatis常见操作/">JavaWeb学习之路（七）——Mybatis常见操作</a><a href="/templates/ledger/posts/javaweb学习之路-五-mvc-过滤器-监听器/">JavaWeb学习之路（五）——MVC、过滤器、监听器</a><a href="/templates/ledger/posts/javaweb学习之路-四-jsp/">JavaWeb学习之路（四）——JSP</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-3" href="#mvc" data-toc-link="mvc"> MVC </a><a class="toc-level-3" href="#hello-springmvc" data-toc-link="hello-springmvc"> Hello SpringMVC </a><a class="toc-level-3" href="#执行原理" data-toc-link="执行原理"> 执行原理 </a><a class="toc-level-3" href="#使用注解实现" data-toc-link="使用注解实现"> 使用注解实现 </a><a class="toc-level-3" href="#controller" data-toc-link="controller"> controller </a><a class="toc-level-3" href="#乱码解决" data-toc-link="乱码解决"> 乱码解决 </a><a class="toc-level-3" href="#json" data-toc-link="json"> Json </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = tocLinks
+      .map((link) => {
+        const id = link.getAttribute("data-toc-link");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean);
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

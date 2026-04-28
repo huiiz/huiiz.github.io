@@ -1,0 +1,167 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Linux的文件权限 · Ledger | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="查看文件 直接使用ls命令查看。 输出结果为code test.txt。 但是，部分文件是隐藏文件，这时候就需要使用ls a命令查看。其中，以.开头的就代表是隐藏文件(夹)。 huii@HUII PC:~$ ls a . .bash logout .config .local ."><meta property="og:title" content="Linux的文件权限 · Ledger | HUII's Blog"><meta property="og:description" content="查看文件 直接使用ls命令查看。 输出结果为code test.txt。 但是，部分文件是隐藏文件，这时候就需要使用ls a命令查看。其中，以.开头的就代表是隐藏文件(夹)。 huii@HUII PC:~$ ls a . .bash logout .config .local ."><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/templates/ledger/posts/linux%E7%9A%84%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#8e5a48"><link rel="canonical" href="https://blog.huii.top/templates/ledger/posts/linux%E7%9A%84%E6%96%87%E4%BB%B6%E6%9D%83%E9%99%90/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.PS7qN8BI.css">
+<style>.pagination[data-astro-cid-d776pwuy]{display:flex;align-items:center;justify-content:center;gap:.9rem;margin-top:2.4rem;flex-wrap:wrap}.pagination-summary[data-astro-cid-d776pwuy]{display:inline-flex;align-items:baseline;gap:.22rem;padding:0 .15rem;color:var(--theme-muted);letter-spacing:.04em}.pagination-summary[data-astro-cid-d776pwuy] strong[data-astro-cid-d776pwuy]{color:var(--theme-text);font-size:1.15rem}.pagination-pages[data-astro-cid-d776pwuy]{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.pagination-arrow[data-astro-cid-d776pwuy],.pagination-page[data-astro-cid-d776pwuy]{display:inline-flex;align-items:center;justify-content:center;min-width:2.8rem;min-height:2.8rem;padding:0 .95rem;border:1px solid var(--theme-line);border-radius:999px;background:var(--theme-panel);color:var(--theme-text);box-shadow:var(--theme-shadow);transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}.pagination-arrow[data-astro-cid-d776pwuy]:hover,.pagination-page[data-astro-cid-d776pwuy]:hover{transform:translateY(-2px);border-color:var(--theme-soft-fill-strong)}.pagination-page[data-astro-cid-d776pwuy].is-active{background:var(--theme-color);color:#fff;border-color:transparent}.pagination-arrow[data-astro-cid-d776pwuy].is-disabled{opacity:.45;box-shadow:none}.pagination-gap[data-astro-cid-d776pwuy]{color:var(--theme-muted);padding:0 .1rem}@media(max-width:760px){.pagination[data-astro-cid-d776pwuy]{justify-content:center;gap:.7rem}.pagination-summary[data-astro-cid-d776pwuy]{width:100%;justify-content:center;order:-1}.pagination-pages[data-astro-cid-d776pwuy]{justify-content:center;width:100%}.pagination-arrow[data-astro-cid-d776pwuy]{min-width:calc(50% - .5rem);padding:0 .75rem}}
+</style>
+<link rel="stylesheet" href="/_astro/index.R3ImXAFw.css"></head> <body> <div class="page" id="body-wrap" data-theme-preset="ledger" data-home-template="journal" data-card-style="outline" data-sidebar-style="minimal" style="--theme-color:#8e5a48;--theme-color-deep:#5b342a;--theme-accent:#281d19;--theme-text:#241b18;--theme-muted:#7c6d63;--theme-line:rgba(93, 67, 52, 0.18);--theme-bg:#f6f0e8;--theme-panel:rgba(255, 251, 246, 0.94);--theme-panel-solid:#fffaf4;--theme-panel-soft:rgba(255, 246, 238, 0.76);--theme-shadow:0 14px 36px rgba(72, 51, 41, 0.06);--theme-shadow-strong:0 18px 46px rgba(72, 51, 41, 0.11);--theme-bg-image:radial-gradient(circle at top right, rgba(142, 90, 72, 0.08), transparent 21%), radial-gradient(circle at left 18%, rgba(39, 29, 26, 0.05), transparent 24%), linear-gradient(180deg, #faf6ef 0%, #f3ece2 100%);--theme-nav-bg:rgba(250, 245, 238, 0.84);--theme-nav-border:rgba(93, 67, 52, 0.1);--theme-hero-mask:linear-gradient(135deg, rgba(30, 23, 20, 0.28), rgba(30, 23, 20, 0.46)), linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.1));--theme-hero-panel-bg:rgba(39, 29, 26, 0.22);--theme-hero-panel-border:rgba(255, 244, 233, 0.18);--theme-hero-panel-shadow:0 24px 54px rgba(35, 27, 23, 0.18);--theme-soft-fill:rgba(140, 79, 61, 0.07);--theme-soft-fill-strong:rgba(140, 79, 61, 0.12);--theme-code-bg:#241d1c;--theme-code-text:#f8f0e5;--theme-reading-text:#3b312b;--radius-lg:22px;--radius-md:16px;--radius-sm:10px;--nav-width:1360px;--content-width:1380px;--page-width:1180px;--reading-width:1360px;--font-sans:&#34;Libre Franklin&#34;, &#34;PingFang SC&#34;, &#34;Microsoft YaHei&#34;, sans-serif;--font-display:&#34;EB Garamond&#34;, &#34;Noto Serif SC&#34;, &#34;Source Han Serif SC&#34;, serif"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>Linux的文件权限</h1> <p>查看文件 直接使用ls命令查看。 输出结果为code test.txt。 但是，部分文件是隐藏文件，这时候就需要使用ls a命令查看。其中，以.开头的就代表是隐藏文件(夹)。 huii@HUII PC:~$ ls a . .bash logout .config .local .</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2023年3月12日</span> <span>阅读约 10 分钟</span> </div> <div class="reading-categories"> <a href="/categories/coding/">Coding</a> </div> <div class="reading-tags"> <a href="/tags/linux/">#Linux</a> </div> </header> <div class="post-content reading-content"><h2 id="查看文件">查看文件</h2><p>直接使用<code>ls</code>命令查看。</p><p>输出结果为<code>code  test.txt</code>。</p><p>但是，部分文件是隐藏文件，这时候就需要使用<code>ls -a</code>命令查看。其中，以.开头的就代表是隐藏文件(夹)。</p><pre><code>huii@HUII-PC:~$ ls -a
+.              .bash_logout  .config   .local       .python_history            .viminfo        test.txt
+..             .bashrc       .dbus     .motd_shown  .ssh                       .vscode-server
+.bash_history  .cache        .lesshst  .profile     .sudo_as_admin_successful  code</code></pre><p>可以使用<code>ls -l</code>命令查看文件属性。</p><pre><code>huii@HUII-PC:~$ ls -l
+total 8
+drwxr-xr-x 6 huii huii 4096 Feb 17 13:47 code
+-rw-r--r-- 1 huii huii  256 Mar  7 10:36 test.txt</code></pre><p>命令可以组合使用，如<code>ls -al</code>,查看全部文件的属性。</p><pre><code>huii@HUII-PC:~$ ls -al
+total 72
+drwxr-x--- 9 huii huii 4096 Mar  7 20:56 .
+drwxr-xr-x 3 root root 4096 Feb 16 23:34 ..
+-rw------- 1 huii huii 8264 Mar 11 23:57 .bash_history
+-rw-r--r-- 1 huii huii  220 Feb 16 23:34 .bash_logout
+-rw-r--r-- 1 huii huii 3866 Mar  1 14:06 .bashrc
+drwxr-xr-x 4 huii huii 4096 Mar  1 13:51 .cache
+drwx------ 6 huii huii 4096 Mar  5 11:25 .config
+drwx------ 3 huii huii 4096 Mar  5 11:25 .dbus
+-rw------- 1 huii huii   39 Mar  7 20:56 .lesshst
+drwxr-xr-x 5 huii huii 4096 Mar  1 13:51 .local
+-rw-r--r-- 1 huii huii    0 Mar 12 11:25 .motd_shown
+-rw-r--r-- 1 huii huii  807 Feb 16 23:34 .profile
+-rw------- 1 huii huii    0 Feb 17 00:17 .python_history
+drwx------ 2 huii huii 4096 Feb 17 13:29 .ssh
+-rw-r--r-- 1 huii huii    0 Feb 17 09:52 .sudo_as_admin_successful
+-rw------- 1 huii huii 3585 Mar  1 13:27 .viminfo
+drwxr-xr-x 5 huii huii 4096 Feb 17 09:47 .vscode-server
+drwxr-xr-x 6 huii huii 4096 Feb 17 13:47 code
+-rw-r--r-- 1 huii huii  256 Mar  7 10:36 test.txt</code></pre><h2 id="文件属性">文件属性</h2><p>以<code>-rw-r--r-- 1 huii huii  256 Mar  7 10:36 test.txt</code>为例，文件属性可以分为以下几部分。</p><figure><img src="/notion/linux的文件权限/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>文件属性<a href="https://www.cnblogs.com/JZjuechen/p/15689796.html" target="_blank" rel="noreferrer">Linux文件属性详述 - JZEason - 博客园 (cnblogs.com)</a></p><ul><li><code>rw r r </code> 。文件类型权限，该字段共有10位，其中第一位表示文件种类，2 4，5 7，8 10分别表示<strong>文件拥有者</strong> 、<strong>用户组</strong> 、<strong>非本人且非用户组</strong> 对应的权限。</li><li><code>1</code> 。链接数，表示多少文件名链接到此节点。</li><li><code>huii</code> 。第一个表示文件/目录拥有者账号。</li><li><code>huii</code> 。第二个表示文件所属用户组。</li><li><code>256</code> 。表示文件容量大小，单位为Bytes。</li><li><code>Mar 7 10:36</code> 。最近修改时间。</li><li><code>test.txt</code> 。文件名。</li></ul><h2 id="文件类型权限">文件类型权限</h2><pre><code>-rw-r--r--</code></pre><h3 id="文件种类">文件种类</h3><p>即<strong>文件类型权限</strong>中的第一位字符。</p><ul><li>&lt;code </code> 表示一般文件。</li><li><code>d</code> 表示目录。</li><li><code>l</code> 表示链接文件(link file)。</li><li><code>b</code> 表示设备文件里面的可供存储的周边设备。</li><li><code>c</code> 设备文件里面的串行端口设备。</li></ul><h3 id="文件权限">文件权限</h3><p>文件权限位于2-10位，每三个为一组，每组均为<code>rwb</code>和<code>-</code>的组合。</p><ul><li>r表示read，可读。</li><li>w表示write，可写。</li><li>x表示execute，可执行</li></ul><p><code>rwb</code>的顺序是固定的，当有该权限的时候，出现对应的字母，否则用<code>-</code>进行占位。</p><p>如：具有可读可执行权限，则表示为<code>r-x</code>。</p><figure><img src="/notion/linux的文件权限/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>类型与权限<a href="https://www.runoob.com/linux/linux-file-attr-permission.html" target="_blank" rel="noreferrer">Linux 文件基本属性 | 菜鸟教程 (runoob.com)</a></p><h2 id="修改文件权限">修改文件权限</h2><h3 id="进制转换">进制转换</h3><p><code>rwb</code>这三个权限都各只有两种状态，因此可以用三位二进制进行表示，可以从000至111分别表示<code>---</code>至<code>rwb</code>。其对应的十进制值如下。因此可以便捷地使用三个0-7的数字来分别表示对应的权限。</p><pre><code>权限 | 二进制 | 十进制
+ | 000 | 0
+x | 001 | 1
+w | 010 | 2
+wx | 011 | 3
+r | 100 | 4
+r x | 101 | 5
+rw | 110 | 6
+rwb | 111 | 7</code></pre><h3 id="直接赋予权限">直接赋予权限</h3><p>修改权限的语法为chmod [-R] xyz 文件或目录。</p><p>其中</p><ul><li>R为可选项，表示对当前目录及目录下所有文件进行操作。</li><li>xyz为三个数字，表示需要赋予的权限，如770表示所有者和群组有rwb权限，其他人则无。</li></ul><pre><code>huii@HUII-PC:~$ chmod 770 test.txt
+huii@HUII-PC:~$ ls -l
+total 8
+drwxr-xr-x 6 huii huii 4096 Feb 17 13:47 code
+-rwxrwx--- 1 huii huii  256 Mar  7 10:36 test.txt</code></pre><h3 id="增-删-改部分权限">增、删、改部分权限</h3><p>权限对应到三种身份，可以使用四种符号进行表示，可组合使用。</p><ul><li>u。user，文件拥有者。</li><li>g。group，用户组。</li><li>o。other，其他用户。</li><li>a。all，所有用户。</li></ul><p>对应着三种操作。</p><ul><li>=。设置为某权限。</li><li>+。添加某权限。</li><li>。移除某权限。</li></ul><p>可操作的权限有三种，即rwx，可组合。</p><p>在<code>-rwxrwx--- 1 huii huii 256 Mar 7 10:36 test.txt</code>基础上对权限进行处理。</p><p><em>将group和other的权限修改为wx</em></p><pre><code>huii@HUII-PC:~$ chmod go=wx test.txt
+huii@HUII-PC:~$ ls -l
+total 8
+drwxr-xr-x 6 huii huii 4096 Feb 17 13:47 code
+-rwx-wx-wx 1 huii huii  256 Mar  7 10:36 test.txt</code></pre><p><em>所有人去除w权限。</em></p><pre><code>huii@HUII-PC:~$ chmod a-w test.txt
+huii@HUII-PC:~$ ls -l
+total 8
+drwxr-xr-x 6 huii huii 4096 Feb 17 13:47 code
+-r-x--x--x 1 huii huii  256 Mar  7 10:36 test.txt</code></pre><p><em>other添加w权限。</em></p><pre><code>huii@HUII-PC:~$ chmod o+w test.txt
+huii@HUII-PC:~$ ls -l
+total 8
+drwxr-xr-x 6 huii huii 4096 Feb 17 13:47 code
+-r-x--x-wx 1 huii huii  256 Mar  7 10:36 test.txt</code></pre><h2 id="目录-文件夹权限的含义">目录/文件夹权限的含义</h2><h3 id="r">r</h3><p>具有<strong>读取</strong>该目录结构列表的权限，相当于是箱子里的灯光。</p><h3 id="w">w</h3><p>具有<strong>改动</strong>目录结构的权限。</p><ul><li>建立新的文件与目录;</li><li>删除已经存在的文件与目录（不论该文件的权限是什么 )</li><li>将已存在的文件或目录进行<strong>更名</strong> ;</li><li>移动该目录内的文件、目录位置。</li></ul><h3 id="x">x</h3><p><strong>进入</strong>该目录的权限，相当于是打开箱子的钥匙。</p><p>因此，目录必须要有x权限，r或者w权限才有意义。</p><h3 id="删除权限讨论">删除权限讨论</h3><p>即使对该文件拥有完整的权限，也无法对该文件进行删除。rwx权限是针对文件内容而言，与文件名无关。</p><p>如果要删除文件，需要具有文件所属目录的<code>wx</code>权限。</p><pre><code>huii@HUII-PC:~$ mkdir test1#创建test1目录
+huii@HUII-PC:~$ ls -l
+total 12
+drwxr-xr-x 6 huii huii 4096 Feb 17 13:47 code
+-r-x--x-wx 1 huii huii  256 Mar  7 10:36 test.txt
+drwxr-xr-x 2 huii huii 4096 Mar 12 13:05 test1
+huii@HUII-PC:~$ cd test1/
+huii@HUII-PC:~/test1$ touch t1#创建t1文件
+huii@HUII-PC:~/test1$ cd ..
+huii@HUII-PC:~$ chmod u=x test1/#只给test1目录x权限
+huii@HUII-PC:~$ ls -l
+total 12
+drwxr-xr-x 6 huii huii 4096 Feb 17 13:47 code
+-r-x--x-wx 1 huii huii  256 Mar  7 10:36 test.txt
+d--xr-xr-x 2 huii huii 4096 Mar 12 13:05 test1
+huii@HUII-PC:~$ cd test1/
+huii@HUII-PC:~/test1$ ls#没有查看权限
+ls: cannot open directory &#39;.&#39;: Permission denied
+huii@HUII-PC:~/test1$ rm t1#没有删除权限
+rm: cannot remove &#39;t1&#39;: Permission denied
+huii@HUII-PC:~/test1$ cd ..
+huii@HUII-PC:~$ chmod u=wx test1#给test1目录wx权限
+huii@HUII-PC:~$ cd test1/
+huii@HUII-PC:~/test1$ ls#没有查看权限
+ls: cannot open directory &#39;.&#39;: Permission denied
+huii@HUII-PC:~/test1$ rm t1#有删除权限
+huii@HUII-PC:~/test1$</code></pre></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/templates/ledger/posts/深度学习相关概念/">深度学习相关概念</a> </div> <div> <span>下一篇</span> <a href="/templates/ledger/posts/yolov3笔记/">YOLOv3笔记</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关文章</h3> </div> <div class="related-post-list"> <a href="/templates/ledger/posts/linux-二-常用命令/">Linux（二）——常用命令</a><a href="/templates/ledger/posts/linux-一-初识/">Linux（一）——初识</a><a href="/templates/ledger/posts/hexo公式显示与自动部署/">Hexo公式显示与自动部署</a><a href="/templates/ledger/posts/python第三方库yaml/">Python第三方库yaml</a><a href="/templates/ledger/posts/python小tips-持续更新/">Python小tips【持续更新】</a><a href="/templates/ledger/posts/flet的页面布局-layout/">Flet的页面布局(Layout)</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-2" href="#查看文件" data-toc-link="查看文件"> 查看文件 </a><a class="toc-level-2" href="#文件属性" data-toc-link="文件属性"> 文件属性 </a><a class="toc-level-2" href="#文件类型权限" data-toc-link="文件类型权限"> 文件类型权限 </a><a class="toc-level-3" href="#文件种类" data-toc-link="文件种类"> 文件种类 </a><a class="toc-level-3" href="#文件权限" data-toc-link="文件权限"> 文件权限 </a><a class="toc-level-2" href="#修改文件权限" data-toc-link="修改文件权限"> 修改文件权限 </a><a class="toc-level-3" href="#进制转换" data-toc-link="进制转换"> 进制转换 </a><a class="toc-level-3" href="#直接赋予权限" data-toc-link="直接赋予权限"> 直接赋予权限 </a><a class="toc-level-3" href="#增-删-改部分权限" data-toc-link="增-删-改部分权限"> 增、删、改部分权限 </a><a class="toc-level-2" href="#目录-文件夹权限的含义" data-toc-link="目录-文件夹权限的含义"> 目录/文件夹权限的含义 </a><a class="toc-level-3" href="#r" data-toc-link="r"> r </a><a class="toc-level-3" href="#w" data-toc-link="w"> w </a><a class="toc-level-3" href="#x" data-toc-link="x"> x </a><a class="toc-level-3" href="#删除权限讨论" data-toc-link="删除权限讨论"> 删除权限讨论 </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = tocLinks
+      .map((link) => {
+        const id = link.getAttribute("data-toc-link");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean);
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

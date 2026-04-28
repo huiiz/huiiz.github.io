@@ -1,0 +1,109 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Linux（一）——初识 · Classic | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="环境及介绍 学习基于CentOS 7 Linux 内核最初只是由芬兰人林纳斯·托瓦兹（Linus Torvalds）在赫尔辛基大学上学时出于个人爱好而编写的。 Linux 是一套免费使用和自由传播的类 Unix 操作系统，是一个基于 POSIX（可移植操作系统接口） 和 UNIX"><meta property="og:title" content="Linux（一）——初识 · Classic | HUII's Blog"><meta property="og:description" content="环境及介绍 学习基于CentOS 7 Linux 内核最初只是由芬兰人林纳斯·托瓦兹（Linus Torvalds）在赫尔辛基大学上学时出于个人爱好而编写的。 Linux 是一套免费使用和自由传播的类 Unix 操作系统，是一个基于 POSIX（可移植操作系统接口） 和 UNIX"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/templates/classic/posts/linux-%E4%B8%80-%E5%88%9D%E8%AF%86/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#4d81ef"><link rel="canonical" href="https://blog.huii.top/templates/classic/posts/linux-%E4%B8%80-%E5%88%9D%E8%AF%86/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.PS7qN8BI.css">
+<style>.pagination[data-astro-cid-d776pwuy]{display:flex;align-items:center;justify-content:center;gap:.9rem;margin-top:2.4rem;flex-wrap:wrap}.pagination-summary[data-astro-cid-d776pwuy]{display:inline-flex;align-items:baseline;gap:.22rem;padding:0 .15rem;color:var(--theme-muted);letter-spacing:.04em}.pagination-summary[data-astro-cid-d776pwuy] strong[data-astro-cid-d776pwuy]{color:var(--theme-text);font-size:1.15rem}.pagination-pages[data-astro-cid-d776pwuy]{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.pagination-arrow[data-astro-cid-d776pwuy],.pagination-page[data-astro-cid-d776pwuy]{display:inline-flex;align-items:center;justify-content:center;min-width:2.8rem;min-height:2.8rem;padding:0 .95rem;border:1px solid var(--theme-line);border-radius:999px;background:var(--theme-panel);color:var(--theme-text);box-shadow:var(--theme-shadow);transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}.pagination-arrow[data-astro-cid-d776pwuy]:hover,.pagination-page[data-astro-cid-d776pwuy]:hover{transform:translateY(-2px);border-color:var(--theme-soft-fill-strong)}.pagination-page[data-astro-cid-d776pwuy].is-active{background:var(--theme-color);color:#fff;border-color:transparent}.pagination-arrow[data-astro-cid-d776pwuy].is-disabled{opacity:.45;box-shadow:none}.pagination-gap[data-astro-cid-d776pwuy]{color:var(--theme-muted);padding:0 .1rem}@media(max-width:760px){.pagination[data-astro-cid-d776pwuy]{justify-content:center;gap:.7rem}.pagination-summary[data-astro-cid-d776pwuy]{width:100%;justify-content:center;order:-1}.pagination-pages[data-astro-cid-d776pwuy]{justify-content:center;width:100%}.pagination-arrow[data-astro-cid-d776pwuy]{min-width:calc(50% - .5rem);padding:0 .75rem}}
+</style>
+<link rel="stylesheet" href="/_astro/index.R3ImXAFw.css"></head> <body> <div class="page" id="body-wrap" data-theme-preset="classic" data-home-template="showcase" data-card-style="magazine" data-sidebar-style="stacked" style="--theme-color:#4d81ef;--theme-color-deep:#274f99;--theme-accent:#12243a;--theme-text:#1b2736;--theme-muted:#607286;--theme-line:rgba(89, 113, 145, 0.16);--theme-bg:#eff4fb;--theme-panel:rgba(255, 255, 255, 0.92);--theme-panel-solid:#ffffff;--theme-panel-soft:rgba(255, 255, 255, 0.76);--theme-shadow:0 22px 55px rgba(24, 44, 78, 0.08);--theme-shadow-strong:0 26px 68px rgba(24, 44, 78, 0.14);--theme-bg-image:radial-gradient(circle at top right, rgba(77, 129, 239, 0.16), transparent 19%), radial-gradient(circle at left 10%, rgba(18, 36, 58, 0.08), transparent 28%), linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);--theme-nav-bg:rgba(248, 251, 255, 0.78);--theme-nav-border:rgba(77, 129, 239, 0.08);--theme-hero-mask:linear-gradient(135deg, rgba(16, 37, 66, 0.24), rgba(16, 37, 66, 0.58)), linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.16));--theme-hero-panel-bg:rgba(9, 25, 48, 0.28);--theme-hero-panel-border:rgba(255, 255, 255, 0.16);--theme-hero-panel-shadow:0 24px 60px rgba(8, 24, 46, 0.2);--theme-soft-fill:rgba(77, 129, 239, 0.06);--theme-soft-fill-strong:rgba(77, 129, 239, 0.1);--theme-code-bg:#13263b;--theme-code-text:#edf4ff;--theme-reading-text:#334155;--radius-lg:30px;--radius-md:22px;--radius-sm:18px;--nav-width:1500px;--content-width:1520px;--page-width:1240px;--reading-width:1500px;--font-sans:&#34;Avenir Next&#34;, &#34;Helvetica Neue&#34;, &#34;PingFang SC&#34;, &#34;Microsoft YaHei&#34;, sans-serif;--font-display:&#34;Iowan Old Style&#34;, &#34;Palatino Linotype&#34;, &#34;Noto Serif SC&#34;, &#34;Source Han Serif SC&#34;, serif"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>Linux（一）——初识</h1> <p>环境及介绍 学习基于CentOS 7 Linux 内核最初只是由芬兰人林纳斯·托瓦兹（Linus Torvalds）在赫尔辛基大学上学时出于个人爱好而编写的。 Linux 是一套免费使用和自由传播的类 Unix 操作系统，是一个基于 POSIX（可移植操作系统接口） 和 UNIX</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2021年5月3日</span> <span>阅读约 4 分钟</span> </div> <div class="reading-categories"> <a href="/categories/coding/">Coding</a> </div> <div class="reading-tags"> <a href="/tags/linux/">#Linux</a><a href="/tags/centos/">#CentOS</a> </div> </header> <div class="post-content reading-content"><h3 id="环境及介绍">环境及介绍</h3><ul><li><p>学习基于CentOS 7</p></li><li><p>Linux 内核最初只是由芬兰人林纳斯·托瓦兹（Linus Torvalds）在赫尔辛基大学上学时出于个人爱好而编写的。</p> <p>Linux 是一套免费使用和自由传播的类 Unix 操作系统，是一个基于 POSIX（可移植操作系统接口） 和 UNIX 的多用户、多任务、支持多线程和多 CPU 的操作系统。</p> <p>Linux 能运行主要的 UNIX 工具软件、应用程序和网络协议。它支持 32 位和 64 位硬件。Linux 继承了 Unix 以网络为核心的设计思想，是一个性能稳定的多用户网络操作系统。</p></li></ul><figure><img src="/notion/linux-一-初识/image/image-20210504194353130.png" alt="image-20210504194353130" /><figcaption>image-20210504194353130</figcaption></figure><h3 id="远程连接">远程连接</h3><figure><img src="/notion/linux-一-初识/image/image-20210503230146377.png" alt="image-20210503230146377" /><figcaption>image-20210503230146377</figcaption></figure><h3 id="用户登录">用户登录</h3><ul><li><p>命令行登录</p></li><li><p>ssh登录</p></li><li><p>图形界面登录</p> &lt;p <strong>最高权限账号为root，可以操作一切</strong> </p></li></ul><h3 id="关机">关机</h3><ul><li><p>服务器几乎不关机</p></li><li><p>linux中无错误即代表操作成功</p></li></ul><pre><code>sync # 将数据由内存同步到硬盘中。
+
+shutdown # 关机指令，你可以man shutdown 来看一下帮助文档。例如你可以运行如下命令关机：
+
+shutdown –h 10 # 这个命令告诉大家，计算机将在10分钟后关机
+
+shutdown –h now # 立马关机
+
+shutdown –h 20:25 # 系统会在今天20:25关机
+
+shutdown –h +10 # 十分钟后关机
+
+shutdown –r now # 系统立马重启
+
+shutdown –r +10 # 系统十分钟后重启
+
+reboot # 就是重启，等同于 shutdown –r now
+
+halt # 关闭系统，等同于shutdown –h now 和 poweroff</code></pre><h3 id="系统目录结构">系统目录结构</h3><ul><li><strong>/bin</strong> ：bin是Binary的缩写, 这个目录存放着最经常使用的命令。</li><li><strong>/boot：</strong> 这里存放的是启动Linux时使用的一些核心文件，包括一些连接文件以及镜像文件。</li><li><strong>/dev ：</strong> dev是Device(设备)的缩写, 存放的是Linux的外部设备，在Linux中访问设备的方式和访问文件的方式是相同的。</li><li><strong>/etc：</strong> 这个目录用来存放所有的系统管理所需要的配置文件和子目录。</li><li><strong>/home</strong> ：用户的主目录，在Linux中，每个用户都有一个自己的目录，一般该目录名是以用户的账号命名的。</li><li><strong>/lib</strong> ：这个目录里存放着系统最基本的动态连接共享库，其作用类似于Windows里的DLL文件。</li><li><strong>/lost+found</strong> ：这个目录一般情况下是空的，当系统非法关机后，这里就存放了一些文件。</li><li><strong>/media</strong> ：linux系统会自动识别一些设备，例如U盘、光驱等等，当识别后，linux会把识别的设备挂载到这个目录下。</li><li><strong>/mnt</strong> ：系统提供该目录是为了让用户临时挂载别的文件系统的，我们可以将光驱挂载在/mnt/上，然后进入该目录就可以查看光驱里的内容了。</li><li><strong>/opt</strong> ：这是给主机额外安装软件所摆放的目录。比如你安装一个ORACLE数据库则就可以放到这个目录下。默认是空的。</li><li><strong>/proc</strong> ：这个目录是一个虚拟的目录，它是系统内存的映射，我们可以通过直接访问这个目录来获取系统信息。</li><li><strong>/root</strong> ：该目录为系统管理员，也称作超级权限者的用户主目录。</li><li><strong>/sbin</strong> ：s就是Super User的意思，这里存放的是系统管理员使用的系统管理程序。</li><li><strong>/srv</strong> ：该目录存放一些服务启动之后需要提取的数据。</li><li><strong>/sys</strong> ：这是linux2.6内核的一个很大的变化。该目录下安装了2.6内核中新出现的一个文件系统 sysfs 。</li><li><strong>/tmp</strong> ：这个目录是用来存放一些临时文件的。</li><li><strong>/usr</strong> ：这是一个非常重要的目录，用户的很多应用程序和文件都放在这个目录下，类似于windows下的program files目录。</li><li><strong>/usr/bin：</strong> 系统用户使用的应用程序。</li><li><strong>/usr/sbin：</strong> 超级用户使用的比较高级的管理程序和系统守护程序。</li><li><strong>/usr/src：</strong> 内核源代码默认的放置目录。</li><li><strong>/var</strong> ：这个目录中存放着在不断扩充着的东西，我们习惯将那些经常被修改的目录放在这个目录下。包括各种日志文件。</li><li><strong>/run</strong> ：是一个临时文件系统，存储系统启动以来的信息。当系统重启时，这个目录下的文件应该被删掉或清除。</li></ul></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/templates/classic/posts/linux-二-常用命令/">Linux（二）——常用命令</a> </div> <div> <span>下一篇</span> <a href="/templates/classic/posts/javaweb学习之路-六-mybatis入门/">JavaWeb学习之路（六）——Mybatis入门</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关文章</h3> </div> <div class="related-post-list"> <a href="/templates/classic/posts/linux-二-常用命令/">Linux（二）——常用命令</a><a href="/templates/classic/posts/linux的文件权限/">Linux的文件权限</a><a href="/templates/classic/posts/hexo公式显示与自动部署/">Hexo公式显示与自动部署</a><a href="/templates/classic/posts/python第三方库yaml/">Python第三方库yaml</a><a href="/templates/classic/posts/python小tips-持续更新/">Python小tips【持续更新】</a><a href="/templates/classic/posts/flet的页面布局-layout/">Flet的页面布局(Layout)</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-3" href="#环境及介绍" data-toc-link="环境及介绍"> 环境及介绍 </a><a class="toc-level-3" href="#远程连接" data-toc-link="远程连接"> 远程连接 </a><a class="toc-level-3" href="#用户登录" data-toc-link="用户登录"> 用户登录 </a><a class="toc-level-3" href="#关机" data-toc-link="关机"> 关机 </a><a class="toc-level-3" href="#系统目录结构" data-toc-link="系统目录结构"> 系统目录结构 </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = tocLinks
+      .map((link) => {
+        const id = link.getAttribute("data-toc-link");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean);
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

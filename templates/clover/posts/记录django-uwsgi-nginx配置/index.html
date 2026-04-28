@@ -1,0 +1,125 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>记录Django+uwsgi+Nginx配置 · Clover | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="实现 模拟从windows开发环境，迁移项目至linux生产环境 前置条件 安装Django、uwsgi、Nginx she pip install uwsgi uWSGI 以客户端 服务端模型运行。Web 服务器（例如 nginx，Apache）与一个 django uwsgi"><meta property="og:title" content="记录Django+uwsgi+Nginx配置 · Clover | HUII's Blog"><meta property="og:description" content="实现 模拟从windows开发环境，迁移项目至linux生产环境 前置条件 安装Django、uwsgi、Nginx she pip install uwsgi uWSGI 以客户端 服务端模型运行。Web 服务器（例如 nginx，Apache）与一个 django uwsgi"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/templates/clover/posts/%E8%AE%B0%E5%BD%95django-uwsgi-nginx%E9%85%8D%E7%BD%AE/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#2f7b64"><link rel="canonical" href="https://blog.huii.top/templates/clover/posts/%E8%AE%B0%E5%BD%95django-uwsgi-nginx%E9%85%8D%E7%BD%AE/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.PS7qN8BI.css">
+<style>.pagination[data-astro-cid-d776pwuy]{display:flex;align-items:center;justify-content:center;gap:.9rem;margin-top:2.4rem;flex-wrap:wrap}.pagination-summary[data-astro-cid-d776pwuy]{display:inline-flex;align-items:baseline;gap:.22rem;padding:0 .15rem;color:var(--theme-muted);letter-spacing:.04em}.pagination-summary[data-astro-cid-d776pwuy] strong[data-astro-cid-d776pwuy]{color:var(--theme-text);font-size:1.15rem}.pagination-pages[data-astro-cid-d776pwuy]{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.pagination-arrow[data-astro-cid-d776pwuy],.pagination-page[data-astro-cid-d776pwuy]{display:inline-flex;align-items:center;justify-content:center;min-width:2.8rem;min-height:2.8rem;padding:0 .95rem;border:1px solid var(--theme-line);border-radius:999px;background:var(--theme-panel);color:var(--theme-text);box-shadow:var(--theme-shadow);transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}.pagination-arrow[data-astro-cid-d776pwuy]:hover,.pagination-page[data-astro-cid-d776pwuy]:hover{transform:translateY(-2px);border-color:var(--theme-soft-fill-strong)}.pagination-page[data-astro-cid-d776pwuy].is-active{background:var(--theme-color);color:#fff;border-color:transparent}.pagination-arrow[data-astro-cid-d776pwuy].is-disabled{opacity:.45;box-shadow:none}.pagination-gap[data-astro-cid-d776pwuy]{color:var(--theme-muted);padding:0 .1rem}@media(max-width:760px){.pagination[data-astro-cid-d776pwuy]{justify-content:center;gap:.7rem}.pagination-summary[data-astro-cid-d776pwuy]{width:100%;justify-content:center;order:-1}.pagination-pages[data-astro-cid-d776pwuy]{justify-content:center;width:100%}.pagination-arrow[data-astro-cid-d776pwuy]{min-width:calc(50% - .5rem);padding:0 .75rem}}
+</style>
+<link rel="stylesheet" href="/_astro/index.R3ImXAFw.css"></head> <body> <div class="page" id="body-wrap" data-theme-preset="clover" data-home-template="showcase" data-card-style="magazine" data-sidebar-style="stacked" style="--theme-color:#2f7b64;--theme-color-deep:#174b3d;--theme-accent:#18322d;--theme-text:#17312d;--theme-muted:#5d736d;--theme-line:rgba(61, 104, 89, 0.14);--theme-bg:#eef6f0;--theme-panel:rgba(255, 255, 255, 0.94);--theme-panel-solid:#ffffff;--theme-panel-soft:rgba(246, 251, 247, 0.84);--theme-shadow:0 18px 44px rgba(22, 57, 47, 0.08);--theme-shadow-strong:0 24px 60px rgba(22, 57, 47, 0.13);--theme-bg-image:radial-gradient(circle at top left, rgba(47, 123, 100, 0.14), transparent 24%), radial-gradient(circle at 86% 12%, rgba(23, 76, 61, 0.08), transparent 20%), linear-gradient(180deg, #f9fcf9 0%, #edf5ef 100%);--theme-nav-bg:rgba(248, 252, 248, 0.82);--theme-nav-border:rgba(47, 122, 99, 0.08);--theme-hero-mask:linear-gradient(135deg, rgba(19, 49, 45, 0.2), rgba(19, 49, 45, 0.36)), linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.14));--theme-hero-panel-bg:rgba(20, 48, 43, 0.2);--theme-hero-panel-border:rgba(255, 255, 255, 0.16);--theme-hero-panel-shadow:0 22px 56px rgba(16, 42, 38, 0.18);--theme-soft-fill:rgba(47, 122, 99, 0.07);--theme-soft-fill-strong:rgba(47, 122, 99, 0.12);--theme-code-bg:#14302a;--theme-code-text:#edf7f1;--theme-reading-text:#334440;--radius-lg:28px;--radius-md:20px;--radius-sm:14px;--nav-width:1480px;--content-width:1500px;--page-width:1260px;--reading-width:1480px;--font-sans:&#34;Avenir Next&#34;, &#34;Helvetica Neue&#34;, &#34;PingFang SC&#34;, &#34;Microsoft YaHei&#34;, sans-serif;--font-display:&#34;Palatino Linotype&#34;, &#34;Book Antiqua&#34;, &#34;Noto Serif SC&#34;, &#34;Source Han Serif SC&#34;, serif"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>记录Django+uwsgi+Nginx配置</h1> <p>实现 模拟从windows开发环境，迁移项目至linux生产环境 前置条件 安装Django、uwsgi、Nginx she pip install uwsgi uWSGI 以客户端 服务端模型运行。Web 服务器（例如 nginx，Apache）与一个 django uwsgi</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2021年10月17日</span> <span>阅读约 5 分钟</span> </div> <div class="reading-categories"> <a href="/categories/coding/">Coding</a> </div> <div class="reading-tags"> <a href="/tags/python/">#Python</a><a href="/tags/django/">#Django</a><a href="/tags/uwsgi/">#uwsgi</a><a href="/tags/nginx/">#Nginx</a> </div> </header> <div class="post-content reading-content"><h3 id="实现">实现</h3><p>模拟从windows开发环境，迁移项目至linux生产环境</p><h3 id="前置条件">前置条件</h3><p>安装Django、uwsgi、Nginx</p><pre><code>pip install uwsgi</code></pre><p>uWSGI 以客户端-服务端模型运行。Web 服务器（例如 nginx，Apache）与一个 <code>django-uwsgi</code> "worker" 进程交互，提供动态内容。</p><p>其他的安装不再赘述。</p><h3 id="django项目创建">Django项目创建</h3><ul><li><p>创建虚拟环境</p></li><li><p>创建HelloWorld项目</p></li></ul><pre><code>django-admin startproject HelloWorld</code></pre><ul><li>创建requirements.txt文件</li></ul><pre><code>pip freeze &gt; requirements.txt</code></pre><ul><li>迁移到服务器</li></ul><h3 id="uwsgi文件配置">uwsgi文件配置</h3><pre><code>[uwsgi]
+socket          = /www/wwwroot/test1/test1.sock
+chdir           = /www/wwwroot/test1
+module          = HelloWorld.wsgi
+home            = /www/wwwroot/test1/venv
+pidfile         = /www/pid/uwsgi.pid
+daemonize       = /www/wwwlogs/uwsgi/test1.log
+master          = true
+processes       = 5
+threads         = 10
+#指定socket协议，运行django，只能与nginx结合时使用
+socket          = 0.0.0.0:8000
+#如果你没用nginx，只想自己启动一个http界面，用这个
+# http          =  0.0.0.0:8000
+chmod-socket    = 666
+vacuum          = true</code></pre><ul><li><p>启动命令<code>uwsgi ini uwsgi.ini</code> </p></li><li><p>杀死进程命令<code>pkill f uwsgi 9</code> </p></li><li><p>重启uwsgi命令<code>uwsgi reload /www/pid/uwsgi.pid</code> </p></li></ul><p><strong>一些坑</strong> : 文件权限要够，要不然一些文件无法创建将导致失败</p><figure><img src="/notion/记录django-uwsgi-nginx配置/image/image-20211017172228810.png" alt="image-20211017172228810" /><figcaption>image-20211017172228810</figcaption></figure><p>可以通过查看日志来查错</p><figure><img src="/notion/记录django-uwsgi-nginx配置/image/image-20211017172314519.png" alt="image-20211017172314519" /><figcaption>image-20211017172314519</figcaption></figure><h3 id="nginx配置">Nginx配置</h3><p>在<code>/etc/nginx/conf.d</code>下创建.conf文件。</p><pre><code>server {
+    listen 80; # 我要监听那个端口
+    server_name www.test1.com; # 你访问的路径前面的url名称ip地址也可以
+    error_log  /var/log/nginx/error.log; #错误日志定义等级，[ debug | info | notice | warn | error | crit ]
+    access_log /var/log/nginx/access.log; # Nginx日志配置
+    charset utf-8; # Nginx编码
+    gzip_types text/plain application/x-javascript text/css text/javascript application/x-httpd-php application/json text/json image/jpeg image/gif image/png application/octet-stream; # 支持压缩的类型
+
+    # 指定项目路径uwsgi
+    location / { # 这个location就和咱们Django的url(r&#39;^admin/&#39;, admin.site.urls),
+        include uwsgi_params; # 导入一个Nginx模块他是用来和uWSGI进行通讯的
+        uwsgi_connect_timeout 30; # 设置连接uWSGI超时时间
+        uwsgi_pass unix:///www/wwwroot/test1/test1.sock;
+    }
+
+    # 指定静态文件路径
+    location /static/ {
+        alias /www/wwwroot/test1/static/;
+    }
+}</code></pre><p>其中uwsgi_pass的内容与上面uwsgi对应。这个是用来通信的。</p><p>重启Nginx命令：<code>service nginx restart</code></p><p>可以通过查看日志了解状态</p><figure><img src="/notion/记录django-uwsgi-nginx配置/image/image-20211017172741494.png" alt="image-20211017172741494" /><figcaption>image-20211017172741494</figcaption></figure><figure><img src="/notion/记录django-uwsgi-nginx配置/image/image-20211017172803352.png" alt="image-20211017172803352" /><figcaption>image-20211017172803352</figcaption></figure><h3 id="目录结构">目录结构</h3><p>/<strong>www</strong></p><figure><img src="/notion/记录django-uwsgi-nginx配置/image/image-20211017172901570.png" alt="image-20211017172901570" /><figcaption>image-20211017172901570</figcaption></figure><p><strong>/etc/nginx/conf.d</strong></p><figure><img src="/notion/记录django-uwsgi-nginx配置/image/image-20211017172951218.png" alt="image-20211017172951218" /><figcaption>image-20211017172951218</figcaption></figure><p><strong>/var/log/nginx</strong></p><figure><img src="/notion/记录django-uwsgi-nginx配置/image/image-20211017173041068.png" alt="image-20211017173041068" /><figcaption>image-20211017173041068</figcaption></figure><h3 id="运行效果">运行效果</h3><p>修改了hosts文件</p><figure><img src="/notion/记录django-uwsgi-nginx配置/image/image-20211017173219560.png" alt="image-20211017173219560" /><figcaption>image-20211017173219560</figcaption></figure><figure><img src="/notion/记录django-uwsgi-nginx配置/image/image-20211017173137056.png" alt="image-20211017173137056" /><figcaption>image-20211017173137056</figcaption></figure></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/templates/clover/posts/esp32-c3手动烧录bin文件/">ESP32-C3手动烧录bin文件</a> </div> <div> <span>下一篇</span> <a href="/templates/clover/posts/springboot入门/">SpringBoot入门</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关文章</h3> </div> <div class="related-post-list"> <a href="/templates/clover/posts/python第三方库yaml/">Python第三方库yaml</a><a href="/templates/clover/posts/python小tips-持续更新/">Python小tips【持续更新】</a><a href="/templates/clover/posts/flet的页面布局-layout/">Flet的页面布局(Layout)</a><a href="/templates/clover/posts/flet实现to-do-app/">Flet实现To-Do app</a><a href="/templates/clover/posts/flet-一款基于python的跨平台前端框架/">Flet，一款基于Python的跨平台前端框架</a><a href="/templates/clover/posts/pytorch中的一些函数/">PyTorch中的一些函数</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-3" href="#实现" data-toc-link="实现"> 实现 </a><a class="toc-level-3" href="#前置条件" data-toc-link="前置条件"> 前置条件 </a><a class="toc-level-3" href="#django项目创建" data-toc-link="django项目创建"> Django项目创建 </a><a class="toc-level-3" href="#uwsgi文件配置" data-toc-link="uwsgi文件配置"> uwsgi文件配置 </a><a class="toc-level-3" href="#nginx配置" data-toc-link="nginx配置"> Nginx配置 </a><a class="toc-level-3" href="#目录结构" data-toc-link="目录结构"> 目录结构 </a><a class="toc-level-3" href="#运行效果" data-toc-link="运行效果"> 运行效果 </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = tocLinks
+      .map((link) => {
+        const id = link.getAttribute("data-toc-link");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean);
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

@@ -1,0 +1,108 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>图像目标检测基本概念与算法 · Ledger | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="目标检测任务概述 机器视觉的中心任务是从 图像中解析出可供计算机理解的信息 。根据后续任务的需求，可将其分为四个主要层次：分类（Classification）、定位（Location）、检测（Detection）、分割（Segmentation）必读！计算机视觉四大基本任务(分类"><meta property="og:title" content="图像目标检测基本概念与算法 · Ledger | HUII's Blog"><meta property="og:description" content="目标检测任务概述 机器视觉的中心任务是从 图像中解析出可供计算机理解的信息 。根据后续任务的需求，可将其分为四个主要层次：分类（Classification）、定位（Location）、检测（Detection）、分割（Segmentation）必读！计算机视觉四大基本任务(分类"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/templates/ledger/posts/%E5%9B%BE%E5%83%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E7%AE%97%E6%B3%95/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#8e5a48"><link rel="canonical" href="https://blog.huii.top/templates/ledger/posts/%E5%9B%BE%E5%83%8F%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8E%E7%AE%97%E6%B3%95/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.PS7qN8BI.css">
+<style>.pagination[data-astro-cid-d776pwuy]{display:flex;align-items:center;justify-content:center;gap:.9rem;margin-top:2.4rem;flex-wrap:wrap}.pagination-summary[data-astro-cid-d776pwuy]{display:inline-flex;align-items:baseline;gap:.22rem;padding:0 .15rem;color:var(--theme-muted);letter-spacing:.04em}.pagination-summary[data-astro-cid-d776pwuy] strong[data-astro-cid-d776pwuy]{color:var(--theme-text);font-size:1.15rem}.pagination-pages[data-astro-cid-d776pwuy]{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.pagination-arrow[data-astro-cid-d776pwuy],.pagination-page[data-astro-cid-d776pwuy]{display:inline-flex;align-items:center;justify-content:center;min-width:2.8rem;min-height:2.8rem;padding:0 .95rem;border:1px solid var(--theme-line);border-radius:999px;background:var(--theme-panel);color:var(--theme-text);box-shadow:var(--theme-shadow);transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}.pagination-arrow[data-astro-cid-d776pwuy]:hover,.pagination-page[data-astro-cid-d776pwuy]:hover{transform:translateY(-2px);border-color:var(--theme-soft-fill-strong)}.pagination-page[data-astro-cid-d776pwuy].is-active{background:var(--theme-color);color:#fff;border-color:transparent}.pagination-arrow[data-astro-cid-d776pwuy].is-disabled{opacity:.45;box-shadow:none}.pagination-gap[data-astro-cid-d776pwuy]{color:var(--theme-muted);padding:0 .1rem}@media(max-width:760px){.pagination[data-astro-cid-d776pwuy]{justify-content:center;gap:.7rem}.pagination-summary[data-astro-cid-d776pwuy]{width:100%;justify-content:center;order:-1}.pagination-pages[data-astro-cid-d776pwuy]{justify-content:center;width:100%}.pagination-arrow[data-astro-cid-d776pwuy]{min-width:calc(50% - .5rem);padding:0 .75rem}}
+</style>
+<link rel="stylesheet" href="/_astro/index.R3ImXAFw.css"></head> <body> <div class="page" id="body-wrap" data-theme-preset="ledger" data-home-template="journal" data-card-style="outline" data-sidebar-style="minimal" style="--theme-color:#8e5a48;--theme-color-deep:#5b342a;--theme-accent:#281d19;--theme-text:#241b18;--theme-muted:#7c6d63;--theme-line:rgba(93, 67, 52, 0.18);--theme-bg:#f6f0e8;--theme-panel:rgba(255, 251, 246, 0.94);--theme-panel-solid:#fffaf4;--theme-panel-soft:rgba(255, 246, 238, 0.76);--theme-shadow:0 14px 36px rgba(72, 51, 41, 0.06);--theme-shadow-strong:0 18px 46px rgba(72, 51, 41, 0.11);--theme-bg-image:radial-gradient(circle at top right, rgba(142, 90, 72, 0.08), transparent 21%), radial-gradient(circle at left 18%, rgba(39, 29, 26, 0.05), transparent 24%), linear-gradient(180deg, #faf6ef 0%, #f3ece2 100%);--theme-nav-bg:rgba(250, 245, 238, 0.84);--theme-nav-border:rgba(93, 67, 52, 0.1);--theme-hero-mask:linear-gradient(135deg, rgba(30, 23, 20, 0.28), rgba(30, 23, 20, 0.46)), linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.1));--theme-hero-panel-bg:rgba(39, 29, 26, 0.22);--theme-hero-panel-border:rgba(255, 244, 233, 0.18);--theme-hero-panel-shadow:0 24px 54px rgba(35, 27, 23, 0.18);--theme-soft-fill:rgba(140, 79, 61, 0.07);--theme-soft-fill-strong:rgba(140, 79, 61, 0.12);--theme-code-bg:#241d1c;--theme-code-text:#f8f0e5;--theme-reading-text:#3b312b;--radius-lg:22px;--radius-md:16px;--radius-sm:10px;--nav-width:1360px;--content-width:1380px;--page-width:1180px;--reading-width:1360px;--font-sans:&#34;Libre Franklin&#34;, &#34;PingFang SC&#34;, &#34;Microsoft YaHei&#34;, sans-serif;--font-display:&#34;EB Garamond&#34;, &#34;Noto Serif SC&#34;, &#34;Source Han Serif SC&#34;, serif"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>图像目标检测基本概念与算法</h1> <p>目标检测任务概述 机器视觉的中心任务是从 图像中解析出可供计算机理解的信息 。根据后续任务的需求，可将其分为四个主要层次：分类（Classification）、定位（Location）、检测（Detection）、分割（Segmentation）必读！计算机视觉四大基本任务(分类</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2022年12月20日</span> <span>阅读约 7 分钟</span> </div> <div class="reading-categories"> <a href="/categories/machinelearning/">MachineLearning</a> </div> <div class="reading-tags"> <a href="/tags/机器学习/">#机器学习</a><a href="/tags/深度学习/">#深度学习</a><a href="/tags/目标检测/">#目标检测</a><a href="/tags/cv/">#CV</a> </div> </header> <div class="post-content reading-content"><h2 id="目标检测任务概述">目标检测任务概述</h2><p>机器视觉的中心任务是从<strong>图像中解析出可供计算机理解的信息</strong>。根据后续任务的需求，可将其分为四个主要层次：分类（Classification）、定位（Location）、检测（Detection）、分割（Segmentation）<a href="https://mp.weixin.qq.com/s?__biz=MzU2NjU3OTc5NA%3D%3D&mid=2247553356&idx=1&sn=62d14b0f722f98c949d12b68a8472be7&chksm=fca81671cbdf9f678b9c21eb321afd95b40236e87f41d54ca973868167b8841487edf818540d&scene=27" target="_blank" rel="noreferrer">必读！计算机视觉四大基本任务(分类、定位、检测、分割) (qq.com)</a>。</p><figure><img src="/notion/图像目标检测基本概念与算法/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>分类(图a)、定位、检测(图b)、语义分割(图c)、和实例分割(图d)</p><p>分类任务关心图像整体，给出整张图像的内容描述即可，而检测则关心特定物体目标，要求同时获得目标类别信息和位置信息。</p><figure><img src="/notion/图像目标检测基本概念与算法/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>图像检测</p><h2 id="发展沿革">发展沿革</h2><figure><img src="/notion/图像目标检测基本概念与算法/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>目标检测发展沿革</p><p><a href="https://zhuanlan.zhihu.com/p/382702930" target="_blank" rel="noreferrer">目标检测究竟发展到了什么程度？| 目标检测发展22年 - 知乎 (zhihu.com)</a></p><h3 id="阶段一-传统目标检测方法">阶段一：传统目标检测方法</h3><p>传统检测算法流程可概括如下：</p><ol><li>选取感兴趣区域，选取可能包含物体的区域</li><li>对可能包含物体的区域进行特征提取</li><li>对提取的特征进行检测分类</li></ol><figure><img src="/notion/图像目标检测基本概念与算法/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>传统检测流程</p><p>较为知名的传统方法有：Viola Jones Detectors、HOG Detector、Deformable Part-based Model (DPM)[目标检测的传统方法概述 - 腾讯云开发者社区-腾讯云 (tencent.com)](<a href="https://cloud.tencent.com/developer/article/1486379。" target="_blank" rel="noreferrer">https://cloud.tencent.com/developer/article/1486379。</a></p><p>具体介绍参见参考资料。</p><h3 id="阶段二-深度学习方法">阶段二：深度学习方法</h3><p>基于手工提取特征的传统目标检测算法进展缓慢，性能低下。直到2012年卷积神经网络(Convolutional Neural Networks, CNNs)的兴起将目标检测领域推向了新的台阶。基于CNNs的目标检测算法主要有两条技术发展路线：anchor-based和anchor-free方法，而anchor-based方法则包括一阶段和二阶段检测算法(二阶段目标检测算法一般比一阶段精度要高，但一阶段检测算法速度会更快)。</p><h4 id="two-stage目标检测算法"><strong>Two-stage目标检测算法</strong></h4><p>二阶段检测算法主要分为以下两个阶段
+<strong>Stage1</strong>：从图像中生成region proposals
+<strong>Stage2</strong>：从region proposals生成最终的物体边框。</p><p>重要的算法有：RCNN、SONET、Fast RCNN、Faster RCNN、FPN、Cascade RCNN</p><h4 id="one-stage目标检测算法">one-stage目标检测算法</h4><p>一阶段目标检测算法不需要region proposal阶段，直接产生物体的类别概率和位置坐标值，经过一个阶段即可直接得到最终的检测结果，因此有着更快的检测速度。</p><p>重要的算法有：YOLO v1、SSD、YOLO v2、RetinaNet、YOLO v3、YOLO v4、YOLO V5</p><h4 id="anchor-free中的目标检测算法">Anchor-Free中的目标检测算法</h4><p>基于Anchor的物体检测问题通常被建模成对一些候选区域进行分类和回归的问题，在一阶段检测器中，这些候选区域就是通过滑窗方式产生Anchor box，而在二阶段检测器中，候选区域是RPN生成的Proposal，但是RPN本身仍然是对滑窗方式产生的Anchor进行分类和回归。基于Anchor的检测算法由于Anchor太多导致计算复杂，及其所带来的大量超参数都会影响模型性能。近年的Anchor free技术则摒弃Anchor，通过确定关键点的方式来完成检测，大大减少了网络超参数的数量。</p><p>重要的算法有：CornerNet、CenterNet、FSAF、FCOS、SAPD</p><h2 id="评价指标">评价指标</h2><h3 id="交并比iou">交并比IOU</h3><p>$$
+IOU=\frac{A∩B}{A∪B}
+$$</p><figure><img src="/notion/图像目标检测基本概念与算法/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>IOU示意图</p><h3 id="准确率-精度-召回率-f1值-fpr">准确率/精度/召回率/F1值/FPR</h3><p>True positives (TP,真正): 预测为正,实际为正
+True negatives (TN,真负): 预测为负,实际为负
+False positives(FP,假正): 预测为正,实际为负
+False negatives(FN,假负): 预测为负,实际为正</p><p>$$
+Accuracy = \frac{TP+TN}{TP+TN+FP+FN}\
+$$</p><p>$$
+Precision = \frac{TP}{TP+FP} \
+$$</p><p>$$
+Recall = \frac{TP}{TP+FN} \
+$$</p><p>$$
+F1-Score = \frac{2\times TP}{2\times TP+FP+FN} \
+$$</p><p>$$
+FPR = \frac{FP}{FP+TN} \
+$$</p><h3 id="pr曲线-ap值">PR曲线-AP值</h3><p>模型精度，召回率，FPR和F1-Score值无法往往不能直观反应模型性能，因此就有了PR曲线-AP值 和 ROC曲线-AUC值。</p><p>PR曲线就是Precision和Recall的曲线，我们以Precision作为纵坐标，Recall为横坐标，可绘制PR曲线。</p><figure><img src="/notion/图像目标检测基本概念与算法/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>PR曲线 AP值</p><p><strong>评估标准</strong>：如果模型的精度越高，且召回率越高，那么模型的性能自然也就越好，反映在PR曲线上就是PR曲线下面的面积越大，模型性能越好。我们将PR曲线下的面积定义为AP(Average Precision)值，反映在AP值上就是AP值越大，说明模型的平均准确率越高。</p><h3 id="roc曲线-auc值"><strong>ROC曲线-AUC值</strong></h3><p>ROC曲线就是RPR和TPR的曲线，我们以FPR为横坐标，TPR为纵坐标，可绘制ROC曲线。</p><figure><img src="/notion/图像目标检测基本概念与算法/image/img.webp" alt="img" /><figcaption>img</figcaption></figure><p>ROC曲线 AUC值</p><p><strong>评估标准</strong>：当TPR越大，FPR越小时，说明模型分类结果是越好的，反映在ROC曲线上就是ROC曲线下面的面积越大，模型性能越好。我们将ROC曲线下的面积定义为AUC(Area Under Curve)值，反映在AUC值上就是AUC值越大，说明模型对正样本分类的结果越好。</p><h3 id="map"><strong>mAP</strong></h3><p>Mean Average Precision(mAP)是平均精度均值，具体指的是不同召回率下的精度均值。在目标检测中，一个模型通常会检测很多种物体，那么每一类都能绘制一个PR曲线，进而计算出一个AP值，而多个类别的AP值的平均就是mAP。</p><p><strong>评估标准</strong>：mAP衡量的是模型在所有类别上的好坏，属于目标检测中一个最为重要的指标，一般看论文或者评估一个目标检测模型，都会看这个值，这个值(0-1范围区间)越大越好。</p><p>**划重点！！！**一般来说mAP是针对整个数据集而言的，AP则针对数据集中某一个类别而言的，而percision和recall针对单张图片某一类别的。</p><h3 id="fps"><strong>FPS</strong></h3><p>Frame Per Second(FPS)指的是模型一秒钟能检测图片的数量，不同的检测模型往往会有不同的mAP和检测速度。</p><figure><img src="/notion/图像目标检测基本概念与算法/image/img.webp" alt="img" /><figcaption>img</figcaption></figure><p>FPS</p><p>目标检测技术的很多实际应用在准确度和速度上都有很高的要求，如果不计速度性能指标，只注重准确度表现的突破，其代价是更高的计算复杂度和更多内存需求，对于行业部署而言，可扩展性仍是一个悬而未决的问题。因此在实际问题中，通常需要综合考虑mAP和检测速度等因素。</p></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/templates/ledger/posts/r-cnn-rcnn系列算法ⅰ/">R-CNN——RCNN系列算法Ⅰ</a> </div> <div> <span>下一篇</span> <a href="/templates/ledger/posts/rnn循环神经网络/">RNN循环神经网络</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关文章</h3> </div> <div class="related-post-list"> <a href="/templates/ledger/posts/yolov3笔记/">YOLOv3笔记</a><a href="/templates/ledger/posts/yolov2-yolo9000-笔记/">YOLOv2(YOLO9000)笔记</a><a href="/templates/ledger/posts/yolo-v1笔记/">YOLO v1笔记</a><a href="/templates/ledger/posts/faster-r-cnn-rcnn系列算法ⅲ/">Faster R-CNN——RCNN系列算法Ⅲ</a><a href="/templates/ledger/posts/fast-r-cnn-rcnn系列算法ⅱ/">Fast R-CNN——RCNN系列算法Ⅱ</a><a href="/templates/ledger/posts/r-cnn-rcnn系列算法ⅰ/">R-CNN——RCNN系列算法Ⅰ</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-2" href="#目标检测任务概述" data-toc-link="目标检测任务概述"> 目标检测任务概述 </a><a class="toc-level-2" href="#发展沿革" data-toc-link="发展沿革"> 发展沿革 </a><a class="toc-level-3" href="#阶段一-传统目标检测方法" data-toc-link="阶段一-传统目标检测方法"> 阶段一：传统目标检测方法 </a><a class="toc-level-3" href="#阶段二-深度学习方法" data-toc-link="阶段二-深度学习方法"> 阶段二：深度学习方法 </a><a class="toc-level-2" href="#评价指标" data-toc-link="评价指标"> 评价指标 </a><a class="toc-level-3" href="#交并比iou" data-toc-link="交并比iou"> 交并比IOU </a><a class="toc-level-3" href="#准确率-精度-召回率-f1值-fpr" data-toc-link="准确率-精度-召回率-f1值-fpr"> 准确率/精度/召回率/F1值/FPR </a><a class="toc-level-3" href="#pr曲线-ap值" data-toc-link="pr曲线-ap值"> PR曲线-AP值 </a><a class="toc-level-3" href="#roc曲线-auc值" data-toc-link="roc曲线-auc值"> ROC曲线-AUC值 </a><a class="toc-level-3" href="#map" data-toc-link="map"> mAP </a><a class="toc-level-3" href="#fps" data-toc-link="fps"> FPS </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = tocLinks
+      .map((link) => {
+        const id = link.getAttribute("data-toc-link");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean);
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

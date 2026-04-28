@@ -1,0 +1,170 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Python小tips【持续更新】 · Classic | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="默认参数 参考：【Python】我精心设计的默认参数，怎么就出问题了呢？ 哔哩哔哩 bilibili 在定义类的时候，会定义一些默认参数，可能会像这样 class Player: def init (self, name, items=[]): self.name = name"><meta property="og:title" content="Python小tips【持续更新】 · Classic | HUII's Blog"><meta property="og:description" content="默认参数 参考：【Python】我精心设计的默认参数，怎么就出问题了呢？ 哔哩哔哩 bilibili 在定义类的时候，会定义一些默认参数，可能会像这样 class Player: def init (self, name, items=[]): self.name = name"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/templates/classic/posts/python%E5%B0%8Ftips-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#4d81ef"><link rel="canonical" href="https://blog.huii.top/templates/classic/posts/python%E5%B0%8Ftips-%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.PS7qN8BI.css">
+<style>.pagination[data-astro-cid-d776pwuy]{display:flex;align-items:center;justify-content:center;gap:.9rem;margin-top:2.4rem;flex-wrap:wrap}.pagination-summary[data-astro-cid-d776pwuy]{display:inline-flex;align-items:baseline;gap:.22rem;padding:0 .15rem;color:var(--theme-muted);letter-spacing:.04em}.pagination-summary[data-astro-cid-d776pwuy] strong[data-astro-cid-d776pwuy]{color:var(--theme-text);font-size:1.15rem}.pagination-pages[data-astro-cid-d776pwuy]{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.pagination-arrow[data-astro-cid-d776pwuy],.pagination-page[data-astro-cid-d776pwuy]{display:inline-flex;align-items:center;justify-content:center;min-width:2.8rem;min-height:2.8rem;padding:0 .95rem;border:1px solid var(--theme-line);border-radius:999px;background:var(--theme-panel);color:var(--theme-text);box-shadow:var(--theme-shadow);transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}.pagination-arrow[data-astro-cid-d776pwuy]:hover,.pagination-page[data-astro-cid-d776pwuy]:hover{transform:translateY(-2px);border-color:var(--theme-soft-fill-strong)}.pagination-page[data-astro-cid-d776pwuy].is-active{background:var(--theme-color);color:#fff;border-color:transparent}.pagination-arrow[data-astro-cid-d776pwuy].is-disabled{opacity:.45;box-shadow:none}.pagination-gap[data-astro-cid-d776pwuy]{color:var(--theme-muted);padding:0 .1rem}@media(max-width:760px){.pagination[data-astro-cid-d776pwuy]{justify-content:center;gap:.7rem}.pagination-summary[data-astro-cid-d776pwuy]{width:100%;justify-content:center;order:-1}.pagination-pages[data-astro-cid-d776pwuy]{justify-content:center;width:100%}.pagination-arrow[data-astro-cid-d776pwuy]{min-width:calc(50% - .5rem);padding:0 .75rem}}
+</style>
+<link rel="stylesheet" href="/_astro/index.R3ImXAFw.css"></head> <body> <div class="page" id="body-wrap" data-theme-preset="classic" data-home-template="showcase" data-card-style="magazine" data-sidebar-style="stacked" style="--theme-color:#4d81ef;--theme-color-deep:#274f99;--theme-accent:#12243a;--theme-text:#1b2736;--theme-muted:#607286;--theme-line:rgba(89, 113, 145, 0.16);--theme-bg:#eff4fb;--theme-panel:rgba(255, 255, 255, 0.92);--theme-panel-solid:#ffffff;--theme-panel-soft:rgba(255, 255, 255, 0.76);--theme-shadow:0 22px 55px rgba(24, 44, 78, 0.08);--theme-shadow-strong:0 26px 68px rgba(24, 44, 78, 0.14);--theme-bg-image:radial-gradient(circle at top right, rgba(77, 129, 239, 0.16), transparent 19%), radial-gradient(circle at left 10%, rgba(18, 36, 58, 0.08), transparent 28%), linear-gradient(180deg, #f8fbff 0%, #eef4fb 100%);--theme-nav-bg:rgba(248, 251, 255, 0.78);--theme-nav-border:rgba(77, 129, 239, 0.08);--theme-hero-mask:linear-gradient(135deg, rgba(16, 37, 66, 0.24), rgba(16, 37, 66, 0.58)), linear-gradient(180deg, rgba(255, 255, 255, 0.04), rgba(0, 0, 0, 0.16));--theme-hero-panel-bg:rgba(9, 25, 48, 0.28);--theme-hero-panel-border:rgba(255, 255, 255, 0.16);--theme-hero-panel-shadow:0 24px 60px rgba(8, 24, 46, 0.2);--theme-soft-fill:rgba(77, 129, 239, 0.06);--theme-soft-fill-strong:rgba(77, 129, 239, 0.1);--theme-code-bg:#13263b;--theme-code-text:#edf4ff;--theme-reading-text:#334155;--radius-lg:30px;--radius-md:22px;--radius-sm:18px;--nav-width:1500px;--content-width:1520px;--page-width:1240px;--reading-width:1500px;--font-sans:&#34;Avenir Next&#34;, &#34;Helvetica Neue&#34;, &#34;PingFang SC&#34;, &#34;Microsoft YaHei&#34;, sans-serif;--font-display:&#34;Iowan Old Style&#34;, &#34;Palatino Linotype&#34;, &#34;Noto Serif SC&#34;, &#34;Source Han Serif SC&#34;, serif"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>Python小tips【持续更新】</h1> <p>默认参数 参考：【Python】我精心设计的默认参数，怎么就出问题了呢？ 哔哩哔哩 bilibili 在定义类的时候，会定义一些默认参数，可能会像这样 class Player: def init (self, name, items=[]): self.name = name</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2023年3月9日</span> <span>阅读约 6 分钟</span> </div> <div class="reading-categories"> <a href="/categories/coding/">Coding</a> </div> <div class="reading-tags"> <a href="/tags/python/">#Python</a> </div> </header> <div class="post-content reading-content"><h2 id="默认参数">默认参数</h2><p>参考：<a href="https://www.bilibili.com/video/BV1NP4y1g7CT/?spm_id_from=333.1007.top_right_bar_window_history.content.click&vd_source=2e809f6048dfa28aa4dd25d2374b23bc" target="_blank" rel="noreferrer">【Python】我精心设计的默认参数，怎么就出问题了呢？_哔哩哔哩_bilibili</a></p><p>在定义类的时候，会定义一些默认参数，可能会像这样</p><pre><code>class Player:
+    def __init__(self, name, items=[]):
+        self.name = name
+        self.items = items</code></pre><p>然后如果像这样调用的话</p><pre><code>if __name__ == &quot;__main__&quot;:
+    p1 = Player(&quot;John&quot;, [&quot;sword&quot;, &quot;shield&quot;])
+    p2 = Player(&quot;Jane&quot;)
+    p3 = Player(&quot;Jack&quot;)
+
+    p2.items.append(&quot;bow&quot;)
+    p3.items.append(&quot;axe&quot;)
+
+    print(p3.items)</code></pre><p>输出结果为<code>['bow', 'axe']</code>。</p><p>很明显，这不应该是我们想要的结果，我们期望输出应该是<code>['axe']</code>。</p><p>Python的Document里有这么一段话<a href="https://docs.python.org/zh-cn/3/reference/compound_stmts.html" target="_blank" rel="noreferrer">8. 复合语句 — Python 3.11.2 文档</a></p><blockquote>&lt;p <strong>默认形参值会在执行函数定义时按从左至右的顺序被求值。</strong> 这意味着当函数被定义时将对表达式求值一次，相同的“预计算”值将在每次调用时被使用。 这一点在默认形参为可变对象，例如列表或字典的时候尤其需要重点理解：如果函数修改了该对象（例如向列表添加了一项），则实际上默认值也会被修改。 这通常不是人们所想要的。</p></blockquote><p>简而言之，对于这种可变对象，如果使用<strong>默认参数，他们会指向同一个对象</strong>。</p><p>Document中也提到了解决方法</p><blockquote><p>使用 <code>None</code> 作为默认值</p></blockquote><p>因此，我们将类定义修改为如下，即可解决这一问题。</p><pre><code>class Player:
+    def __init__(self, name, items=None):
+        if items is None:
+            items = []
+        self.name = name
+        self.items = items</code></pre><h2 id="使用is-none对none进行判断">使用is None对None进行判断</h2><p>参考：<a href="https://www.bilibili.com/video/BV1xL411N7iS/?spm_id_from=333.880.my_history.page.click&vd_source=2e809f6048dfa28aa4dd25d2374b23bc" target="_blank" rel="noreferrer">【python】为什么判断一个值是否为None的时候，一定要用is呢？_哔哩哔哩_bilibili</a></p><h3 id="不要直接作为布尔值判断-if-none">不要直接作为布尔值判断(if None)</h3><p>除了None之外，其他传入的空数据结构，如Dictionary，List，Tuple等也会被识别成False。</p><p>对于以下这种情况，我们原本期望共享ls1这个数组，最终能够输出<code>[1, 1]</code>，可是程序运行最终只输出了<code>[1]</code>，原因就是输入的ls1是空数组，使用逻辑判断结果为False。</p><pre><code>class Test:
+    def __init__(self, ls=None):
+        if ls:
+            self.ls = ls
+        else:
+            self.ls = []
+    
+    def cal(self):
+        self.ls.append(1)
+
+    def __str__(self):
+        return str(self.ls)
+
+if __name__ == &quot;__main__&quot;:
+    ls1 = []
+    t1 = Test(ls1)
+    t2 = Test(ls1)
+    t1.cal()
+    t2.cal()
+    print(t2)</code></pre><p>我们也可以使用<code>__bool__</code>自定义类判断为<code>False</code>的情况。输出结果为output2。</p><pre><code>class Test:
+    def __bool__(self):
+        return False
+    
+if Test():
+    print(&quot;output1&quot;)
+else:
+    print(&quot;output2&quot;)</code></pre><p>因此，由于一些数据结构会对bool进行重载，造成对None的判断出现问题。</p><h3 id="也不要使用">也不要使用==</h3><p>由于可以使用<code>__eq__</code>对运算符==进行重载，也可能导致判断出错。以下代码结果即可输出output1。</p><pre><code>class Test:
+    def __eq__(self, other):
+        return True
+    
+if Test() == None:
+    print(&quot;output1&quot;)
+else:
+    print(&quot;output2&quot;)</code></pre><h3 id="使用is">使用is</h3><p>某些运算符不能重载 —— is、and、or以及not（位运算符&、|以及~可以重载）[ref]<a href="https://zhuanlan.zhihu.com/p/515284250" target="_blank" rel="noreferrer">流畅的Python 笔记12——运算符重载 - 知乎 (zhihu.com)</a>[/ref]</p><p>使用dis这个module对<code>==</code>和<code>is</code>进行比较，观察字节码</p><p>Python3.11中运行结果</p><pre><code>&gt;&gt;&gt; import dis
+&gt;&gt;&gt; dis.dis(&#39;a == None&#39;)
+  0           0 RESUME                   0
+
+  1           2 LOAD_NAME                0 (a)
+              4 LOAD_CONST               0 (None)
+              6 COMPARE_OP               2 (==)
+             12 RETURN_VALUE
+&gt;&gt;&gt; dis.dis(&#39;a is None&#39;)
+  0           0 RESUME                   0
+
+  1           2 LOAD_NAME                0 (a)
+              4 LOAD_CONST               0 (None)
+              6 IS_OP                    0
+              8 RETURN_VALUE
+&gt;&gt;&gt;</code></pre><p>使用Python3.9</p><pre><code>  1           0 LOAD_NAME                0 (a)
+              2 LOAD_CONST               0 (None)
+              4 COMPARE_OP               2 (==)
+              6 RETURN_VALUE
+None
+  1           0 LOAD_NAME                0 (a)
+              2 LOAD_CONST               0 (None)
+              4 IS_OP                    0
+              6 RETURN_VALUE
+None</code></pre><p>可以看到只有<code>COMPARE_OP</code>和<code>IS_OP</code>的差别。</p><p>在Python源代码中，is是进行地址的指针比较，在c中是非常快的，而<code>COMPARE_OP</code>则要慢。</p><h2 id="generator中的坑">generator中的坑</h2><p>参考：<a href="https://www.bilibili.com/video/BV1pY411n722/?spm_id_from=333.1007.top_right_bar_window_history.content.click" target="_blank" rel="noreferrer">【python】几乎没人做对的题目？聊聊生成器表达式里不为人知的秘密_哔哩哔哩_bilibili</a></p><p>对于以下的代码，运行结果为[1, 2]。</p><p>注意：第二行是()，不是生成式的[]。</p><pre><code>ls = [1, 2, 3, 4, 5]
+g = (n for n in ls if n in ls)
+ls = [0, 1, 2]
+print(list(g))</code></pre><p>实际上，这段代码等价于</p><pre><code>ls = [1, 2, 3, 4, 5]
+g = (n for n in ls if n in ls2)
+ls2 = [0, 1, 2]
+print(list(g))</code></pre><p>在PEP 289<a href="https://peps.python.org/pep-0289/" target="_blank" rel="noreferrer">PEP 289 – Generator Expressions | peps.python.org</a>中提到</p><blockquote><p>Only the outermost for expression is evaluated immediately, the other expressions are deferred until the generator is run</p> <p>只有最外层的 for 表达式被立即计算，其他表达式被延迟到生成器运行</p></blockquote></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/templates/classic/posts/yolov3笔记/">YOLOv3笔记</a> </div> <div> <span>下一篇</span> <a href="/templates/classic/posts/yolov2-yolo9000-笔记/">YOLOv2(YOLO9000)笔记</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关文章</h3> </div> <div class="related-post-list"> <a href="/templates/classic/posts/python第三方库yaml/">Python第三方库yaml</a><a href="/templates/classic/posts/flet的页面布局-layout/">Flet的页面布局(Layout)</a><a href="/templates/classic/posts/flet实现to-do-app/">Flet实现To-Do app</a><a href="/templates/classic/posts/flet-一款基于python的跨平台前端框架/">Flet，一款基于Python的跨平台前端框架</a><a href="/templates/classic/posts/记录django-uwsgi-nginx配置/">记录Django+uwsgi+Nginx配置</a><a href="/templates/classic/posts/pytorch中的一些函数/">PyTorch中的一些函数</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-2" href="#默认参数" data-toc-link="默认参数"> 默认参数 </a><a class="toc-level-2" href="#使用is-none对none进行判断" data-toc-link="使用is-none对none进行判断"> 使用is None对None进行判断 </a><a class="toc-level-3" href="#不要直接作为布尔值判断-if-none" data-toc-link="不要直接作为布尔值判断-if-none"> 不要直接作为布尔值判断(if None) </a><a class="toc-level-3" href="#也不要使用" data-toc-link="也不要使用"> 也不要使用== </a><a class="toc-level-3" href="#使用is" data-toc-link="使用is"> 使用is </a><a class="toc-level-2" href="#generator中的坑" data-toc-link="generator中的坑"> generator中的坑 </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = tocLinks
+      .map((link) => {
+        const id = link.getAttribute("data-toc-link");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean);
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

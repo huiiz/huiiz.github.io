@@ -1,0 +1,146 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>Flet的页面布局(Layout) · Pulse | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="介绍 这是Flet的页面布局介绍，来源于官网文档：Layout | Flet <center 页面布局</center Page Page是View控件的容器，Page实例和和根视图是在新用户会话启动时自动创建的。 属性 auto scroll 当属性值为True，滚动条会自动滚"><meta property="og:title" content="Flet的页面布局(Layout) · Pulse | HUII's Blog"><meta property="og:description" content="介绍 这是Flet的页面布局介绍，来源于官网文档：Layout | Flet <center 页面布局</center Page Page是View控件的容器，Page实例和和根视图是在新用户会话启动时自动创建的。 属性 auto scroll 当属性值为True，滚动条会自动滚"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/templates/pulse/posts/flet%E7%9A%84%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80-layout/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#d06c45"><link rel="canonical" href="https://blog.huii.top/templates/pulse/posts/flet%E7%9A%84%E9%A1%B5%E9%9D%A2%E5%B8%83%E5%B1%80-layout/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.PS7qN8BI.css">
+<style>.pagination[data-astro-cid-d776pwuy]{display:flex;align-items:center;justify-content:center;gap:.9rem;margin-top:2.4rem;flex-wrap:wrap}.pagination-summary[data-astro-cid-d776pwuy]{display:inline-flex;align-items:baseline;gap:.22rem;padding:0 .15rem;color:var(--theme-muted);letter-spacing:.04em}.pagination-summary[data-astro-cid-d776pwuy] strong[data-astro-cid-d776pwuy]{color:var(--theme-text);font-size:1.15rem}.pagination-pages[data-astro-cid-d776pwuy]{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.pagination-arrow[data-astro-cid-d776pwuy],.pagination-page[data-astro-cid-d776pwuy]{display:inline-flex;align-items:center;justify-content:center;min-width:2.8rem;min-height:2.8rem;padding:0 .95rem;border:1px solid var(--theme-line);border-radius:999px;background:var(--theme-panel);color:var(--theme-text);box-shadow:var(--theme-shadow);transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}.pagination-arrow[data-astro-cid-d776pwuy]:hover,.pagination-page[data-astro-cid-d776pwuy]:hover{transform:translateY(-2px);border-color:var(--theme-soft-fill-strong)}.pagination-page[data-astro-cid-d776pwuy].is-active{background:var(--theme-color);color:#fff;border-color:transparent}.pagination-arrow[data-astro-cid-d776pwuy].is-disabled{opacity:.45;box-shadow:none}.pagination-gap[data-astro-cid-d776pwuy]{color:var(--theme-muted);padding:0 .1rem}@media(max-width:760px){.pagination[data-astro-cid-d776pwuy]{justify-content:center;gap:.7rem}.pagination-summary[data-astro-cid-d776pwuy]{width:100%;justify-content:center;order:-1}.pagination-pages[data-astro-cid-d776pwuy]{justify-content:center;width:100%}.pagination-arrow[data-astro-cid-d776pwuy]{min-width:calc(50% - .5rem);padding:0 .75rem}}
+</style>
+<link rel="stylesheet" href="/_astro/index.R3ImXAFw.css"></head> <body> <div class="page" id="body-wrap" data-theme-preset="pulse" data-home-template="focus" data-card-style="compact" data-sidebar-style="stacked" style="--theme-color:#d06c45;--theme-color-deep:#8c402a;--theme-accent:#20252d;--theme-text:#20252d;--theme-muted:#66707a;--theme-line:rgba(45, 54, 67, 0.14);--theme-bg:#f4efe9;--theme-panel:rgba(255, 255, 255, 0.96);--theme-panel-solid:#ffffff;--theme-panel-soft:rgba(250, 244, 239, 0.9);--theme-shadow:0 14px 36px rgba(31, 38, 48, 0.08);--theme-shadow-strong:0 24px 58px rgba(31, 38, 48, 0.14);--theme-bg-image:radial-gradient(circle at top left, rgba(208, 108, 69, 0.12), transparent 22%), radial-gradient(circle at right 18%, rgba(31, 37, 45, 0.08), transparent 20%), linear-gradient(180deg, #fbf8f4 0%, #f4ede7 100%);--theme-nav-bg:rgba(248, 245, 241, 0.9);--theme-nav-border:rgba(45, 54, 67, 0.08);--theme-hero-mask:linear-gradient(135deg, rgba(25, 31, 40, 0.22), rgba(25, 31, 40, 0.38)), linear-gradient(180deg, rgba(255, 255, 255, 0.03), rgba(0, 0, 0, 0.14));--theme-hero-panel-bg:rgba(26, 32, 41, 0.2);--theme-hero-panel-border:rgba(255, 255, 255, 0.16);--theme-hero-panel-shadow:0 22px 56px rgba(18, 23, 30, 0.2);--theme-soft-fill:rgba(212, 107, 73, 0.07);--theme-soft-fill-strong:rgba(212, 107, 73, 0.12);--theme-code-bg:#1f2630;--theme-code-text:#f6f1eb;--theme-reading-text:#3b434f;--radius-lg:12px;--radius-md:8px;--radius-sm:6px;--nav-width:1480px;--content-width:1500px;--page-width:1260px;--reading-width:1480px;--font-sans:&#34;IBM Plex Sans&#34;, &#34;PingFang SC&#34;, &#34;Microsoft YaHei&#34;, sans-serif;--font-display:&#34;Baskerville&#34;, &#34;Times New Roman&#34;, &#34;Noto Serif SC&#34;, &#34;Source Han Serif SC&#34;, serif"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>Flet的页面布局(Layout)</h1> <p>介绍 这是Flet的页面布局介绍，来源于官网文档：Layout | Flet &lt;center 页面布局&lt;/center Page Page是View控件的容器，Page实例和和根视图是在新用户会话启动时自动创建的。 属性 auto scroll 当属性值为True，滚动条会自动滚</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2022年12月31日</span> <span>阅读约 4 分钟</span> </div> <div class="reading-categories"> <a href="/categories/coding/">Coding</a> </div> <div class="reading-tags"> <a href="/tags/python/">#Python</a><a href="/tags/gui/">#GUI</a><a href="/tags/flet/">#Flet</a> </div> </header> <div class="post-content reading-content"><h2 id="介绍">介绍</h2><p>这是Flet的页面布局介绍，来源于官网文档：<a href="https://flet.dev/docs/controls/layout" target="_blank" rel="noreferrer">Layout | Flet</a></p><figure><img src="/notion/flet的页面布局-layout/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>页面布局</p><h2 id="page">Page</h2><p>Page是View控件的容器，Page实例和和根视图是在新用户会话启动时自动创建的。</p><h3 id="属性">属性</h3><h4 id="auto-scroll">auto_scroll</h4><p>当属性值为<code>True</code>，滚动条会自动滚动至页面尾部。</p><h4 id="appbar">appbar</h4><p>显示页面顶部导航栏。</p><pre><code>import flet as ft
+
+def main(page: ft.Page):
+    def check_item_clicked(e):
+        e.control.checked = not e.control.checked
+        page.update()
+
+    page.appbar = ft.AppBar(
+        leading=ft.Icon(ft.icons.PALETTE),
+        leading_width=40,
+        title=ft.Text(&quot;AppBar Example&quot;),
+        center_title=False,
+        bgcolor=ft.colors.SURFACE_VARIANT,
+        actions=[
+            ft.IconButton(ft.icons.WB_SUNNY_OUTLINED),
+            ft.IconButton(ft.icons.FILTER_3),
+            ft.PopupMenuButton(
+                items=[
+                    ft.PopupMenuItem(text=&quot;Item 1&quot;),
+                    ft.PopupMenuItem(),  # divider
+                    ft.PopupMenuItem(
+                        text=&quot;Checked item&quot;, checked=False, on_click=check_item_clicked
+                    ),
+                ]
+            ),
+        ],
+    )
+    page.add(ft.Text(&quot;Body!&quot;))
+
+ft.app(target=main)</code></pre><figure><img src="/notion/flet的页面布局-layout/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>appbar</p><h4 id="banner">banner</h4><p>显示页面顶部横幅。</p><pre><code>import flet as ft
+
+def main(page):
+    def close_banner(e):
+        page.banner.open = False
+        page.update()
+
+    page.banner = ft.Banner(
+        bgcolor=ft.colors.AMBER_100,
+        leading=ft.Icon(ft.icons.WARNING_AMBER_ROUNDED, color=ft.colors.AMBER, size=40),
+        content=ft.Text(
+            &quot;Oops, there were some errors while trying to delete the file. What would you like me to do?&quot;
+        ),
+        actions=[
+            ft.TextButton(&quot;Retry&quot;, on_click=close_banner),
+            ft.TextButton(&quot;Ignore&quot;, on_click=close_banner),
+            ft.TextButton(&quot;Cancel&quot;, on_click=close_banner),
+        ],
+    )
+
+    def show_banner_click(e):
+        page.banner.open = True
+        page.update()
+
+    page.add(ft.ElevatedButton(&quot;Show Banner&quot;, on_click=show_banner_click))
+
+ft.app(target=main)</code></pre><figure><img src="/notion/flet的页面布局-layout/image/img.png" alt="img" /><figcaption>img</figcaption></figure><p>banner</p><h3 id="方法">方法</h3><h3 id="事件">事件</h3><h2 id="view">View</h2><h2 id="container">Container</h2><h2 id="row">Row</h2><h2 id="column">Column</h2><h2 id="stack">Stack</h2><h2 id="listview">ListView</h2><h2 id="listtitle">ListTItle</h2><h2 id="gridview">GridView</h2><h2 id="responsiverow">ResponsiveRow</h2><h2 id="datatable">DataTable</h2><h2 id="tabs">Tabs</h2><h2 id="card">Card</h2><h2 id="divider">Divider</h2><h2 id="verticaldivider">VerticalDivider</h2></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/templates/pulse/posts/yolo-v1笔记/">YOLO v1笔记</a> </div> <div> <span>下一篇</span> <a href="/templates/pulse/posts/flet实现to-do-app/">Flet实现To-Do app</a> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关文章</h3> </div> <div class="related-post-list"> <a href="/templates/pulse/posts/flet实现to-do-app/">Flet实现To-Do app</a><a href="/templates/pulse/posts/flet-一款基于python的跨平台前端框架/">Flet，一款基于Python的跨平台前端框架</a><a href="/templates/pulse/posts/python第三方库yaml/">Python第三方库yaml</a><a href="/templates/pulse/posts/python小tips-持续更新/">Python小tips【持续更新】</a><a href="/templates/pulse/posts/记录django-uwsgi-nginx配置/">记录Django+uwsgi+Nginx配置</a><a href="/templates/pulse/posts/pytorch中的一些函数/">PyTorch中的一些函数</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-2" href="#介绍" data-toc-link="介绍"> 介绍 </a><a class="toc-level-2" href="#page" data-toc-link="page"> Page </a><a class="toc-level-3" href="#属性" data-toc-link="属性"> 属性 </a><a class="toc-level-3" href="#方法" data-toc-link="方法"> 方法 </a><a class="toc-level-3" href="#事件" data-toc-link="事件"> 事件 </a><a class="toc-level-2" href="#view" data-toc-link="view"> View </a><a class="toc-level-2" href="#container" data-toc-link="container"> Container </a><a class="toc-level-2" href="#row" data-toc-link="row"> Row </a><a class="toc-level-2" href="#column" data-toc-link="column"> Column </a><a class="toc-level-2" href="#stack" data-toc-link="stack"> Stack </a><a class="toc-level-2" href="#listview" data-toc-link="listview"> ListView </a><a class="toc-level-2" href="#listtitle" data-toc-link="listtitle"> ListTItle </a><a class="toc-level-2" href="#gridview" data-toc-link="gridview"> GridView </a><a class="toc-level-2" href="#responsiverow" data-toc-link="responsiverow"> ResponsiveRow </a><a class="toc-level-2" href="#datatable" data-toc-link="datatable"> DataTable </a><a class="toc-level-2" href="#tabs" data-toc-link="tabs"> Tabs </a><a class="toc-level-2" href="#card" data-toc-link="card"> Card </a><a class="toc-level-2" href="#divider" data-toc-link="divider"> Divider </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = tocLinks
+      .map((link) => {
+        const id = link.getAttribute("data-toc-link");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean);
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>

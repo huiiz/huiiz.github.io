@@ -1,0 +1,91 @@
+<!DOCTYPE html><html lang="zh-CN"> <head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1.0,viewport-fit=cover"><title>JavaWeb学习之路（一）——动机与准备 · Ledger | HUII&#39;s Blog</title><meta name="author" content="HUII"><meta name="description" content="前期知识储备 目前我已经点亮以下技能点 前端html、css、js，以及jquery、vue框架的基本使用。 熟练使用python语言，掌握或了解c语言、Java等流行语言。 掌握基本数据结构与算法。 使用MySQL数据库。 熟悉web前后端交互，request与response"><meta property="og:title" content="JavaWeb学习之路（一）——动机与准备 · Ledger | HUII's Blog"><meta property="og:description" content="前期知识储备 目前我已经点亮以下技能点 前端html、css、js，以及jquery、vue框架的基本使用。 熟练使用python语言，掌握或了解c语言、Java等流行语言。 掌握基本数据结构与算法。 使用MySQL数据库。 熟悉web前后端交互，request与response"><meta property="og:type" content="website"><meta property="og:locale" content="zh_CN"><meta property="og:url" content="https://blog.huii.top/templates/ledger/posts/javaweb%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF-%E4%B8%80-%E5%8A%A8%E6%9C%BA%E4%B8%8E%E5%87%86%E5%A4%87/"><meta property="og:image" content="https://blog.huii.top/img/avatar.png"><meta name="twitter:card" content="summary"><meta name="theme-color" content="#8e5a48"><link rel="canonical" href="https://blog.huii.top/templates/ledger/posts/javaweb%E5%AD%A6%E4%B9%A0%E4%B9%8B%E8%B7%AF-%E4%B8%80-%E5%8A%A8%E6%9C%BA%E4%B8%8E%E5%87%86%E5%A4%87/"><link rel="shortcut icon" href="/img/logo.png"><link rel="alternate" type="application/rss+xml" title="HUII's Blog" href="/rss.xml"><link rel="stylesheet" href="/_astro/_slug_.PS7qN8BI.css">
+<style>.pagination[data-astro-cid-d776pwuy]{display:flex;align-items:center;justify-content:center;gap:.9rem;margin-top:2.4rem;flex-wrap:wrap}.pagination-summary[data-astro-cid-d776pwuy]{display:inline-flex;align-items:baseline;gap:.22rem;padding:0 .15rem;color:var(--theme-muted);letter-spacing:.04em}.pagination-summary[data-astro-cid-d776pwuy] strong[data-astro-cid-d776pwuy]{color:var(--theme-text);font-size:1.15rem}.pagination-pages[data-astro-cid-d776pwuy]{display:flex;align-items:center;gap:.55rem;flex-wrap:wrap}.pagination-arrow[data-astro-cid-d776pwuy],.pagination-page[data-astro-cid-d776pwuy]{display:inline-flex;align-items:center;justify-content:center;min-width:2.8rem;min-height:2.8rem;padding:0 .95rem;border:1px solid var(--theme-line);border-radius:999px;background:var(--theme-panel);color:var(--theme-text);box-shadow:var(--theme-shadow);transition:transform .18s ease,border-color .18s ease,background .18s ease,color .18s ease}.pagination-arrow[data-astro-cid-d776pwuy]:hover,.pagination-page[data-astro-cid-d776pwuy]:hover{transform:translateY(-2px);border-color:var(--theme-soft-fill-strong)}.pagination-page[data-astro-cid-d776pwuy].is-active{background:var(--theme-color);color:#fff;border-color:transparent}.pagination-arrow[data-astro-cid-d776pwuy].is-disabled{opacity:.45;box-shadow:none}.pagination-gap[data-astro-cid-d776pwuy]{color:var(--theme-muted);padding:0 .1rem}@media(max-width:760px){.pagination[data-astro-cid-d776pwuy]{justify-content:center;gap:.7rem}.pagination-summary[data-astro-cid-d776pwuy]{width:100%;justify-content:center;order:-1}.pagination-pages[data-astro-cid-d776pwuy]{justify-content:center;width:100%}.pagination-arrow[data-astro-cid-d776pwuy]{min-width:calc(50% - .5rem);padding:0 .75rem}}
+</style>
+<link rel="stylesheet" href="/_astro/index.R3ImXAFw.css"></head> <body> <div class="page" id="body-wrap" data-theme-preset="ledger" data-home-template="journal" data-card-style="outline" data-sidebar-style="minimal" style="--theme-color:#8e5a48;--theme-color-deep:#5b342a;--theme-accent:#281d19;--theme-text:#241b18;--theme-muted:#7c6d63;--theme-line:rgba(93, 67, 52, 0.18);--theme-bg:#f6f0e8;--theme-panel:rgba(255, 251, 246, 0.94);--theme-panel-solid:#fffaf4;--theme-panel-soft:rgba(255, 246, 238, 0.76);--theme-shadow:0 14px 36px rgba(72, 51, 41, 0.06);--theme-shadow-strong:0 18px 46px rgba(72, 51, 41, 0.11);--theme-bg-image:radial-gradient(circle at top right, rgba(142, 90, 72, 0.08), transparent 21%), radial-gradient(circle at left 18%, rgba(39, 29, 26, 0.05), transparent 24%), linear-gradient(180deg, #faf6ef 0%, #f3ece2 100%);--theme-nav-bg:rgba(250, 245, 238, 0.84);--theme-nav-border:rgba(93, 67, 52, 0.1);--theme-hero-mask:linear-gradient(135deg, rgba(30, 23, 20, 0.28), rgba(30, 23, 20, 0.46)), linear-gradient(180deg, rgba(255, 255, 255, 0.02), rgba(0, 0, 0, 0.1));--theme-hero-panel-bg:rgba(39, 29, 26, 0.22);--theme-hero-panel-border:rgba(255, 244, 233, 0.18);--theme-hero-panel-shadow:0 24px 54px rgba(35, 27, 23, 0.18);--theme-soft-fill:rgba(140, 79, 61, 0.07);--theme-soft-fill-strong:rgba(140, 79, 61, 0.12);--theme-code-bg:#241d1c;--theme-code-text:#f8f0e5;--theme-reading-text:#3b312b;--radius-lg:22px;--radius-md:16px;--radius-sm:10px;--nav-width:1360px;--content-width:1380px;--page-width:1180px;--reading-width:1360px;--font-sans:&#34;Libre Franklin&#34;, &#34;PingFang SC&#34;, &#34;Microsoft YaHei&#34;, sans-serif;--font-display:&#34;EB Garamond&#34;, &#34;Noto Serif SC&#34;, &#34;Source Han Serif SC&#34;, serif"> <nav id="nav"> <div class="nav-inner"> <a class="nav-site-title" href="/"> <img class="site-icon" src="/img/logo.png" alt="Logo"> <span class="site-branding"> <strong class="site-name">HUII&#39;s Blog</strong> <small>New Beginning, New Way</small> </span> </a> <div id="menus"> <div class="menus-items"> <div class="menus-item"> <a class="site-page" href="/"> <span>首页</span> </a> </div><div class="menus-item"> <a class="site-page" href="/archive/"> <span>归档</span> </a> </div><div class="menus-item"> <a class="site-page" href="/tags/"> <span>标签</span> </a> </div><div class="menus-item"> <a class="site-page" href="/categories/"> <span>分类</span> </a> </div><div class="menus-item"> <a class="site-page" href="/link/"> <span>友链</span> </a> </div><div class="menus-item"> <a class="site-page" href="/about/"> <span>关于</span> </a> </div><div class="menus-item"> <a class="site-page" href="https://www.huii.top/" target="_blank" rel="noreferrer"> <span>个人主页</span> </a> </div> </div> </div> </div> </nav>  <header class="page-header is-page" style="background-image: url(/img/index.png);"> <div class="page-header-mask"></div> <div class="page-header-inner page-hero">  <span class="hero-kicker">写作 / 归档 / 笔记</span> <h1>JavaWeb学习之路（一）——动机与准备</h1> <p>前期知识储备 目前我已经点亮以下技能点 前端html、css、js，以及jquery、vue框架的基本使用。 熟练使用python语言，掌握或了解c语言、Java等流行语言。 掌握基本数据结构与算法。 使用MySQL数据库。 熟悉web前后端交互，request与response</p> </div> </header> <main class="layout layout-reading layout-reading-with-toc" id="content-inner"> <div class="reading-shell has-toc"> <article class="reading-article" id="post"> <header class="reading-header"> <div class="reading-meta"> <span>发布于 2021年4月29日</span> <span>阅读约 2 分钟</span> </div> <div class="reading-categories"> <a href="/categories/coding/">Coding</a> </div> <div class="reading-tags"> <a href="/tags/java/">#Java</a><a href="/tags/web/">#Web</a> </div> </header> <div class="post-content reading-content"><h3 id="前期知识储备">前期知识储备</h3><p>目前我已经点亮以下技能点</p><ul><li>前端html、css、js，以及jquery、vue框架的基本使用。</li><li>熟练使用python语言，掌握或了解c语言、Java等流行语言。</li><li>掌握基本数据结构与算法。</li><li>使用MySQL数据库。</li><li>熟悉web前后端交互，request与response。</li><li>用ThinkPHP、Flask、Django开发过几个中小型项目。</li></ul><h3 id="为什么想要学习javaweb">为什么想要学习JavaWeb</h3><p>经过这一年多的web开发的学习，我经历了ThinkPHP-&gt;Flask-&gt;Django三个历程，前半阶段主力语言是php，后半阶段，也就是目前，我的主力语言是Python。</p><p>php，怎么说呢，刚开始，我觉得它跟C语言挺像的，后来学习了Java后发现，我用的ThinkPHP框架内的结构跟Java更像。但是呢，这个<code>$</code>是在有点令人讨厌，之后一次项目的数组操作不出来（是我太菜了），让我下定决心废弃它。</p><p>python，目前是我最喜爱的语言。我可以很快速地完成我想要的功能。但是，鱼与熊掌不可兼得，开发效率的提升，伴随的是运行效率的严重下降。它的运行效率实在是不行 ！ </p><p>据我了解，目前市场上主流的web后端语言是Java，虽然我有点不太喜欢Java（感觉太啰嗦了），但是有了比较好用的IDE，问题好像不是太大。并且目前有很多成熟的解决方案，学习起来应该也比较easy。</p><h3 id="计划如何学习">计划如何学习</h3><p>目前学习主战地：B站</p><p>我原本是计划看尚硅谷或者其他培训班的课程。但是我前几天发现了一个讲课效果特别好的up主:<a href="https://space.bilibili.com/95256449/channel/detail?cid=146244" target="_blank" rel="noreferrer"><em>遇见狂神说的个人空间 - 哔哩哔哩 ( ゜- ゜)つロ 乾杯~ Bilibili</em></a></p><figure><img src="/notion/javaweb学习之路-一-动机与准备/image/img.jpg" alt="img" /><figcaption>img</figcaption></figure><p>他的课感觉很不错：</p><figure><img src="/notion/javaweb学习之路-一-动机与准备/image/75b12ea49e8d7cc6cd2d0ada331f9851fe5ad27c.jpg@380w_240h_100Q_1c.webp-(380×240)-(h" alt="75b12ea49e8d7cc6cd2d0ada331f9851fe5ad27c.jpg@380w_240h_100Q_1c.webp (380×240) (hdslb.com)" /><figcaption>75b12ea49e8d7cc6cd2d0ada331f9851fe5ad27c.jpg@380w_240h_100Q_1c.webp (380×240) (hdslb.com)</figcaption></figure><p>所以计划跟着他看完JavaWeb内容，并继续学习其他知识。</p><h3 id="学习路线">学习路线</h3><figure><img src="/notion/javaweb学习之路-一-动机与准备/image/image-20210503104856735.png" alt="image-20210503104856735" /><figcaption>image-20210503104856735</figcaption></figure></div> <nav class="reading-pagination"> <div> <span>上一篇</span> <a href="/templates/ledger/posts/javaweb学习之路-三-基本请求处理/">JavaWeb学习之路（三）——基本请求处理</a> </div> <div> <span>下一篇</span> <p>已经是最早一篇</p> </div> </nav> <section class="related-posts"> <div class="related-posts-head"> <span class="section-kicker">延伸阅读</span> <h3>相关文章</h3> </div> <div class="related-post-list"> <a href="/templates/ledger/posts/javaweb学习之路-五-mvc-过滤器-监听器/">JavaWeb学习之路（五）——MVC、过滤器、监听器</a><a href="/templates/ledger/posts/javaweb学习之路-四-jsp/">JavaWeb学习之路（四）——JSP</a><a href="/templates/ledger/posts/javaweb学习之路-二-环境配置与项目创建/">JavaWeb学习之路（二）——环境配置与项目创建</a><a href="/templates/ledger/posts/javaweb学习之路-三-基本请求处理/">JavaWeb学习之路（三）——基本请求处理</a><a href="/templates/ledger/posts/springboot入门/">SpringBoot入门</a><a href="/templates/ledger/posts/springmvc入门/">SpringMVC入门</a> </div> </section> </article> <aside class="reading-toc" aria-label="文章目录"> <div class="reading-toc-card"> <div class="reading-toc-head"> <span class="section-kicker">目录</span> <strong>本页导航</strong> </div> <nav class="reading-toc-list"> <a class="toc-level-3" href="#前期知识储备" data-toc-link="前期知识储备"> 前期知识储备 </a><a class="toc-level-3" href="#为什么想要学习javaweb" data-toc-link="为什么想要学习javaweb"> 为什么想要学习JavaWeb </a><a class="toc-level-3" href="#计划如何学习" data-toc-link="计划如何学习"> 计划如何学习 </a><a class="toc-level-3" href="#学习路线" data-toc-link="学习路线"> 学习路线 </a> </nav> </div> </aside> </div> <button class="back-to-top" type="button" aria-label="回到顶部" data-back-to-top>
+回到顶部
+</button> </main> <script>
+    const backToTop = document.querySelector("[data-back-to-top]");
+    const tocLinks = [...document.querySelectorAll("[data-toc-link]")];
+    const headings = tocLinks
+      .map((link) => {
+        const id = link.getAttribute("data-toc-link");
+        return id ? document.getElementById(id) : null;
+      })
+      .filter(Boolean);
+    const embeddedFrames = [...document.querySelectorAll(".embed-frame iframe")];
+    const isStandaloneEmbedPage = document.querySelector(".reading-content-standalone") !== null;
+
+    const updateBackToTop = () => {
+      if (!backToTop) return;
+      backToTop.classList.toggle("is-visible", window.scrollY > 560);
+    };
+
+    backToTop?.addEventListener("click", () => {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    });
+
+    const setActiveToc = () => {
+      if (!tocLinks.length || !headings.length) return;
+
+      let currentId = headings[0]?.id || "";
+      for (const heading of headings) {
+        if (window.scrollY >= heading.offsetTop - 180) {
+          currentId = heading.id;
+        }
+      }
+
+      for (const link of tocLinks) {
+        link.classList.toggle("is-active", link.getAttribute("data-toc-link") === currentId);
+      }
+    };
+
+    const markEmbeddedFrame = (iframe) => {
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        doc.body.classList.add("is-embedded");
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    const resizeEmbeddedFrame = (iframe) => {
+      if (isStandaloneEmbedPage) return;
+
+      try {
+        const doc = iframe.contentDocument;
+        if (!doc) return;
+        const height = Math.max(
+          doc.body.scrollHeight,
+          doc.documentElement.scrollHeight,
+          doc.body.offsetHeight,
+          doc.documentElement.offsetHeight
+        );
+        if (height) {
+          iframe.style.height = `${height}px`;
+        }
+      } catch {
+        // Ignore cross-document access failures.
+      }
+    };
+
+    for (const iframe of embeddedFrames) {
+      iframe.addEventListener("load", () => {
+        markEmbeddedFrame(iframe);
+        resizeEmbeddedFrame(iframe);
+      });
+      markEmbeddedFrame(iframe);
+      resizeEmbeddedFrame(iframe);
+    }
+
+    window.addEventListener("scroll", updateBackToTop, { passive: true });
+    window.addEventListener("scroll", setActiveToc, { passive: true });
+    window.addEventListener("resize", () => {
+      for (const iframe of embeddedFrames) resizeEmbeddedFrame(iframe);
+      setActiveToc();
+      updateBackToTop();
+    });
+
+    updateBackToTop();
+    setActiveToc();
+  </script>  <footer id="footer"> <div class="footer-inner"> <div class="footer-other"> <div class="footer-copyright"> <span class="copyright">&copy; 2015 - 2026 By HUII</span> </div> <div class="footer-custom-text"> <span><a href="https://beian.miit.gov.cn/" target="_blank" rel="noreferrer">备案号：闽ICP备18005042号-2</a></span> </div> </div> </div> </footer> </div> </body></html>
