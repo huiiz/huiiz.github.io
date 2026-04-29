@@ -8,7 +8,7 @@
     public void setUserDao(UserDao userDao){
         this.userDao = userDao;
     }
-}</code></pre><ul><li>之前程序是主动创建对象，控制权在程序员手上</li><li>使用set注入后，程序不再具有主动性，而是变成被动接受对象。</li></ul><p><strong>控制反转是一种通过描述（XML或注解）并通过第三方去生产或获取特定对象的方式。在Spring中实现控制反转的是IOC容器，其实现方法是依赖注入。</strong></p><h3 id="hello-spring">Hello Spring</h3><p><strong>结构如图</strong></p><figure><img src="/img/image-20210801210639422.png" alt="image-20210801210639422" /><figcaption>image-20210801210639422</figcaption></figure><h4 id="hello-java">Hello.java</h4><pre><code>package top.huii.pojo;
+}</code></pre><ul><li>之前程序是主动创建对象，控制权在程序员手上</li><li>使用set注入后，程序不再具有主动性，而是变成被动接受对象。</li></ul><p><strong>控制反转是一种通过描述（XML或注解）并通过第三方去生产或获取特定对象的方式。在Spring中实现控制反转的是IOC容器，其实现方法是依赖注入。</strong></p><h3 id="hello-spring">Hello Spring</h3><p><strong>结构如图</strong></p><h4 id="hello-java">Hello.java</h4><pre><code>package top.huii.pojo;
 
 public class Hello {
     private String str;
@@ -28,7 +28,7 @@ public class Hello {
                 &#39;}&#39;;
     }
 }
-</code></pre><h4 id="配置文件beans-xml-可使用idea生成模板">配置文件beans.xml(可使用IDEA生成模板)</h4><figure><img src="/img/image-20210801210814821.png" alt="image-20210801210814821" /><figcaption>image-20210801210814821</figcaption></figure><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
+</code></pre><h4 id="配置文件beans-xml-可使用idea生成模板">配置文件beans.xml(可使用IDEA生成模板)</h4><pre><code>&lt;?xml version=&quot;1.0&quot; encoding=&quot;UTF-8&quot;?&gt;
 &lt;beans xmlns=&quot;http://www.springframework.org/schema/beans&quot;
        xmlns:xsi=&quot;http://www.w3.org/2001/XMLSchema-instance&quot;
        xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
@@ -302,10 +302,10 @@ public class User {
        xsi:schemaLocation=&quot;http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd&quot;&gt;
     &lt;!--c命名空间,通过构造器注入--&gt;
     &lt;bean id=&quot;user2&quot; class=&quot;top.huii.pojo.User&quot; c:age=&quot;19&quot; c:name=&quot;huii&quot;/&gt;
-&lt;/beans&gt;</code></pre><h3 id="bean的作用域">bean的作用域</h3><h4 id="单例模式-默认">单例模式（默认）</h4><p>只有一个对象</p><figure><img src="/img/singleton.png" alt="singleton" /><figcaption>singleton</figcaption></figure><pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.foo.DefaultAccountService&quot;/&gt;
+&lt;/beans&gt;</code></pre><h3 id="bean的作用域">bean的作用域</h3><h4 id="单例模式-默认">单例模式（默认）</h4><p>只有一个对象</p><pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.foo.DefaultAccountService&quot;/&gt;
 
 &lt;!-- the following is equivalent, though redundant (singleton scope is the default) --&gt;
-&lt;bean id=&quot;accountService&quot; class=&quot;com.foo.DefaultAccountService&quot; scope=&quot;singleton&quot;/&gt;</code></pre><h4 id="原型模式">原型模式</h4><p>每次从容器中get的时候，都会产生一个新对象</p><figure><img src="/img/prototype.png" alt="prototype" /><figcaption>prototype</figcaption></figure><pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.foo.DefaultAccountService&quot; scope=&quot;prototype&quot;/&gt;</code></pre><h4 id="其他">其他</h4><p>request，session，application只能在web开发中使用</p><h3 id="bean的自动装配">Bean的自动装配</h3><p><strong>自动寻找并装配属性</strong></p><p>配置的三种方式</p><ul><li>xml中显式配置</li><li>java中显式配置</li><li>隐式自动装配bean（ ）</li></ul><h4 id="准备代码">准备代码</h4><p><strong>cat.java</strong></p><pre><code>package top.huii.pojo;
+&lt;bean id=&quot;accountService&quot; class=&quot;com.foo.DefaultAccountService&quot; scope=&quot;singleton&quot;/&gt;</code></pre><h4 id="原型模式">原型模式</h4><p>每次从容器中get的时候，都会产生一个新对象</p><pre><code>&lt;bean id=&quot;accountService&quot; class=&quot;com.foo.DefaultAccountService&quot; scope=&quot;prototype&quot;/&gt;</code></pre><h4 id="其他">其他</h4><p>request，session，application只能在web开发中使用</p><h3 id="bean的自动装配">Bean的自动装配</h3><p><strong>自动寻找并装配属性</strong></p><p>配置的三种方式</p><ul><li>xml中显式配置</li><li>java中显式配置</li><li>隐式自动装配bean（ ）</li></ul><h4 id="准备代码">准备代码</h4><p><strong>cat.java</strong></p><pre><code>package top.huii.pojo;
 
 public class Cat {
     public void shout(){
@@ -499,7 +499,7 @@ public class User {
     @Value(&quot;HUII&quot;)
     public String name = &quot;HUII&quot;;
 }
-</code></pre><h4 id="衍生注解">衍生注解</h4><p>@Component有几个衍生注释</p><figure><img src="/img/image-20210802141731740.png" alt="image-20210802141731740" /><figcaption>image-20210802141731740</figcaption></figure><p><strong>UserDao.java</strong></p><pre><code>package top.huii.dao;
+</code></pre><h4 id="衍生注解">衍生注解</h4><p>@Component有几个衍生注释</p><p><strong>UserDao.java</strong></p><pre><code>package top.huii.dao;
 
 import org.springframework.stereotype.Repository;
 
@@ -536,7 +536,7 @@ public class FactoryMethodComponent {
     public TestBean prototypeInstance(InjectionPoint injectionPoint) {
         return new TestBean(&quot;prototypeInstance for &quot; + injectionPoint.getMember());
     }
-}</code></pre><h4 id="小结">小结</h4><ul><li>xml更万能，适合任何场合，维护方便</li><li>注解不是自己类使用不了，维护复杂</li></ul><h3 id="使用java的方式配置spring">使用Java的方式配置spring</h3><h4 id="javaconfig">JavaConfig</h4><figure><img src="/img/image-20210802144851313.png" alt="image-20210802144851313" /><figcaption>image-20210802144851313</figcaption></figure><p><strong>User.java</strong></p><pre><code>package top.huii.pojo;
+}</code></pre><h4 id="小结">小结</h4><ul><li>xml更万能，适合任何场合，维护方便</li><li>注解不是自己类使用不了，维护复杂</li></ul><h3 id="使用java的方式配置spring">使用Java的方式配置spring</h3><h4 id="javaconfig">JavaConfig</h4><p><strong>User.java</strong></p><pre><code>package top.huii.pojo;
 
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
@@ -662,7 +662,7 @@ public class ProxyInvocationHandler implements InvocationHandler{
     &lt;artifactId&gt;aspectjweaver&lt;/artifactId&gt;
     &lt;version&gt;1.9.7&lt;/version&gt;
     &lt;scope&gt;runtime&lt;/scope&gt;
-&lt;/dependency&gt;</code></pre><h4 id="使用原生spring-api实现">使用原生Spring API实现</h4><figure><img src="/img/image-20210802183316830.png" alt="image-20210802183316830" /><figcaption>image-20210802183316830</figcaption></figure><p><strong>UserService.java</strong></p><pre><code>package top.huii.service;
+&lt;/dependency&gt;</code></pre><h4 id="使用原生spring-api实现">使用原生Spring API实现</h4><p><strong>UserService.java</strong></p><pre><code>package top.huii.service;
 
 public interface UserService {
     public void add();
